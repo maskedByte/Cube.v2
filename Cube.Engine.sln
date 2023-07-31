@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Execution", "Execution", "{0E41D63C-06EF-4ABC-A5AA-5A36B5AD03C6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{A832A45F-22D3-4AC5-B3C6-F4B7550546BB}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engine", "Engine", "{CFDC25C8-B312-4D38-9204-23502D7E0477}"
 EndProject
@@ -11,6 +15,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine.Core", "Engine\Engine.Core\Engine.Core.csproj", "{BD0ADF1B-613A-40A3-8FBD-13B7C51986FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine.Rendering", "Engine\Engine.Rendering\Engine.Rendering.csproj", "{48E9EC50-0A88-4A13-B2CE-312D820F911F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine.OpenGL", "Engine\Engine.OpenGL\Engine.OpenGL.csproj", "{676A50D3-5893-4A80-93B6-8DCF4D3A5CD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,10 +36,15 @@ Global
 		{48E9EC50-0A88-4A13-B2CE-312D820F911F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48E9EC50-0A88-4A13-B2CE-312D820F911F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48E9EC50-0A88-4A13-B2CE-312D820F911F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{676A50D3-5893-4A80-93B6-8DCF4D3A5CD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{676A50D3-5893-4A80-93B6-8DCF4D3A5CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{676A50D3-5893-4A80-93B6-8DCF4D3A5CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{676A50D3-5893-4A80-93B6-8DCF4D3A5CD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7A2CD865-2F5B-483A-A328-504C58C4EE0B} = {0E41D63C-06EF-4ABC-A5AA-5A36B5AD03C6}
 		{BD0ADF1B-613A-40A3-8FBD-13B7C51986FA} = {CFDC25C8-B312-4D38-9204-23502D7E0477}
 		{48E9EC50-0A88-4A13-B2CE-312D820F911F} = {CFDC25C8-B312-4D38-9204-23502D7E0477}
+		{676A50D3-5893-4A80-93B6-8DCF4D3A5CD2} = {CFDC25C8-B312-4D38-9204-23502D7E0477}
 	EndGlobalSection
 EndGlobal

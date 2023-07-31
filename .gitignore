@@ -350,5 +350,5 @@ MigrationBackup/
 .ionide/
 *.dtp
 *.DotSettings
-/.idea/
+.idea/
 /Engine/Base/DebugPage
