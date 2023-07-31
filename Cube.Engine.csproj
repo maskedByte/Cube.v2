@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>Cube.Engine</AssemblyName>
+        <RootNamespace>Cube.Engine</RootNamespace>
+        <PackageId>Cube.Engine</PackageId>
+        <Authors>Cube.Engine</Authors>
+        <Company>Cube.Engine</Company>
+        <Product>Cube.Engine</Product>
+    </PropertyGroup>
+
+</Project>
