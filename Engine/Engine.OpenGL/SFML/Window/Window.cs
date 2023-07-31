@@ -407,7 +407,6 @@ public class Window : ObjectBase
     protected Window(IntPtr cPointer, int dummy) :
         base(cPointer)
     {
--
     }
 
     ////////////////////////////////////////////////////////////
