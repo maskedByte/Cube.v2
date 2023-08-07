@@ -129,7 +129,10 @@ public struct Quaterniond : IEquatable<Quaterniond>
     public Vector4d ToAxisAngle()
     {
         var q = this;
-        if (System.Math.Abs(q.W) > 1.0d) q.Normalize();
+        if (System.Math.Abs(q.W) > 1.0d)
+        {
+            q.Normalize();
+        }
 
         var result = new Vector4d
         {
@@ -138,11 +141,15 @@ public struct Quaterniond : IEquatable<Quaterniond>
 
         var den = System.Math.Sqrt(1.0 - q.W * q.W);
         if (den > 0.0001d)
+        {
             result.Xyz = q.Xyz / den;
+        }
         else
             // This occurs when the angle is zero.
             // Not a problem: just set an arbitrary normalized axis.
+        {
             result.Xyz = Vector3d.UnitX;
+        }
 
         return result;
     }
@@ -473,7 +480,10 @@ public struct Quaterniond : IEquatable<Quaterniond>
     [Pure]
     public static Quaterniond FromAxisAngle(Vector3d axis, double angle)
     {
-        if (axis.LengthSquared == 0.0d) return Identity;
+        if (axis.LengthSquared == 0.0d)
+        {
+            return Identity;
+        }
 
         var result = Identity;
 
@@ -620,18 +630,26 @@ public struct Quaterniond : IEquatable<Quaterniond>
         // if either input is zero, return the other.
         if (q1.LengthSquared == 0.0d)
         {
-            if (q2.LengthSquared == 0.0d) return Identity;
+            if (q2.LengthSquared == 0.0d)
+            {
+                return Identity;
+            }
 
             return q2;
         }
 
-        if (q2.LengthSquared == 0.0d) return q1;
+        if (q2.LengthSquared == 0.0d)
+        {
+            return q1;
+        }
 
         var cosHalfAngle = q1.W * q2.W + Vector3d.Dot(q1.Xyz, q2.Xyz);
 
         if (cosHalfAngle >= 1.0d || cosHalfAngle <= -1.0d)
             // angle = 0.0d, so just return one input.
+        {
             return q1;
+        }
 
         if (cosHalfAngle < 0.0d)
         {
@@ -659,7 +677,10 @@ public struct Quaterniond : IEquatable<Quaterniond>
         }
 
         var result = new Quaterniond(blendA * q1.Xyz + blendB * q2.Xyz, blendA * q1.W + blendB * q2.W);
-        if (result.LengthSquared > 0.0d) return Normalize(result);
+        if (result.LengthSquared > 0.0d)
+        {
+            return Normalize(result);
+        }
 
         return Identity;
     }

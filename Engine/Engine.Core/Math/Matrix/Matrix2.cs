@@ -170,9 +170,15 @@ public struct Matrix2 : IEquatable<Matrix2>
     {
         get
         {
-            if (rowIndex == 0) return Row0[columnIndex];
+            if (rowIndex == 0)
+            {
+                return Row0[columnIndex];
+            }
 
-            if (rowIndex == 1) return Row1[columnIndex];
+            if (rowIndex == 1)
+            {
+                return Row1[columnIndex];
+            }
 
             throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
                                                columnIndex + ")");
@@ -181,12 +187,18 @@ public struct Matrix2 : IEquatable<Matrix2>
         set
         {
             if (rowIndex == 0)
+            {
                 Row0[columnIndex] = value;
+            }
             else if (rowIndex == 1)
+            {
                 Row1[columnIndex] = value;
+            }
             else
+            {
                 throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " +
                                                    columnIndex + ")");
+            }
         }
     }
 
@@ -439,7 +451,10 @@ public struct Matrix2 : IEquatable<Matrix2>
     {
         var det = mat.Row0.X * mat.Row1.Y - mat.Row0.Y * mat.Row1.X;
 
-        if (det == 0) throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+        if (det == 0)
+        {
+            throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+        }
 
         var invDet = 1f / det;
 

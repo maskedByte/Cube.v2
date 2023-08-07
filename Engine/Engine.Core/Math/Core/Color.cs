@@ -125,7 +125,10 @@ public sealed class Color : IEquatable<Color>
     /// <returns></returns>
     public bool Equals(Color? other)
     {
-        if (other != null) return false;
+        if (other != null)
+        {
+            return false;
+        }
 
         return
             R == other!.R &&
@@ -249,13 +252,25 @@ public sealed class Color : IEquatable<Color>
         var max = r;
         var min = r;
 
-        if (g > max) max = g;
+        if (g > max)
+        {
+            max = g;
+        }
 
-        if (b > max) max = b;
+        if (b > max)
+        {
+            max = b;
+        }
 
-        if (g < min) min = g;
+        if (g < min)
+        {
+            min = g;
+        }
 
-        if (b < min) min = b;
+        if (b < min)
+        {
+            min = b;
+        }
 
         return (max + min) / 2;
     }
@@ -267,7 +282,9 @@ public sealed class Color : IEquatable<Color>
     {
         if (R == G &&
             G == B)
+        {
             return 0; // 0 makes as good an UNDEFINED value as any
+        }
 
         var r = R / 255.0f;
         var g = G / 255.0f;
@@ -278,25 +295,47 @@ public sealed class Color : IEquatable<Color>
         var max = r;
         var min = r;
 
-        if (g > max) max = g;
+        if (g > max)
+        {
+            max = g;
+        }
 
-        if (b > max) max = b;
+        if (b > max)
+        {
+            max = b;
+        }
 
-        if (g < min) min = g;
+        if (g < min)
+        {
+            min = g;
+        }
 
-        if (b < min) min = b;
+        if (b < min)
+        {
+            min = b;
+        }
 
         var delta = max - min;
 
         if (r == max)
+        {
             hue = (g - b) / delta;
+        }
         else if (g == max)
+        {
             hue = 2 + (b - r) / delta;
-        else if (b == max) hue = 4 + (r - g) / delta;
+        }
+        else if (b == max)
+        {
+            hue = 4 + (r - g) / delta;
+        }
 
         hue *= 60;
 
-        if (hue < 0.0f) hue += 360.0f;
+        if (hue < 0.0f)
+        {
+            hue += 360.0f;
+        }
 
         return hue;
     }
@@ -315,25 +354,44 @@ public sealed class Color : IEquatable<Color>
         var max = r;
         var min = r;
 
-        if (g > max) max = g;
+        if (g > max)
+        {
+            max = g;
+        }
 
-        if (b > max) max = b;
+        if (b > max)
+        {
+            max = b;
+        }
 
-        if (g < min) min = g;
+        if (g < min)
+        {
+            min = g;
+        }
 
-        if (b < min) min = b;
+        if (b < min)
+        {
+            min = b;
+        }
 
         // if max == min, then there is no color and
         // the saturation is zero.
         //
-        if (max == min) return s;
+        if (max == min)
+        {
+            return s;
+        }
 
         var l = (max + min) / 2;
 
         if (l <= .5)
+        {
             s = (max - min) / (max + min);
+        }
         else
+        {
             s = (max - min) / (2 - max - min);
+        }
 
         return s;
     }
@@ -384,7 +442,10 @@ public sealed class Color : IEquatable<Color>
         }
 
         var split = text.Trim('<', '>').Split(',');
-        if (split.Length != 4) return Black;
+        if (split.Length != 4)
+        {
+            return Black;
+        }
 
         return new Color(
             byte.Parse(split[0]),

@@ -134,7 +134,10 @@ public static class EasingFunction
     {
         value /= .5f;
         end -= start;
-        if (value < 1) return end * 0.5f * value * value + start;
+        if (value < 1)
+        {
+            return end * 0.5f * value * value + start;
+        }
 
         value--;
         return -end * 0.5f * (value * (value - 2) - 1) + start;
@@ -157,7 +160,10 @@ public static class EasingFunction
     {
         value /= .5f;
         end -= start;
-        if (value < 1) return end * 0.5f * value * value * value + start;
+        if (value < 1)
+        {
+            return end * 0.5f * value * value * value + start;
+        }
 
         value -= 2;
         return end * 0.5f * (value * value * value + 2) + start;
@@ -180,7 +186,10 @@ public static class EasingFunction
     {
         value /= .5f;
         end -= start;
-        if (value < 1) return end * 0.5f * value * value * value * value + start;
+        if (value < 1)
+        {
+            return end * 0.5f * value * value * value * value + start;
+        }
 
         value -= 2;
         return -end * 0.5f * (value * value * value * value - 2) + start;
@@ -203,7 +212,10 @@ public static class EasingFunction
     {
         value /= .5f;
         end -= start;
-        if (value < 1) return end * 0.5f * value * value * value * value * value + start;
+        if (value < 1)
+        {
+            return end * 0.5f * value * value * value * value * value + start;
+        }
 
         value -= 2;
         return end * 0.5f * (value * value * value * value * value + 2) + start;
@@ -243,7 +255,10 @@ public static class EasingFunction
     {
         value /= .5f;
         end -= start;
-        if (value < 1) return end * 0.5f * Mathf.Pow(2, 10 * (value - 1)) + start;
+        if (value < 1)
+        {
+            return end * 0.5f * Mathf.Pow(2, 10 * (value - 1)) + start;
+        }
 
         value--;
         return end * 0.5f * (-Mathf.Pow(2, -10 * value) + 2) + start;
@@ -266,7 +281,10 @@ public static class EasingFunction
     {
         value /= .5f;
         end -= start;
-        if (value < 1) return -end * 0.5f * (Mathf.Sqrt(1 - value * value) - 1) + start;
+        if (value < 1)
+        {
+            return -end * 0.5f * (Mathf.Sqrt(1 - value * value) - 1) + start;
+        }
 
         value -= 2;
         return end * 0.5f * (Mathf.Sqrt(1 - value * value) + 1) + start;
@@ -283,7 +301,10 @@ public static class EasingFunction
     {
         value /= 1f;
         end -= start;
-        if (value < 1 / 2.75f) return end * (7.5625f * value * value) + start;
+        if (value < 1 / 2.75f)
+        {
+            return end * (7.5625f * value * value) + start;
+        }
 
         if (value < 2 / 2.75f)
         {
@@ -306,7 +327,10 @@ public static class EasingFunction
         end -= start;
         var d = 1f;
         if (value < d * 0.5f)
+        {
             return EaseInBounce(0, end, value * 2) * 0.5f + start;
+        }
+
         return EaseOutBounce(0, end, value * 2 - d) * 0.5f + end * 0.5f + start;
     }
 
@@ -351,9 +375,15 @@ public static class EasingFunction
         float s;
         float a = 0;
 
-        if (value == 0) return start;
+        if (value == 0)
+        {
+            return start;
+        }
 
-        if ((value /= d) == 1) return start + end;
+        if ((value /= d) == 1)
+        {
+            return start + end;
+        }
 
         if (a == 0f || a < Mathf.Abs(end))
         {
@@ -375,9 +405,15 @@ public static class EasingFunction
         var p = d * .3f;
         float s;
         float a = 0;
-        if (value == 0) return start;
+        if (value == 0)
+        {
+            return start;
+        }
 
-        if (Mathf.Abs((value /= d) - 1f) < 0.1f) return start + end;
+        if (Mathf.Abs((value /= d) - 1f) < 0.1f)
+        {
+            return start + end;
+        }
 
         if (a == 0f || a < Mathf.Abs(end))
         {
@@ -401,9 +437,15 @@ public static class EasingFunction
         float s;
         float a = 0;
 
-        if (value == 0) return start;
+        if (value == 0)
+        {
+            return start;
+        }
 
-        if ((value /= d * 0.5f) == 2) return start + end;
+        if ((value /= d * 0.5f) == 2)
+        {
+            return start + end;
+        }
 
         if (a == 0f || a < Mathf.Abs(end))
         {
@@ -416,9 +458,11 @@ public static class EasingFunction
         }
 
         if (value < 1)
+        {
             return -0.5f *
                    (a * Mathf.Pow(2, 10 * (value -= 1)) * Mathf.Sin((value * d - s) * (2 * Mathf.Pi) / p)) +
                    start;
+        }
 
         return a * Mathf.Pow(2, -10 * (value -= 1)) * Mathf.Sin((value * d - s) * (2 * Mathf.Pi) / p) * 0.5f +
                end + start;
@@ -454,7 +498,10 @@ public static class EasingFunction
         value /= .5f;
         end -= start;
 
-        if (value < 1) return end * value;
+        if (value < 1)
+        {
+            return end * value;
+        }
 
         value--;
 
@@ -478,7 +525,10 @@ public static class EasingFunction
         value /= .5f;
         end -= start;
 
-        if (value < 1) return 3f / 2f * end * value * value;
+        if (value < 1)
+        {
+            return 3f / 2f * end * value * value;
+        }
 
         value -= 2;
 
@@ -502,7 +552,10 @@ public static class EasingFunction
         value /= .5f;
         end -= start;
 
-        if (value < 1) return 2f * end * value * value * value;
+        if (value < 1)
+        {
+            return 2f * end * value * value * value;
+        }
 
         value -= 2;
 
@@ -526,7 +579,10 @@ public static class EasingFunction
         value /= .5f;
         end -= start;
 
-        if (value < 1) return 5f / 2f * end * value * value * value * value;
+        if (value < 1)
+        {
+            return 5f / 2f * end * value * value * value * value;
+        }
 
         value -= 2;
 
@@ -566,7 +622,10 @@ public static class EasingFunction
         value /= .5f;
         end -= start;
 
-        if (value < 1) return 5f * NaturalLogOf2 * end * Mathf.Pow(2f, 10f * (value - 1));
+        if (value < 1)
+        {
+            return 5f * NaturalLogOf2 * end * Mathf.Pow(2f, 10f * (value - 1));
+        }
 
         value--;
         return 5f * NaturalLogOf2 * end / Mathf.Pow(2f, 10f * value);
@@ -588,7 +647,10 @@ public static class EasingFunction
     {
         value /= .5f;
         end -= start;
-        if (value < 1) return end * value / (2f * Mathf.Sqrt(1f - value * value));
+        if (value < 1)
+        {
+            return end * value / (2f * Mathf.Sqrt(1f - value * value));
+        }
 
         value -= 2;
 
@@ -608,7 +670,10 @@ public static class EasingFunction
         value /= 1f;
         end -= start;
 
-        if (value < 1 / 2.75f) return 2f * end * 7.5625f * value;
+        if (value < 1 / 2.75f)
+        {
+            return 2f * end * 7.5625f * value;
+        }
 
         if (value < 2 / 2.75f)
         {
@@ -632,7 +697,10 @@ public static class EasingFunction
         var d = 1f;
 
         if (value < d * 0.5f)
+        {
             return EaseInBounceD(0, end, value * 2) * 0.5f;
+        }
+
         return EaseOutBounceD(0, end, value * 2 - d) * 0.5f;
     }
 

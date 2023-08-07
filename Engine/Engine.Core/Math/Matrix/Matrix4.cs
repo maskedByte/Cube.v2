@@ -397,13 +397,25 @@ public struct Matrix4 : IEquatable<Matrix4>
     {
         get
         {
-            if (rowIndex == 0) return Row0[columnIndex];
+            if (rowIndex == 0)
+            {
+                return Row0[columnIndex];
+            }
 
-            if (rowIndex == 1) return Row1[columnIndex];
+            if (rowIndex == 1)
+            {
+                return Row1[columnIndex];
+            }
 
-            if (rowIndex == 2) return Row2[columnIndex];
+            if (rowIndex == 2)
+            {
+                return Row2[columnIndex];
+            }
 
-            if (rowIndex == 3) return Row3[columnIndex];
+            if (rowIndex == 3)
+            {
+                return Row3[columnIndex];
+            }
 
             throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
                                                columnIndex + ")");
@@ -412,16 +424,26 @@ public struct Matrix4 : IEquatable<Matrix4>
         set
         {
             if (rowIndex == 0)
+            {
                 Row0[columnIndex] = value;
+            }
             else if (rowIndex == 1)
+            {
                 Row1[columnIndex] = value;
+            }
             else if (rowIndex == 2)
+            {
                 Row2[columnIndex] = value;
+            }
             else if (rowIndex == 3)
+            {
                 Row3[columnIndex] = value;
+            }
             else
+            {
                 throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " +
                                                    columnIndex + ")");
+            }
         }
     }
 
@@ -471,7 +493,10 @@ public struct Matrix4 : IEquatable<Matrix4>
     public Matrix4 Inverted()
     {
         var m = this;
-        if (m.Determinant != 0) m.Invert();
+        if (m.Determinant != 0)
+        {
+            m.Invert();
+        }
 
         return m;
     }
@@ -1075,13 +1100,25 @@ public struct Matrix4 : IEquatable<Matrix4>
         out Matrix4 result
     )
     {
-        if (fovy <= 0 || fovy > Mathf.Pi) throw new ArgumentOutOfRangeException(nameof(fovy));
+        if (fovy <= 0 || fovy > Mathf.Pi)
+        {
+            throw new ArgumentOutOfRangeException(nameof(fovy));
+        }
 
-        if (aspect <= 0) throw new ArgumentOutOfRangeException(nameof(aspect));
+        if (aspect <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(aspect));
+        }
 
-        if (depthNear <= 0) throw new ArgumentOutOfRangeException(nameof(depthNear));
+        if (depthNear <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(depthNear));
+        }
 
-        if (depthFar <= 0) throw new ArgumentOutOfRangeException(nameof(depthFar));
+        if (depthFar <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(depthFar));
+        }
 
         var maxY = depthNear * MathF.Tan(0.5f * fovy);
         var minY = -maxY;
@@ -1145,11 +1182,20 @@ public struct Matrix4 : IEquatable<Matrix4>
         out Matrix4 result
     )
     {
-        if (depthNear <= 0) throw new ArgumentOutOfRangeException(nameof(depthNear));
+        if (depthNear <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(depthNear));
+        }
 
-        if (depthFar <= 0) throw new ArgumentOutOfRangeException(nameof(depthFar));
+        if (depthFar <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(depthFar));
+        }
 
-        if (depthNear >= depthFar) throw new ArgumentOutOfRangeException(nameof(depthNear));
+        if (depthNear >= depthFar)
+        {
+            throw new ArgumentOutOfRangeException(nameof(depthNear));
+        }
 
         var x = 2.0f * depthNear / (right - left);
         var y = 2.0f * depthNear / (top - bottom);
@@ -1347,7 +1393,10 @@ public struct Matrix4 : IEquatable<Matrix4>
     [Pure]
     public static Matrix4 CreatePerspectiveFov(float fov, float width, float height, float zNear, float zFar)
     {
-        if (width <= 0 || height <= 0 || fov <= 0) throw new ArgumentOutOfRangeException();
+        if (width <= 0 || height <= 0 || fov <= 0)
+        {
+            throw new ArgumentOutOfRangeException();
+        }
 
         var rad = fov;
 
@@ -1526,9 +1575,13 @@ public struct Matrix4 : IEquatable<Matrix4>
     {
 #if NETCOREAPP3_1_OR_GREATER
         if (Sse3.IsSupported)
+        {
             InvertSse3(in mat, out result);
+        }
         else
+        {
             InvertFallback(in mat, out result);
+        }
 #else
             InvertFallback(in mat, out result);
 #endif
@@ -1706,7 +1759,9 @@ public struct Matrix4 : IEquatable<Matrix4>
         detM = Sse.Subtract(detM, tr);
 
         if (MathF.Abs(detM.GetElement(0)) < float.Epsilon)
+        {
             throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+        }
 
         // const __m128 adjSignMask = _mm_setr_ps(1.f, -1.f, -1.f, 1.f);
         var adjSignMask = Vector128.Create(1.0f, -1.0f, -1.0f, 1.0f);
@@ -1772,7 +1827,9 @@ public struct Matrix4 : IEquatable<Matrix4>
         var det = a * a11 + b * a12 + c * a13 + d * a14;
 
         if (MathF.Abs(det) < float.Epsilon)
+        {
             throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+        }
 
         var invDet = 1.0f / det;
 

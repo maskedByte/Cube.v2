@@ -92,6 +92,7 @@ csharp_space_between_square_brackets = false
 # ReSharper properties
 resharper_accessor_owner_body = accessors_with_block_body
 resharper_autodetect_indent_settings = true
+resharper_braces_for_ifelse = required
 resharper_csharp_naming_rule.method = AaBb, AaBb_AaBb
 resharper_csharp_naming_rule.private_instance_fields = _ + aaBb_aaBb
 resharper_keep_user_linebreaks = true

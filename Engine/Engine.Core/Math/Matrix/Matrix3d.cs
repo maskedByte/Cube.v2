@@ -241,11 +241,20 @@ public struct Matrix3d : IEquatable<Matrix3d>
     {
         get
         {
-            if (rowIndex == 0) return Row0[columnIndex];
+            if (rowIndex == 0)
+            {
+                return Row0[columnIndex];
+            }
 
-            if (rowIndex == 1) return Row1[columnIndex];
+            if (rowIndex == 1)
+            {
+                return Row1[columnIndex];
+            }
 
-            if (rowIndex == 2) return Row2[columnIndex];
+            if (rowIndex == 2)
+            {
+                return Row2[columnIndex];
+            }
 
             throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
                                                columnIndex + ")");
@@ -254,14 +263,22 @@ public struct Matrix3d : IEquatable<Matrix3d>
         set
         {
             if (rowIndex == 0)
+            {
                 Row0[columnIndex] = value;
+            }
             else if (rowIndex == 1)
+            {
                 Row1[columnIndex] = value;
+            }
             else if (rowIndex == 2)
+            {
                 Row2[columnIndex] = value;
+            }
             else
+            {
                 throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " +
                                                    columnIndex + ")");
+            }
         }
     }
 
@@ -310,7 +327,10 @@ public struct Matrix3d : IEquatable<Matrix3d>
     public Matrix3d Inverted()
     {
         var m = this;
-        if (m.Determinant != 0) m.Invert();
+        if (m.Determinant != 0)
+        {
+            m.Invert();
+        }
 
         return m;
     }
@@ -791,7 +811,10 @@ public struct Matrix3d : IEquatable<Matrix3d>
         // Compute determinant:
         var det = row0X * invRow0X + row0Y * invRow1X + row0Z * invRow2X;
 
-        if (det == 0f) throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+        if (det == 0f)
+        {
+            throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+        }
 
         // Compute adjoint:
         result.Row0.X = invRow0X;

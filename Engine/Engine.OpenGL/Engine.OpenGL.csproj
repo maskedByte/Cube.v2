@@ -12,7 +12,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Driver\" />
         <Folder Include="Vendor\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Engine.Core\Engine.Core.csproj"/>
     </ItemGroup>
 </Project>

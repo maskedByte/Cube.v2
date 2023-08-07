@@ -172,13 +172,25 @@ public struct Vector4d : IEquatable<Vector4d>
     {
         get
         {
-            if (index == 0) return X;
+            if (index == 0)
+            {
+                return X;
+            }
 
-            if (index == 1) return Y;
+            if (index == 1)
+            {
+                return Y;
+            }
 
-            if (index == 2) return Z;
+            if (index == 2)
+            {
+                return Z;
+            }
 
-            if (index == 3) return W;
+            if (index == 3)
+            {
+                return W;
+            }
 
             throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
         }
@@ -186,15 +198,25 @@ public struct Vector4d : IEquatable<Vector4d>
         set
         {
             if (index == 0)
+            {
                 X = value;
+            }
             else if (index == 1)
+            {
                 Y = value;
+            }
             else if (index == 2)
+            {
                 Z = value;
+            }
             else if (index == 3)
+            {
                 W = value;
+            }
             else
+            {
                 throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
+            }
         }
     }
 

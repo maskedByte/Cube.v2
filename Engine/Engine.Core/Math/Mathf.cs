@@ -106,7 +106,10 @@ public struct Mathf
 
     public static float ACos2(float x)
     {
-        if (x < 1f) return 0f;
+        if (x < 1f)
+        {
+            return 0f;
+        }
 
         return (float)System.Math.Log(x + System.Math.Sqrt(x * x - 1f));
     }
@@ -149,7 +152,10 @@ public struct Mathf
 
     public static float ATan2(float x)
     {
-        if (System.Math.Abs(x) >= 1f) return 0;
+        if (System.Math.Abs(x) >= 1f)
+        {
+            return 0;
+        }
 
         return 0.5f * (float)System.Math.Log((1f + x) / (1f - x));
     }
@@ -280,12 +286,17 @@ public struct Mathf
     public static float Min(params float[] values)
     {
         var len = values.Length;
-        if (len == 0) return 0;
+        if (len == 0)
+        {
+            return 0;
+        }
 
         var m = values[0];
         for (var i = 1; i < len; i++)
             if (values[i] < m)
+            {
                 m = values[i];
+            }
 
         return m;
     }
@@ -300,12 +311,17 @@ public struct Mathf
     public static int Min(params int[] values)
     {
         var len = values.Length;
-        if (len == 0) return 0;
+        if (len == 0)
+        {
+            return 0;
+        }
 
         var m = values[0];
         for (var i = 1; i < len; i++)
             if (values[i] < m)
+            {
                 m = values[i];
+            }
 
         return m;
     }
@@ -326,12 +342,17 @@ public struct Mathf
     public static float Max(params float[] values)
     {
         var len = values.Length;
-        if (len == 0) return 0;
+        if (len == 0)
+        {
+            return 0;
+        }
 
         var m = values[0];
         for (var i = 1; i < len; i++)
             if (values[i] > m)
+            {
                 m = values[i];
+            }
 
         return m;
     }
@@ -346,12 +367,17 @@ public struct Mathf
     public static int Max(params int[] values)
     {
         var len = values.Length;
-        if (len == 0) return 0;
+        if (len == 0)
+        {
+            return 0;
+        }
 
         var m = values[0];
         for (var i = 1; i < len; i++)
             if (values[i] > m)
+            {
                 m = values[i];
+            }
 
         return m;
     }
@@ -526,8 +552,13 @@ public struct Mathf
     public static float Clamp(float value, float min, float max)
     {
         if (value < min)
+        {
             value = min;
-        else if (value > max) value = max;
+        }
+        else if (value > max)
+        {
+            value = max;
+        }
 
         return value;
     }
@@ -539,8 +570,13 @@ public struct Mathf
     public static double Clamp(double value, double min, double max)
     {
         if (value < min)
+        {
             value = min;
-        else if (value > max) value = max;
+        }
+        else if (value > max)
+        {
+            value = max;
+        }
 
         return value;
     }
@@ -549,8 +585,13 @@ public struct Mathf
     public static int Clamp(int value, int min, int max)
     {
         if (value < min)
+        {
             value = min;
-        else if (value > max) value = max;
+        }
+        else if (value > max)
+        {
+            value = max;
+        }
 
         return value;
     }
@@ -588,7 +629,10 @@ public struct Mathf
     public static float LerpAngle(float a, float b, float t)
     {
         var delta = Repeat(b - a, 360);
-        if (delta > 180) delta -= 360;
+        if (delta > 180)
+        {
+            delta -= 360;
+        }
 
         return (float)(a + delta * Clamp01(t));
     }
@@ -596,7 +640,10 @@ public struct Mathf
     // Moves a value /current/ towards /target/.
     public static float MoveTowards(float current, float target, float maxDelta)
     {
-        if (Abs(target - current) <= maxDelta) return target;
+        if (Abs(target - current) <= maxDelta)
+        {
+            return target;
+        }
 
         return current + Sign(target - current) * maxDelta;
     }
@@ -605,7 +652,10 @@ public struct Mathf
     public static float MoveTowardsAngle(float current, float target, float maxDelta)
     {
         var deltaAngle = DeltaAngle(current, target);
-        if (-maxDelta < deltaAngle && deltaAngle < maxDelta) return target;
+        if (-maxDelta < deltaAngle && deltaAngle < maxDelta)
+        {
+            return target;
+        }
 
         target = current + deltaAngle;
         return MoveTowards(current, target, maxDelta);
@@ -623,7 +673,10 @@ public struct Mathf
     {
         var negative = value < 0F;
         var abs = Abs(value);
-        if (abs > absMax) return negative ? -abs : abs;
+        if (abs > absMax)
+        {
+            return negative ? -abs : abs;
+        }
 
         var result = Pow(abs / absMax, gamma) * absMax;
         return negative ? -result : result;
@@ -665,7 +718,10 @@ public struct Mathf
         var output = target + (change + temp) * exp;
 
         // Prevent overshooting
-        if (originalTo - current > 0.0F != output > originalTo) return output;
+        if (originalTo - current > 0.0F != output > originalTo)
+        {
+            return output;
+        }
 
         output = originalTo;
         currentVelocity = (output - originalTo) / deltaTime;
@@ -704,7 +760,10 @@ public struct Mathf
     public static float DeltaAngle(float current, float target)
     {
         var delta = Repeat(target - current, 360.0F);
-        if (delta > 180.0F) delta -= 360.0F;
+        if (delta > 180.0F)
+        {
+            delta -= 360.0F;
+        }
 
         return delta;
     }
@@ -869,7 +928,9 @@ public struct Mathf
 
         if (angle > 180f)
             // shift angle to range (-180, 180]
+        {
             angle -= 360f;
+        }
 
         return angle;
     }
@@ -886,7 +947,9 @@ public struct Mathf
 
         if (angle > 180f)
             // shift angle to range (-180, 180]
+        {
             angle -= 360f;
+        }
 
         return angle;
     }
@@ -903,7 +966,9 @@ public struct Mathf
 
         if (angle > Pi)
             // shift angle to range (-π, π]
+        {
             angle -= 2 * Pi;
+        }
 
         return angle;
     }
@@ -920,7 +985,9 @@ public struct Mathf
 
         if (angle > Pi)
             // shift angle to range (-π, π]
+        {
             angle -= 2 * Pi;
+        }
 
         return angle;
     }
@@ -937,7 +1004,9 @@ public struct Mathf
 
         if (angle < 0.0f)
             // shift angle to the range [0, 360)
+        {
             angle += 360f;
+        }
 
         return angle;
     }
@@ -954,7 +1023,9 @@ public struct Mathf
 
         if (angle < 0.0d)
             // shift angle to the range [0, 360)
+        {
             angle += 360d;
+        }
 
         return angle;
     }
@@ -971,7 +1042,9 @@ public struct Mathf
 
         if (angle < 0.0f)
             // shift angle to the range [0,2π)
+        {
             angle += TwoPi;
+        }
 
         return angle;
     }
@@ -989,7 +1062,9 @@ public struct Mathf
 
         if (angle < 0.0d)
             // shift angle to the range [0,2π)
+        {
             angle += 2d * System.Math.PI;
+        }
 
         return angle;
     }
@@ -1009,10 +1084,16 @@ public struct Mathf
     {
         // we use longs here, otherwise we run into a two's complement problem, causing this to fail with -2 and 2.0
         long k = BitConverter.SingleToInt32Bits(a);
-        if (k < 0) k = int.MinValue - k;
+        if (k < 0)
+        {
+            k = int.MinValue - k;
+        }
 
         long l = BitConverter.SingleToInt32Bits(b);
-        if (l < 0) l = int.MinValue - l;
+        if (l < 0)
+        {
+            l = int.MinValue - l;
+        }
 
         var intDiff = System.Math.Abs(k - l);
         return intDiff <= 1 << maxDeltaBits;
@@ -1042,12 +1123,16 @@ public struct Mathf
 
         if (a == b)
             // Shortcut, handles infinities
+        {
             return true;
+        }
 
         if (a == 0.0f || b == 0.0f || diff < doubleNormal)
             // a or b is zero, or both are extremely close to it.
             // relative error is less meaningful here
+        {
             return diff < error * doubleNormal;
+        }
 
         // use relative error
         return diff / System.Math.Min(absA + absB, double.MaxValue) < error;
@@ -1077,12 +1162,16 @@ public struct Mathf
 
         if (a == b)
             // Shortcut, handles infinities
+        {
             return true;
+        }
 
         if (a == 0.0f || b == 0.0f || diff < floatNormal)
             // a or b is zero, or both are extremely close to it.
             // relative error is less meaningful here
+        {
             return diff < error * floatNormal;
+        }
 
         // use relative error
         var relativeError = diff / System.Math.Min(absA + absB, float.MaxValue);
@@ -1105,7 +1194,9 @@ public struct Mathf
     {
         if (a == b)
             // Early bailout, handles infinities
+        {
             return true;
+        }
 
         var diff = System.Math.Abs(a - b);
         return diff <= tolerance;
@@ -1127,7 +1218,9 @@ public struct Mathf
     {
         if (a == b)
             // Early bailout, handles infinities
+        {
             return true;
+        }
 
         var diff = System.Math.Abs(a - b);
         return diff <= tolerance;

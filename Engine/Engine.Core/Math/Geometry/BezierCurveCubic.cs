@@ -104,14 +104,21 @@ public struct BezierCurveCubic
 
         var r = new Vector2(x, y);
 
-        if (Parallel == 0.0f) return r;
+        if (Parallel == 0.0f)
+        {
+            return r;
+        }
 
         Vector2 perpendicular;
 
         if (t == 0.0f)
+        {
             perpendicular = FirstControlPoint - StartAnchor;
+        }
         else
+        {
             perpendicular = r - CalculatePointOfDerivative(t);
+        }
 
         return r + Vector2.Normalize(perpendicular).PerpendicularRight * Parallel;
     }

@@ -58,7 +58,10 @@ public sealed class HslColor
         double g;
         double b;
 
-        if (hslColor._luminosity == 0) return Color.Black;
+        if (hslColor._luminosity == 0)
+        {
+            return Color.Black;
+        }
 
         if (hslColor._saturation == 0)
         {
@@ -155,9 +158,13 @@ public sealed class HslColor
     {
         double temp2;
         if (hslColor._luminosity < 0.5)
+        {
             temp2 = hslColor._luminosity * (1.0 + hslColor._saturation);
+        }
         else
+        {
             temp2 = hslColor._luminosity + hslColor._saturation - hslColor._luminosity * hslColor._saturation;
+        }
 
         return temp2;
     }

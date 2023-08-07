@@ -52,7 +52,10 @@ public readonly struct Vertex
         result[2] = Position.Z;
         result[3] = Position.W;
 
-        if (Color == null) return result;
+        if (Color == null)
+        {
+            return result;
+        }
 
         var color = Color!.ToVector4();
         result[4] = color.X;

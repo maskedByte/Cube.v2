@@ -38,7 +38,9 @@ public struct BezierCurve
     public BezierCurve(IEnumerable<Vector2> points)
     {
         if (points == null)
+        {
             throw new ArgumentNullException(nameof(points), "Must point to a valid list of Vector2 structures.");
+        }
 
         _points = new List<Vector2>(points);
         Parallel = 0.0f;
@@ -51,7 +53,9 @@ public struct BezierCurve
     public BezierCurve(params Vector2[] points)
     {
         if (points == null)
+        {
             throw new ArgumentNullException(nameof(points), "Must point to a valid list of Vector2 structures.");
+        }
 
         _points = new List<Vector2>(points);
         Parallel = 0.0f;
@@ -65,7 +69,9 @@ public struct BezierCurve
     public BezierCurve(float parallel, params Vector2[] points)
     {
         if (points == null)
+        {
             throw new ArgumentNullException(nameof(points), "Must point to a valid list of Vector2 structures.");
+        }
 
         Parallel = parallel;
         _points = new List<Vector2>(points);
@@ -79,7 +85,9 @@ public struct BezierCurve
     public BezierCurve(float parallel, IEnumerable<Vector2> points)
     {
         if (points == null)
+        {
             throw new ArgumentNullException(nameof(points), "Must point to a valid list of Vector2 structures.");
+        }
 
         Parallel = parallel;
         _points = new List<Vector2>(points);
@@ -206,14 +214,21 @@ public struct BezierCurve
             i++;
         }
 
-        if (parallel == 0.0f) return r;
+        if (parallel == 0.0f)
+        {
+            return r;
+        }
 
         Vector2 perpendicular;
 
         if (t != 0.0f)
+        {
             perpendicular = r - CalculatePointOfDerivative(points, t);
+        }
         else
+        {
             perpendicular = points[1] - points[0];
+        }
 
         return r + Vector2.Normalize(perpendicular).PerpendicularRight * parallel;
     }

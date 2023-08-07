@@ -372,13 +372,25 @@ public struct Matrix4d : IEquatable<Matrix4d>
     {
         get
         {
-            if (rowIndex == 0) return Row0[columnIndex];
+            if (rowIndex == 0)
+            {
+                return Row0[columnIndex];
+            }
 
-            if (rowIndex == 1) return Row1[columnIndex];
+            if (rowIndex == 1)
+            {
+                return Row1[columnIndex];
+            }
 
-            if (rowIndex == 2) return Row2[columnIndex];
+            if (rowIndex == 2)
+            {
+                return Row2[columnIndex];
+            }
 
-            if (rowIndex == 3) return Row3[columnIndex];
+            if (rowIndex == 3)
+            {
+                return Row3[columnIndex];
+            }
 
             throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
                                                columnIndex + ")");
@@ -387,16 +399,26 @@ public struct Matrix4d : IEquatable<Matrix4d>
         set
         {
             if (rowIndex == 0)
+            {
                 Row0[columnIndex] = value;
+            }
             else if (rowIndex == 1)
+            {
                 Row1[columnIndex] = value;
+            }
             else if (rowIndex == 2)
+            {
                 Row2[columnIndex] = value;
+            }
             else if (rowIndex == 3)
+            {
                 Row3[columnIndex] = value;
+            }
             else
+            {
                 throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " +
                                                    columnIndex + ")");
+            }
         }
     }
 
@@ -446,7 +468,10 @@ public struct Matrix4d : IEquatable<Matrix4d>
     public Matrix4d Inverted()
     {
         var m = this;
-        if (m.Determinant != 0) m.Invert();
+        if (m.Determinant != 0)
+        {
+            m.Invert();
+        }
 
         return m;
     }
@@ -915,13 +940,25 @@ public struct Matrix4d : IEquatable<Matrix4d>
         out Matrix4d result
     )
     {
-        if (fovy <= 0 || fovy > System.Math.PI) throw new ArgumentOutOfRangeException(nameof(fovy));
+        if (fovy <= 0 || fovy > System.Math.PI)
+        {
+            throw new ArgumentOutOfRangeException(nameof(fovy));
+        }
 
-        if (aspect <= 0) throw new ArgumentOutOfRangeException(nameof(aspect));
+        if (aspect <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(aspect));
+        }
 
-        if (depthNear <= 0) throw new ArgumentOutOfRangeException(nameof(depthNear));
+        if (depthNear <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(depthNear));
+        }
 
-        if (depthFar <= 0) throw new ArgumentOutOfRangeException(nameof(depthFar));
+        if (depthFar <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(depthFar));
+        }
 
         var maxY = depthNear * System.Math.Tan(0.5 * fovy);
         var minY = -maxY;
@@ -985,11 +1022,20 @@ public struct Matrix4d : IEquatable<Matrix4d>
         out Matrix4d result
     )
     {
-        if (depthNear <= 0) throw new ArgumentOutOfRangeException(nameof(depthNear));
+        if (depthNear <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(depthNear));
+        }
 
-        if (depthFar <= 0) throw new ArgumentOutOfRangeException(nameof(depthFar));
+        if (depthFar <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(depthFar));
+        }
 
-        if (depthNear >= depthFar) throw new ArgumentOutOfRangeException(nameof(depthNear));
+        if (depthNear >= depthFar)
+        {
+            throw new ArgumentOutOfRangeException(nameof(depthNear));
+        }
 
         var x = 2.0 * depthNear / (right - left);
         var y = 2.0 * depthNear / (top - bottom);
@@ -1549,7 +1595,9 @@ public struct Matrix4d : IEquatable<Matrix4d>
         var det = a * a11 + b * a12 + c * a13 + d * a14;
 
         if (System.Math.Abs(det) < double.Epsilon)
+        {
             throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+        }
 
         var invDet = 1.0f / det;
 

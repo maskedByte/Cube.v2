@@ -56,9 +56,15 @@ public struct Vector2 : IEquatable<Vector2>
     {
         get
         {
-            if (index == 0) return X;
+            if (index == 0)
+            {
+                return X;
+            }
 
-            if (index == 1) return Y;
+            if (index == 1)
+            {
+                return Y;
+            }
 
             throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
         }
@@ -66,11 +72,17 @@ public struct Vector2 : IEquatable<Vector2>
         set
         {
             if (index == 0)
+            {
                 X = value;
+            }
             else if (index == 1)
+            {
                 Y = value;
+            }
             else
+            {
                 throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
+            }
         }
     }
 

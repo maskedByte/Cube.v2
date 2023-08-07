@@ -22,9 +22,20 @@ public struct AAB3 : IEquatable<AAB3>
         get { return _min; }
         set
         {
-            if (value.X > _max.X) _max.X = value.X;
-            if (value.Y > _max.Y) _max.Y = value.Y;
-            if (value.Z > _max.Z) _max.Z = value.Z;
+            if (value.X > _max.X)
+            {
+                _max.X = value.X;
+            }
+
+            if (value.Y > _max.Y)
+            {
+                _max.Y = value.Y;
+            }
+
+            if (value.Z > _max.Z)
+            {
+                _max.Z = value.Z;
+            }
 
             _min = value;
         }
@@ -40,9 +51,20 @@ public struct AAB3 : IEquatable<AAB3>
         get { return _max; }
         set
         {
-            if (value.X < _min.X) _min.X = value.X;
-            if (value.Y < _min.Y) _min.Y = value.Y;
-            if (value.Z < _min.Z) _min.Z = value.Z;
+            if (value.X < _min.X)
+            {
+                _min.X = value.X;
+            }
+
+            if (value.Y < _min.Y)
+            {
+                _min.Y = value.Y;
+            }
+
+            if (value.Z < _min.Z)
+            {
+                _min.Z = value.Z;
+            }
 
             _max = value;
         }

@@ -237,13 +237,18 @@ public sealed class Transform
 
     private void CalculateMatrix()
     {
-        if (!_dirty && Parent == null) return;
+        if (!_dirty && Parent == null)
+        {
+            return;
+        }
 
         _modelMatrix = Matrix4.Identity;
 
         if (Parent != null)
             // World transformation
+        {
             _modelMatrix *= Parent.Transformation;
+        }
 
         _modelMatrix = _scaleMatrix *
                        _originMatrix.Inverted() *

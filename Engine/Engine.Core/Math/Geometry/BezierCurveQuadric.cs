@@ -79,14 +79,21 @@ public struct BezierCurveQuadric
             c * c * StartAnchor.Y + 2 * t * c * ControlPoint.Y + t * t * EndAnchor.Y
         );
 
-        if (Parallel == 0.0f) return r;
+        if (Parallel == 0.0f)
+        {
+            return r;
+        }
 
         Vector2 perpendicular;
 
         if (t == 0.0f)
+        {
             perpendicular = ControlPoint - StartAnchor;
+        }
         else
+        {
             perpendicular = r - CalculatePointOfDerivative(t);
+        }
 
         return r + Vector2.Normalize(perpendicular).PerpendicularRight * Parallel;
     }

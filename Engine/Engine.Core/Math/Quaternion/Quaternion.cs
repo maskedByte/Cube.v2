@@ -133,7 +133,10 @@ public struct Quaternion : IEquatable<Quaternion>
     public Vector4 ToAxisAngle()
     {
         var q = this;
-        if (System.Math.Abs(q.W) > 1.0f) q.Normalize();
+        if (System.Math.Abs(q.W) > 1.0f)
+        {
+            q.Normalize();
+        }
 
         var result = new Vector4
         {
@@ -142,11 +145,15 @@ public struct Quaternion : IEquatable<Quaternion>
 
         var den = MathF.Sqrt(1.0f - q.W * q.W);
         if (den > 0.0001f)
+        {
             result.Xyz = q.Xyz / den;
+        }
         else
             // This occurs when the angle is zero.
             // Not a problem: just set an arbitrary normalized axis.
+        {
             result.Xyz = Vector3.UnitX;
+        }
 
         return result;
     }
@@ -477,7 +484,10 @@ public struct Quaternion : IEquatable<Quaternion>
     [Pure]
     public static Quaternion FromAxisAngle(Vector3 axis, float angle)
     {
-        if (axis.LengthSquared == 0.0f) return Identity;
+        if (axis.LengthSquared == 0.0f)
+        {
+            return Identity;
+        }
 
         var result = Identity;
 
@@ -630,18 +640,26 @@ public struct Quaternion : IEquatable<Quaternion>
         // if either input is zero, return the other.
         if (q1.LengthSquared == 0.0f)
         {
-            if (q2.LengthSquared == 0.0f) return Identity;
+            if (q2.LengthSquared == 0.0f)
+            {
+                return Identity;
+            }
 
             return q2;
         }
 
-        if (q2.LengthSquared == 0.0f) return q1;
+        if (q2.LengthSquared == 0.0f)
+        {
+            return q1;
+        }
 
         var cosHalfAngle = q1.W * q2.W + Vector3.Dot(q1.Xyz, q2.Xyz);
 
         if (cosHalfAngle >= 1.0f || cosHalfAngle <= -1.0f)
             // angle = 0.0f, so just return one input.
+        {
             return q1;
+        }
 
         if (cosHalfAngle < 0.0f)
         {
@@ -669,7 +687,10 @@ public struct Quaternion : IEquatable<Quaternion>
         }
 
         var result = new Quaternion(blendA * q1.Xyz + blendB * q2.Xyz, blendA * q1.W + blendB * q2.W);
-        if (result.LengthSquared > 0.0f) return Normalize(result);
+        if (result.LengthSquared > 0.0f)
+        {
+            return Normalize(result);
+        }
 
         return Identity;
     }
