@@ -16,5 +16,7 @@ public class TestApp
             driver.HandleEvents();
             driver.Swap();
         }
+
+        driver.Close();
     }
 }
