@@ -9,7 +9,7 @@ namespace Engine.OpenGL.Vendor.SFML.Window;
 /// Give access to the real-time state of the mouse
 /// </summary>
 ////////////////////////////////////////////////////////////
-public static class Mouse
+internal static class Mouse
 {
     ////////////////////////////////////////////////////////////
     /// <summary>

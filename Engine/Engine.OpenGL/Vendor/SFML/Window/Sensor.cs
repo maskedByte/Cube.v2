@@ -9,7 +9,7 @@ namespace Engine.OpenGL.Vendor.SFML.Window;
 /// Give access to the real-time state of sensors
 /// </summary>
 ////////////////////////////////////////////////////////////
-public static class Sensor
+internal static class Sensor
 {
     ////////////////////////////////////////////////////////////
     /// <summary>

@@ -8,7 +8,7 @@ namespace Engine.OpenGL.Vendor.SFML.Window;
 /// <summary>
 /// Cursor defines the appearance of a system cursor.
 /// </summary>
-public class Cursor : ObjectBase
+internal class Cursor : ObjectBase
 {
     /// <summary>
     /// Enumeration of possibly available native system cursor types

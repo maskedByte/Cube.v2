@@ -5,7 +5,7 @@ namespace Engine.OpenGL.Vendor.SFML.Window;
 /// Keyboard event parameters
 /// </summary>
 ////////////////////////////////////////////////////////////
-public class KeyEventArgs : EventArgs
+internal class KeyEventArgs : EventArgs
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -59,7 +59,7 @@ public class KeyEventArgs : EventArgs
 /// Text event parameters
 /// </summary>
 ////////////////////////////////////////////////////////////
-public class TextEventArgs : EventArgs
+internal class TextEventArgs : EventArgs
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -93,7 +93,7 @@ public class TextEventArgs : EventArgs
 /// Mouse move event parameters
 /// </summary>
 ////////////////////////////////////////////////////////////
-public class MouseMoveEventArgs : EventArgs
+internal class MouseMoveEventArgs : EventArgs
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -132,7 +132,7 @@ public class MouseMoveEventArgs : EventArgs
 /// Mouse buttons event parameters
 /// </summary>
 ////////////////////////////////////////////////////////////
-public class MouseButtonEventArgs : EventArgs
+internal class MouseButtonEventArgs : EventArgs
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -177,7 +177,7 @@ public class MouseButtonEventArgs : EventArgs
 /// </summary>
 ////////////////////////////////////////////////////////////
 [Obsolete("MouseWheelEventArgs is deprecated, please use MouseWheelScrollEventArgs instead")]
-public class MouseWheelEventArgs : EventArgs
+internal class MouseWheelEventArgs : EventArgs
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -221,7 +221,7 @@ public class MouseWheelEventArgs : EventArgs
 /// Mouse wheel scroll event parameters
 /// </summary>
 ////////////////////////////////////////////////////////////
-public class MouseWheelScrollEventArgs : EventArgs
+internal class MouseWheelScrollEventArgs : EventArgs
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -270,7 +270,7 @@ public class MouseWheelScrollEventArgs : EventArgs
 /// Joystick axis move event parameters
 /// </summary>
 ////////////////////////////////////////////////////////////
-public class JoystickMoveEventArgs : EventArgs
+internal class JoystickMoveEventArgs : EventArgs
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -314,7 +314,7 @@ public class JoystickMoveEventArgs : EventArgs
 /// Joystick buttons event parameters
 /// </summary>
 ////////////////////////////////////////////////////////////
-public class JoystickButtonEventArgs : EventArgs
+internal class JoystickButtonEventArgs : EventArgs
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -353,7 +353,7 @@ public class JoystickButtonEventArgs : EventArgs
 /// Joystick connection/disconnection event parameters
 /// </summary>
 ////////////////////////////////////////////////////////////
-public class JoystickConnectEventArgs : EventArgs
+internal class JoystickConnectEventArgs : EventArgs
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -387,7 +387,7 @@ public class JoystickConnectEventArgs : EventArgs
 /// Size event parameters
 /// </summary>
 ////////////////////////////////////////////////////////////
-public class SizeEventArgs : EventArgs
+internal class SizeEventArgs : EventArgs
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -426,7 +426,7 @@ public class SizeEventArgs : EventArgs
 /// Touch event parameters
 /// </summary>
 ////////////////////////////////////////////////////////////
-public class TouchEventArgs : EventArgs
+internal class TouchEventArgs : EventArgs
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -470,7 +470,7 @@ public class TouchEventArgs : EventArgs
 /// Sensor event parameters
 /// </summary>
 ////////////////////////////////////////////////////////////
-public class SensorEventArgs : EventArgs
+internal class SensorEventArgs : EventArgs
 {
     ////////////////////////////////////////////////////////////
     /// <summary>

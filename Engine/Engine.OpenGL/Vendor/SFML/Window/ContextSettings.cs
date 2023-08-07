@@ -8,7 +8,7 @@ namespace Engine.OpenGL.Vendor.SFML.Window;
 /// </summary>
 ////////////////////////////////////////////////////////////
 [StructLayout(LayoutKind.Sequential)]
-public struct ContextSettings
+internal struct ContextSettings
 {
     ////////////////////////////////////////////////////////////
     /// <summary>

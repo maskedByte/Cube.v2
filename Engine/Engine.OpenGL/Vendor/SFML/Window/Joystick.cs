@@ -9,7 +9,7 @@ namespace Engine.OpenGL.Vendor.SFML.Window;
 /// Give access to the real-time state of the joysticks
 /// </summary>
 ////////////////////////////////////////////////////////////
-public static class Joystick
+internal static class Joystick
 {
     /// <summary>Maximum number of supported joysticks</summary>
     public static readonly uint Count = 8;
@@ -140,14 +140,15 @@ public static class Joystick
     /// <param name="joystick">Index of the joystick</param>
     /// <returns>Structure containing joystick information</returns>
     ////////////////////////////////////////////////////////////
-    public static Identification GetIdentification(uint joystick)
+    internal static Identification GetIdentification(uint joystick)
     {
         var identification = sfJoystick_getIdentification(joystick);
-        var retIdentification = new Identification();
-
-        retIdentification.Name = Marshal.PtrToStringAnsi(identification.Name);
-        retIdentification.VendorId = identification.VendorId;
-        retIdentification.ProductId = identification.ProductId;
+        var retIdentification = new Identification
+        {
+            Name = Marshal.PtrToStringAnsi(identification.Name),
+            VendorId = identification.VendorId,
+            ProductId = identification.ProductId
+        };
 
         return retIdentification;
     }
@@ -157,7 +158,7 @@ public static class Joystick
     /// Identification holds a joystick's identification
     /// </summary>
     ////////////////////////////////////////////////////////////
-    public struct Identification
+    internal struct Identification
     {
         /// <summary>Name of the joystick</summary>
         public string Name;
@@ -176,7 +177,7 @@ public static class Joystick
     /// </summary>
     ////////////////////////////////////////////////////////////
     [StructLayout(LayoutKind.Sequential)]
-    internal struct IdentificationMarshalData
+    private struct IdentificationMarshalData
     {
         public IntPtr Name;
         public uint VendorId;

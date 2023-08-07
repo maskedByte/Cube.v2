@@ -8,7 +8,7 @@ namespace Engine.OpenGL.Vendor.SFML.Window;
 /// </summary>
 ////////////////////////////////////////////////////////////
 [Serializable]
-public class LoadingFailedException : Exception
+internal class LoadingFailedException : Exception
 {
     ////////////////////////////////////////////////////////////
     /// <summary>

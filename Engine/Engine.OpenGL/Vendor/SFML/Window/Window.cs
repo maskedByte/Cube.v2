@@ -12,7 +12,7 @@ namespace Engine.OpenGL.Vendor.SFML.Window;
 /// </summary>
 ////////////////////////////////////////////////////////////
 [Flags]
-public enum Styles
+internal enum Styles
 {
     /// <summary>No border / title bar (this flag and all others are mutually exclusive)</summary>
     None = 0,
@@ -39,7 +39,7 @@ public enum Styles
 /// or connect to an existing one
 /// </summary>
 ////////////////////////////////////////////////////////////
-public class Window : ObjectBase
+internal class Window : ObjectBase
 {
     ////////////////////////////////////////////////////////////
     /// <summary>

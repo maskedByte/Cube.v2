@@ -8,7 +8,7 @@ namespace Engine.OpenGL.Vendor.SFML.Window;
 /// <summary>
 /// Clipboard provides an interface for getting and setting the contents of the system clipboard.
 /// </summary>
-public class Clipboard
+internal class Clipboard
 {
     /// <summary>
     /// The contents of the Clipboard as a UTF-32 string

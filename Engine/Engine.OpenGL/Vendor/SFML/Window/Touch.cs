@@ -9,7 +9,7 @@ namespace Engine.OpenGL.Vendor.SFML.Window;
 /// Give access to the real-time state of the touches
 /// </summary>
 ////////////////////////////////////////////////////////////
-public static class Touch
+internal static class Touch
 {
     ////////////////////////////////////////////////////////////
     /// <summary>

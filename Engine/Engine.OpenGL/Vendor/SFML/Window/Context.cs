@@ -15,7 +15,7 @@ namespace Engine.OpenGL.Vendor.SFML.Window;
 //////////////////////////////////////////////////////////////////
 [SuppressMessage("Interoperability",
     "SYSLIB1054:Verwenden Sie \\\"LibraryImportAttribute\\\" anstelle von \\\"DllImportAttribute\\\", um P/Invoke-Marshallingcode zur Kompilierzeit zu generieren.")]
-public class Context : CriticalFinalizerObject
+internal class Context : CriticalFinalizerObject
 {
     ////////////////////////////////////////////////////////////
     /// <summary>

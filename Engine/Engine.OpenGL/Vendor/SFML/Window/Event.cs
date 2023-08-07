@@ -7,7 +7,7 @@ namespace Engine.OpenGL.Vendor.SFML.Window;
 /// Enumeration of the different types of events
 /// </summary>
 ////////////////////////////////////////////////////////////
-public enum EventType
+internal enum EventType
 {
     /// <summary>Event triggered when a window is manually closed</summary>
     Closed,
@@ -86,7 +86,7 @@ public enum EventType
 /// </summary>
 ////////////////////////////////////////////////////////////
 [StructLayout(LayoutKind.Sequential)]
-public struct KeyEvent
+internal struct KeyEvent
 {
     /// <summary>Code of the key (see KeyCode enum)</summary>
     public Keyboard.Key Code;
@@ -110,7 +110,7 @@ public struct KeyEvent
 /// </summary>
 ////////////////////////////////////////////////////////////
 [StructLayout(LayoutKind.Sequential)]
-public struct TextEvent
+internal struct TextEvent
 {
     /// <summary>UTF-32 value of the character</summary>
     public uint Unicode;
@@ -122,7 +122,7 @@ public struct TextEvent
 /// </summary>
 ////////////////////////////////////////////////////////////
 [StructLayout(LayoutKind.Sequential)]
-public struct MouseMoveEvent
+internal struct MouseMoveEvent
 {
     /// <summary>X coordinate of the mouse cursor</summary>
     public int X;
@@ -137,7 +137,7 @@ public struct MouseMoveEvent
 /// </summary>
 ////////////////////////////////////////////////////////////
 [StructLayout(LayoutKind.Sequential)]
-public struct MouseButtonEvent
+internal struct MouseButtonEvent
 {
     /// <summary>Code of the button (see MouseButton enum)</summary>
     public Mouse.Button Button;
@@ -156,7 +156,7 @@ public struct MouseButtonEvent
 ////////////////////////////////////////////////////////////
 [StructLayout(LayoutKind.Sequential)]
 [Obsolete("MouseWheelEvent is deprecated, please use MouseWheelScrollEvent instead")]
-public struct MouseWheelEvent
+internal struct MouseWheelEvent
 {
     /// <summary>Scroll amount</summary>
     public int Delta;
@@ -174,7 +174,7 @@ public struct MouseWheelEvent
 /// </summary>
 ////////////////////////////////////////////////////////////
 [StructLayout(LayoutKind.Sequential)]
-public struct MouseWheelScrollEvent
+internal struct MouseWheelScrollEvent
 {
     /// <summary>Mouse Wheel which triggered the event</summary>
     public Mouse.Wheel Wheel;
@@ -195,7 +195,7 @@ public struct MouseWheelScrollEvent
 /// </summary>
 ////////////////////////////////////////////////////////////
 [StructLayout(LayoutKind.Sequential)]
-public struct JoystickMoveEvent
+internal struct JoystickMoveEvent
 {
     /// <summary>Index of the joystick which triggered the event</summary>
     public uint JoystickId;
@@ -213,7 +213,7 @@ public struct JoystickMoveEvent
 /// </summary>
 ////////////////////////////////////////////////////////////
 [StructLayout(LayoutKind.Sequential)]
-public struct JoystickButtonEvent
+internal struct JoystickButtonEvent
 {
     /// <summary>Index of the joystick which triggered the event</summary>
     public uint JoystickId;
@@ -228,7 +228,7 @@ public struct JoystickButtonEvent
 /// </summary>
 ////////////////////////////////////////////////////////////
 [StructLayout(LayoutKind.Sequential)]
-public struct JoystickConnectEvent
+internal struct JoystickConnectEvent
 {
     /// <summary>Index of the joystick which triggered the event</summary>
     public uint JoystickId;
@@ -240,7 +240,7 @@ public struct JoystickConnectEvent
 /// </summary>
 ////////////////////////////////////////////////////////////
 [StructLayout(LayoutKind.Sequential)]
-public struct SizeEvent
+internal struct SizeEvent
 {
     /// <summary>New width of the window</summary>
     public uint Width;
@@ -255,7 +255,7 @@ public struct SizeEvent
 /// </summary>
 ////////////////////////////////////////////////////////////
 [StructLayout(LayoutKind.Sequential)]
-public struct TouchEvent
+internal struct TouchEvent
 {
     /// <summary>Index of the finger in case of multi-touch events</summary>
     public uint Finger;
@@ -273,7 +273,7 @@ public struct TouchEvent
 /// </summary>
 ////////////////////////////////////////////////////////////
 [StructLayout(LayoutKind.Sequential)]
-public struct SensorEvent
+internal struct SensorEvent
 {
     /// <summary>Type of the sensor</summary>
     public Sensor.Type Type;
@@ -294,7 +294,7 @@ public struct SensorEvent
 /// </summary>
 ////////////////////////////////////////////////////////////
 [StructLayout(LayoutKind.Explicit, Size = 20)]
-public struct Event
+internal struct Event
 {
     /// <summary>Type of event (see EventType enum)</summary>
     [FieldOffset(0)] public EventType Type;

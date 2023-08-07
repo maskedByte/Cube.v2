@@ -12,7 +12,7 @@ namespace Engine.OpenGL.Vendor.SFML.Window;
 /// </summary>
 ////////////////////////////////////////////////////////////
 [StructLayout(LayoutKind.Sequential)]
-public struct VideoMode
+internal struct VideoMode
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
