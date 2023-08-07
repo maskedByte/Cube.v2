@@ -126,7 +126,7 @@ public sealed class OpenGl : IDriver
     /// <inheritdoc />
     public IInput GetInput()
     {
-        throw new NotImplementedException();
+        return _input;
     }
 
     /// <inheritdoc />
