@@ -1,6 +1,7 @@
 ﻿using Engine.Driver;
 using Engine.Driver.Input;
 using Engine.Driver.Window;
+using Engine.Exceptions;
 using Engine.Math.Core;
 using Engine.OpenGL.Vendor.OpenGL.Core;
 
@@ -10,7 +11,7 @@ namespace Engine.OpenGL.Driver;
 /// OpenGL driver.
 /// Implements <see cref="IDriver" /> to use OpenGL 4.5 as graphics driver.
 /// </summary>
-public sealed class OpenGl : IDriver
+public sealed class OpenGlDriver : IDriver
 {
     private static readonly Dictionary<DrawMode, BeginMode> DrawModeToBeginMode = new Dictionary<DrawMode, BeginMode>
     {
@@ -25,18 +26,20 @@ public sealed class OpenGl : IDriver
         { DrawMode.Polygon, BeginMode.Triangles } // Adjust as needed
     };
 
+    private bool _isInitialized;
     private readonly Input _input;
 
     /// <summary>
     /// Gets the current window.
     /// </summary>
-    public IWindow CurrentWindow { get; private set; }
+    public IWindow? CurrentWindow { get; private set; }
 
     /// <summary>
     /// Default parameterless constructor.
     /// </summary>
-    public OpenGl()
+    public OpenGlDriver()
     {
+        _isInitialized = false;
         CurrentWindow = null!;
         _input = new Input() ?? throw new NullReferenceException(nameof(_input));
     }
@@ -58,6 +61,8 @@ public sealed class OpenGl : IDriver
         Gl.DepthFunc(DepthFunction.Less);
         Gl.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
+        _isInitialized = true;
+
         if (showStats)
         {
             ShowOpenGlExtensions();
@@ -71,6 +76,11 @@ public sealed class OpenGl : IDriver
     /// <inheritdoc />
     public void SetClearColor(Color color)
     {
+        if (!_isInitialized)
+        {
+            throw new ContextNotInitializedException($"{nameof(OpenGlDriver)} context not initialized.");
+        }
+
         var clearColor = color.ToVector4();
         Gl.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
     }
@@ -78,7 +88,7 @@ public sealed class OpenGl : IDriver
     /// <inheritdoc />
     public void Close()
     {
-        CurrentWindow.Close();
+        CurrentWindow?.Close();
     }
 
     /// <inheritdoc />
@@ -112,13 +122,13 @@ public sealed class OpenGl : IDriver
     /// <inheritdoc />
     public void HandleEvents()
     {
-        CurrentWindow.HandleEvents();
+        CurrentWindow?.HandleEvents();
     }
 
     /// <inheritdoc />
     public void Swap()
     {
-        CurrentWindow.Display();
+        CurrentWindow?.Display();
         Time.Instance.Update();
         _input.Reset();
     }
