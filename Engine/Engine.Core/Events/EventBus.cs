@@ -1,6 +1,6 @@
-using Engine.EventBus.Interface;
+using Engine.Events.Interface;
 
-namespace Engine.EventBus;
+namespace Engine.Events;
 
 /// <summary>
 /// Implementation for EventSystem
@@ -65,6 +65,9 @@ public static class EventBus
             return;
         }
 
-        foreach (var subscriber in Subscribers[eventN]) subscriber?.ReceiveEvent(payload);
+        foreach (var subscriber in Subscribers[eventN])
+        {
+            subscriber?.ReceiveEvent(payload);
+        }
     }
 }

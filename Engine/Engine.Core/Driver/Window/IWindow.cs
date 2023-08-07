@@ -1,4 +1,6 @@
-﻿namespace Engine.Driver.Window;
+﻿using Engine.Driver.Input;
+
+namespace Engine.Driver.Window;
 
 /// <summary>
 /// Interface for window.
@@ -32,12 +34,6 @@ public interface IWindow
     void RequestFocus();
 
     /// <summary>
-    /// Set the window title
-    /// </summary>
-    /// <param name="title">The title to set</param>
-    void SetTitle(string title);
-
-    /// <summary>
     /// Set the window size
     /// </summary>
     /// <param name="width">New width of the window</param>
@@ -52,6 +48,12 @@ public interface IWindow
     void SetPosition(int x, int y);
 
     /// <summary>
+    /// Set the window title
+    /// </summary>
+    /// <param name="title">The new title</param>
+    void SetTitle(string title);
+
+    /// <summary>
     /// Set the windows vSync
     /// </summary>
     /// <param name="vSync">State of vSync</param>
@@ -64,8 +66,23 @@ public interface IWindow
     void SetVisible(bool visible);
 
     /// <summary>
-    /// Set the window fullscreen
+    /// Set the window fullscreen, works only after window recreation
     /// </summary>
     /// <param name="fullscreen">State of fullscreen</param>
     void SetFullscreen(bool fullscreen);
+
+    /// <summary>
+    /// Draw the window
+    /// </summary>
+    void Display();
+
+    /// <summary>
+    /// Close the window
+    /// </summary>
+    void Close();
+
+    /// <summary>
+    /// Handle incoming window events
+    /// </summary>
+    void HandleEvents();
 }

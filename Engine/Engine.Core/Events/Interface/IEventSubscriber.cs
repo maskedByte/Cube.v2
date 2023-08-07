@@ -1,4 +1,4 @@
-﻿namespace Engine.EventBus.Interface;
+﻿namespace Engine.Events.Interface;
 
 /// <summary>
 /// Provides a interface to handle event subscriptions

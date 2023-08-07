@@ -1,8 +1,8 @@
 using System.Text;
-using Engine.Configuration.Interface;
+using Engine.Configurations.Interface;
 using Engine.Exceptions;
 
-namespace Engine.Configuration.Loader;
+namespace Engine.Configurations.Loader;
 
 /// <summary>
 /// <see cref="IConfigurationBuilder" /> implementation to load *.yml files

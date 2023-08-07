@@ -2,7 +2,7 @@
 using Engine.Math.Matrix;
 using Engine.Math.Vector;
 
-namespace Engine.Configuration.Interface;
+namespace Engine.Configurations.Interface;
 
 /// <summary>
 /// <see cref="IConfiguration" /> interface

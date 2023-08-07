@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
-using Engine.Configuration.Interface;
-using Engine.Configuration.Loader;
+using Engine.Configurations.Interface;
+using Engine.Configurations.Loader;
 using Engine.Exceptions;
 using Engine.Extensions;
 using Engine.Math.Core;
@@ -9,7 +9,7 @@ using Engine.Math.Vector;
 
 #pragma warning disable CS8604
 
-namespace Engine.Configuration;
+namespace Engine.Configurations;
 
 /// <summary>
 /// Implementation for <see cref="IConfiguration" /> to provide application wide configurations

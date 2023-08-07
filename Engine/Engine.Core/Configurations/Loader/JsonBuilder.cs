@@ -1,8 +1,8 @@
 using System.Text;
-using Engine.Configuration.Interface;
+using Engine.Configurations.Interface;
 using Newtonsoft.Json.Linq;
 
-namespace Engine.Configuration.Loader;
+namespace Engine.Configurations.Loader;
 
 /// <summary>
 /// <see cref="IConfigurationBuilder" /> implementation to load *.json files

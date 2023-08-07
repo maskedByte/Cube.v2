@@ -10,5 +10,5 @@ public enum ClearBufferFlag
     DepthBufferBit = 4,
     StencilBufferBit = 8,
     AccumBufferBit = 16,
-    AllBufferBits = ColorBufferBit | StencilBufferBit | DepthBufferBit | AccumBufferBit
+    AllBufferBits = ColorBufferBit | StencilBufferBit | DepthBufferBit
 }
