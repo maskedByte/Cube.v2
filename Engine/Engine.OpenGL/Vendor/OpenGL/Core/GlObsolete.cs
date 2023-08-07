@@ -1,11 +1,12 @@
 using System.Runtime.InteropServices;
 
-namespace Engine.OpenGL.OpenGL.Core;
+namespace Engine.OpenGL.Vendor.OpenGL.Core;
 
-partial class Gl
+internal partial class Gl
 {
     /// <summary>
-    /// Record the GL time into a query object after all previous commands have reached the GL server but have not yet necessarily executed.
+    /// Record the GL time into a query object after all previous commands have reached the GL server but have not yet
+    /// necessarily executed.
     /// <para>
     /// glQueryCounter causes the GL to record the current time into the query object named id. target must
     /// be GL_TIMESTAMP. The time is recorded after all previous commands on the GL client and server state
@@ -22,7 +23,7 @@ partial class Gl
     /// Specify the counter to query. target must be GL_TIMESTAMP.
     /// </param>
     [Obsolete("QueryCounter(UInt32, Int32) is deprecated, please use QueryCounter(UInt32, QueryTarget) instead.")]
-    public static void QueryCounter(UInt32 id, Int32 target)
+    public static void QueryCounter(uint id, int target)
     {
         global::OpenGL.Gl.Delegates.glQueryCounter(id, (QueryTarget)target);
     }
@@ -46,8 +47,9 @@ partial class Gl
     /// Specifies a color buffer. Accepted values are GL_FRONT_LEFT, GL_FRONT_RIGHT, GL_BACK_LEFT,
     /// GL_BACK_RIGHT, GL_FRONT, GL_BACK, GL_LEFT, GL_RIGHT, and the constants GL_COLOR_ATTACHMENTi.
     /// </param>
-    [Obsolete("NamedFramebufferReadBuffer(UInt32, BeginMode) is deprecated, please use NamedFramebufferReadBuffer(ReadBufferMode, BeginMode) instead.")]
-    public static void NamedFramebufferReadBuffer(UInt32 framebuffer, BeginMode mode)
+    [Obsolete(
+        "NamedFramebufferReadBuffer(UInt32, BeginMode) is deprecated, please use NamedFramebufferReadBuffer(ReadBufferMode, BeginMode) instead.")]
+    public static void NamedFramebufferReadBuffer(uint framebuffer, BeginMode mode)
     {
         global::OpenGL.Gl.Delegates.glNamedFramebufferReadBuffer((ReadBufferMode)framebuffer, mode);
     }
@@ -72,8 +74,9 @@ partial class Gl
     /// <param name="param">
     /// For the scalar commands, specifies the value of pname.
     /// </param>
-    [Obsolete("SamplerParameterf(UInt32, Int32, Single) is deprecated, please use SamplerParameterf(UInt32, TextureParameterName, Single) instead.")]
-    public static void SamplerParameterf(UInt32 sampler, Int32 pname, Single param)
+    [Obsolete(
+        "SamplerParameterf(UInt32, Int32, Single) is deprecated, please use SamplerParameterf(UInt32, TextureParameterName, Single) instead.")]
+    public static void SamplerParameterf(uint sampler, int pname, float param)
     {
         global::OpenGL.Gl.Delegates.glSamplerParameterf(sampler, (TextureParameterName)pname, param);
     }
@@ -98,8 +101,9 @@ partial class Gl
     /// <param name="param">
     /// For the scalar commands, specifies the value of pname.
     /// </param>
-    [Obsolete("SamplerParameteri(UInt32, Int32, Int32) is deprecated, please use SamplerParameteri(UInt32, TextureParameterName, Int32) instead.")]
-    public static void SamplerParameteri(UInt32 sampler, Int32 pname, Int32 param)
+    [Obsolete(
+        "SamplerParameteri(UInt32, Int32, Int32) is deprecated, please use SamplerParameteri(UInt32, TextureParameterName, Int32) instead.")]
+    public static void SamplerParameteri(uint sampler, int pname, int param)
     {
         global::OpenGL.Gl.Delegates.glSamplerParameteri(sampler, (TextureParameterName)pname, param);
     }
@@ -125,8 +129,9 @@ partial class Gl
     /// For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or
     /// values of pname are stored.
     /// </param>
-    [Obsolete("SamplerParameterfv(UInt32, Int32, Single[]) is deprecated, please use SamplerParameterfv(UInt32, TextureParameterName, Single[]) instead.")]
-    public static void SamplerParameterfv(UInt32 sampler, Int32 pname, Single[] @params)
+    [Obsolete(
+        "SamplerParameterfv(UInt32, Int32, Single[]) is deprecated, please use SamplerParameterfv(UInt32, TextureParameterName, Single[]) instead.")]
+    public static void SamplerParameterfv(uint sampler, int pname, float[] @params)
     {
         global::OpenGL.Gl.Delegates.glSamplerParameterfv(sampler, (TextureParameterName)pname, @params);
     }
@@ -152,8 +157,9 @@ partial class Gl
     /// For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or
     /// values of pname are stored.
     /// </param>
-    [Obsolete("SamplerParameteriv(UInt32, Int32, Int32[]) is deprecated, please use SamplerParameteriv(UInt32, TextureParameterName, Int32[]) instead.")]
-    public static void SamplerParameteriv(UInt32 sampler, Int32 pname, Int32[] @params)
+    [Obsolete(
+        "SamplerParameteriv(UInt32, Int32, Int32[]) is deprecated, please use SamplerParameteriv(UInt32, TextureParameterName, Int32[]) instead.")]
+    public static void SamplerParameteriv(uint sampler, int pname, int[] @params)
     {
         global::OpenGL.Gl.Delegates.glSamplerParameteriv(sampler, (TextureParameterName)pname, @params);
     }
@@ -179,8 +185,9 @@ partial class Gl
     /// <param name="params">
     /// Returns the sampler parameters.
     /// </param>
-    [Obsolete("GetSamplerParameterfv(UInt32, Int32, Int32[]) is deprecated, please use GetSamplerParameterfv(UInt32, TextureParameterName, Single[]) instead.")]
-    public static void GetSamplerParameterfv(UInt32 sampler, Int32 pname, [Out] Single[] @params)
+    [Obsolete(
+        "GetSamplerParameterfv(UInt32, Int32, Int32[]) is deprecated, please use GetSamplerParameterfv(UInt32, TextureParameterName, Single[]) instead.")]
+    public static void GetSamplerParameterfv(uint sampler, int pname, [Out] float[] @params)
     {
         global::OpenGL.Gl.Delegates.glGetSamplerParameterfv(sampler, (TextureParameterName)pname, @params);
     }
@@ -206,8 +213,9 @@ partial class Gl
     /// <param name="params">
     /// Returns the sampler parameters.
     /// </param>
-    [Obsolete("GetSamplerParameteriv(UInt32, Int32, Int32[]) is deprecated, please use GetSamplerParameteriv(UInt32, TextureParameterName, Int32[]) instead.")]
-    public static void GetSamplerParameteriv(UInt32 sampler, Int32 pname, [Out] Int32[] @params)
+    [Obsolete(
+        "GetSamplerParameteriv(UInt32, Int32, Int32[]) is deprecated, please use GetSamplerParameteriv(UInt32, TextureParameterName, Int32[]) instead.")]
+    public static void GetSamplerParameteriv(uint sampler, int pname, [Out] int[] @params)
     {
         global::OpenGL.Gl.Delegates.glGetSamplerParameteriv(sampler, (TextureParameterName)pname, @params);
     }
@@ -233,8 +241,9 @@ partial class Gl
     /// <param name="id">
     /// Specifies the name of a query object.
     /// </param>
-    [Obsolete("BeginQueryIndexed(UInt32, UInt32, UInt32) is deprecated, please use BeginQueryIndexed(UInt32, UInt32, UInt32) instead.")]
-    public static void BeginQueryIndexed(UInt32 target, UInt32 index, UInt32 id)
+    [Obsolete(
+        "BeginQueryIndexed(UInt32, UInt32, UInt32) is deprecated, please use BeginQueryIndexed(UInt32, UInt32, UInt32) instead.")]
+    public static void BeginQueryIndexed(uint target, uint index, uint id)
     {
         global::OpenGL.Gl.Delegates.glBeginQueryIndexed((QueryTarget)target, index, id);
     }

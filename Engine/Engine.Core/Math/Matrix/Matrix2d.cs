@@ -33,7 +33,7 @@ public struct Matrix2d : IEquatable<Matrix2d>
     public static readonly Matrix2d Zero = new Matrix2d(Vector2d.Zero, Vector2d.Zero);
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Matrix2d"/> struct.
+    /// Initializes a new instance of the <see cref="Matrix2d" /> struct.
     /// </summary>
     /// <param name="row0">Top row of the matrix.</param>
     /// <param name="row1">Bottom row of the matrix.</param>
@@ -44,7 +44,7 @@ public struct Matrix2d : IEquatable<Matrix2d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Matrix2d"/> struct.
+    /// Initializes a new instance of the <see cref="Matrix2d" /> struct.
     /// </summary>
     /// <param name="m00">First item of the first row of the matrix.</param>
     /// <param name="m01">Second item of the first row of the matrix.</param>

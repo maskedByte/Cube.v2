@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using SFML.System;
 
-namespace Engine.OpenGL.SFML.Window;
+namespace Engine.OpenGL.Vendor.SFML.Window;
 
 ////////////////////////////////////////////////////////////
 /// <summary>
@@ -100,7 +100,7 @@ public static class Mouse
     ////////////////////////////////////////////////////////////
     public static void SetPosition(Vector2i position)
     {
-        SetPosition(position, null);
+        SetPosition(position, null!);
     }
 
     ////////////////////////////////////////////////////////////
@@ -115,23 +115,24 @@ public static class Mouse
     public static void SetPosition(Vector2i position, Window relativeTo)
     {
         if (relativeTo != null)
-        {
             relativeTo.InternalSetMousePosition(position);
-        }
         else
-        {
             sfMouse_setPosition(position, IntPtr.Zero);
-        }
     }
 
     #region Imports
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-    static extern bool sfMouse_isButtonPressed(Button button);
 
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-    static extern Vector2i sfMouse_getPosition(IntPtr relativeTo);
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
+    [SuppressUnmanagedCodeSecurity]
+    private static extern bool sfMouse_isButtonPressed(Button button);
 
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-    static extern void sfMouse_setPosition(Vector2i position, IntPtr relativeTo);
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
+    [SuppressUnmanagedCodeSecurity]
+    private static extern Vector2i sfMouse_getPosition(IntPtr relativeTo);
+
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
+    [SuppressUnmanagedCodeSecurity]
+    private static extern void sfMouse_setPosition(Vector2i position, IntPtr relativeTo);
+
     #endregion
 }

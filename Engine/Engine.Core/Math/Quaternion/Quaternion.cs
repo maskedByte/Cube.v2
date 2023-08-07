@@ -24,7 +24,7 @@ public struct Quaternion : IEquatable<Quaternion>
     public float W;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Quaternion"/> struct.
+    /// Initializes a new instance of the <see cref="Quaternion" /> struct.
     /// </summary>
     /// <param name="v">The vector part.</param>
     /// <param name="w">The w part.</param>
@@ -35,7 +35,7 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Quaternion"/> struct.
+    /// Initializes a new instance of the <see cref="Quaternion" /> struct.
     /// </summary>
     /// <param name="x">The x component.</param>
     /// <param name="y">The y component.</param>
@@ -47,7 +47,7 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Quaternion"/> struct from given Euler angles in radians.
+    /// Initializes a new instance of the <see cref="Quaternion" /> struct from given Euler angles in radians.
     /// The rotations will get applied in following order:
     /// 1. around X axis, 2. around Y axis, 3. around Z axis.
     /// </summary>
@@ -74,7 +74,7 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Quaternion"/> struct from given Euler angles in radians.
+    /// Initializes a new instance of the <see cref="Quaternion" /> struct from given Euler angles in radians.
     /// The rotations will get applied in following order:
     /// 1. Around X, 2. Around Y, 3. Around Z.
     /// </summary>
@@ -211,7 +211,7 @@ public struct Quaternion : IEquatable<Quaternion>
     /// <summary>
     /// Gets the length (magnitude) of the quaternion.
     /// </summary>
-    /// <seealso cref="LengthSquared"/>
+    /// <seealso cref="LengthSquared" />
     public float Length
     {
         get { return MathF.Sqrt(W * W + Xyz.LengthSquared); }

@@ -1,6 +1,7 @@
 // ReSharper disable CompareOfFloatsByEqualityOperator
 
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using Engine.Math.Vector;
 
@@ -38,41 +39,6 @@ public sealed class Color : IEquatable<Color>
         get { return A < 255; }
     }
 
-    /// <summary>
-    /// Implicit convert System.Drawing.Color into <see cref="Color"/>
-    /// </summary>
-    public static implicit operator Color(System.Drawing.Color color)
-    {
-        return new Color(color.R, color.G, color.B, color.A);
-    }
-
-    public static Color operator +(Color color1, Color color2)
-    {
-        return new Color(
-            color1.R + color2.R,
-            color1.G + color2.G,
-            color1.B + color2.B,
-            color1.A + color2.A);
-    }
-
-    public static Color operator -(Color color1, Color color2)
-    {
-        return new Color(
-            color1.R - color2.R,
-            color1.G - color2.G,
-            color1.B - color2.B,
-            color1.A - color2.A);
-    }
-
-    public static Color operator *(Color color1, Color color2)
-    {
-        return new Color(
-            color1.R * color2.R,
-            color1.G * color2.G,
-            color1.B * color2.B,
-            color1.A * color2.A);
-    }
-
     public static Color Black
     {
         get { return new Color(0, 0, 0, 255); }
@@ -101,27 +67,6 @@ public sealed class Color : IEquatable<Color>
     public static Color Blue
     {
         get { return new Color(0, 0, 255, 255); }
-    }
-
-    /// <summary>
-    /// Convert <see cref="System.Drawing.Color"/> into <see cref="Color"/>
-    /// </summary>
-    /// <param name="color"></param>
-    /// <returns>New created <see cref="Color"/></returns>
-    public static Color FromDrawingColor(System.Drawing.Color color)
-    {
-        return new Color(color.R, color.G, color.B, color.A);
-    }
-
-    /// <summary>
-    /// Convert <see cref="System.Drawing.Color"/> into <see cref="Color"/>
-    /// </summary>
-    /// <param name="color"></param>
-    /// <param name="alpha"></param>
-    /// <returns>New created <see cref="Color"/></returns>
-    public static Color FromDrawingColor(System.Drawing.Color color, byte alpha)
-    {
-        return new Color(color.R, color.G, color.B, alpha);
     }
 
     /// <summary>
@@ -174,18 +119,90 @@ public sealed class Color : IEquatable<Color>
     }
 
     /// <summary>
+    /// Check if color is equal to <paramref name="other" />
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Color? other)
+    {
+        if (other != null) return false;
+
+        return
+            R == other!.R &&
+            G == other.G &&
+            B == other.B &&
+            A == other.A;
+    }
+
+    /// <summary>
+    /// Implicit convert System.Drawing.Color into <see cref="Color" />
+    /// </summary>
+    public static implicit operator Color(System.Drawing.Color color)
+    {
+        return new Color(color.R, color.G, color.B, color.A);
+    }
+
+    public static Color operator +(Color color1, Color color2)
+    {
+        return new Color(
+            color1.R + color2.R,
+            color1.G + color2.G,
+            color1.B + color2.B,
+            color1.A + color2.A);
+    }
+
+    public static Color operator -(Color color1, Color color2)
+    {
+        return new Color(
+            color1.R - color2.R,
+            color1.G - color2.G,
+            color1.B - color2.B,
+            color1.A - color2.A);
+    }
+
+    public static Color operator *(Color color1, Color color2)
+    {
+        return new Color(
+            color1.R * color2.R,
+            color1.G * color2.G,
+            color1.B * color2.B,
+            color1.A * color2.A);
+    }
+
+    /// <summary>
+    /// Convert <see cref="System.Drawing.Color" /> into <see cref="Color" />
+    /// </summary>
+    /// <param name="color"></param>
+    /// <returns>New created <see cref="Color" /></returns>
+    public static Color FromDrawingColor(System.Drawing.Color color)
+    {
+        return new Color(color.R, color.G, color.B, color.A);
+    }
+
+    /// <summary>
+    /// Convert <see cref="System.Drawing.Color" /> into <see cref="Color" />
+    /// </summary>
+    /// <param name="color"></param>
+    /// <param name="alpha"></param>
+    /// <returns>New created <see cref="Color" /></returns>
+    public static Color FromDrawingColor(System.Drawing.Color color, byte alpha)
+    {
+        return new Color(color.R, color.G, color.B, alpha);
+    }
+
+    /// <summary>
     /// Return a vector4 for this color where color values converted from RGBA into Float
     /// </summary>
-    /// <returns>New <see cref="Vector3"/> containing the color value</returns>
+    /// <returns>New <see cref="Vector3" /> containing the color value</returns>
     public Vector3 ToVector3()
     {
         return new Vector3(R / 255f, G / 255f, B / 255f);
     }
 
     /// <summary>
-    /// Return a <see cref="Vector4"/> for this color where color values converted from RGBA into Float
+    /// Return a <see cref="Vector4" /> for this color where color values converted from RGBA into Float
     /// </summary>
-    /// <returns>New <see cref="Vector4"/> containing the color value</returns>
+    /// <returns>New <see cref="Vector4" /> containing the color value</returns>
     public Vector4 ToVector4()
     {
         return new Vector4(R / 255f, G / 255f, B / 255f, A / 255f);
@@ -201,9 +218,9 @@ public sealed class Color : IEquatable<Color>
     }
 
     /// <summary>
-    /// Convert <see cref="Vector3"/> into <see cref="Color"/>
+    /// Convert <see cref="Vector3" /> into <see cref="Color" />
     /// </summary>
-    /// <param name="color"><see cref="Vector3"/> vector to convert to <see cref="Color"/>, value range from 0-1 </param>
+    /// <param name="color"><see cref="Vector3" /> vector to convert to <see cref="Color" />, value range from 0-1 </param>
     /// <returns></returns>
     public static Color FromVector(Vector3 color)
     {
@@ -211,9 +228,9 @@ public sealed class Color : IEquatable<Color>
     }
 
     /// <summary>
-    /// Convert <see cref="Vector4"/> into <see cref="Color"/>
+    /// Convert <see cref="Vector4" /> into <see cref="Color" />
     /// </summary>
-    /// <param name="color"><see cref="Vector4"/> vector to convert to <see cref="Color"/>, value range from 0-1 </param>
+    /// <param name="color"><see cref="Vector4" /> vector to convert to <see cref="Color" />, value range from 0-1 </param>
     /// <returns></returns>
     public static Color FromVector(Vector4 color)
     {
@@ -221,7 +238,7 @@ public sealed class Color : IEquatable<Color>
     }
 
     /// <summary>
-    ///  Returns the Lightness
+    /// Returns the Lightness
     /// </summary>
     public float GetBrightness()
     {
@@ -326,8 +343,10 @@ public sealed class Color : IEquatable<Color>
     /// </summary>
     /// <param name="color">The color to interpolate with</param>
     /// <param name="factor">The interpolation factor, a value between 0 and 1.</param>
-    /// <remarks>A factor of 0 will result in the current color, a factor of 1 will result in the provided color,
-    /// and a factor of 0.5 will result in a color halfway between the two.</remarks>
+    /// <remarks>
+    /// A factor of 0 will result in the current color, a factor of 1 will result in the provided color,
+    /// and a factor of 0.5 will result in a color halfway between the two.
+    /// </remarks>
     /// <returns>The interpolated color</returns>
     public Color Interpolate(Color color, float factor)
     {
@@ -339,29 +358,13 @@ public sealed class Color : IEquatable<Color>
         return new Color(red, green, blue, alpha);
     }
 
-    /// <summary>
-    /// Check if color is equal to <paramref name="other"/>
-    /// </summary>
-    /// <param name="other"></param>
-    /// <returns></returns>
-    public bool Equals(Color? other)
-    {
-        if (other != null) return false;
-
-        return
-            R == other!.R &&
-            G == other.G &&
-            B == other.B &&
-            A == other.A;
-    }
-
     public override string ToString()
     {
         return $"{R} {G} {B} {A}";
     }
 
     /// <summary>
-    /// Parse a string to <see cref="Color"/>, format can be #ff44aa or <255,255,255,255> or 255,255,255,255
+    /// Parse a string to <see cref="Color" />, format can be #ff44aa or <255,255,255,255> or 255,255,255,255
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
@@ -371,11 +374,11 @@ public sealed class Color : IEquatable<Color>
         if (text.Trim().StartsWith('#'))
         {
             var colorHex = text.ToUpper().TrimStart('#');
-            var r = int.Parse(colorHex[0..2], System.Globalization.NumberStyles.HexNumber);
-            var g = int.Parse(colorHex[2..4], System.Globalization.NumberStyles.HexNumber);
-            var b = int.Parse(colorHex[4..6], System.Globalization.NumberStyles.HexNumber);
+            var r = int.Parse(colorHex[..2], NumberStyles.HexNumber);
+            var g = int.Parse(colorHex[2..4], NumberStyles.HexNumber);
+            var b = int.Parse(colorHex[4..6], NumberStyles.HexNumber);
             var a = colorHex.Length > 6
-                ? int.Parse(colorHex[6..8], System.Globalization.NumberStyles.HexNumber)
+                ? int.Parse(colorHex[6..8], NumberStyles.HexNumber)
                 : 255;
             return new Color(r, g, b, a);
         }

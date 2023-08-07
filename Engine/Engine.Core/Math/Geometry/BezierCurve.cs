@@ -32,7 +32,7 @@ public struct BezierCurve
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="BezierCurve"/> struct.
+    /// Initializes a new instance of the <see cref="BezierCurve" /> struct.
     /// </summary>
     /// <param name="points">The points.</param>
     public BezierCurve(IEnumerable<Vector2> points)
@@ -45,7 +45,7 @@ public struct BezierCurve
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="BezierCurve"/> struct.
+    /// Initializes a new instance of the <see cref="BezierCurve" /> struct.
     /// </summary>
     /// <param name="points">The points.</param>
     public BezierCurve(params Vector2[] points)
@@ -58,7 +58,7 @@ public struct BezierCurve
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="BezierCurve"/> struct.
+    /// Initializes a new instance of the <see cref="BezierCurve" /> struct.
     /// </summary>
     /// <param name="parallel">The parallel value.</param>
     /// <param name="points">The points.</param>
@@ -72,7 +72,7 @@ public struct BezierCurve
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="BezierCurve"/> struct.
+    /// Initializes a new instance of the <see cref="BezierCurve" /> struct.
     /// </summary>
     /// <param name="parallel">The parallel value.</param>
     /// <param name="points">The points.</param>
@@ -102,7 +102,7 @@ public struct BezierCurve
     /// <param name="precision">The precision.</param>
     /// <returns>Length of curve.</returns>
     /// <remarks>
-    /// The precision gets better as the <paramref name="precision"/>
+    /// The precision gets better as the <paramref name="precision" />
     /// value gets smaller.
     /// </remarks>
     [Pure]
@@ -117,7 +117,7 @@ public struct BezierCurve
     /// <param name="points">The points.</param>
     /// <param name="precision">The precision value.</param>
     /// <returns>
-    /// The precision gets better as the <paramref name="precision"/>
+    /// The precision gets better as the <paramref name="precision" />
     /// value gets smaller.
     /// </returns>
     [Pure]
@@ -134,16 +134,16 @@ public struct BezierCurve
     /// <param name="parallel">The parallel value.</param>
     /// <returns>Length of curve.</returns>
     /// <remarks>
-    ///  <para>
-    /// The precision gets better as the <paramref name="precision"/>
+    ///     <para>
+    /// The precision gets better as the <paramref name="precision" />
     /// value gets smaller.
-    ///  </para>
-    ///  <para>
-    /// The <paramref name="parallel"/> parameter defines whether the curve should be calculated as a
+    ///     </para>
+    ///     <para>
+    /// The <paramref name="parallel" /> parameter defines whether the curve should be calculated as a
     /// parallel curve to the original bezier curve. A value of 0.0f represents
     /// the original curve, 5.0f represents a curve that has always a distance
     /// of 5.0f to the orignal curve.
-    ///  </para>
+    ///     </para>
     /// </remarks>
     [Pure]
     public static float CalculateLength(IList<Vector2> points, float precision, float parallel)
@@ -181,7 +181,7 @@ public struct BezierCurve
     /// <param name="parallel">The parallel value.</param>
     /// <returns>Resulting point.</returns>
     /// <remarks>
-    /// The <paramref name="parallel"/> parameter defines whether the curve should be calculated as a
+    /// The <paramref name="parallel" /> parameter defines whether the curve should be calculated as a
     /// parallel curve to the original bezier curve. A value of 0.0f represents
     /// the original curve, 5.0f represents a curve that has always a distance
     /// of 5.0f to the orignal curve.

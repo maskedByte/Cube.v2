@@ -6,14 +6,15 @@ using SFML.System;
 
 // ReSharper disable ArrangeTypeMemberModifiers
 
-namespace Engine.OpenGL.SFML.Window;
+namespace Engine.OpenGL.Vendor.SFML.Window;
 
 //////////////////////////////////////////////////////////////////
 /// <summary>
 /// This class defines a .NET interface to an SFML OpenGL Context
 /// </summary>
 //////////////////////////////////////////////////////////////////
-[SuppressMessage("Interoperability", "SYSLIB1054:Verwenden Sie \\\"LibraryImportAttribute\\\" anstelle von \\\"DllImportAttribute\\\", um P/Invoke-Marshallingcode zur Kompilierzeit zu generieren.")]
+[SuppressMessage("Interoperability",
+    "SYSLIB1054:Verwenden Sie \\\"LibraryImportAttribute\\\" anstelle von \\\"DllImportAttribute\\\", um P/Invoke-Marshallingcode zur Kompilierzeit zu generieren.")]
 public class Context : CriticalFinalizerObject
 {
     ////////////////////////////////////////////////////////////
@@ -84,16 +85,22 @@ public class Context : CriticalFinalizerObject
     private readonly IntPtr _myThis;
 
     #region Imports
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
+    [SuppressUnmanagedCodeSecurity]
     static extern IntPtr sfContext_create();
 
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
+    [SuppressUnmanagedCodeSecurity]
     static extern void sfContext_destroy(IntPtr view);
 
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
+    [SuppressUnmanagedCodeSecurity]
     static extern bool sfContext_setActive(IntPtr view, bool active);
 
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
+    [SuppressUnmanagedCodeSecurity]
     static extern ContextSettings sfContext_getSettings(IntPtr view);
+
     #endregion
 }

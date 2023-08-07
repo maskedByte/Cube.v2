@@ -34,7 +34,7 @@ public struct Matrix3d : IEquatable<Matrix3d>
     public static Matrix3d Identity = new Matrix3d(Vector3d.UnitX, Vector3d.UnitY, Vector3d.UnitZ);
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Matrix3d"/> struct.
+    /// Initializes a new instance of the <see cref="Matrix3d" /> struct.
     /// </summary>
     /// <param name="row0">Top row of the matrix.</param>
     /// <param name="row1">Second row of the matrix.</param>
@@ -47,7 +47,7 @@ public struct Matrix3d : IEquatable<Matrix3d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Matrix3d"/> struct.
+    /// Initializes a new instance of the <see cref="Matrix3d" /> struct.
     /// </summary>
     /// <param name="m00">First item of the first row of the matrix.</param>
     /// <param name="m01">Second item of the first row of the matrix.</param>
@@ -72,7 +72,7 @@ public struct Matrix3d : IEquatable<Matrix3d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Matrix3d"/> struct.
+    /// Initializes a new instance of the <see cref="Matrix3d" /> struct.
     /// </summary>
     /// <param name="matrix">A Matrix4d to take the upper-left 3x3 from.</param>
     public Matrix3d(Matrix4d matrix)
@@ -293,7 +293,7 @@ public struct Matrix3d : IEquatable<Matrix3d>
     }
 
     /// <summary>
-    /// Divides each element in the Matrix by the <see cref="Determinant"/>.
+    /// Divides each element in the Matrix by the <see cref="Determinant" />.
     /// </summary>
     public void Normalize()
     {

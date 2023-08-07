@@ -3,7 +3,7 @@ using System.Security;
 using System.Text;
 using SFML.System;
 
-namespace Engine.OpenGL.SFML.Window;
+namespace Engine.OpenGL.Vendor.SFML.Window;
 
 /// <summary>
 /// Clipboard provides an interface for getting and setting the contents of the system clipboard.
@@ -17,25 +17,22 @@ public class Clipboard
     {
         get
         {
-            IntPtr source = sfClipboard_getUnicodeString();
+            var source = sfClipboard_getUnicodeString();
 
             uint length = 0;
             unsafe
             {
-                for(uint* ptr = (uint*)source.ToPointer(); *ptr != 0; ++ptr)
-                {
-                    length++;
-                }
+                for (var ptr = (uint*)source.ToPointer(); *ptr != 0; ++ptr) length++;
             }
 
-            byte[] sourceBytes = new byte[length * 4];
+            var sourceBytes = new byte[length * 4];
             Marshal.Copy(source, sourceBytes, 0, sourceBytes.Length);
 
             return Encoding.UTF32.GetString(sourceBytes);
         }
         set
         {
-            byte[] utf32 = Encoding.UTF32.GetBytes(value + '\0');
+            var utf32 = Encoding.UTF32.GetBytes(value + '\0');
 
             unsafe
             {
@@ -47,9 +44,11 @@ public class Clipboard
         }
     }
 
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-    static extern IntPtr sfClipboard_getUnicodeString();
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
+    [SuppressUnmanagedCodeSecurity]
+    private static extern IntPtr sfClipboard_getUnicodeString();
 
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-    static extern void sfClipboard_setUnicodeString(IntPtr ptr);
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
+    [SuppressUnmanagedCodeSecurity]
+    private static extern void sfClipboard_setUnicodeString(IntPtr ptr);
 }

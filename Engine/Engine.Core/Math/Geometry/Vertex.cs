@@ -64,7 +64,7 @@ public readonly struct Vertex
     }
 
     /// <summary>
-    /// Returns the values set for this <see cref="Vertex"/>
+    /// Returns the values set for this <see cref="Vertex" />
     /// </summary>
     public override string ToString()
     {

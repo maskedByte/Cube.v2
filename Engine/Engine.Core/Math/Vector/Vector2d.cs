@@ -62,7 +62,7 @@ public struct Vector2d : IEquatable<Vector2d>
     public static readonly int SizeInBytes = Unsafe.SizeOf<Vector2>();
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector2d"/> struct.
+    /// Initializes a new instance of the <see cref="Vector2d" /> struct.
     /// </summary>
     /// <param name="value">The value that will initialize this instance.</param>
     public Vector2d(double value)
@@ -72,7 +72,7 @@ public struct Vector2d : IEquatable<Vector2d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector2d"/> struct.
+    /// Initializes a new instance of the <see cref="Vector2d" /> struct.
     /// </summary>
     /// <param name="x">The X coordinate.</param>
     /// <param name="y">The Y coordinate.</param>
@@ -112,7 +112,7 @@ public struct Vector2d : IEquatable<Vector2d>
     /// <summary>
     /// Gets the length (magnitude) of the vector.
     /// </summary>
-    /// <seealso cref="LengthSquared"/>
+    /// <seealso cref="LengthSquared" />
     public double Length
     {
         get { return System.Math.Sqrt(X * X + Y * Y); }
@@ -125,7 +125,7 @@ public struct Vector2d : IEquatable<Vector2d>
     /// This property avoids the costly square root operation required by the Length property. This makes it more suitable
     /// for comparisons.
     /// </remarks>
-    /// <see cref="Length"/>
+    /// <see cref="Length" />
     public double LengthSquared
     {
         get { return X * X + Y * Y; }
@@ -953,30 +953,30 @@ public struct Vector2d : IEquatable<Vector2d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector2d"/> struct using a tuple containing the component
+    /// Initializes a new instance of the <see cref="Vector2d" /> struct using a tuple containing the component
     /// values.
     /// </summary>
     /// <param name="values">A tuple containing the component values.</param>
-    /// <returns>A new instance of the <see cref="Vector2d"/> struct with the given component values.</returns>
+    /// <returns>A new instance of the <see cref="Vector2d" /> struct with the given component values.</returns>
     [Pure]
     public static implicit operator Vector2d((double X, double Y) values)
     {
         return new Vector2d(values.X, values.Y);
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override bool Equals(object obj)
     {
         return obj is Vector2d vector2d && Equals(vector2d);
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public bool Equals(Vector2d other)
     {
         return X == other.X && Y == other.Y;
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override int GetHashCode()
     {
         return HashCode.Combine(X, Y);

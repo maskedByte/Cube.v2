@@ -49,7 +49,7 @@ public struct AAB2 : IEquatable<AAB2>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="AAB2"/> struct.
+    /// Initializes a new instance of the <see cref="AAB2" /> struct.
     /// </summary>
     /// <param name="min">The minimum point on the XY plane this box encloses.</param>
     /// <param name="max">The maximum point on the XY plane this box encloses.</param>
@@ -60,7 +60,7 @@ public struct AAB2 : IEquatable<AAB2>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="AAB2"/> struct.
+    /// Initializes a new instance of the <see cref="AAB2" /> struct.
     /// </summary>
     /// <param name="minX">The minimum X value to be enclosed.</param>
     /// <param name="minY">The minimum Y value to be enclosed.</param>
@@ -152,10 +152,9 @@ public struct AAB2 : IEquatable<AAB2>
     [Pure]
     public bool Contains(Vector2 point, bool boundaryInclusive)
     {
-        if (boundaryInclusive)
-            return ContainsInclusive(point);
-        else
-            return ContainsExclusive(point);
+        return boundaryInclusive
+            ? ContainsInclusive(point)
+            : ContainsExclusive(point);
     }
 
     /// <summary>
@@ -278,19 +277,19 @@ public struct AAB2 : IEquatable<AAB2>
         return !(left == right);
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override bool Equals(object? obj)
     {
         return obj is AAB2 aab2 && Equals(aab2);
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public bool Equals(AAB2 other)
     {
         return _min.Equals(other._min) && _max.Equals(other._max);
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override int GetHashCode()
     {
         return HashCode.Combine(_min, _max);

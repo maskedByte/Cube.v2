@@ -49,7 +49,7 @@ public struct AAB3 : IEquatable<AAB3>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="AAB3"/> struct.
+    /// Initializes a new instance of the <see cref="AAB3" /> struct.
     /// </summary>
     /// <param name="min">The minimum point in 3D space this box encloses.</param>
     /// <param name="max">The maximum point in 3D space this box encloses.</param>
@@ -60,7 +60,7 @@ public struct AAB3 : IEquatable<AAB3>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="AAB3"/> struct.
+    /// Initializes a new instance of the <see cref="AAB3" /> struct.
     /// </summary>
     /// <param name="minX">The minimum X value to be enclosed.</param>
     /// <param name="minY">The minimum Y value to be enclosed.</param>
@@ -157,10 +157,9 @@ public struct AAB3 : IEquatable<AAB3>
     [Pure]
     public bool Contains(Vector3 point, bool boundaryInclusive)
     {
-        if (boundaryInclusive)
-            return ContainsInclusive(point);
-        else
-            return ContainsExclusive(point);
+        return boundaryInclusive
+            ? ContainsInclusive(point)
+            : ContainsExclusive(point);
     }
 
     /// <summary>
@@ -284,19 +283,19 @@ public struct AAB3 : IEquatable<AAB3>
         return !(left == right);
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override bool Equals(object? obj)
     {
         return obj is AAB3 aab3 && Equals(aab3);
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public bool Equals(AAB3 other)
     {
         return _min.Equals(other._min) && _max.Equals(other._max);
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override int GetHashCode()
     {
         return HashCode.Combine(_min, _max);

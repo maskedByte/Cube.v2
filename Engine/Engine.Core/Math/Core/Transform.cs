@@ -7,24 +7,24 @@ using Engine.Math.Vector;
 namespace Engine.Math.Core;
 
 /// <summary>
-/// Implementation of <see cref="Transform"/>
+/// Implementation of <see cref="Transform" />
 /// </summary>
 [Serializable]
 public sealed class Transform
 {
     private bool _dirty;
     private Vector3 _localPosition;
+    private Matrix4 _localPositionMatrix;
     private Quaternion.Quaternion _localRotation;
+    private Matrix4 _localRotationMatrix;
+    private Matrix4 _modelMatrix; // Cached
+    private Vector3 _origin;
+    private Matrix4 _originMatrix;
+
+    private Vector3 _scale;
 
     // Cached matrix
     private Matrix4 _scaleMatrix;
-    private Matrix4 _originMatrix;
-    private Matrix4 _localRotationMatrix;
-    private Matrix4 _localPositionMatrix;
-
-    private Vector3 _scale;
-    private Matrix4 _modelMatrix; // Cached
-    private Vector3 _origin;
 
     /// <summary>
     /// Set to true to automatically update the model matrix
@@ -137,7 +137,7 @@ public sealed class Transform
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="Transform"/>
+    /// Creates a new instance of <see cref="Transform" />
     /// </summary>
     public Transform()
     {
@@ -154,7 +154,7 @@ public sealed class Transform
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="Transform"/> and sets its position.
+    /// Creates a new instance of <see cref="Transform" /> and sets its position.
     /// </summary>
     /// <param name="position">The initial position to set for the transform.</param>
     public Transform(Vector3 position)
@@ -165,7 +165,7 @@ public sealed class Transform
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="Transform"/> and sets its position and scale.
+    /// Creates a new instance of <see cref="Transform" /> and sets its position and scale.
     /// </summary>
     /// <param name="position">The initial position to set for the transform.</param>
     /// <param name="scale">The initial scale to set for the transform.</param>
@@ -178,7 +178,7 @@ public sealed class Transform
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="Transform"/> and sets its position, scale and rotation.
+    /// Creates a new instance of <see cref="Transform" /> and sets its position, scale and rotation.
     /// </summary>
     /// <param name="position">The initial position to set for the transform.</param>
     /// <param name="scale">The initial scale to set for the transform.</param>
@@ -192,7 +192,7 @@ public sealed class Transform
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="Transform"/> and sets its position, scale, rotation and origin.
+    /// Creates a new instance of <see cref="Transform" /> and sets its position, scale, rotation and origin.
     /// </summary>
     /// <param name="position">The initial position to set for the transform.</param>
     /// <param name="scale">The initial scale to set for the transform.</param>
@@ -206,7 +206,7 @@ public sealed class Transform
     }
 
     /// <summary>
-    /// Translate into specific direction given by <paramref name="translation"/>
+    /// Translate into specific direction given by <paramref name="translation" />
     /// </summary>
     /// <param name="translation"></param>
     /// <param name="space"></param>
@@ -228,7 +228,7 @@ public sealed class Transform
     /// <summary>
     /// Calculate the distance between this object and another objects positions
     /// </summary>
-    /// <param name="transform">The target <see cref="Transform"/> to calculate distance to.</param>
+    /// <param name="transform">The target <see cref="Transform" /> to calculate distance to.</param>
     /// <returns></returns>
     public float Distance(Transform transform)
     {

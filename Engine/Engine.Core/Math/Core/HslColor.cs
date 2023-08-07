@@ -3,15 +3,15 @@
 namespace Engine.Math.Core;
 
 /// <summary>
-/// Represents a <see cref="Color"/> as HSL value
+/// Represents a <see cref="Color" /> as HSL value
 /// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public sealed class HslColor
 {
     private const double Scale = 240.0;
     private double _hue = 1.0;
-    private double _saturation = 1.0;
     private double _luminosity = 1.0;
+    private double _saturation = 1.0;
 
     public double Hue
     {

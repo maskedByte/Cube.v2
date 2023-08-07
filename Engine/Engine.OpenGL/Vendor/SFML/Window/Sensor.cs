@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using SFML.System;
 
-namespace Engine.OpenGL.SFML.Window;
+namespace Engine.OpenGL.Vendor.SFML.Window;
 
 ////////////////////////////////////////////////////////////
 /// <summary>
@@ -77,13 +77,18 @@ public static class Sensor
     }
 
     #region Imports
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-    static extern bool sfSensor_isAvailable(Type Sensor);
 
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-    static extern void sfSensor_setEnabled(Type Sensor, bool Enabled);
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
+    [SuppressUnmanagedCodeSecurity]
+    private static extern bool sfSensor_isAvailable(Type Sensor);
 
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-    static extern Vector3f sfSensor_getValue(Type Sensor);
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
+    [SuppressUnmanagedCodeSecurity]
+    private static extern void sfSensor_setEnabled(Type Sensor, bool Enabled);
+
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
+    [SuppressUnmanagedCodeSecurity]
+    private static extern Vector3f sfSensor_getValue(Type Sensor);
+
     #endregion
 }

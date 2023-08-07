@@ -24,7 +24,7 @@ public struct Quaterniond : IEquatable<Quaterniond>
     public double W;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Quaterniond"/> struct.
+    /// Initializes a new instance of the <see cref="Quaterniond" /> struct.
     /// </summary>
     /// <param name="v">The vector part.</param>
     /// <param name="w">The w part.</param>
@@ -35,7 +35,7 @@ public struct Quaterniond : IEquatable<Quaterniond>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Quaterniond"/> struct.
+    /// Initializes a new instance of the <see cref="Quaterniond" /> struct.
     /// </summary>
     /// <param name="x">The x component.</param>
     /// <param name="y">The y component.</param>
@@ -47,7 +47,7 @@ public struct Quaterniond : IEquatable<Quaterniond>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Quaterniond"/> struct from given Euler angles in radians.
+    /// Initializes a new instance of the <see cref="Quaterniond" /> struct from given Euler angles in radians.
     /// </summary>
     /// <param name="pitch">The pitch (attitude), rotation around X axis.</param>
     /// <param name="yaw">The yaw (heading), rotation around Y axis.</param>
@@ -72,7 +72,7 @@ public struct Quaterniond : IEquatable<Quaterniond>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Quaterniond"/> struct from given Euler angles in radians.
+    /// Initializes a new instance of the <see cref="Quaterniond" /> struct from given Euler angles in radians.
     /// </summary>
     /// <param name="eulerAngles">The euler angles as a Vector3d.</param>
     public Quaterniond(Vector3d eulerAngles)
@@ -207,7 +207,7 @@ public struct Quaterniond : IEquatable<Quaterniond>
     /// <summary>
     /// Gets the length (magnitude) of the Quaterniond.
     /// </summary>
-    /// <seealso cref="LengthSquared"/>
+    /// <seealso cref="LengthSquared" />
     public double Length
     {
         get { return System.Math.Sqrt(W * W + Xyz.LengthSquared); }

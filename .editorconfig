@@ -94,7 +94,12 @@ resharper_accessor_owner_body = accessors_with_block_body
 resharper_autodetect_indent_settings = true
 resharper_csharp_naming_rule.method = AaBb, AaBb_AaBb
 resharper_csharp_naming_rule.private_instance_fields = _ + aaBb_aaBb
+resharper_keep_user_linebreaks = true
+resharper_linebreaks_inside_tags_for_multiline_elements = true
 resharper_use_indent_from_vs = false
+resharper_wrap_lines = true
+resharper_xmldoc_indent_text = RemoveIndent
+resharper_xmldoc_keep_user_linebreaks = true
 
 # ReSharper inspection severities
 resharper_arrange_redundant_parentheses_highlighting = hint
@@ -122,22 +127,22 @@ tab_width = 4
 
 
 # S4457: Parameter validation in "async"/"await" methods should be wrapped
-dotnet_diagnostic.S4457.severity = suggestion
+dotnet_diagnostic.s4457.severity = suggestion
 
 # S3877: Exceptions should not be thrown from unexpected methods
-dotnet_diagnostic.S3877.severity = suggestion
+dotnet_diagnostic.s3877.severity = suggestion
 
 # S4144: Methods should not have identical implementations
-dotnet_diagnostic.S4144.severity = suggestion
+dotnet_diagnostic.s4144.severity = suggestion
 
 # S4136: Method overloads should be grouped together
-dotnet_diagnostic.S4136.severity = suggestion
+dotnet_diagnostic.s4136.severity = suggestion
 
 # S2365: Properties should not make collection or array copies
-dotnet_diagnostic.S2365.severity = suggestion
+dotnet_diagnostic.s2365.severity = suggestion
 
 # S1199: Nested code blocks should not be used
-dotnet_diagnostic.S1199.severity = suggestion
+dotnet_diagnostic.s1199.severity = suggestion
 
 # S4581: "new Guid()" should not be used
-dotnet_diagnostic.S4581.severity = suggestion
+dotnet_diagnostic.s4581.severity = suggestion

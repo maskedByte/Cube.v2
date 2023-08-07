@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace Engine.OpenGL.SFML.Window;
+namespace Engine.OpenGL.Vendor.SFML.Window;
 
 ////////////////////////////////////////////////////////////
 /// <summary>
@@ -65,7 +65,8 @@ public struct ContextSettings
     /// <param name="attributes">Attribute flags of the context</param>
     /// <param name="sRgbCapable">sRGB capability of the context</param>
     ////////////////////////////////////////////////////////////
-    public ContextSettings(uint depthBits, uint stencilBits, uint antialiasingLevel, uint majorVersion, uint minorVersion, Attribute attributes, bool sRgbCapable)
+    public ContextSettings(uint depthBits, uint stencilBits, uint antialiasingLevel, uint majorVersion,
+        uint minorVersion, Attribute attributes, bool sRgbCapable)
     {
         DepthBits = depthBits;
         StencilBits = stencilBits;

@@ -1,60 +1,48 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Engine.OpenGL.OpenGL.Core;
+namespace Engine.OpenGL.Vendor.OpenGL.Core;
 
 /// <summary>
 /// Bindings to OpenGL 4.5 methods as well as some helper shortcuts.
 /// </summary>
-partial class Gl
+internal partial class Gl
 {
-    #region Preallocated Memory
     // pre-allocate the float[] for matrix and array data
     private static readonly float[] Float1 = new float[1];
     private static readonly double[] Double1 = new double[1];
     private static readonly uint[] Uint1 = new uint[1];
     private static readonly int[] Int1 = new int[1];
     private static readonly bool[] Bool1 = new bool[1];
-    #endregion
 
-    #region Private Fields
-    private static int _version = 0;
-    private static int _versionMinor = 0;
+    private static int _version;
+    private static int _versionMinor;
 
-    private static StringBuilder _errorBuffer = new StringBuilder();
+    private static readonly StringBuilder _errorBuffer = new StringBuilder();
 
-    #endregion
-
-    #region Public Properties
     /// <summary>
     /// Gets the program ID of the currently active shader program.
     /// </summary>
-    public static uint CurrentProgram { get; private set; } = 0;
+    public static uint CurrentProgram { get; private set; }
 
-    #endregion
-
-    #region OpenGL Helpers (Type Safe Equivalents or Shortcuts)
     /// <summary>
     /// Return all OpenGl error for the last call to api
     /// </summary>
     /// <returns>String containing the error informations</returns>
     public static string GetErrors()
     {
-        ErrorCode error = GetError();
+        var error = GetError();
         return error != ErrorCode.NoError ? error.ToString() : string.Empty;
     }
 
     /// <summary>
     /// Return all OpenGl error for the last call to api
     /// </summary>
-    /// <param name="sb"><see cref="StringBuilder"/> to write errors to</param>
+    /// <param name="sb"><see cref="StringBuilder" /> to write errors to</param>
     public static bool GetErrors(StringBuilder sb)
     {
-        ErrorCode error = GetError();
-        if (error == ErrorCode.NoError)
-        {
-            return false;
-        }
+        var error = GetError();
+        if (error == ErrorCode.NoError) return false;
 
         sb.Append("\t");
         sb.Append(error.ToString());
@@ -67,10 +55,7 @@ partial class Gl
     {
         _errorBuffer.Clear();
 
-        if (GetErrors(_errorBuffer))
-        {
-            Console.WriteLine(command + "\n" + _errorBuffer);
-        }
+        if (GetErrors(_errorBuffer)) Console.WriteLine(command + "\n" + _errorBuffer);
     }
 
     /// <summary>
@@ -152,10 +137,7 @@ partial class Gl
     public static void TexParameteriv(TextureTarget target, TextureParameterName pname, TextureParameter[] @params)
     {
         var iparams = new int[@params.Length];
-        for (var i = 0; i < iparams.Length; i++)
-        {
-            iparams[i] = (int)@params[i];
-        }
+        for (var i = 0; i < iparams.Length; i++) iparams[i] = (int)@params[i];
 
         global::OpenGL.Gl.Delegates.glTexParameteriv(target, pname, iparams);
     }
@@ -284,10 +266,7 @@ partial class Gl
     public static string GetProgramInfoLog(uint program)
     {
         GetProgramiv(program, ProgramParameter.InfoLogLength, Int1);
-        if (Int1[0] == 0)
-        {
-            return string.Empty;
-        }
+        if (Int1[0] == 0) return string.Empty;
 
         var sb = new StringBuilder(Int1[0]);
         GetProgramInfoLog(program, sb.Capacity, Int1, sb);
@@ -301,10 +280,7 @@ partial class Gl
     public static string GetShaderInfoLog(uint shader)
     {
         GetShaderiv(shader, ShaderParameter.InfoLogLength, Int1);
-        if (Int1[0] == 0)
-        {
-            return string.Empty;
-        }
+        if (Int1[0] == 0) return string.Empty;
 
         var sb = new StringBuilder(Int1[0]);
         GetShaderInfoLog(shader, sb.Capacity, Int1, sb);
@@ -328,9 +304,12 @@ partial class Gl
     /// <typeparam name="T"></typeparam>
     /// <param name="target">Specifies the target buffer object.</param>
     /// <param name="size">Specifies the size in bytes of the buffer object's new data store.</param>
-    /// <param name="data">Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.</param>
+    /// <param name="data">
+    /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if
+    /// no data is to be copied.
+    /// </param>
     /// <param name="usage">Specifies expected usage pattern of the data store.</param>
-    public static void BufferData<T>(BufferTarget target, int size, [In][Out] T[] data, BufferUsageHint usage)
+    public static void BufferData<T>(BufferTarget target, int size, [In] [Out] T[] data, BufferUsageHint usage)
         where T : struct
     {
         var data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
@@ -365,15 +344,20 @@ partial class Gl
     /// <param name="target">Specifies the target buffer object.</param>
     /// <param name="position">Offset into the data from which to start copying to the buffer.</param>
     /// <param name="size">Specifies the size in bytes of the buffer object's new data store.</param>
-    /// <param name="data">Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.</param>
+    /// <param name="data">
+    /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if
+    /// no data is to be copied.
+    /// </param>
     /// <param name="usage">Specifies expected usage pattern of the data store.</param>
-    public static void BufferData<T>(BufferTarget target, int position, int size, [In][Out] T[] data, BufferUsageHint usage)
+    public static void BufferData<T>(BufferTarget target, int position, int size, [In] [Out] T[] data,
+        BufferUsageHint usage)
         where T : struct
     {
         var data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
         try
         {
-            global::OpenGL.Gl.Delegates.glBufferData(target, new IntPtr(size), (IntPtr)((int)data_ptr.AddrOfPinnedObject() + position), usage);
+            global::OpenGL.Gl.Delegates.glBufferData(target, new IntPtr(size),
+                (int)data_ptr.AddrOfPinnedObject() + position, usage);
         }
         finally
         {
@@ -390,19 +374,16 @@ partial class Gl
     /// <param name="data">The data to store in the VBO.</param>
     /// <param name="hint">The buffer usage hint (usually StaticDraw).</param>
     /// <returns>The buffer ID of the VBO on success, 0 on failure.</returns>
-    public static uint CreateVBO<T>(BufferTarget target, [In][Out] T[] data, BufferUsageHint hint)
+    public static uint CreateVBO<T>(BufferTarget target, [In] [Out] T[] data, BufferUsageHint hint)
         where T : struct
     {
         var vboHandle = GenBuffer();
-        if (vboHandle == 0)
-        {
-            return 0;
-        }
+        if (vboHandle == 0) return 0;
 
         var size = data.Length * Marshal.SizeOf<T>();
 
         BindBuffer(target, vboHandle);
-        BufferData<T>(target, size, data, hint);
+        BufferData(target, size, data, hint);
         BindBuffer(target, 0);
         return vboHandle;
     }
@@ -416,19 +397,16 @@ partial class Gl
     /// <param name="hint">The buffer usage hint (usually StaticDraw).</param>
     /// <param name="length">The length of the VBO (will take the first 'length' elements from data).</param>
     /// <returns>The buffer ID of the VBO on success, 0 on failure.</returns>
-    public static uint CreateVBO<T>(BufferTarget target, [In][Out] T[] data, BufferUsageHint hint, int length)
+    public static uint CreateVBO<T>(BufferTarget target, [In] [Out] T[] data, BufferUsageHint hint, int length)
         where T : struct
     {
         var vboHandle = GenBuffer();
-        if (vboHandle == 0)
-        {
-            return 0;
-        }
+        if (vboHandle == 0) return 0;
 
         var size = length * Marshal.SizeOf<T>();
 
         BindBuffer(target, vboHandle);
-        BufferData<T>(target, size, data, hint);
+        BufferData(target, size, data, hint);
         BindBuffer(target, 0);
         return vboHandle;
     }
@@ -443,20 +421,18 @@ partial class Gl
     /// <param name="position">Starting element of the data that will be copied into the VBO.</param>
     /// <param name="length">The length of the VBO (will take the first 'length' elements from data).</param>
     /// <returns>The buffer ID of the VBO on success, 0 on failure.</returns>
-    public static uint CreateVBO<T>(BufferTarget target, [In][Out] T[] data, BufferUsageHint hint, int position, int length)
+    public static uint CreateVBO<T>(BufferTarget target, [In] [Out] T[] data, BufferUsageHint hint, int position,
+        int length)
         where T : struct
     {
         var vboHandle = GenBuffer();
-        if (vboHandle == 0)
-        {
-            return 0;
-        }
+        if (vboHandle == 0) return 0;
 
         var offset = position * Marshal.SizeOf<T>();
         var size = length * Marshal.SizeOf<T>();
 
         BindBuffer(target, vboHandle);
-        BufferData<T>(target, offset, size, data, hint);
+        BufferData(target, offset, size, data, hint);
         BindBuffer(target, 0);
         return vboHandle;
     }
@@ -473,10 +449,7 @@ partial class Gl
         where T : struct
     {
         var vboHandle = GenBuffer();
-        if (vboHandle == 0)
-        {
-            return 0;
-        }
+        if (vboHandle == 0) return 0;
 
         var size = length * Marshal.SizeOf<T>();
 
@@ -492,10 +465,7 @@ partial class Gl
     /// <returns>The current major OpenGL version, or 0 on an error.</returns>
     public static int Version()
     {
-        if (_version != 0)
-        {
-            return _version; // cache the version information
-        }
+        if (_version != 0) return _version; // cache the version information
 
         try
         {
@@ -517,10 +487,7 @@ partial class Gl
     /// <returns>The current minor OpenGL version, or -1 on an error.</returns>
     public static int VersionMinor()
     {
-        if (_versionMinor != 0)
-        {
-            return _versionMinor; // cache the version information
-        }
+        if (_versionMinor != 0) return _versionMinor; // cache the version information
 
         try
         {
@@ -552,7 +519,10 @@ partial class Gl
     /// </summary>
     /// <typeparam name="T">The type of data in the data array.</typeparam>
     /// <param name="vboID">The VBO whose buffer will be updated.</param>
-    /// <param name="target">Specifies the target buffer object.  Must be ArrayBuffer, ElementArrayBuffer, PixelPackBuffer or PixelUnpackBuffer.</param>
+    /// <param name="target">
+    /// Specifies the target buffer object.  Must be ArrayBuffer, ElementArrayBuffer, PixelPackBuffer or
+    /// PixelUnpackBuffer.
+    /// </param>
     /// <param name="data">The new data that will be copied to the data store.</param>
     /// <param name="length">The size in bytes of the data store region being replaced.</param>
     public static void BufferSubData<T>(uint vboID, BufferTarget target, T[] data, int length)
@@ -563,7 +533,7 @@ partial class Gl
         try
         {
             BindBuffer(target, vboID);
-            BufferSubData(target, IntPtr.Zero, (IntPtr)(Marshal.SizeOf(data[0]) * length), handle.AddrOfPinnedObject());
+            BufferSubData(target, IntPtr.Zero, Marshal.SizeOf(data[0]) * length, handle.AddrOfPinnedObject());
         }
         finally
         {
@@ -571,5 +541,4 @@ partial class Gl
             GC.Collect();
         }
     }
-    #endregion
 }

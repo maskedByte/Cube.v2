@@ -85,7 +85,7 @@ public struct Vector4 : IEquatable<Vector4>
     public static readonly int SizeInBytes = Unsafe.SizeOf<Vector4>();
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4"/> struct.
+    /// Initializes a new instance of the <see cref="Vector4" /> struct.
     /// </summary>
     /// <param name="value">The value that will initialize this instance.</param>
     public Vector4(float value)
@@ -97,7 +97,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4"/> struct.
+    /// Initializes a new instance of the <see cref="Vector4" /> struct.
     /// </summary>
     /// <param name="x">The x component of the Vector4.</param>
     /// <param name="y">The y component of the Vector4.</param>
@@ -112,7 +112,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4"/> struct.
+    /// Initializes a new instance of the <see cref="Vector4" /> struct.
     /// </summary>
     /// <param name="v">The Vector2 to copy components from.</param>
     public Vector4(Vector2 v)
@@ -124,11 +124,11 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4"/> struct.
+    /// Initializes a new instance of the <see cref="Vector4" /> struct.
     /// </summary>
     /// <param name="v">The Vector3 to copy components from.</param>
     /// <remarks>
-    ///  .<seealso cref="Vector4(Vector3, float)"/>
+    /// .<seealso cref="Vector4(Vector3, float)" />
     /// </remarks>
     public Vector4(Vector3 v)
     {
@@ -139,7 +139,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4"/> struct.
+    /// Initializes a new instance of the <see cref="Vector4" /> struct.
     /// </summary>
     /// <param name="v">The Vector3 to copy components from.</param>
     /// <param name="w">The w component of the new Vector4.</param>
@@ -152,7 +152,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4"/> struct.
+    /// Initializes a new instance of the <see cref="Vector4" /> struct.
     /// </summary>
     /// <param name="v">The Vector4 to copy components from.</param>
     public Vector4(Vector4 v)
@@ -208,8 +208,8 @@ public struct Vector4 : IEquatable<Vector4>
     /// <summary>
     /// Gets the length (magnitude) of the vector.
     /// </summary>
-    /// <see cref="LengthFast"/>
-    /// <seealso cref="LengthSquared"/>
+    /// <see cref="LengthFast" />
+    /// <seealso cref="LengthSquared" />
     public float Length
     {
         get { return MathF.Sqrt(X * X + Y * Y + Z * Z + W * W); }
@@ -222,8 +222,8 @@ public struct Vector4 : IEquatable<Vector4>
     /// This property uses an approximation of the square root function to calculate vector magnitude, with
     /// an upper error bound of 0.001.
     /// </remarks>
-    /// <see cref="Length"/>
-    /// <seealso cref="LengthSquared"/>
+    /// <see cref="Length" />
+    /// <seealso cref="LengthSquared" />
     public float LengthFast
     {
         get { return 1.0f / Mathf.InverseSqrtFast(X * X + Y * Y + Z * Z + W * W); }
@@ -236,8 +236,8 @@ public struct Vector4 : IEquatable<Vector4>
     /// This property avoids the costly square root operation required by the Length property. This makes it more suitable
     /// for comparisons.
     /// </remarks>
-    /// <see cref="Length"/>
-    /// <seealso cref="LengthFast"/>
+    /// <see cref="Length" />
+    /// <seealso cref="LengthFast" />
     public float LengthSquared
     {
         get { return X * X + Y * Y + Z * Z + W * W; }
@@ -2061,11 +2061,11 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4"/> struct using a tuple containing the component
+    /// Initializes a new instance of the <see cref="Vector4" /> struct using a tuple containing the component
     /// values.
     /// </summary>
     /// <param name="values">A tuple containing the component values.</param>
-    /// <returns>A new instance of the <see cref="Vector4"/> struct with the given component values.</returns>
+    /// <returns>A new instance of the <see cref="Vector4" /> struct with the given component values.</returns>
     [Pure]
     public static implicit operator Vector4((float X, float Y, float Z, float W) values)
     {

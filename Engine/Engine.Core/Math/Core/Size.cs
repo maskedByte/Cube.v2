@@ -44,9 +44,9 @@ public struct Size : IEquatable<Size>
     }
 
     /// <summary>
-    /// Initialize a new instance of <see cref="Size"/> with given <paramref name="scalar"/>
+    /// Initialize a new instance of <see cref="Size" /> with given <paramref name="scalar" />
     /// </summary>
-    /// <param name="scalar">To set for <see cref="Width"/> and <see cref="Height"/></param>
+    /// <param name="scalar">To set for <see cref="Width" /> and <see cref="Height" /></param>
     public Size(int scalar)
     {
         Width = scalar;

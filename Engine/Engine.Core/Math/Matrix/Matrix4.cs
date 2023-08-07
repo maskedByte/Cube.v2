@@ -11,7 +11,7 @@ namespace Engine.Math.Matrix;
 /// <summary>
 /// Represents a 4x4 matrix containing 3D rotation, scale, transform, and projection.
 /// </summary>
-/// <seealso cref="Matrix4d"/>
+/// <seealso cref="Matrix4d" />
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
 public struct Matrix4 : IEquatable<Matrix4>
@@ -48,7 +48,7 @@ public struct Matrix4 : IEquatable<Matrix4>
     public static readonly Matrix4 Zero = new Matrix4(Vector4.Zero, Vector4.Zero, Vector4.Zero, Vector4.Zero);
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Matrix4"/> struct.
+    /// Initializes a new instance of the <see cref="Matrix4" /> struct.
     /// </summary>
     /// <param name="row0">Top row of the matrix.</param>
     /// <param name="row1">Second row of the matrix.</param>
@@ -63,7 +63,7 @@ public struct Matrix4 : IEquatable<Matrix4>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Matrix4"/> struct.
+    /// Initializes a new instance of the <see cref="Matrix4" /> struct.
     /// </summary>
     /// <param name="m00">First item of the first row of the matrix.</param>
     /// <param name="m01">Second item of the first row of the matrix.</param>
@@ -97,7 +97,7 @@ public struct Matrix4 : IEquatable<Matrix4>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Matrix4"/> struct.
+    /// Initializes a new instance of the <see cref="Matrix4" /> struct.
     /// </summary>
     /// <param name="topLeft">The top left 3x3 of the matrix.</param>
     public Matrix4(Matrix3 topLeft)
@@ -453,7 +453,7 @@ public struct Matrix4 : IEquatable<Matrix4>
     }
 
     /// <summary>
-    /// Divides each element in the Matrix by the <see cref="Determinant"/>.
+    /// Divides each element in the Matrix by the <see cref="Determinant" />.
     /// </summary>
     public void Normalize()
     {
@@ -1058,13 +1058,13 @@ public struct Matrix4 : IEquatable<Matrix4>
     /// <param name="result">A projection matrix that transforms camera space to raster space.</param>
     /// <exception cref="System.ArgumentOutOfRangeException">
     /// Thrown under the following conditions:
-    ///  <list type="bullet">
-    ///  <item>fovy is zero, less than zero or larger than Math.PI</item>
-    ///  <item>aspect is negative or zero</item>
-    ///  <item>depthNear is negative or zero</item>
-    ///  <item>depthFar is negative or zero</item>
-    ///  <item>depthNear is larger than depthFar</item>
-    ///  </list>
+    /// <list type="bullet">
+    ///     <item>fovy is zero, less than zero or larger than Math.PI</item>
+    ///     <item>aspect is negative or zero</item>
+    ///     <item>depthNear is negative or zero</item>
+    ///     <item>depthFar is negative or zero</item>
+    ///     <item>depthNear is larger than depthFar</item>
+    /// </list>
     /// </exception>
     public static void CreatePerspectiveFieldOfView
     (
@@ -1101,13 +1101,13 @@ public struct Matrix4 : IEquatable<Matrix4>
     /// <returns>A projection matrix that transforms camera space to raster space.</returns>
     /// <exception cref="System.ArgumentOutOfRangeException">
     /// Thrown under the following conditions:
-    ///  <list type="bullet">
-    ///  <item>fovy is zero, less than zero or larger than Math.PI</item>
-    ///  <item>aspect is negative or zero</item>
-    ///  <item>depthNear is negative or zero</item>
-    ///  <item>depthFar is negative or zero</item>
-    ///  <item>depthNear is larger than depthFar</item>
-    ///  </list>
+    /// <list type="bullet">
+    ///     <item>fovy is zero, less than zero or larger than Math.PI</item>
+    ///     <item>aspect is negative or zero</item>
+    ///     <item>depthNear is negative or zero</item>
+    ///     <item>depthFar is negative or zero</item>
+    ///     <item>depthNear is larger than depthFar</item>
+    /// </list>
     /// </exception>
     [Pure]
     public static Matrix4 CreatePerspectiveFieldOfView(float fovy, float aspect, float depthNear, float depthFar)
@@ -1128,11 +1128,11 @@ public struct Matrix4 : IEquatable<Matrix4>
     /// <param name="result">A projection matrix that transforms camera space to raster space.</param>
     /// <exception cref="System.ArgumentOutOfRangeException">
     /// Thrown under the following conditions:
-    ///  <list type="bullet">
-    ///  <item>depthNear is negative or zero</item>
-    ///  <item>depthFar is negative or zero</item>
-    ///  <item>depthNear is larger than depthFar</item>
-    ///  </list>
+    /// <list type="bullet">
+    ///     <item>depthNear is negative or zero</item>
+    ///     <item>depthFar is negative or zero</item>
+    ///     <item>depthNear is larger than depthFar</item>
+    /// </list>
     /// </exception>
     public static void CreatePerspectiveOffCenter
     (
@@ -1188,11 +1188,11 @@ public struct Matrix4 : IEquatable<Matrix4>
     /// <returns>A projection matrix that transforms camera space to raster space.</returns>
     /// <exception cref="System.ArgumentOutOfRangeException">
     /// Thrown under the following conditions:
-    ///  <list type="bullet">
-    ///  <item>depthNear is negative or zero</item>
-    ///  <item>depthFar is negative or zero</item>
-    ///  <item>depthNear is larger than depthFar</item>
-    ///  </list>
+    /// <list type="bullet">
+    ///     <item>depthNear is negative or zero</item>
+    ///     <item>depthFar is negative or zero</item>
+    ///     <item>depthNear is larger than depthFar</item>
+    /// </list>
     /// </exception>
     [Pure]
     public static Matrix4 CreatePerspectiveOffCenter
@@ -1318,7 +1318,7 @@ public struct Matrix4 : IEquatable<Matrix4>
     /// <param name="aspect">The aspect ratio.</param>
     /// <param name="zNear">The near depth clipping plane.</param>
     /// <param name="zFar">The far depth clipping plane.</param>
-    /// <returns>A <see cref="Matrix4"/> that contains the projection matrix for the perspective transformation.</returns>
+    /// <returns>A <see cref="Matrix4" /> that contains the projection matrix for the perspective transformation.</returns>
     [Pure]
     public static Matrix4 CreatePerspective(float fovy, float aspect, float zNear, float zFar)
     {

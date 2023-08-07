@@ -27,7 +27,7 @@ public struct Vector2 : IEquatable<Vector2>
     public float Y;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector2"/> struct.
+    /// Initializes a new instance of the <see cref="Vector2" /> struct.
     /// </summary>
     /// <param name="value">The value that will initialize this instance.</param>
     public Vector2(float value)
@@ -37,7 +37,7 @@ public struct Vector2 : IEquatable<Vector2>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector2"/> struct.
+    /// Initializes a new instance of the <see cref="Vector2" /> struct.
     /// </summary>
     /// <param name="x">The x coordinate of the net Vector2.</param>
     /// <param name="y">The y coordinate of the net Vector2.</param>
@@ -77,8 +77,8 @@ public struct Vector2 : IEquatable<Vector2>
     /// <summary>
     /// Gets the length (magnitude) of the vector.
     /// </summary>
-    /// <see cref="LengthFast"/>
-    /// <seealso cref="LengthSquared"/>
+    /// <see cref="LengthFast" />
+    /// <seealso cref="LengthSquared" />
     public float Length
     {
         get { return MathF.Sqrt(X * X + Y * Y); }
@@ -91,8 +91,8 @@ public struct Vector2 : IEquatable<Vector2>
     /// This property uses an approximation of the square root function to calculate vector magnitude, with
     /// an upper error bound of 0.001.
     /// </remarks>
-    /// <see cref="Length"/>
-    /// <seealso cref="LengthSquared"/>
+    /// <see cref="Length" />
+    /// <seealso cref="LengthSquared" />
     public float LengthFast
     {
         get { return 1.0f / Mathf.InverseSqrtFast(X * X + Y * Y); }
@@ -105,8 +105,8 @@ public struct Vector2 : IEquatable<Vector2>
     /// This property avoids the costly square root operation required by the Length property. This makes it more suitable
     /// for comparisons.
     /// </remarks>
-    /// <see cref="Length"/>
-    /// <seealso cref="LengthFast"/>
+    /// <see cref="Length" />
+    /// <seealso cref="LengthFast" />
     public float LengthSquared
     {
         get { return X * X + Y * Y; }
@@ -991,11 +991,11 @@ public struct Vector2 : IEquatable<Vector2>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector2"/> struct using a tuple containing the component
+    /// Initializes a new instance of the <see cref="Vector2" /> struct using a tuple containing the component
     /// values.
     /// </summary>
     /// <param name="values">A tuple containing the component values.</param>
-    /// <returns>A new instance of the <see cref="Vector2"/> struct with the given component values.</returns>
+    /// <returns>A new instance of the <see cref="Vector2" /> struct with the given component values.</returns>
     [Pure]
     public static implicit operator Vector2((float X, float Y) values)
     {
@@ -1013,19 +1013,19 @@ public struct Vector2 : IEquatable<Vector2>
         return new Vector2d(vec.X, vec.Y);
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override bool Equals(object? obj)
     {
         return obj is Vector2 vector2 && Equals(vector2);
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public bool Equals(Vector2 other)
     {
         return X == other.X && Y == other.Y;
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override int GetHashCode()
     {
         return HashCode.Combine(X, Y);

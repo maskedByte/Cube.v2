@@ -36,7 +36,7 @@ public struct BezierCurveQuadric
     public float Parallel;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="BezierCurveQuadric"/> struct.
+    /// Initializes a new instance of the <see cref="BezierCurveQuadric" /> struct.
     /// </summary>
     /// <param name="startAnchor">The start anchor.</param>
     /// <param name="endAnchor">The end anchor.</param>
@@ -50,7 +50,7 @@ public struct BezierCurveQuadric
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="BezierCurveQuadric"/> struct.
+    /// Initializes a new instance of the <see cref="BezierCurveQuadric" /> struct.
     /// </summary>
     /// <param name="parallel">The parallel value.</param>
     /// <param name="startAnchor">The start anchor.</param>
@@ -114,7 +114,7 @@ public struct BezierCurveQuadric
     /// <param name="precision">The precision.</param>
     /// <returns>Length of curve.</returns>
     /// <remarks>
-    /// The precision gets better when the <paramref name="precision"/>
+    /// The precision gets better when the <paramref name="precision" />
     /// value gets smaller.
     /// </remarks>
     [Pure]

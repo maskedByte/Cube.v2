@@ -3,7 +3,7 @@ using System.Security;
 using SFML;
 using SFML.System;
 
-namespace Engine.OpenGL.SFML.Window;
+namespace Engine.OpenGL.Vendor.SFML.Window;
 
 /// <summary>
 /// Cursor defines the appearance of a system cursor.

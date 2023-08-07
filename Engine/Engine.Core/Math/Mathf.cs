@@ -16,42 +16,42 @@ internal struct MathfInternal
 public struct Mathf
 {
     /// <summary>
-    /// Defines the value of Pi as a <see cref="float"/>.
+    /// Defines the value of Pi as a <see cref="float" />.
     /// </summary>
     public const float Pi = 3.1415927f;
 
     /// <summary>
-    /// Defines the value of Pi divided by two as a <see cref="float"/>.
+    /// Defines the value of Pi divided by two as a <see cref="float" />.
     /// </summary>
     public const float PiOver2 = Pi / 2;
 
     /// <summary>
-    /// Defines the value of Pi divided by three as a <see cref="float"/>.
+    /// Defines the value of Pi divided by three as a <see cref="float" />.
     /// </summary>
     public const float PiOver3 = Pi / 3;
 
     /// <summary>
-    /// Defines the value of  Pi divided by four as a <see cref="float"/>.
+    /// Defines the value of  Pi divided by four as a <see cref="float" />.
     /// </summary>
     public const float PiOver4 = Pi / 4;
 
     /// <summary>
-    /// Defines the value of Pi divided by six as a <see cref="float"/>.
+    /// Defines the value of Pi divided by six as a <see cref="float" />.
     /// </summary>
     public const float PiOver6 = Pi / 6;
 
     /// <summary>
-    /// Defines the value of Pi multiplied by two as a <see cref="float"/>.
+    /// Defines the value of Pi multiplied by two as a <see cref="float" />.
     /// </summary>
     public const float TwoPi = 2 * Pi;
 
     /// <summary>
-    /// Defines the value of Pi multiplied by 3 and divided by two as a <see cref="float"/>.
+    /// Defines the value of Pi multiplied by 3 and divided by two as a <see cref="float" />.
     /// </summary>
     public const float ThreePiOver2 = 3 * Pi / 2;
 
     /// <summary>
-    /// Defines the value of E as a <see cref="float"/>.
+    /// Defines the value of E as a <see cref="float" />.
     /// </summary>
     public const float E = 2.7182817f;
 
@@ -424,7 +424,8 @@ public struct Mathf
 
 
     /// <summary>
-    /// Returns the smallest integral value that is greater than or equal to the specified double-precision floating-point number.
+    /// Returns the smallest integral value that is greater than or equal to the specified double-precision floating-point
+    /// number.
     /// </summary>
     [Pure]
     public static float Ceil(float f)
@@ -433,7 +434,8 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Returns the smallest integral value that is greater than or equal to the specified double-precision floating-point number.
+    /// Returns the smallest integral value that is greater than or equal to the specified double-precision floating-point
+    /// number.
     /// </summary>
     [Pure]
     public static double Ceil(double f)
@@ -460,7 +462,8 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Rounds a double-precision floating-point value to the nearest integral value, and rounds midpoint values to the nearest even number.
+    /// Rounds a double-precision floating-point value to the nearest integral value, and rounds midpoint values to the nearest
+    /// even number.
     /// </summary>
     [Pure]
     public static float Round(float f)
@@ -469,7 +472,8 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Rounds a double-precision floating-point value to the nearest integral value, and rounds midpoint values to the nearest even number.
+    /// Rounds a double-precision floating-point value to the nearest integral value, and rounds midpoint values to the nearest
+    /// even number.
     /// </summary>
     [Pure]
     public static double Round(double f)
@@ -478,7 +482,8 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Returns the smallest integral value that is greater than or equal to the specified double-precision floating-point number.
+    /// Returns the smallest integral value that is greater than or equal to the specified double-precision floating-point
+    /// number.
     /// </summary>
     [Pure]
     public static int CeilToInt(float f)
@@ -496,7 +501,8 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Rounds a double-precision floating-point value to the nearest integral value, and rounds midpoint values to the nearest even number.
+    /// Rounds a double-precision floating-point value to the nearest integral value, and rounds midpoint values to the nearest
+    /// even number.
     /// </summary>
     [Pure]
     public static int RoundToInt(float f)
@@ -505,7 +511,8 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Returns the sign of <param name="f"></param>
+    /// Returns the sign of
+    /// <param name="f"></param>
     /// </summary>
     public static float Sign(float f)
     {
@@ -565,9 +572,12 @@ public struct Mathf
     /// </summary>
     /// <param name="a">A dividend.</param>
     /// <param name="b">A divisor.</param>
-    /// <returns>A number equal to a - (b Q), where Q is the quotient of a / b rounded to the nearest integer (if a / b falls halfway between two integers, the even integer is returned).
+    /// <returns>
+    /// A number equal to a - (b Q), where Q is the quotient of a / b rounded to the nearest integer (if a / b falls halfway
+    /// between two integers, the even integer is returned).
     /// If a - (b Q) is zero, the value +0 is returned if a is positive, or -0 if a is negative.
-    /// If b = 0, NaN is returned.</returns>
+    /// If b = 0, NaN is returned.
+    /// </returns>
     [Pure]
     public static double IeeeRemainder(double a, double b)
     {
@@ -1016,8 +1026,10 @@ public struct Mathf
     /// <param name="b">The second float.</param>
     /// <param name="error">The maximum error between the two.</param>
     /// <returns>
-    ///  <value>true</value> if the values are approximately equal within the error margin; otherwise,
-    /// <value>false</value>.
+    /// <value>true</value>
+    /// if the values are approximately equal within the error margin; otherwise,
+    /// <value>false</value>
+    /// .
     /// </returns>
     [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator", Justification = "Used for early bailout.")]
     [Pure]
@@ -1049,8 +1061,10 @@ public struct Mathf
     /// <param name="b">The second float.</param>
     /// <param name="error">The maximum error between the two.</param>
     /// <returns>
-    ///  <value>true</value> if the values are approximately equal within the error margin; otherwise,
-    ///  <value>false</value>.
+    /// <value>true</value>
+    /// if the values are approximately equal within the error margin; otherwise,
+    /// <value>false</value>
+    /// .
     /// </returns>
     [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator", Justification = "Used for early bailout.")]
     [Pure]
@@ -1123,7 +1137,7 @@ public struct Mathf
     /// Calculates the factorial of a given natural number.
     /// </summary>
     /// <param name="n">The number.</param>
-    /// <returns>The factorial of <paramref name="n"/>.</returns>
+    /// <returns>The factorial of <paramref name="n" />.</returns>
     [Pure]
     public static long Factorial(int n)
     {
@@ -1135,7 +1149,7 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Calculates the binomial coefficient <paramref name="n"/> above <paramref name="k"/>.
+    /// Calculates the binomial coefficient <paramref name="n" /> above <paramref name="k" />.
     /// </summary>
     /// <param name="n">The n.</param>
     /// <param name="k">The k.</param>

@@ -38,7 +38,7 @@ public struct Matrix3 : IEquatable<Matrix3>
     public static readonly Matrix3 Zero = new Matrix3(Vector3.Zero, Vector3.Zero, Vector3.Zero);
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Matrix3"/> struct.
+    /// Initializes a new instance of the <see cref="Matrix3" /> struct.
     /// </summary>
     /// <param name="row0">Top row of the matrix.</param>
     /// <param name="row1">Second row of the matrix.</param>
@@ -51,7 +51,7 @@ public struct Matrix3 : IEquatable<Matrix3>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Matrix3"/> struct.
+    /// Initializes a new instance of the <see cref="Matrix3" /> struct.
     /// </summary>
     /// <param name="m00">First item of the first row of the matrix.</param>
     /// <param name="m01">Second item of the first row of the matrix.</param>
@@ -76,7 +76,7 @@ public struct Matrix3 : IEquatable<Matrix3>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Matrix3"/> struct.
+    /// Initializes a new instance of the <see cref="Matrix3" /> struct.
     /// </summary>
     /// <param name="matrix">A Matrix4 to take the upper-left 3x3 from.</param>
     public Matrix3(Matrix4 matrix)
@@ -297,7 +297,7 @@ public struct Matrix3 : IEquatable<Matrix3>
     }
 
     /// <summary>
-    /// Divides each element in the Matrix by the <see cref="Determinant"/>.
+    /// Divides each element in the Matrix by the <see cref="Determinant" />.
     /// </summary>
     public void Normalize()
     {

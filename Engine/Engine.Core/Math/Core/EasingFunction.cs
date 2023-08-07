@@ -61,6 +61,8 @@ namespace Engine.Math.Core;
 
 public static class EasingFunction
 {
+    public delegate float Function(float s, float e, float v);
+
     public enum Ease
     {
         EaseInQuad = 0,
@@ -281,25 +283,22 @@ public static class EasingFunction
     {
         value /= 1f;
         end -= start;
-        if (value < 1 / 2.75f)
-        {
-            return end * (7.5625f * value * value) + start;
-        }
-        else if (value < 2 / 2.75f)
+        if (value < 1 / 2.75f) return end * (7.5625f * value * value) + start;
+
+        if (value < 2 / 2.75f)
         {
             value -= 1.5f / 2.75f;
             return end * (7.5625f * value * value + .75f) + start;
         }
-        else if (value < 2.5 / 2.75)
+
+        if (value < 2.5 / 2.75)
         {
             value -= 2.25f / 2.75f;
             return end * (7.5625f * value * value + .9375f) + start;
         }
-        else
-        {
-            value -= 2.625f / 2.75f;
-            return end * (7.5625f * value * value + .984375f) + start;
-        }
+
+        value -= 2.625f / 2.75f;
+        return end * (7.5625f * value * value + .984375f) + start;
     }
 
     public static float EaseInOutBounce(float start, float end, float value)
@@ -308,8 +307,7 @@ public static class EasingFunction
         var d = 1f;
         if (value < d * 0.5f)
             return EaseInBounce(0, end, value * 2) * 0.5f + start;
-        else
-            return EaseOutBounce(0, end, value * 2 - d) * 0.5f + end * 0.5f + start;
+        return EaseOutBounce(0, end, value * 2 - d) * 0.5f + end * 0.5f + start;
     }
 
     public static float EaseInBack(float start, float end, float value)
@@ -610,25 +608,22 @@ public static class EasingFunction
         value /= 1f;
         end -= start;
 
-        if (value < 1 / 2.75f)
-        {
-            return 2f * end * 7.5625f * value;
-        }
-        else if (value < 2 / 2.75f)
+        if (value < 1 / 2.75f) return 2f * end * 7.5625f * value;
+
+        if (value < 2 / 2.75f)
         {
             value -= 1.5f / 2.75f;
             return 2f * end * 7.5625f * value;
         }
-        else if (value < 2.5 / 2.75)
+
+        if (value < 2.5 / 2.75)
         {
             value -= 2.25f / 2.75f;
             return 2f * end * 7.5625f * value;
         }
-        else
-        {
-            value -= 2.625f / 2.75f;
-            return 2f * end * 7.5625f * value;
-        }
+
+        value -= 2.625f / 2.75f;
+        return 2f * end * 7.5625f * value;
     }
 
     public static float EaseInOutBounceD(float start, float end, float value)
@@ -638,8 +633,7 @@ public static class EasingFunction
 
         if (value < d * 0.5f)
             return EaseInBounceD(0, end, value * 2) * 0.5f;
-        else
-            return EaseOutBounceD(0, end, value * 2 - d) * 0.5f;
+        return EaseOutBounceD(0, end, value * 2 - d) * 0.5f;
     }
 
     public static float EaseInBackD(float start, float end, float value)
@@ -763,8 +757,6 @@ public static class EasingFunction
                    Mathf.Sin(Mathf.Pi * value * (2.5f * value * value * value + 0.2f)) + value
                    / 5f);
     }
-
-    public delegate float Function(float s, float e, float v);
 
     /// <summary>
     /// Returns the function associated to the easingFunction enum. This value returned should be cached as it allocates memory

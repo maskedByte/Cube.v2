@@ -1,9 +1,10 @@
 using System.Runtime.InteropServices;
+using System.Text;
 
-namespace Engine.OpenGL.OpenGL.Core;
+namespace Engine.OpenGL.Vendor.OpenGL.Core;
 
 // Automatically generated from GlCore.cs using BuildGl
-partial class Gl
+internal partial class Gl
 {
     /// <summary>
     /// Set the active program object for a program pipeline object.
@@ -288,10 +289,7 @@ partial class Gl
     /// </param>
     public static void BindAttribLocation(uint program, int index, string name)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glBindAttribLocation(program, (uint)index, name);
     }
@@ -1178,7 +1176,8 @@ partial class Gl
     public static void BlitFramebuffer(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1,
         int dstY1, ClearBufferMask mask, BlitFramebufferFilter filter)
     {
-        global::OpenGL.Gl.Delegates.glBlitFramebuffer(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
+        global::OpenGL.Gl.Delegates.glBlitFramebuffer(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask,
+            filter);
     }
 
     /// <summary>
@@ -1230,7 +1229,8 @@ partial class Gl
         int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, ClearBufferMask mask,
         BlitFramebufferFilter filter)
     {
-        global::OpenGL.Gl.Delegates.glBlitNamedFramebuffer(readFramebuffer, drawFramebuffer, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0,
+        global::OpenGL.Gl.Delegates.glBlitNamedFramebuffer(readFramebuffer, drawFramebuffer, srcX0, srcY0, srcX1, srcY1,
+            dstX0, dstY0,
             dstX1, dstY1, mask, filter);
     }
 
@@ -1980,7 +1980,8 @@ partial class Gl
     public static void ClearTexSubImage(uint texture, int level, int xoffset, int yoffset, int zoffset, int width,
         int height, int depth, PixelInternalFormat format, PixelType type, nint data)
     {
-        global::OpenGL.Gl.Delegates.glClearTexSubImage(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type,
+        global::OpenGL.Gl.Delegates.glClearTexSubImage(texture, level, xoffset, yoffset, zoffset, width, height, depth,
+            format, type,
             data);
     }
 
@@ -2135,7 +2136,8 @@ partial class Gl
     public static void CompressedTexImage1D(TextureTarget target, int level, PixelInternalFormat internalFormat,
         int width, int border, int imageSize, nint data)
     {
-        global::OpenGL.Gl.Delegates.glCompressedTexImage1D(target, level, internalFormat, width, border, imageSize, data);
+        global::OpenGL.Gl.Delegates.glCompressedTexImage1D(target, level, internalFormat, width, border, imageSize,
+            data);
     }
 
     /// <summary>
@@ -2177,7 +2179,8 @@ partial class Gl
     public static void CompressedTexImage2D(TextureTarget target, int level, PixelInternalFormat internalFormat,
         int width, int height, int border, int imageSize, nint data)
     {
-        global::OpenGL.Gl.Delegates.glCompressedTexImage2D(target, level, internalFormat, width, height, border, imageSize, data);
+        global::OpenGL.Gl.Delegates.glCompressedTexImage2D(target, level, internalFormat, width, height, border,
+            imageSize, data);
     }
 
     /// <summary>
@@ -2221,7 +2224,8 @@ partial class Gl
     public static void CompressedTexImage3D(TextureTarget target, int level, PixelInternalFormat internalFormat,
         int width, int height, int depth, int border, int imageSize, nint data)
     {
-        global::OpenGL.Gl.Delegates.glCompressedTexImage3D(target, level, internalFormat, width, height, depth, border, imageSize,
+        global::OpenGL.Gl.Delegates.glCompressedTexImage3D(target, level, internalFormat, width, height, depth, border,
+            imageSize,
             data);
     }
 
@@ -2291,7 +2295,8 @@ partial class Gl
     public static void CompressedTextureSubImage1D(uint texture, int level, int xoffset, int width,
         PixelInternalFormat format, int imageSize, nint data)
     {
-        global::OpenGL.Gl.Delegates.glCompressedTextureSubImage1D(texture, level, xoffset, width, format, imageSize, data);
+        global::OpenGL.Gl.Delegates.glCompressedTextureSubImage1D(texture, level, xoffset, width, format, imageSize,
+            data);
     }
 
     /// <summary>
@@ -2334,7 +2339,8 @@ partial class Gl
     public static void CompressedTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width,
         int height, PixelFormat format, int imageSize, nint data)
     {
-        global::OpenGL.Gl.Delegates.glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize,
+        global::OpenGL.Gl.Delegates.glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format,
+            imageSize,
             data);
     }
 
@@ -2375,7 +2381,8 @@ partial class Gl
     public static void CompressedTextureSubImage2D(uint texture, int level, int xoffset, int yoffset, int width,
         int height, PixelInternalFormat format, int imageSize, nint data)
     {
-        global::OpenGL.Gl.Delegates.glCompressedTextureSubImage2D(texture, level, xoffset, yoffset, width, height, format, imageSize,
+        global::OpenGL.Gl.Delegates.glCompressedTextureSubImage2D(texture, level, xoffset, yoffset, width, height,
+            format, imageSize,
             data);
     }
 
@@ -2422,7 +2429,8 @@ partial class Gl
     public static void CompressedTexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset,
         int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, nint data)
     {
-        global::OpenGL.Gl.Delegates.glCompressedTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format,
+        global::OpenGL.Gl.Delegates.glCompressedTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height,
+            depth, format,
             imageSize, data);
     }
 
@@ -2468,7 +2476,8 @@ partial class Gl
     public static void CompressedTextureSubImage3D(uint texture, int level, int xoffset, int yoffset, int zoffset,
         int width, int height, int depth, PixelInternalFormat format, int imageSize, nint data)
     {
-        global::OpenGL.Gl.Delegates.glCompressedTextureSubImage3D(texture, level, xoffset, yoffset, zoffset, width, height, depth,
+        global::OpenGL.Gl.Delegates.glCompressedTextureSubImage3D(texture, level, xoffset, yoffset, zoffset, width,
+            height, depth,
             format, imageSize, data);
     }
 
@@ -2596,7 +2605,8 @@ partial class Gl
         int srcZ, uint dstName, BufferTarget dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int srcWidth,
         int srcHeight, int srcDepth)
     {
-        global::OpenGL.Gl.Delegates.glCopyImageSubData(srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstName, dstTarget, dstLevel,
+        global::OpenGL.Gl.Delegates.glCopyImageSubData(srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstName,
+            dstTarget, dstLevel,
             dstX, dstY, dstZ, srcWidth, srcHeight, srcDepth);
     }
 
@@ -2929,7 +2939,8 @@ partial class Gl
     public static void CopyTextureSubImage3D(uint texture, int level, int xoffset, int yoffset, int zoffset, int x,
         int y, int width, int height)
     {
-        global::OpenGL.Gl.Delegates.glCopyTextureSubImage3D(texture, level, xoffset, yoffset, zoffset, x, y, width, height);
+        global::OpenGL.Gl.Delegates.glCopyTextureSubImage3D(texture, level, xoffset, yoffset, zoffset, x, y, width,
+            height);
     }
 
     /// <summary>
@@ -3495,7 +3506,8 @@ partial class Gl
     }
 
     /// <summary>
-    /// Specify mapping of depth values from normalized device coordinates to window coordinates for a specified set of viewports.
+    /// Specify mapping of depth values from normalized device coordinates to window coordinates for a specified set of
+    /// viewports.
     /// <para>
     /// After clipping and division by w, depth coordinates range from -1 to 1, corresponding to the near
     /// and far clipping planes. Each viewport has an independent depth range specified as a linear mapping
@@ -3975,7 +3987,8 @@ partial class Gl
     public static void DrawElementsInstancedBaseInstance(BeginMode mode, int count, DrawElementsType type,
         nint indices, int primcount, uint baseinstance)
     {
-        global::OpenGL.Gl.Delegates.glDrawElementsInstancedBaseInstance(mode, count, type, indices, primcount, baseinstance);
+        global::OpenGL.Gl.Delegates.glDrawElementsInstancedBaseInstance(mode, count, type, indices, primcount,
+            baseinstance);
     }
 
     /// <summary>
@@ -4014,7 +4027,8 @@ partial class Gl
     public static void DrawElementsInstancedBaseVertex(BeginMode mode, int count, DrawElementsType type,
         nint indices, int primcount, int basevertex)
     {
-        global::OpenGL.Gl.Delegates.glDrawElementsInstancedBaseVertex(mode, count, type, indices, primcount, basevertex);
+        global::OpenGL.Gl.Delegates.glDrawElementsInstancedBaseVertex(mode, count, type, indices, primcount,
+            basevertex);
     }
 
     /// <summary>
@@ -4057,7 +4071,8 @@ partial class Gl
     public static void DrawElementsInstancedBaseVertexBaseInstance(BeginMode mode, int count, DrawElementsType type,
         nint indices, int primcount, int basevertex, uint baseinstance)
     {
-        global::OpenGL.Gl.Delegates.glDrawElementsInstancedBaseVertexBaseInstance(mode, count, type, indices, primcount, basevertex,
+        global::OpenGL.Gl.Delegates.glDrawElementsInstancedBaseVertexBaseInstance(mode, count, type, indices, primcount,
+            basevertex,
             baseinstance);
     }
 
@@ -4356,10 +4371,7 @@ partial class Gl
     /// </param>
     public static void EnableVertexAttribArray(int index)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glEnableVertexAttribArray((uint)index);
     }
@@ -4393,10 +4405,7 @@ partial class Gl
     /// </param>
     public static void DisableVertexAttribArray(int index)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glDisableVertexAttribArray((uint)index);
     }
@@ -4438,10 +4447,7 @@ partial class Gl
     /// </param>
     public static void EnableVertexArrayAttrib(uint vaobj, int index)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glEnableVertexArrayAttrib(vaobj, (uint)index);
     }
@@ -4483,10 +4489,7 @@ partial class Gl
     /// </param>
     public static void DisableVertexArrayAttrib(uint vaobj, int index)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glDisableVertexArrayAttrib(vaobj, (uint)index);
     }
@@ -4682,7 +4685,8 @@ partial class Gl
     public static void NamedFramebufferRenderbuffer(uint framebuffer, FramebufferAttachment attachment,
         RenderbufferTarget renderbuffertarget, uint renderbuffer)
     {
-        global::OpenGL.Gl.Delegates.glNamedFramebufferRenderbuffer(framebuffer, attachment, renderbuffertarget, renderbuffer);
+        global::OpenGL.Gl.Delegates.glNamedFramebufferRenderbuffer(framebuffer, attachment, renderbuffertarget,
+            renderbuffer);
     }
 
     /// <summary>
@@ -5396,7 +5400,7 @@ partial class Gl
     /// </param>
     public static void GetActiveAttrib(uint program, uint index, int bufSize, [Out] int[] length,
         [Out] int[] size, [Out] ActiveAttribType[] type,
-        [Out] System.Text.StringBuilder name)
+        [Out] StringBuilder name)
     {
         global::OpenGL.Gl.Delegates.glGetActiveAttrib(program, index, bufSize, length, size, type, name);
     }
@@ -5435,12 +5439,9 @@ partial class Gl
     /// </param>
     public static void GetActiveAttrib(uint program, int index, int bufSize, [Out] int[] length,
         [Out] int[] size, [Out] ActiveAttribType[] type,
-        [Out] System.Text.StringBuilder name)
+        [Out] StringBuilder name)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glGetActiveAttrib(program, (uint)index, bufSize, length, size, type, name);
     }
@@ -5475,7 +5476,7 @@ partial class Gl
     /// written.
     /// </param>
     public static void GetActiveSubroutineName(uint program, ShaderType shadertype, uint index, int bufsize,
-        [Out] int[] length, [Out] System.Text.StringBuilder name)
+        [Out] int[] length, [Out] StringBuilder name)
     {
         global::OpenGL.Gl.Delegates.glGetActiveSubroutineName(program, shadertype, index, bufsize, length, name);
     }
@@ -5543,10 +5544,7 @@ partial class Gl
     public static void GetActiveSubroutineUniformiv(uint program, ShaderType shadertype, int index,
         SubroutineParameterName pname, [Out] int[] values)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glGetActiveSubroutineUniformiv(program, shadertype, (uint)index, pname, values);
     }
@@ -5576,14 +5574,13 @@ partial class Gl
     /// </param>
     /// <param name="length">
     /// Specifies the address of a variable into which is written the number of characters copied into name.
-    ///
     /// </param>
     /// <param name="name">
     /// Specifies the address of a buffer that will receive the name of the specified shader subroutine
     /// uniform.
     /// </param>
     public static void GetActiveSubroutineUniformName(uint program, ShaderType shadertype, uint index, int bufsize,
-        [Out] int[] length, [Out] System.Text.StringBuilder name)
+        [Out] int[] length, [Out] StringBuilder name)
     {
         global::OpenGL.Gl.Delegates.glGetActiveSubroutineUniformName(program, shadertype, index, bufsize, length, name);
     }
@@ -5613,21 +5610,18 @@ partial class Gl
     /// </param>
     /// <param name="length">
     /// Specifies the address of a variable into which is written the number of characters copied into name.
-    ///
     /// </param>
     /// <param name="name">
     /// Specifies the address of a buffer that will receive the name of the specified shader subroutine
     /// uniform.
     /// </param>
     public static void GetActiveSubroutineUniformName(uint program, ShaderType shadertype, int index, int bufsize,
-        [Out] int[] length, [Out] System.Text.StringBuilder name)
+        [Out] int[] length, [Out] StringBuilder name)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
-        global::OpenGL.Gl.Delegates.glGetActiveSubroutineUniformName(program, shadertype, (uint)index, bufsize, length, name);
+        global::OpenGL.Gl.Delegates.glGetActiveSubroutineUniformName(program, shadertype, (uint)index, bufsize, length,
+            name);
     }
 
     /// <summary>
@@ -5664,7 +5658,7 @@ partial class Gl
     /// </param>
     public static void GetActiveUniform(uint program, uint index, int bufSize, [Out] int[] length,
         [Out] int[] size, [Out] ActiveUniformType[] type,
-        [Out] System.Text.StringBuilder name)
+        [Out] StringBuilder name)
     {
         global::OpenGL.Gl.Delegates.glGetActiveUniform(program, index, bufSize, length, size, type, name);
     }
@@ -5703,12 +5697,9 @@ partial class Gl
     /// </param>
     public static void GetActiveUniform(uint program, int index, int bufSize, [Out] int[] length,
         [Out] int[] size, [Out] ActiveUniformType[] type,
-        [Out] System.Text.StringBuilder name)
+        [Out] StringBuilder name)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glGetActiveUniform(program, (uint)index, bufSize, length, size, type, name);
     }
@@ -5762,9 +5753,10 @@ partial class Gl
     /// uniformBlockIndex.
     /// </param>
     public static void GetActiveUniformBlockName(uint program, uint uniformBlockIndex, int bufSize,
-        [Out] int[] length, [Out] System.Text.StringBuilder uniformBlockName)
+        [Out] int[] length, [Out] StringBuilder uniformBlockName)
     {
-        global::OpenGL.Gl.Delegates.glGetActiveUniformBlockName(program, uniformBlockIndex, bufSize, length, uniformBlockName);
+        global::OpenGL.Gl.Delegates.glGetActiveUniformBlockName(program, uniformBlockIndex, bufSize, length,
+            uniformBlockName);
     }
 
     /// <summary>
@@ -5798,7 +5790,7 @@ partial class Gl
     /// uniformIndex within program.
     /// </param>
     public static void GetActiveUniformName(uint program, uint uniformIndex, int bufSize,
-        [Out] int[] length, [Out] System.Text.StringBuilder uniformName)
+        [Out] int[] length, [Out] StringBuilder uniformName)
     {
         global::OpenGL.Gl.Delegates.glGetActiveUniformName(program, uniformIndex, bufSize, length, uniformName);
     }
@@ -6260,7 +6252,8 @@ partial class Gl
     public static void GetCompressedTextureSubImage(uint texture, int level, int xoffset, int yoffset, int zoffset,
         int width, int height, int depth, int bufSize, [Out] nint pixels)
     {
-        global::OpenGL.Gl.Delegates.glGetCompressedTextureSubImage(texture, level, xoffset, yoffset, zoffset, width, height, depth,
+        global::OpenGL.Gl.Delegates.glGetCompressedTextureSubImage(texture, level, xoffset, yoffset, zoffset, width,
+            height, depth,
             bufSize, pixels);
     }
 
@@ -6546,7 +6539,7 @@ partial class Gl
     /// The address of a string that will receive the object label.
     /// </param>
     public static void GetObjectLabel(ObjectLabel identifier, uint name, int bufSize, [Out] int[] length,
-        [Out] System.Text.StringBuilder label)
+        [Out] StringBuilder label)
     {
         global::OpenGL.Gl.Delegates.glGetObjectLabel(identifier, name, bufSize, length, label);
     }
@@ -6570,7 +6563,7 @@ partial class Gl
     /// The address of a string that will receive the object label.
     /// </param>
     public static void GetObjectPtrLabel([Out] nint ptr, int bufSize, [Out] int[] length,
-        [Out] System.Text.StringBuilder label)
+        [Out] StringBuilder label)
     {
         global::OpenGL.Gl.Delegates.glGetObjectPtrLabel(ptr, bufSize, length, label);
     }
@@ -6676,7 +6669,7 @@ partial class Gl
     /// Specifies an array of characters that is used to return the information log.
     /// </param>
     public static void GetProgramInfoLog(uint program, int maxLength, [Out] int[] length,
-        [Out] System.Text.StringBuilder infoLog)
+        [Out] StringBuilder infoLog)
     {
         global::OpenGL.Gl.Delegates.glGetProgramInfoLog(program, maxLength, length, infoLog);
     }
@@ -6755,7 +6748,7 @@ partial class Gl
     /// pipeline.
     /// </param>
     public static void GetProgramPipelineInfoLog(uint pipeline, int bufSize, [Out] int[] length,
-        [Out] System.Text.StringBuilder infoLog)
+        [Out] StringBuilder infoLog)
     {
         global::OpenGL.Gl.Delegates.glGetProgramPipelineInfoLog(pipeline, bufSize, length, infoLog);
     }
@@ -6793,7 +6786,8 @@ partial class Gl
         int propCount, [Out] ProgramResourceParameterName[] props, int bufSize,
         [Out] int[] length, [Out] int[] @params)
     {
-        global::OpenGL.Gl.Delegates.glGetProgramResourceiv(program, programInterface, index, propCount, props, bufSize, length,
+        global::OpenGL.Gl.Delegates.glGetProgramResourceiv(program, programInterface, index, propCount, props, bufSize,
+            length,
             @params);
     }
 
@@ -6892,7 +6886,7 @@ partial class Gl
     /// The address of a character array into which will be written the name of the resource.
     /// </param>
     public static void GetProgramResourceName(uint program, ProgramInterface programInterface, uint index,
-        int bufSize, [Out] int[] length, [Out] System.Text.StringBuilder name)
+        int bufSize, [Out] int[] length, [Out] StringBuilder name)
     {
         global::OpenGL.Gl.Delegates.glGetProgramResourceName(program, programInterface, index, bufSize, length, name);
     }
@@ -7271,7 +7265,7 @@ partial class Gl
     /// Specifies an array of characters that is used to return the information log.
     /// </param>
     public static void GetShaderInfoLog(uint shader, int maxLength, [Out] int[] length,
-        [Out] System.Text.StringBuilder infoLog)
+        [Out] StringBuilder infoLog)
     {
         global::OpenGL.Gl.Delegates.glGetShaderInfoLog(shader, maxLength, length, infoLog);
     }
@@ -7329,7 +7323,7 @@ partial class Gl
     /// Specifies an array of characters that is used to return the source code string.
     /// </param>
     public static void GetShaderSource(uint shader, int bufSize, [Out] int[] length,
-        [Out] System.Text.StringBuilder source)
+        [Out] StringBuilder source)
     {
         global::OpenGL.Gl.Delegates.glGetShaderSource(shader, bufSize, length, source);
     }
@@ -8125,7 +8119,8 @@ partial class Gl
     public static void GetTextureSubImage(uint texture, int level, int xoffset, int yoffset, int zoffset, int width,
         int height, int depth, PixelFormat format, PixelType type, int bufSize, [Out] nint pixels)
     {
-        global::OpenGL.Gl.Delegates.glGetTextureSubImage(texture, level, xoffset, yoffset, zoffset, width, height, depth, format,
+        global::OpenGL.Gl.Delegates.glGetTextureSubImage(texture, level, xoffset, yoffset, zoffset, width, height,
+            depth, format,
             type, bufSize, pixels);
     }
 
@@ -8263,7 +8258,7 @@ partial class Gl
     /// </param>
     public static void GetTransformFeedbackVarying(uint program, uint index, int bufSize,
         [Out] int[] length, [Out] int[] size, [Out] ActiveAttribType[] type,
-        [Out] System.Text.StringBuilder name)
+        [Out] StringBuilder name)
     {
         global::OpenGL.Gl.Delegates.glGetTransformFeedbackVarying(program, index, bufSize, length, size, type, name);
     }
@@ -8731,10 +8726,7 @@ partial class Gl
     /// </param>
     public static void GetVertexAttribdv(int index, VertexAttribParameter pname, [Out] double[] @params)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glGetVertexAttribdv((uint)index, pname, @params);
     }
@@ -8786,10 +8778,7 @@ partial class Gl
     /// </param>
     public static void GetVertexAttribfv(int index, VertexAttribParameter pname, [Out] float[] @params)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glGetVertexAttribfv((uint)index, pname, @params);
     }
@@ -8841,10 +8830,7 @@ partial class Gl
     /// </param>
     public static void GetVertexAttribiv(int index, VertexAttribParameter pname, [Out] int[] @params)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glGetVertexAttribiv((uint)index, pname, @params);
     }
@@ -8896,10 +8882,7 @@ partial class Gl
     /// </param>
     public static void GetVertexAttribIiv(int index, VertexAttribParameter pname, [Out] int[] @params)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glGetVertexAttribIiv((uint)index, pname, @params);
     }
@@ -8951,10 +8934,7 @@ partial class Gl
     /// </param>
     public static void GetVertexAttribIuiv(int index, VertexAttribParameter pname, [Out] uint[] @params)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glGetVertexAttribIuiv((uint)index, pname, @params);
     }
@@ -9006,10 +8986,7 @@ partial class Gl
     /// </param>
     public static void GetVertexAttribLdv(int index, VertexAttribParameter pname, [Out] double[] @params)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glGetVertexAttribLdv((uint)index, pname, @params);
     }
@@ -9059,10 +9036,7 @@ partial class Gl
     public static void GetVertexAttribPointerv(int index, VertexAttribPointerParameter pname,
         [Out] nint pointer)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glGetVertexAttribPointerv((uint)index, pname, pointer);
     }
@@ -9203,7 +9177,8 @@ partial class Gl
     public static void InvalidateSubFramebuffer(FramebufferTarget target, int numAttachments,
         FramebufferAttachment[] attachments, int x, int y, int width, int height)
     {
-        global::OpenGL.Gl.Delegates.glInvalidateSubFramebuffer(target, numAttachments, attachments, x, y, width, height);
+        global::OpenGL.Gl.Delegates.glInvalidateSubFramebuffer(target, numAttachments, attachments, x, y, width,
+            height);
     }
 
     /// <summary>
@@ -9237,7 +9212,8 @@ partial class Gl
     public static void InvalidateNamedFramebufferSubData(uint framebuffer, int numAttachments,
         FramebufferAttachment[] attachments, int x, int y, int width, int height)
     {
-        global::OpenGL.Gl.Delegates.glInvalidateNamedFramebufferSubData(framebuffer, numAttachments, attachments, x, y, width,
+        global::OpenGL.Gl.Delegates.glInvalidateNamedFramebufferSubData(framebuffer, numAttachments, attachments, x, y,
+            width,
             height);
     }
 
@@ -9300,7 +9276,8 @@ partial class Gl
     public static void InvalidateTexSubImage(uint texture, int level, int xoffset, int yoffset, int zoffset,
         int width, int height, int depth)
     {
-        global::OpenGL.Gl.Delegates.glInvalidateTexSubImage(texture, level, xoffset, yoffset, zoffset, width, height, depth);
+        global::OpenGL.Gl.Delegates.glInvalidateTexSubImage(texture, level, xoffset, yoffset, zoffset, width, height,
+            depth);
     }
 
     /// <summary>
@@ -11292,7 +11269,8 @@ partial class Gl
     }
 
     /// <summary>
-    /// Record the GL time into a query object after all previous commands have reached the GL server but have not yet necessarily executed.
+    /// Record the GL time into a query object after all previous commands have reached the GL server but have not yet
+    /// necessarily executed.
     /// <para>
     /// glQueryCounter causes the GL to record the current time into the query object named id. target must
     /// be GL_TIMESTAMP. The time is recorded after all previous commands on the GL client and server state
@@ -11564,7 +11542,8 @@ partial class Gl
     public static void NamedRenderbufferStorageMultisample(uint renderbuffer, int samples,
         RenderbufferStorage internalFormat, int width, int height)
     {
-        global::OpenGL.Gl.Delegates.glNamedRenderbufferStorageMultisample(renderbuffer, samples, internalFormat, width, height);
+        global::OpenGL.Gl.Delegates.glNamedRenderbufferStorageMultisample(renderbuffer, samples, internalFormat, width,
+            height);
     }
 
     /// <summary>
@@ -11879,7 +11858,6 @@ partial class Gl
     /// </param>
     /// <param name="shaders">
     /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
-    ///
     /// </param>
     /// <param name="binaryFormat">
     /// Specifies the format of the shader binaries contained in binary.
@@ -12318,7 +12296,8 @@ partial class Gl
     public static void TexImage2D(TextureTarget target, int level, PixelInternalFormat internalFormat, int width,
         int height, int border, PixelFormat format, PixelType type, nint data)
     {
-        global::OpenGL.Gl.Delegates.glTexImage2D(target, level, internalFormat, width, height, border, format, type, data);
+        global::OpenGL.Gl.Delegates.glTexImage2D(target, level, internalFormat, width, height, border, format, type,
+            data);
     }
 
     /// <summary>
@@ -12353,7 +12332,8 @@ partial class Gl
     public static void TexImage2DMultisample(TextureTargetMultisample target, int samples,
         PixelInternalFormat internalFormat, int width, int height, bool fixedsamplelocations)
     {
-        global::OpenGL.Gl.Delegates.glTexImage2DMultisample(target, samples, internalFormat, width, height, fixedsamplelocations);
+        global::OpenGL.Gl.Delegates.glTexImage2DMultisample(target, samples, internalFormat, width, height,
+            fixedsamplelocations);
     }
 
     /// <summary>
@@ -12412,7 +12392,8 @@ partial class Gl
     public static void TexImage3D(TextureTarget target, int level, PixelInternalFormat internalFormat, int width,
         int height, int depth, int border, PixelFormat format, PixelType type, nint data)
     {
-        global::OpenGL.Gl.Delegates.glTexImage3D(target, level, internalFormat, width, height, depth, border, format, type, data);
+        global::OpenGL.Gl.Delegates.glTexImage3D(target, level, internalFormat, width, height, depth, border, format,
+            type, data);
     }
 
     /// <summary>
@@ -12991,7 +12972,8 @@ partial class Gl
     public static void TexStorage2DMultisample(TextureTarget target, int samples,
         SizedInternalFormat internalFormat, int width, int height, bool fixedsamplelocations)
     {
-        global::OpenGL.Gl.Delegates.glTexStorage2DMultisample(target, samples, internalFormat, width, height, fixedsamplelocations);
+        global::OpenGL.Gl.Delegates.glTexStorage2DMultisample(target, samples, internalFormat, width, height,
+            fixedsamplelocations);
     }
 
     /// <summary>
@@ -13181,7 +13163,8 @@ partial class Gl
     public static void TextureStorage3DMultisample(uint texture, int samples, SizedInternalFormat internalFormat,
         int width, int height, int depth, bool fixedsamplelocations)
     {
-        global::OpenGL.Gl.Delegates.glTextureStorage3DMultisample(texture, samples, internalFormat, width, height, depth,
+        global::OpenGL.Gl.Delegates.glTextureStorage3DMultisample(texture, samples, internalFormat, width, height,
+            depth,
             fixedsamplelocations);
     }
 
@@ -13317,7 +13300,8 @@ partial class Gl
     public static void TexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width,
         int height, PixelFormat format, PixelType type, nint pixels)
     {
-        global::OpenGL.Gl.Delegates.glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
+        global::OpenGL.Gl.Delegates.glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type,
+            pixels);
     }
 
     /// <summary>
@@ -13365,7 +13349,8 @@ partial class Gl
     public static void TextureSubImage2D(uint texture, int level, int xoffset, int yoffset, int width, int height,
         PixelFormat format, PixelType type, nint pixels)
     {
-        global::OpenGL.Gl.Delegates.glTextureSubImage2D(texture, level, xoffset, yoffset, width, height, format, type, pixels);
+        global::OpenGL.Gl.Delegates.glTextureSubImage2D(texture, level, xoffset, yoffset, width, height, format, type,
+            pixels);
     }
 
     /// <summary>
@@ -13419,7 +13404,8 @@ partial class Gl
     public static void TexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset,
         int width, int height, int depth, PixelFormat format, PixelType type, nint pixels)
     {
-        global::OpenGL.Gl.Delegates.glTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type,
+        global::OpenGL.Gl.Delegates.glTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth,
+            format, type,
             pixels);
     }
 
@@ -13474,7 +13460,8 @@ partial class Gl
     public static void TextureSubImage3D(uint texture, int level, int xoffset, int yoffset, int zoffset, int width,
         int height, int depth, PixelFormat format, PixelType type, nint pixels)
     {
-        global::OpenGL.Gl.Delegates.glTextureSubImage3D(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type,
+        global::OpenGL.Gl.Delegates.glTextureSubImage3D(texture, level, xoffset, yoffset, zoffset, width, height, depth,
+            format, type,
             pixels);
     }
 
@@ -13530,7 +13517,8 @@ partial class Gl
     public static void TextureView(uint texture, TextureTarget target, uint origtexture,
         PixelInternalFormat internalFormat, uint minlevel, uint numlevels, uint minlayer, uint numlayers)
     {
-        global::OpenGL.Gl.Delegates.glTextureView(texture, target, origtexture, internalFormat, minlevel, numlevels, minlayer,
+        global::OpenGL.Gl.Delegates.glTextureView(texture, target, origtexture, internalFormat, minlevel, numlevels,
+            minlayer,
             numlayers);
     }
 
@@ -14752,10 +14740,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib1f(int index, float v0)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib1f((uint)index, v0);
     }
@@ -14793,10 +14778,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib1s(int index, short v0)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib1s((uint)index, v0);
     }
@@ -14834,10 +14816,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib1d(int index, double v0)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib1d((uint)index, v0);
     }
@@ -14875,10 +14854,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI1i(int index, int v0)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI1i((uint)index, v0);
     }
@@ -14916,10 +14892,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI1ui(int index, uint v0)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI1ui((uint)index, v0);
     }
@@ -14963,10 +14936,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib2f(int index, float v0, float v1)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib2f((uint)index, v0, v1);
     }
@@ -15010,10 +14980,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib2s(int index, short v0, short v1)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib2s((uint)index, v0, v1);
     }
@@ -15057,10 +15024,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib2d(int index, double v0, double v1)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib2d((uint)index, v0, v1);
     }
@@ -15104,10 +15068,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI2i(int index, int v0, int v1)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI2i((uint)index, v0, v1);
     }
@@ -15151,10 +15112,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI2ui(int index, uint v0, uint v1)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI2ui((uint)index, v0, v1);
     }
@@ -15204,10 +15162,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib3f(int index, float v0, float v1, float v2)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib3f((uint)index, v0, v1, v2);
     }
@@ -15257,10 +15212,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib3s(int index, short v0, short v1, short v2)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib3s((uint)index, v0, v1, v2);
     }
@@ -15310,10 +15262,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib3d(int index, double v0, double v1, double v2)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib3d((uint)index, v0, v1, v2);
     }
@@ -15363,10 +15312,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI3i(int index, int v0, int v1, int v2)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI3i((uint)index, v0, v1, v2);
     }
@@ -15416,10 +15362,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI3ui(int index, uint v0, uint v1, uint v2)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI3ui((uint)index, v0, v1, v2);
     }
@@ -15475,10 +15418,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib4f(int index, float v0, float v1, float v2, float v3)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4f((uint)index, v0, v1, v2, v3);
     }
@@ -15534,10 +15474,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib4s(int index, short v0, short v1, short v2, short v3)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4s((uint)index, v0, v1, v2, v3);
     }
@@ -15593,10 +15530,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib4d(int index, double v0, double v1, double v2, double v3)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4d((uint)index, v0, v1, v2, v3);
     }
@@ -15652,10 +15586,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib4Nub(int index, byte v0, byte v1, byte v2, byte v3)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4Nub((uint)index, v0, v1, v2, v3);
     }
@@ -15711,10 +15642,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI4i(int index, int v0, int v1, int v2, int v3)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI4i((uint)index, v0, v1, v2, v3);
     }
@@ -15770,10 +15698,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI4ui(int index, uint v0, uint v1, uint v2, uint v3)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI4ui((uint)index, v0, v1, v2, v3);
     }
@@ -15811,10 +15736,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribL1d(int index, double v0)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribL1d((uint)index, v0);
     }
@@ -15858,10 +15780,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribL2d(int index, double v0, double v1)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribL2d((uint)index, v0, v1);
     }
@@ -15911,10 +15830,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribL3d(int index, double v0, double v1, double v2)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribL3d((uint)index, v0, v1, v2);
     }
@@ -15970,10 +15886,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribL4d(int index, double v0, double v1, double v2, double v3)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribL4d((uint)index, v0, v1, v2, v3);
     }
@@ -16013,10 +15926,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib1fv(int index, float[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib1fv((uint)index, v);
     }
@@ -16056,10 +15966,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib1sv(int index, short[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib1sv((uint)index, v);
     }
@@ -16099,10 +16006,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib1dv(int index, double[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib1dv((uint)index, v);
     }
@@ -16142,10 +16046,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI1iv(int index, int[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI1iv((uint)index, v);
     }
@@ -16185,10 +16086,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI1uiv(int index, uint[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI1uiv((uint)index, v);
     }
@@ -16228,10 +16126,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib2fv(int index, float[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib2fv((uint)index, v);
     }
@@ -16271,10 +16166,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib2sv(int index, short[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib2sv((uint)index, v);
     }
@@ -16314,10 +16206,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib2dv(int index, double[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib2dv((uint)index, v);
     }
@@ -16357,10 +16246,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI2iv(int index, int[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI2iv((uint)index, v);
     }
@@ -16400,10 +16286,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI2uiv(int index, uint[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI2uiv((uint)index, v);
     }
@@ -16443,10 +16326,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib3fv(int index, float[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib3fv((uint)index, v);
     }
@@ -16486,10 +16366,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib3sv(int index, short[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib3sv((uint)index, v);
     }
@@ -16529,10 +16406,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib3dv(int index, double[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib3dv((uint)index, v);
     }
@@ -16572,10 +16446,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI3iv(int index, int[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI3iv((uint)index, v);
     }
@@ -16615,10 +16486,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI3uiv(int index, uint[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI3uiv((uint)index, v);
     }
@@ -16658,10 +16526,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib4fv(int index, float[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4fv((uint)index, v);
     }
@@ -16701,10 +16566,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib4sv(int index, short[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4sv((uint)index, v);
     }
@@ -16744,10 +16606,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib4dv(int index, double[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4dv((uint)index, v);
     }
@@ -16787,10 +16646,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib4iv(int index, int[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4iv((uint)index, v);
     }
@@ -16830,10 +16686,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib4bv(int index, sbyte[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4bv((uint)index, v);
     }
@@ -16873,10 +16726,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib4ubv(int index, byte[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4ubv((uint)index, v);
     }
@@ -16916,10 +16766,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib4usv(int index, ushort[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4usv((uint)index, v);
     }
@@ -16959,10 +16806,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib4uiv(int index, uint[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4uiv((uint)index, v);
     }
@@ -17002,10 +16846,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib4Nbv(int index, sbyte[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4Nbv((uint)index, v);
     }
@@ -17045,10 +16886,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib4Nsv(int index, short[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4Nsv((uint)index, v);
     }
@@ -17088,10 +16926,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib4Niv(int index, int[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4Niv((uint)index, v);
     }
@@ -17131,10 +16966,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib4Nubv(int index, byte[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4Nubv((uint)index, v);
     }
@@ -17174,10 +17006,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib4Nusv(int index, ushort[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4Nusv((uint)index, v);
     }
@@ -17217,10 +17046,7 @@ partial class Gl
     /// </param>
     public static void VertexAttrib4Nuiv(int index, uint[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4Nuiv((uint)index, v);
     }
@@ -17260,10 +17086,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI4bv(int index, sbyte[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI4bv((uint)index, v);
     }
@@ -17303,10 +17126,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI4ubv(int index, byte[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI4ubv((uint)index, v);
     }
@@ -17346,10 +17166,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI4sv(int index, short[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI4sv((uint)index, v);
     }
@@ -17389,10 +17206,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI4usv(int index, ushort[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI4usv((uint)index, v);
     }
@@ -17432,10 +17246,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI4iv(int index, int[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI4iv((uint)index, v);
     }
@@ -17475,10 +17286,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribI4uiv(int index, uint[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribI4uiv((uint)index, v);
     }
@@ -17518,10 +17326,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribL1dv(int index, double[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribL1dv((uint)index, v);
     }
@@ -17561,10 +17366,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribL2dv(int index, double[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribL2dv((uint)index, v);
     }
@@ -17604,10 +17406,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribL3dv(int index, double[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribL3dv((uint)index, v);
     }
@@ -17647,10 +17446,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribL4dv(int index, double[] v)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribL4dv((uint)index, v);
     }
@@ -17710,10 +17506,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribP1ui(int index, VertexAttribPType type, bool normalized, uint value)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribP1ui((uint)index, type, normalized, value);
     }
@@ -17773,10 +17566,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribP2ui(int index, VertexAttribPType type, bool normalized, uint value)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribP2ui((uint)index, type, normalized, value);
     }
@@ -17836,10 +17626,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribP3ui(int index, VertexAttribPType type, bool normalized, uint value)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribP3ui((uint)index, type, normalized, value);
     }
@@ -17899,10 +17686,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribP4ui(int index, VertexAttribPType type, bool normalized, uint value)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribP4ui((uint)index, type, normalized, value);
     }
@@ -17993,10 +17777,7 @@ partial class Gl
     /// </param>
     public static void VertexAttribDivisor(int index, uint divisor)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribDivisor((uint)index, divisor);
     }
@@ -18123,7 +17904,8 @@ partial class Gl
     public static void VertexArrayAttribFormat(uint vaobj, uint attribindex, int size, VertexAttribFormat type,
         bool normalized, uint relativeoffset)
     {
-        global::OpenGL.Gl.Delegates.glVertexArrayAttribFormat(vaobj, attribindex, size, type, normalized, relativeoffset);
+        global::OpenGL.Gl.Delegates.glVertexArrayAttribFormat(vaobj, attribindex, size, type, normalized,
+            relativeoffset);
     }
 
     /// <summary>
@@ -18275,10 +18057,7 @@ partial class Gl
     public static void VertexAttribPointer(int index, int size, VertexAttribPointerType type, bool normalized,
         int stride, nint pointer)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribPointer((uint)index, size, type, normalized, stride, pointer);
     }
@@ -18360,10 +18139,7 @@ partial class Gl
     public static void VertexAttribIPointer(int index, int size, VertexAttribPointerType type, int stride,
         nint pointer)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribIPointer((uint)index, size, type, stride, pointer);
     }
@@ -18445,10 +18221,7 @@ partial class Gl
     public static void VertexAttribLPointer(int index, int size, VertexAttribPointerType type, int stride,
         nint pointer)
     {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException("index");
-        }
+        if (index < 0) throw new ArgumentOutOfRangeException("index");
 
         global::OpenGL.Gl.Delegates.glVertexAttribLPointer((uint)index, size, type, stride, pointer);
     }

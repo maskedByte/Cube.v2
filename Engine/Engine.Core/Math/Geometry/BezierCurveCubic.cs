@@ -41,7 +41,7 @@ public struct BezierCurveCubic
     public float Parallel;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="BezierCurveCubic"/> struct.
+    /// Initializes a new instance of the <see cref="BezierCurveCubic" /> struct.
     /// </summary>
     /// <param name="startAnchor">The start anchor point.</param>
     /// <param name="endAnchor">The end anchor point.</param>
@@ -63,7 +63,7 @@ public struct BezierCurveCubic
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="BezierCurveCubic"/> struct.
+    /// Initializes a new instance of the <see cref="BezierCurveCubic" /> struct.
     /// </summary>
     /// <param name="parallel">The parallel value.</param>
     /// <param name="startAnchor">The start anchor point.</param>
@@ -140,7 +140,7 @@ public struct BezierCurveCubic
     /// <param name="precision">The precision.</param>
     /// <returns>Length of the curve.</returns>
     /// <remarks>
-    /// The precision gets better when the <paramref name="precision"/>
+    /// The precision gets better when the <paramref name="precision" />
     /// value gets smaller.
     /// </remarks>
     [Pure]

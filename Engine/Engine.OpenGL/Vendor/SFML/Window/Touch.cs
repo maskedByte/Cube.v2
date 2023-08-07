@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using SFML.System;
 
-namespace Engine.OpenGL.SFML.Window;
+namespace Engine.OpenGL.Vendor.SFML.Window;
 
 ////////////////////////////////////////////////////////////
 /// <summary>
@@ -51,11 +51,13 @@ public static class Touch
 
     #region Imports
 
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-    static extern bool sfTouch_isDown(uint finger);
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
+    [SuppressUnmanagedCodeSecurity]
+    private static extern bool sfTouch_isDown(uint finger);
 
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-    static extern Vector2i sfTouch_getPosition(uint finger, IntPtr relativeTo);
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
+    [SuppressUnmanagedCodeSecurity]
+    private static extern Vector2i sfTouch_getPosition(uint finger, IntPtr relativeTo);
 
     #endregion
 }

@@ -30,7 +30,7 @@ public struct Vector3d : IEquatable<Vector3d>
     public double Z;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector3d"/> struct.
+    /// Initializes a new instance of the <see cref="Vector3d" /> struct.
     /// </summary>
     /// <param name="value">The value that will initialize this instance.</param>
     public Vector3d(double value)
@@ -41,7 +41,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector3d"/> struct.
+    /// Initializes a new instance of the <see cref="Vector3d" /> struct.
     /// </summary>
     /// <param name="x">The x component of the Vector3.</param>
     /// <param name="y">The y component of the Vector3.</param>
@@ -54,7 +54,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector3d"/> struct.
+    /// Initializes a new instance of the <see cref="Vector3d" /> struct.
     /// </summary>
     /// <param name="v">The Vector2d to copy components from.</param>
     public Vector3d(Vector2d v)
@@ -65,7 +65,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector3d"/> struct.
+    /// Initializes a new instance of the <see cref="Vector3d" /> struct.
     /// </summary>
     /// <param name="v">The Vector3d to copy components from.</param>
     public Vector3d(Vector3d v)
@@ -76,7 +76,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector3d"/> struct.
+    /// Initializes a new instance of the <see cref="Vector3d" /> struct.
     /// </summary>
     /// <param name="v">The Vector4d to copy components from.</param>
     public Vector3d(Vector4d v)
@@ -120,8 +120,8 @@ public struct Vector3d : IEquatable<Vector3d>
     /// <summary>
     /// Gets the length (magnitude) of the vector.
     /// </summary>
-    /// <see cref="LengthFast"/>
-    /// <seealso cref="LengthSquared"/>
+    /// <see cref="LengthFast" />
+    /// <seealso cref="LengthSquared" />
     public double Length
     {
         get { return System.Math.Sqrt(X * X + Y * Y + Z * Z); }
@@ -134,8 +134,8 @@ public struct Vector3d : IEquatable<Vector3d>
     /// This property uses an approximation of the square root function to calculate vector magnitude, with
     /// an upper error bound of 0.001.
     /// </remarks>
-    /// <see cref="Length"/>
-    /// <seealso cref="LengthSquared"/>
+    /// <see cref="Length" />
+    /// <seealso cref="LengthSquared" />
     public double LengthFast
     {
         get { return 1.0 / Mathf.InverseSqrtFast(X * X + Y * Y + Z * Z); }
@@ -148,8 +148,8 @@ public struct Vector3d : IEquatable<Vector3d>
     /// This property avoids the costly square root operation required by the Length property. This makes it more suitable
     /// for comparisons.
     /// </remarks>
-    /// <see cref="Length"/>
-    /// <seealso cref="LengthFast"/>
+    /// <see cref="Length" />
+    /// <seealso cref="LengthFast" />
     public double LengthSquared
     {
         get { return X * X + Y * Y + Z * Z; }
@@ -1419,11 +1419,11 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector3d"/> struct using a tuple containing the component
+    /// Initializes a new instance of the <see cref="Vector3d" /> struct using a tuple containing the component
     /// values.
     /// </summary>
     /// <param name="values">A tuple containing the component values.</param>
-    /// <returns>A new instance of the <see cref="Vector3d"/> struct with the given component values.</returns>
+    /// <returns>A new instance of the <see cref="Vector3d" /> struct with the given component values.</returns>
     [Pure]
     public static implicit operator Vector3d((double X, double Y, double Z) values)
     {

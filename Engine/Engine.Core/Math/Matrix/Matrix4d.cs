@@ -9,7 +9,7 @@ namespace Engine.Math.Matrix;
 /// <summary>
 /// Represents a 4x4 matrix containing 3D rotation, scale, transform, and projection with double-precision components.
 /// </summary>
-/// <seealso cref="Matrix4"/>
+/// <seealso cref="Matrix4" />
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
 public struct Matrix4d : IEquatable<Matrix4d>
@@ -40,7 +40,7 @@ public struct Matrix4d : IEquatable<Matrix4d>
     public static Matrix4d Identity = new Matrix4d(Vector4d.UnitX, Vector4d.UnitY, Vector4d.UnitZ, Vector4d.UnitW);
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Matrix4d"/> struct.
+    /// Initializes a new instance of the <see cref="Matrix4d" /> struct.
     /// </summary>
     /// <param name="row0">Top row of the matrix.</param>
     /// <param name="row1">Second row of the matrix.</param>
@@ -55,7 +55,7 @@ public struct Matrix4d : IEquatable<Matrix4d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Matrix4d"/> struct.
+    /// Initializes a new instance of the <see cref="Matrix4d" /> struct.
     /// </summary>
     /// <param name="m00">First item of the first row.</param>
     /// <param name="m01">Second item of the first row.</param>
@@ -89,7 +89,7 @@ public struct Matrix4d : IEquatable<Matrix4d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Matrix4d"/> struct.
+    /// Initializes a new instance of the <see cref="Matrix4d" /> struct.
     /// </summary>
     /// <param name="topLeft">The top left 3x3 of the matrix.</param>
     public Matrix4d(Matrix3d topLeft)
@@ -428,7 +428,7 @@ public struct Matrix4d : IEquatable<Matrix4d>
     }
 
     /// <summary>
-    /// Divides each element in the Matrix by the <see cref="Determinant"/>.
+    /// Divides each element in the Matrix by the <see cref="Determinant" />.
     /// </summary>
     public void Normalize()
     {
@@ -898,13 +898,13 @@ public struct Matrix4d : IEquatable<Matrix4d>
     /// <param name="result">A projection matrix that transforms camera space to raster space.</param>
     /// <exception cref="System.ArgumentOutOfRangeException">
     /// Thrown under the following conditions:
-    ///  <list type="bullet">
-    ///  <item>fovy is zero, less than zero or larger than Math.PI</item>
-    ///  <item>aspect is negative or zero</item>
-    ///  <item>depthNear is negative or zero</item>
-    ///  <item>depthFar is negative or zero</item>
-    ///  <item>depthNear is larger than depthFar</item>
-    ///  </list>
+    /// <list type="bullet">
+    ///     <item>fovy is zero, less than zero or larger than Math.PI</item>
+    ///     <item>aspect is negative or zero</item>
+    ///     <item>depthNear is negative or zero</item>
+    ///     <item>depthFar is negative or zero</item>
+    ///     <item>depthNear is larger than depthFar</item>
+    /// </list>
     /// </exception>
     public static void CreatePerspectiveFieldOfView
     (
@@ -941,13 +941,13 @@ public struct Matrix4d : IEquatable<Matrix4d>
     /// <returns>A projection matrix that transforms camera space to raster space.</returns>
     /// <exception cref="System.ArgumentOutOfRangeException">
     /// Thrown under the following conditions:
-    ///  <list type="bullet">
-    ///  <item>fovy is zero, less than zero or larger than Math.PI</item>
-    ///  <item>aspect is negative or zero</item>
-    ///  <item>depthNear is negative or zero</item>
-    ///  <item>depthFar is negative or zero</item>
-    ///  <item>depthNear is larger than depthFar</item>
-    ///  </list>
+    /// <list type="bullet">
+    ///     <item>fovy is zero, less than zero or larger than Math.PI</item>
+    ///     <item>aspect is negative or zero</item>
+    ///     <item>depthNear is negative or zero</item>
+    ///     <item>depthFar is negative or zero</item>
+    ///     <item>depthNear is larger than depthFar</item>
+    /// </list>
     /// </exception>
     [Pure]
     public static Matrix4d CreatePerspectiveFieldOfView(double fovy, double aspect, double depthNear, double depthFar)
@@ -968,11 +968,11 @@ public struct Matrix4d : IEquatable<Matrix4d>
     /// <param name="result">A projection matrix that transforms camera space to raster space.</param>
     /// <exception cref="System.ArgumentOutOfRangeException">
     /// Thrown under the following conditions:
-    ///  <list type="bullet">
-    ///  <item>depthNear is negative or zero</item>
-    ///  <item>depthFar is negative or zero</item>
-    ///  <item>depthNear is larger than depthFar</item>
-    ///  </list>
+    /// <list type="bullet">
+    ///     <item>depthNear is negative or zero</item>
+    ///     <item>depthFar is negative or zero</item>
+    ///     <item>depthNear is larger than depthFar</item>
+    /// </list>
     /// </exception>
     public static void CreatePerspectiveOffCenter
     (
@@ -1021,11 +1021,11 @@ public struct Matrix4d : IEquatable<Matrix4d>
     /// <returns>A projection matrix that transforms camera space to raster space.</returns>
     /// <exception cref="System.ArgumentOutOfRangeException">
     /// Thrown under the following conditions:
-    ///  <list type="bullet">
-    ///  <item>depthNear is negative or zero</item>
-    ///  <item>depthFar is negative or zero</item>
-    ///  <item>depthNear is larger than depthFar</item>
-    ///  </list>
+    /// <list type="bullet">
+    ///     <item>depthNear is negative or zero</item>
+    ///     <item>depthFar is negative or zero</item>
+    ///     <item>depthNear is larger than depthFar</item>
+    /// </list>
     /// </exception>
     [Pure]
     public static Matrix4d CreatePerspectiveOffCenter
