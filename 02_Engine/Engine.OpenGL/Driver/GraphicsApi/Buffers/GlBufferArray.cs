@@ -2,7 +2,7 @@ using Engine.Driver.Api.Buffers;
 using Engine.Driver.Api.Shaders;
 using Engine.OpenGL.Vendor.OpenGL.Core;
 
-namespace Engine.OpenGL.GraphicsApi.Buffers;
+namespace Engine.OpenGL.Driver.GraphicsApi.Buffers;
 
 /// <summary>
 /// Implementation of <see cref="GlBufferArray" />

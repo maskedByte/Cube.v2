@@ -3,7 +3,7 @@ using Engine.Math.Geometry;
 using Engine.Math.Vector;
 using Engine.OpenGL.Vendor.OpenGL.Core;
 
-namespace Engine.OpenGL.GraphicsApi.Buffers;
+namespace Engine.OpenGL.Driver.GraphicsApi.Buffers;
 
 /// <summary>
 /// Implementation of <see cref="GlBufferObject" />
