@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using Engine.Driver;
-using Engine.Driver.Api.Buffers;
 using Engine.Driver.Api.Shaders;
 using Engine.Driver.Input;
 using Engine.OpenGL.Driver;
@@ -11,9 +10,23 @@ public class TestApp
     {
         // Create simple OpenGl window
         IDriver driver = new OpenGlDriver();
-        var window = driver.CreateWindow(800, 600, false, true);
-        var input = driver.GetInput();
+        var window = driver.CreateWindow(800, 600, false);
         var api = driver.GetApi();
+
+        var shader = api.CreateShader(ShaderSourceType.Vertex, new[]
+        {
+            "#version 330 core\n" +
+            "layout (location = 0) in vec3 aPos;\n" +
+            "void main()\n" +
+            "{\n" +
+            "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n" +
+            "}\0"
+        });
+
+        var shaderProgram = api.CreateShaderProgram();
+        shaderProgram.AddShader(shader);
+        shaderProgram.Compile();
+
 
         // var bufferArrayObject = api.CreateBufferArray();
         //
