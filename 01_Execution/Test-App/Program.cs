@@ -7,10 +7,11 @@ public class TestApp
     {
         // Create simple OpenGl window
         var driver = new OpenGlDriver();
-        var Window = driver.CreateWindow(800, 600, false, true);
+        var window = driver.CreateWindow(800, 600, false, false);
+
         driver.SetClearColor(Color.Coral);
 
-        while (!Window.WindowTerminated())
+        while (!window.WindowTerminated())
         {
             driver.Clear();
 

@@ -12,7 +12,6 @@ namespace Engine.OpenGL.Driver;
 /// </summary>
 public sealed class Window : IWindow
 {
-    private readonly ContextSettings _contextSettings;
     private readonly Vendor.SFML.Window.Window _internalWindow;
     private Viewport _viewport;
     private bool _cursorGrabbed;
@@ -20,7 +19,7 @@ public sealed class Window : IWindow
     private bool _isTerminated;
     private Input? _input;
 
-    public Window(int width, int height, bool vSync)
+    public Window(int width, int height, bool vSync, bool fullscreen, bool resizeAble)
     {
         _input = null;
 
@@ -34,8 +33,8 @@ public sealed class Window : IWindow
         var windowHeight = Configuration.Instance.Get("Window.Height", height);
         var windowVSync = Configuration.Instance.Get("Window.VSync", vSync);
 
-        var windowResizeAble = Configuration.Instance.Get("Window.Resizeable", false);
-        var windowFullScreen = Configuration.Instance.Get("Window.Fullscreen", false);
+        var windowResizeAble = Configuration.Instance.Get("Window.Resizeable", resizeAble);
+        var windowFullScreen = Configuration.Instance.Get("Window.Fullscreen", fullscreen);
 
         var style = Styles.Titlebar | Styles.Close;
         if (windowResizeAble)
@@ -48,7 +47,7 @@ public sealed class Window : IWindow
             style = Styles.Fullscreen;
         }
 
-        _contextSettings = new ContextSettings
+        var contextSettings = new ContextSettings
         {
             MajorVersion = (uint)oglMajorVersion,
             MinorVersion = (uint)oglMinorVersion,
@@ -61,7 +60,7 @@ public sealed class Window : IWindow
             new VideoMode((uint)windowWidth, (uint)windowHeight),
             Configuration.Instance.Get("Defaults.WindowTitle", "Cube.Engine"),
             style,
-            _contextSettings
+            contextSettings
         );
 
         if (_internalWindow == null)

@@ -45,9 +45,16 @@ public sealed class OpenGlDriver : IDriver
     }
 
     /// <inheritdoc />
-    public IWindow CreateWindow(int width, int height, bool vSync, bool showStats)
+    public IWindow CreateWindow(int width, int height, bool vSync, bool fullscreen, bool resizeAble = false, bool showStats = false)
     {
-        CurrentWindow = new Window(width, height, vSync);
+        if (CurrentWindow != null)
+        {
+            // Implement log here
+
+            return CurrentWindow;
+        }
+
+        CurrentWindow = new Window(width, height, vSync, fullscreen, resizeAble);
 
         // Init openGl context
         Gl.PointSize(2f);

@@ -15,8 +15,10 @@ public interface IDriver
     /// <param name="width">The width of the window</param>
     /// <param name="height">The height of the window</param>
     /// <param name="vSync">Sets the vSync</param>
+    /// <param name="fullscreen">Sets if the window should be fullscreen</param>
+    /// <param name="resizeAble">Sets if the window should be resizeable</param>
     /// <param name="showStats">Sets if stats should be shown</param>
-    IWindow CreateWindow(int width, int height, bool vSync, bool showStats);
+    IWindow CreateWindow(int width, int height, bool vSync, bool fullscreen, bool resizeAble, bool showStats);
 
     /// <summary>
     /// Sets the clear color
