@@ -9,7 +9,7 @@ namespace Engine.OpenGL.Vendor.SFML.Window;
 /// Give access to the real-time state of the mouse
 /// </summary>
 ////////////////////////////////////////////////////////////
-internal static class Mouse
+internal static class SfmlMouse
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -115,9 +115,13 @@ internal static class Mouse
     public static void SetPosition(Vector2i position, Window relativeTo)
     {
         if (relativeTo != null)
+        {
             relativeTo.InternalSetMousePosition(position);
+        }
         else
+        {
             sfMouse_setPosition(position, IntPtr.Zero);
+        }
     }
 
     #region Imports

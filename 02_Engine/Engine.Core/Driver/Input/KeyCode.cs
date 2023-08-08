@@ -3,7 +3,7 @@ namespace Engine.Driver.Input;
 /// <summary>
 /// Key codes
 /// </summary>
-public enum Key
+public enum KeyCode
 {
     /// <summary>Unhandled key</summary>
     Unknown = -1,

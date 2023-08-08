@@ -15,46 +15,46 @@ public class TestApp
         var input = driver.GetInput();
         var api = driver.GetApi();
 
-        var bufferArrayObject = api.CreateBufferArray();
+        // var bufferArrayObject = api.CreateBufferArray();
+        //
+        // // Vertex buffer data
+        // var bufferLayout = new BufferLayout();
+        // bufferLayout.AddElement(new BufferElement("a_Position", ShaderDataType.Vector4));
+        // bufferLayout.AddElement(new BufferElement("a_Color", ShaderDataType.Vector4));
 
-        // Vertex buffer data
-        var bufferLayout = new BufferLayout();
-        bufferLayout.AddElement(new BufferElement("a_Position", ShaderDataType.Vector4));
-        bufferLayout.AddElement(new BufferElement("a_Color", ShaderDataType.Vector4));
-
-        var vbo = api.CreateBuffer(bufferLayout);
-        vbo.SetData(Vertices);
-
-        bufferArrayObject.AddBuffer(vbo, BufferType.Vertex);
-
-        // UV Buffer - 2
-        bufferLayout = new BufferLayout();
-        bufferLayout.AddElement(new BufferElement("a_TexCoord", ShaderDataType.Vector2));
-
-        var uvBuffer = api.CreateBuffer(bufferLayout);
-        uvBuffer.SetData(UvCoordinates);
-
-        BufferArray.AddBuffer(uvBuffer, BufferType.Uv);
-
-        // Normal Buffer - 3
-        bufferLayout = new BufferLayout();
-        bufferLayout.AddElement(new BufferElement("a_Normal", ShaderDataType.Vector3));
-
-        var nbo = api.CreateBuffer(bufferLayout);
-        nbo.SetData(Normals);
-
-        BufferArray.AddBuffer(nbo, BufferType.Normal);
-
-        // Index Buffer
-        bufferLayout = new BufferLayout();
-        bufferLayout.AddElement(new BufferElement("indices", ShaderDataType.Int));
-
-        var ibo = api.CreateBuffer(bufferLayout, true);
-        ibo.SetData(Indices);
-
-        BufferArray.AddBuffer(ibo, BufferType.Index);
-
-        BufferArray.Build();
+        // var vbo = api.CreateBuffer(bufferLayout);
+        // vbo.SetData(Vertices);
+        //
+        // bufferArrayObject.AddBuffer(vbo, BufferType.Vertex);
+        //
+        // // UV Buffer - 2
+        // bufferLayout = new BufferLayout();
+        // bufferLayout.AddElement(new BufferElement("a_TexCoord", ShaderDataType.Vector2));
+        //
+        // var uvBuffer = api.CreateBuffer(bufferLayout);
+        // uvBuffer.SetData(UvCoordinates);
+        //
+        // BufferArray.AddBuffer(uvBuffer, BufferType.Uv);
+        //
+        // // Normal Buffer - 3
+        // bufferLayout = new BufferLayout();
+        // bufferLayout.AddElement(new BufferElement("a_Normal", ShaderDataType.Vector3));
+        //
+        // var nbo = api.CreateBuffer(bufferLayout);
+        // nbo.SetData(Normals);
+        //
+        // BufferArray.AddBuffer(nbo, BufferType.Normal);
+        //
+        // // Index Buffer
+        // bufferLayout = new BufferLayout();
+        // bufferLayout.AddElement(new BufferElement("indices", ShaderDataType.Int));
+        //
+        // var ibo = api.CreateBuffer(bufferLayout, true);
+        // ibo.SetData(Indices);
+        //
+        // BufferArray.AddBuffer(ibo, BufferType.Index);
+        //
+        // BufferArray.Build();
 
 
         driver.SetClearColor(Color.Coral);
@@ -64,12 +64,12 @@ public class TestApp
             driver.Clear();
             driver.HandleEvents();
 
-            if (input.GetKey(Key.Escape))
+            if (Keyboard.GetKey(KeyCode.Escape))
             {
                 window.Terminate();
             }
 
-            driver.DrawIndexed(BufferArray, DrawMode.Triangles, BufferArray.Indices.lenght);
+            // driver.DrawIndexed(BufferArray, DrawMode.Triangles, BufferArray.Indices.lenght);
 
             driver.Swap();
         }

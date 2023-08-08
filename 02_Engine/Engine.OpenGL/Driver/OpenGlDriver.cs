@@ -1,12 +1,14 @@
 ﻿using Engine.Driver;
 using Engine.Driver.Api;
-using Engine.Driver.Api.Buffers;
 using Engine.Driver.Input;
 using Engine.Driver.Window;
 using Engine.Exceptions;
 using Engine.Logging;
 using Engine.Math.Core;
+using Engine.OpenGL.GraphicsApi;
 using Engine.OpenGL.Vendor.OpenGL.Core;
+
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
 namespace Engine.OpenGL.Driver;
 
@@ -31,6 +33,7 @@ public sealed class OpenGlDriver : IDriver
 
     private bool _isInitialized;
     private readonly Input _input;
+    private IGraphicsApi? _graphicsApi;
 
     /// <summary>
     /// Gets the current window.
@@ -42,8 +45,9 @@ public sealed class OpenGlDriver : IDriver
     /// </summary>
     public OpenGlDriver()
     {
+        _graphicsApi = null;
         _isInitialized = false;
-        CurrentWindow = null!;
+        CurrentWindow = null;
         _input = new Input() ?? throw new NullReferenceException(nameof(_input));
     }
 
@@ -59,6 +63,11 @@ public sealed class OpenGlDriver : IDriver
 
         CurrentWindow = new Window(width, height, vSync, fullscreen, resizeAble);
 
+        if (CurrentWindow == null)
+        {
+            throw new NullReferenceException(nameof(CurrentWindow));
+        }
+
         // Init openGl context
         Gl.PointSize(2f);
         Gl.Enable(EnableCap.DepthTest);
@@ -72,6 +81,12 @@ public sealed class OpenGlDriver : IDriver
         Gl.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
         _isInitialized = true;
+        _graphicsApi = new OpenGlGraphicsApi();
+
+        if (_graphicsApi == null)
+        {
+            throw new NullReferenceException(nameof(_graphicsApi));
+        }
 
         if (showStats)
         {
@@ -79,6 +94,8 @@ public sealed class OpenGlDriver : IDriver
         }
 
         ((Window)CurrentWindow).SetInput(_input);
+        Keyboard.SetInput(_input);
+        Mouse.SetInput(_input);
 
         return CurrentWindow;
     }
@@ -164,7 +181,12 @@ public sealed class OpenGlDriver : IDriver
     /// <inheritdoc />
     public IGraphicsApi GetApi()
     {
-        throw new NotImplementedException();
+        if (!_isInitialized)
+        {
+            Log.LogMessageAsync($"{nameof(OpenGlDriver)} context not initialized.", LogLevel.Error, this);
+        }
+
+        return _graphicsApi!;
     }
 
     private static void ShowOpenGlExtensions()

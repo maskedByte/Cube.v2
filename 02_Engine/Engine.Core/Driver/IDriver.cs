@@ -12,6 +12,12 @@ namespace Engine.Driver;
 public interface IDriver
 {
     /// <summary>
+    /// The graphics api reference
+    /// </summary>
+    /// <returns>Return the graphics api reference</returns>
+    IGraphicsApi GetApi();
+
+    /// <summary>
     /// Create a new window
     /// </summary>
     /// <param name="width">The width of the window</param>
@@ -62,10 +68,4 @@ public interface IDriver
     /// <param name="drawMode">Set draw mode, <see cref="DrawMode" /></param>
     /// <param name="indexCount">Set count of indices to render</param>
     void DrawIndexed(IBindable bindable, DrawMode drawMode, int indexCount);
-
-    /// <summary>
-    /// The graphics api reference
-    /// </summary>
-    /// <returns>Return the graphics api reference</returns>
-    IGraphicsApi GetApi();
 }

@@ -1,6 +1,7 @@
 using Engine.Driver.Input;
 using Engine.Math.Vector;
 using Engine.OpenGL.Vendor.SFML.Window;
+using Keyboard = SFML.Window.Keyboard;
 
 namespace Engine.OpenGL.Driver;
 
@@ -9,12 +10,12 @@ namespace Engine.OpenGL.Driver;
 /// </summary>
 public sealed class Input : IInput
 {
-    private readonly bool[] _keyStates = new bool[(int)Key.KeyCount];
-    private readonly bool[] _keyDownStates = new bool[(int)Key.KeyCount];
-    private readonly bool[] _keyUpStates = new bool[(int)Key.KeyCount];
-    private readonly bool[] _mouseButtonStates = new bool[(int)MouseButton.ButtonCount];
-    private readonly bool[] _mouseButtonDownStates = new bool[(int)MouseButton.ButtonCount];
-    private readonly bool[] _mouseButtonUpStates = new bool[(int)MouseButton.ButtonCount];
+    private readonly bool[] _keyStates = new bool[(int)KeyCode.KeyCount];
+    private readonly bool[] _keyDownStates = new bool[(int)KeyCode.KeyCount];
+    private readonly bool[] _keyUpStates = new bool[(int)KeyCode.KeyCount];
+    private readonly bool[] _mouseButtonStates = new bool[(int)MouseButtons.ButtonCount];
+    private readonly bool[] _mouseButtonDownStates = new bool[(int)MouseButtons.ButtonCount];
+    private readonly bool[] _mouseButtonUpStates = new bool[(int)MouseButtons.ButtonCount];
     private Vector3 _mouseLocation = Vector3.Zero;
     private Vector2 _mouseDelta = Vector2.Zero;
 
@@ -31,43 +32,43 @@ public sealed class Input : IInput
     }
 
     /// <inheritdoc />
-    public bool GetKey(Key key)
+    public bool GetKey(KeyCode keyCode)
     {
-        return _keyStates[(int)key];
+        return _keyStates[(int)keyCode];
     }
 
     /// <inheritdoc />
-    public bool GetKeyDown(Key key)
+    public bool GetKeyDown(KeyCode keyCode)
     {
-        return _keyDownStates[(int)key];
+        return _keyDownStates[(int)keyCode];
     }
 
     /// <inheritdoc />
-    public bool GetKeyUp(Key key)
+    public bool GetKeyUp(KeyCode keyCode)
     {
-        var state = _keyUpStates[(int)key];
-        _keyUpStates[(int)key] = false;
+        var state = _keyUpStates[(int)keyCode];
+        _keyUpStates[(int)keyCode] = false;
 
         return state;
     }
 
     /// <inheritdoc />
-    public bool GetMouseButton(MouseButton button)
+    public bool GetMouseButton(MouseButtons buttons)
     {
-        return _mouseButtonStates[(int)button];
+        return _mouseButtonStates[(int)buttons];
     }
 
     /// <inheritdoc />
-    public bool GetMouseButtonDown(MouseButton button)
+    public bool GetMouseButtonDown(MouseButtons buttons)
     {
-        return _mouseButtonDownStates[(int)button];
+        return _mouseButtonDownStates[(int)buttons];
     }
 
     /// <inheritdoc />
-    public bool GetMouseButtonUp(MouseButton button)
+    public bool GetMouseButtonUp(MouseButtons buttons)
     {
-        var state = _mouseButtonUpStates[(int)button];
-        _mouseButtonUpStates[(int)button] = false;
+        var state = _mouseButtonUpStates[(int)buttons];
+        _mouseButtonUpStates[(int)buttons] = false;
 
         return state;
     }
@@ -138,7 +139,7 @@ public sealed class Input : IInput
             #region Keyboard Events
 
             case EventType.KeyPressed:
-                if (e.Key.Code != Keyboard.Key.Unknown)
+                if (e.Key.Code != SfmlKeyboard.Key.Unknown)
                 {
                     var mapCode = (int)e.Key.Code;
                     _keyStates[mapCode] = true;
@@ -156,7 +157,7 @@ public sealed class Input : IInput
                 break;
 
             case EventType.KeyReleased:
-                if (e.Key.Code != Keyboard.Key.Unknown)
+                if (e.Key.Code != SfmlKeyboard.Key.Unknown)
                 {
                     var mapCode = (int)e.Key.Code;
                     _keyStates[mapCode] = false;

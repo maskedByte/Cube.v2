@@ -89,7 +89,7 @@ internal enum EventType
 internal struct KeyEvent
 {
     /// <summary>Code of the key (see KeyCode enum)</summary>
-    public Keyboard.Key Code;
+    public SfmlKeyboard.Key Code;
 
     /// <summary>Is the Alt modifier pressed?</summary>
     public int Alt;
@@ -140,7 +140,7 @@ internal struct MouseMoveEvent
 internal struct MouseButtonEvent
 {
     /// <summary>Code of the button (see MouseButton enum)</summary>
-    public Mouse.Button Button;
+    public SfmlMouse.Button Button;
 
     /// <summary>X coordinate of the mouse cursor</summary>
     public int X;
@@ -177,7 +177,7 @@ internal struct MouseWheelEvent
 internal struct MouseWheelScrollEvent
 {
     /// <summary>Mouse Wheel which triggered the event</summary>
-    public Mouse.Wheel Wheel;
+    public SfmlMouse.Wheel Wheel;
 
     /// <summary>Scroll amount</summary>
     public float Delta;

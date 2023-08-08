@@ -3,7 +3,7 @@ namespace Engine.Driver.Input;
 /// <summary>
 /// Mouse buttons
 /// </summary>
-public enum MouseButton
+public enum MouseButtons
 {
     /// <summary>The left mouse button</summary>
     Left,

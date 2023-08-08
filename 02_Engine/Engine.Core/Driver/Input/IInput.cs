@@ -19,46 +19,46 @@ public interface IInput
     Vector2 MouseDelta { get; }
 
     /// <summary>
-    /// Returns true if the user has pressed the <see cref="Key" /> identified by key.
+    /// Returns true if the user has pressed the <see cref="KeyCode" /> identified by key.
     /// </summary>
-    /// <param name="key"><see cref="Key" /> key to check</param>
+    /// <param name="keyCode"><see cref="KeyCode" /> key to check</param>
     /// <returns>True if pressed, false if released</returns>
-    bool GetKey(Key key);
+    bool GetKey(KeyCode keyCode);
 
     /// <summary>
-    /// Returns true while the user holds down the <see cref="Key" /> identified by key.
+    /// Returns true while the user holds down the <see cref="KeyCode" /> identified by key.
     /// </summary>
-    /// <param name="key"><see cref="Key" /> key to check</param>
+    /// <param name="keyCode"><see cref="KeyCode" /> key to check</param>
     /// <returns>True if pressed, false if released</returns>
-    bool GetKeyDown(Key key);
+    bool GetKeyDown(KeyCode keyCode);
 
     /// <summary>
-    /// Returns true the first frame the user releases the <see cref="Key" /> identified by key.
+    /// Returns true the first frame the user releases the <see cref="KeyCode" /> identified by key.
     /// </summary>
-    /// <param name="key"><see cref="Key" /> key to check</param>
+    /// <param name="keyCode"><see cref="KeyCode" /> key to check</param>
     /// <returns>True if pressed, false if released</returns>
-    bool GetKeyUp(Key key);
+    bool GetKeyUp(KeyCode keyCode);
 
     /// <summary>
-    /// Returns whether the given <see cref="MouseButton" /> is pressed.
+    /// Returns whether the given <see cref="MouseButtons" /> is pressed.
     /// </summary>
-    /// <param name="button"></param>
+    /// <param name="buttons"></param>
     /// <returns></returns>
-    bool GetMouseButton(MouseButton button);
+    bool GetMouseButton(MouseButtons buttons);
 
     /// <summary>
-    /// Returns whether the given <see cref="MouseButton" /> is held down.
+    /// Returns whether the given <see cref="MouseButtons" /> is held down.
     /// </summary>
-    /// <param name="button"></param>
+    /// <param name="buttons"></param>
     /// <returns></returns>
-    bool GetMouseButtonDown(MouseButton button);
+    bool GetMouseButtonDown(MouseButtons buttons);
 
     /// <summary>
-    /// Returns true during the frame the user releases the given <see cref="MouseButton" />.
+    /// Returns true during the frame the user releases the given <see cref="MouseButtons" />.
     /// </summary>
-    /// <param name="button"></param>
+    /// <param name="buttons"></param>
     /// <returns></returns>
-    bool GetMouseButtonUp(MouseButton button);
+    bool GetMouseButtonUp(MouseButtons buttons);
 
     /// <summary>
     /// Reset all key states

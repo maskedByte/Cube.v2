@@ -9,7 +9,7 @@ namespace Engine.OpenGL.Vendor.SFML.Window;
 /// Give access to the real-time state of the keyboard
 /// </summary>
 ////////////////////////////////////////////////////////////
-internal static class Keyboard
+internal static class SfmlKeyboard
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
