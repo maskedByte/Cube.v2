@@ -3,27 +3,27 @@ using Engine.Driver.Api.Shaders;
 namespace Engine.Driver.Api.Buffers;
 
 /// <summary>
-/// <see cref="BufferElement"/> struct implementation
+/// <see cref="BufferElement" /> struct implementation
 /// </summary>
 public sealed class BufferElement
 {
     /// <summary>
-    /// Name of the <see cref="BufferElement"/>
+    /// Name of the <see cref="BufferElement" />
     /// </summary>
     public string Name { get; }
 
     /// <summary>
-    /// Offset of the <see cref="BufferElement"/>
+    /// Offset of the <see cref="BufferElement" />
     /// </summary>
     public int Offset { get; set; }
 
     /// <summary>
-    /// Size of the <see cref="BufferElement"/> in bytes
+    /// Size of the <see cref="BufferElement" /> in bytes
     /// </summary>
     public int Size { get; }
 
     /// <summary>
-    /// Shader data type of the <see cref="BufferElement"/>
+    /// Shader data type of the <see cref="BufferElement" />
     /// </summary>
     public ShaderDataType Type { get; }
 
@@ -33,7 +33,7 @@ public sealed class BufferElement
     public bool Normalized { get; }
 
     /// <summary>
-    /// Creates a new instance of <see cref="BufferElement"/>
+    /// Creates a new instance of <see cref="BufferElement" />
     /// </summary>
     /// <param name="name"></param>
     /// <param name="type"></param>

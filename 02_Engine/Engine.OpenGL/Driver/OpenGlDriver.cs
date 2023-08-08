@@ -105,6 +105,7 @@ public sealed class OpenGlDriver : IDriver
     {
         if (!_isInitialized)
         {
+            Log.LogMessageAsync("Graphics context not initialized.", LogLevel.Critical, this);
             throw new ContextNotInitializedException($"{nameof(OpenGlDriver)} context not initialized.");
         }
 
@@ -181,12 +182,13 @@ public sealed class OpenGlDriver : IDriver
     /// <inheritdoc />
     public IGraphicsApi GetApi()
     {
-        if (!_isInitialized)
+        if (_isInitialized)
         {
-            Log.LogMessageAsync($"{nameof(OpenGlDriver)} context not initialized.", LogLevel.Error, this);
+            return _graphicsApi!;
         }
 
-        return _graphicsApi!;
+        Log.LogMessageAsync("Graphics context not initialized.", LogLevel.Critical, this);
+        throw new ContextNotInitializedException($"{nameof(OpenGlDriver)} context not initialized.");
     }
 
     private static void ShowOpenGlExtensions()

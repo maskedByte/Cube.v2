@@ -1,7 +1,7 @@
 namespace Engine.Driver.Api.Buffers;
 
 /// <summary>
-/// Implementation of <see cref="IBufferLayout"/>
+/// Implementation of <see cref="IBufferLayout" />
 /// </summary>
 public sealed class BufferLayout : IBufferLayout
 {
@@ -18,7 +18,7 @@ public sealed class BufferLayout : IBufferLayout
     }
 
     /// <summary>
-    /// Create new instance of <see cref="BufferLayout"/>
+    /// Create new instance of <see cref="BufferLayout" />
     /// </summary>
     public BufferLayout(IEnumerable<BufferElement> elements)
         : this()

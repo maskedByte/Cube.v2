@@ -84,7 +84,9 @@ public static class Mouse
     /// <summary>
     /// Checks if a mouse button was hit
     /// </summary>
-    /// <param name="buttons"><see cref="MouseButtonHit"/></param>
+    /// <param name="buttons">
+    ///     <see cref="MouseButtonHit" />
+    /// </param>
     /// <returns>True if the button was hit, false if not</returns>
     public static bool MouseButtonHit(MouseButtons buttons)
     {
@@ -101,7 +103,9 @@ public static class Mouse
     /// <summary>
     /// Checks if a mouse button was hit
     /// </summary>
-    /// <param name="buttons"><see cref="MouseButtonDown"/></param>
+    /// <param name="buttons">
+    ///     <see cref="MouseButtonDown" />
+    /// </param>
     /// <returns>True if the button was hit, false if not</returns>
     public static bool MouseButtonDown(MouseButtons buttons)
     {
@@ -117,7 +121,9 @@ public static class Mouse
     /// <summary>
     /// Checks if a mouse button was released
     /// </summary>
-    /// <param name="buttons"><see cref="MouseButtonDown"/></param>
+    /// <param name="buttons">
+    ///     <see cref="MouseButtonDown" />
+    /// </param>
     /// <returns>True if the button was released, false if not</returns>
     public static bool MouseButtonUp(MouseButtons buttons)
     {

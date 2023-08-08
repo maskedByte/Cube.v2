@@ -6,10 +6,10 @@ namespace Engine.Driver.Api.Buffers;
 public interface IBufferLayout
 {
     /// <summary>
-    /// Get the <see cref="BufferElement"/> by name
+    /// Get the <see cref="BufferElement" /> by name
     /// </summary>
     /// <param name="name"></param>
-    /// <returns>Returns a <see cref="BufferElement"/> by name</returns>
+    /// <returns>Returns a <see cref="BufferElement" /> by name</returns>
     BufferElement this[string name] { get; }
 
     /// <summary>
@@ -24,7 +24,7 @@ public interface IBufferLayout
     int GetStride();
 
     /// <summary>
-    /// Add an existing <see cref="BufferElement"/> to the <see cref="IBufferLayout"/>
+    /// Add an existing <see cref="BufferElement" /> to the <see cref="IBufferLayout" />
     /// </summary>
     /// <param name="element">The element to add</param>
     void AddElement(BufferElement element);
@@ -32,6 +32,6 @@ public interface IBufferLayout
     /// <summary>
     /// Return the array of buffer elements
     /// </summary>
-    /// <returns>Returns an array of <see cref="BufferElement"/></returns>
+    /// <returns>Returns an array of <see cref="BufferElement" /></returns>
     BufferElement[] GetElements();
 }

@@ -11,67 +11,67 @@ namespace Engine.Driver.Api;
 public interface IGraphicsApi
 {
     /// <summary>
-    /// Create a new <see cref="IBufferArray"/>
+    /// Create a new <see cref="IBufferArray" />
     /// </summary>
-    /// <returns>Returns the new <see cref="IBufferArray"/></returns>
+    /// <returns>Returns the new <see cref="IBufferArray" /></returns>
     IBufferArray CreateBufferArray();
 
     /// <summary>
-    /// Create a new <see cref="IBufferObject"/>
+    /// Create a new <see cref="IBufferObject" />
     /// </summary>
-    /// <returns>Returns the new <see cref="IBufferObject"/></returns>
+    /// <returns>Returns the new <see cref="IBufferObject" /></returns>
     IBufferObject CreateBuffer(IBufferLayout bufferLayout);
 
     /// <summary>
-    /// Create a new <see cref="IShader"/>
+    /// Create a new <see cref="IShader" />
     /// </summary>
-    /// <returns>Returns the new <see cref="IShader"/></returns>
+    /// <returns>Returns the new <see cref="IShader" /></returns>
     IShader CreateShader();
 
     /// <summary>
-    /// Create a new 1D texture<see cref="ITexture"/>
+    /// Create a new 1D texture<see cref="ITexture" />
     /// </summary>
-    /// <returns>Returns the new <see cref="ITexture"/></returns>
+    /// <returns>Returns the new <see cref="ITexture" /></returns>
     ITexture CreateTexture();
 
     /// <summary>
-    /// Create a new 2D texture<see cref="ITexture2D"/>
+    /// Create a new 2D texture<see cref="ITexture2D" />
     /// </summary>
-    /// <returns>Returns the new <see cref="ITexture2D"/></returns>
+    /// <returns>Returns the new <see cref="ITexture2D" /></returns>
     ITexture2D CreateTexture2D();
 
     /// <summary>
-    /// Create a new Cube texture <see cref="ITextureCube"/>
+    /// Create a new Cube texture <see cref="ITextureCube" />
     /// </summary>
-    /// <returns>Returns the new <see cref="ITextureCube"/></returns>
+    /// <returns>Returns the new <see cref="ITextureCube" /></returns>
     ITextureCube CreateTextureCube();
 
     /// <summary>
-    /// Create a new <see cref="ITextureSampler"/>
+    /// Create a new <see cref="ITextureSampler" />
     /// </summary>
-    /// <returns>Returns the new <see cref="ITextureSampler"/></returns>
+    /// <returns>Returns the new <see cref="ITextureSampler" /></returns>
     ITextureSampler CreateTextureSampler();
 
     /// <summary>
-    /// Create a new <see cref="IFrameBuffer"/>
+    /// Create a new <see cref="IFrameBuffer" />
     /// </summary>
-    /// <returns>Returns the new <see cref="IFrameBuffer"/></returns>
+    /// <returns>Returns the new <see cref="IFrameBuffer" /></returns>
     IFrameBuffer CreateFrameBuffer();
 
     /// <summary>
-    /// Create a new <see cref="IRenderBuffer"/>
+    /// Create a new <see cref="IRenderBuffer" />
     /// </summary>
-    /// <returns>Returns the new <see cref="IRenderBuffer"/></returns>
+    /// <returns>Returns the new <see cref="IRenderBuffer" /></returns>
     IRenderBuffer CreateRenderBuffer();
 
     /// <summary>
-    /// Create a new <see cref="IRenderCommand"/>
+    /// Create a new <see cref="IRenderCommand" />
     /// </summary>
     /// <returns></returns>
     IRenderCommand CreateRenderCommand();
 
     /// <summary>
-    /// Create a new <see cref="IRenderCommandQueue"/>
+    /// Create a new <see cref="IRenderCommandQueue" />
     /// </summary>
     /// <returns></returns>
     IRenderCommandQueue CreateRenderCommandQueue();

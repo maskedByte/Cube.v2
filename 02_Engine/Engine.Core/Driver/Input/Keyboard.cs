@@ -14,7 +14,9 @@ public static class Keyboard
     /// <summary>
     /// Check if a key was pressed once
     /// </summary>
-    /// <param name="keyCode"><see cref="KeyCode"/></param>
+    /// <param name="keyCode">
+    ///     <see cref="KeyCode" />
+    /// </param>
     /// <returns>true if the key was pressed false if not.</returns>
     public static bool GetKey(KeyCode keyCode)
     {
@@ -28,10 +30,12 @@ public static class Keyboard
     }
 
     /// <summary>
-    /// Check if a <see cref="keyCode"/> is pressed and hold down.
+    /// Check if a <see cref="keyCode" /> is pressed and hold down.
     /// </summary>
-    /// <param name="keyCode"><see cref="KeyCode"/></param>
-    /// <returns>true as long the <see cref="keyCode"/> is hold down</returns>
+    /// <param name="keyCode">
+    ///     <see cref="KeyCode" />
+    /// </param>
+    /// <returns>true as long the <see cref="keyCode" /> is hold down</returns>
     public static bool GetKeyDown(KeyCode keyCode)
     {
         if (input != null)
@@ -46,7 +50,9 @@ public static class Keyboard
     /// <summary>
     /// Check if a key was released.
     /// </summary>
-    /// <param name="keyCode"><see cref="KeyCode"/></param>
+    /// <param name="keyCode">
+    ///     <see cref="KeyCode" />
+    /// </param>
     /// <returns>true during the frame the user releases the key</returns>
     public static bool GetKeyUp(KeyCode keyCode)
     {

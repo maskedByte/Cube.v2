@@ -1,6 +1,4 @@
-﻿using Engine.Driver.Input;
-
-namespace Engine.Driver.Window;
+﻿namespace Engine.Driver.Window;
 
 /// <summary>
 /// Interface for window.
