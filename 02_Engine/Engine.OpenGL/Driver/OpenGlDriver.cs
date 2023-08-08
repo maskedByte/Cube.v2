@@ -1,4 +1,6 @@
 ﻿using Engine.Driver;
+using Engine.Driver.Api;
+using Engine.Driver.Api.Buffers;
 using Engine.Driver.Input;
 using Engine.Driver.Window;
 using Engine.Exceptions;
@@ -10,7 +12,7 @@ namespace Engine.OpenGL.Driver;
 
 /// <summary>
 /// OpenGL driver.
-/// Implements <see cref="IDriver" /> to use OpenGL 4.5 as graphics driver.
+/// Implements <see cref="IDriver" /> to use OpenGL 4.5+ as graphics driver.
 /// </summary>
 public sealed class OpenGlDriver : IDriver
 {
@@ -46,7 +48,8 @@ public sealed class OpenGlDriver : IDriver
     }
 
     /// <inheritdoc />
-    public IWindow CreateWindow(int width, int height, bool vSync, bool fullscreen, bool resizeAble = false, bool showStats = false)
+    public IWindow CreateWindow(int width, int height, bool vSync, bool fullscreen, bool resizeAble = false,
+        bool showStats = false)
     {
         if (CurrentWindow != null)
         {
@@ -156,6 +159,12 @@ public sealed class OpenGlDriver : IDriver
         }
 
         Gl.DrawElements(beginMode, indexCount, DrawElementsType.UnsignedInt, nint.Zero);
+    }
+
+    /// <inheritdoc />
+    public IGraphicsApi GetApi()
+    {
+        throw new NotImplementedException();
     }
 
     private static void ShowOpenGlExtensions()

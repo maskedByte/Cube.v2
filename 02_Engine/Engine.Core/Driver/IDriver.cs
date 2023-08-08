@@ -1,4 +1,6 @@
-﻿using Engine.Driver.Input;
+﻿using Engine.Driver.Api;
+using Engine.Driver.Api.Buffers;
+using Engine.Driver.Input;
 using Engine.Driver.Window;
 using Engine.Math.Core;
 
@@ -18,7 +20,8 @@ public interface IDriver
     /// <param name="fullscreen">Sets if the window should be fullscreen</param>
     /// <param name="resizeAble">Sets if the window should be resizeable</param>
     /// <param name="showStats">Sets if stats should be shown</param>
-    IWindow CreateWindow(int width, int height, bool vSync, bool fullscreen, bool resizeAble, bool showStats);
+    IWindow CreateWindow(int width, int height, bool vSync, bool fullscreen = false, bool resizeAble = false,
+        bool showStats = false);
 
     /// <summary>
     /// Sets the clear color
@@ -59,4 +62,10 @@ public interface IDriver
     /// <param name="drawMode">Set draw mode, <see cref="DrawMode" /></param>
     /// <param name="indexCount">Set count of indices to render</param>
     void DrawIndexed(IBindable bindable, DrawMode drawMode, int indexCount);
+
+    /// <summary>
+    /// The graphics api reference
+    /// </summary>
+    /// <returns>Return the graphics api reference</returns>
+    IGraphicsApi GetApi();
 }
