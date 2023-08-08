@@ -47,6 +47,6 @@ public class LogEntry
     public string GetFormattedLogEntry()
     {
         return
-            $"{Timestamp:yyyy-MM-dd HH:mm:ss.fff} / {Source} [{Level}] - {Message}";
+            $"[{Level}] {Timestamp:yyyy-MM-dd HH:mm:ss.fff} / {Source}  - {Message}";
     }
 }

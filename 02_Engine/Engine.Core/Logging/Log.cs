@@ -45,6 +45,12 @@ public static class Log
 
         lock (Lock)
         {
+            if (Targets.Count == 0)
+            {
+                Console.WriteLine(logEntry.GetFormattedLogEntry());
+                return;
+            }
+
             logTasks.AddRange(Targets.Select(target => target.LogMessageAsync(logEntry)));
         }
 
