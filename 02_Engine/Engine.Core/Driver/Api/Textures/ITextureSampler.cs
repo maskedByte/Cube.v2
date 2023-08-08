@@ -1,4 +1,4 @@
-﻿namespace Engine.Driver.Api.Texture;
+﻿namespace Engine.Driver.Api.Textures;
 
 public interface ITextureSampler
 {

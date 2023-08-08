@@ -1,7 +1,7 @@
 using Engine.Driver.Api.Buffers;
-using Engine.Driver.Api.Rendering;
-using Engine.Driver.Api.Shader;
-using Engine.Driver.Api.Texture;
+using Engine.Driver.Api.Renderings;
+using Engine.Driver.Api.Shaders;
+using Engine.Driver.Api.Textures;
 
 namespace Engine.Driver.Api;
 
@@ -13,55 +13,55 @@ public interface IGraphicsApi
     /// <summary>
     /// Create a new <see cref="IBufferArray"/>
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Returns the new <see cref="IBufferArray"/></returns>
     IBufferArray CreateBufferArray();
 
     /// <summary>
-    /// Create a new <see cref="IBuffer"/>
+    /// Create a new <see cref="IBufferObject"/>
     /// </summary>
-    /// <returns></returns>
-    IBuffer CreateBuffer();
+    /// <returns>Returns the new <see cref="IBufferObject"/></returns>
+    IBufferObject CreateBuffer(IBufferLayout bufferLayout);
 
     /// <summary>
     /// Create a new <see cref="IShader"/>
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Returns the new <see cref="IShader"/></returns>
     IShader CreateShader();
 
     /// <summary>
     /// Create a new 1D texture<see cref="ITexture"/>
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Returns the new <see cref="ITexture"/></returns>
     ITexture CreateTexture();
 
     /// <summary>
     /// Create a new 2D texture<see cref="ITexture2D"/>
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Returns the new <see cref="ITexture2D"/></returns>
     ITexture2D CreateTexture2D();
 
     /// <summary>
     /// Create a new Cube texture <see cref="ITextureCube"/>
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Returns the new <see cref="ITextureCube"/></returns>
     ITextureCube CreateTextureCube();
 
     /// <summary>
     /// Create a new <see cref="ITextureSampler"/>
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Returns the new <see cref="ITextureSampler"/></returns>
     ITextureSampler CreateTextureSampler();
 
     /// <summary>
     /// Create a new <see cref="IFrameBuffer"/>
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Returns the new <see cref="IFrameBuffer"/></returns>
     IFrameBuffer CreateFrameBuffer();
 
     /// <summary>
     /// Create a new <see cref="IRenderBuffer"/>
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Returns the new <see cref="IRenderBuffer"/></returns>
     IRenderBuffer CreateRenderBuffer();
 
     /// <summary>

@@ -1,4 +1,4 @@
-﻿namespace Engine.Driver.Api.Rendering;
+﻿namespace Engine.Driver.Api.Renderings;
 
 public interface IRenderCommandQueue
 {

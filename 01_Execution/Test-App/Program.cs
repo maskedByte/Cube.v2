@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using Engine.Driver;
 using Engine.Driver.Api.Buffers;
-using Engine.Driver.Api.Shader;
+using Engine.Driver.Api.Shaders;
 using Engine.Driver.Input;
 using Engine.OpenGL.Driver;
 
@@ -22,7 +22,7 @@ public class TestApp
         bufferLayout.AddElement(new BufferElement("a_Position", ShaderDataType.Vector4));
         bufferLayout.AddElement(new BufferElement("a_Color", ShaderDataType.Vector4));
 
-        var vbo = new Buffer(bufferLayout);
+        var vbo = api.CreateBuffer(bufferLayout);
         vbo.SetData(Vertices);
 
         bufferArrayObject.AddBuffer(vbo, BufferType.Vertex);
@@ -31,7 +31,7 @@ public class TestApp
         bufferLayout = new BufferLayout();
         bufferLayout.AddElement(new BufferElement("a_TexCoord", ShaderDataType.Vector2));
 
-        var uvBuffer = new Buffer(bufferLayout);
+        var uvBuffer = api.CreateBuffer(bufferLayout);
         uvBuffer.SetData(UvCoordinates);
 
         BufferArray.AddBuffer(uvBuffer, BufferType.Uv);
@@ -40,7 +40,7 @@ public class TestApp
         bufferLayout = new BufferLayout();
         bufferLayout.AddElement(new BufferElement("a_Normal", ShaderDataType.Vector3));
 
-        var nbo = new Buffer(bufferLayout);
+        var nbo = api.CreateBuffer(bufferLayout);
         nbo.SetData(Normals);
 
         BufferArray.AddBuffer(nbo, BufferType.Normal);
@@ -49,7 +49,7 @@ public class TestApp
         bufferLayout = new BufferLayout();
         bufferLayout.AddElement(new BufferElement("indices", ShaderDataType.Int));
 
-        var ibo = new Buffer(bufferLayout, true);
+        var ibo = api.CreateBuffer(bufferLayout, true);
         ibo.SetData(Indices);
 
         BufferArray.AddBuffer(ibo, BufferType.Index);

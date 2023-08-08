@@ -1,4 +1,4 @@
-using Engine.Driver.Api.Shader;
+using Engine.Driver.Api.Shaders;
 
 namespace Engine.Driver.Api.Buffers;
 

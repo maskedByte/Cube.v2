@@ -1,4 +1,4 @@
-namespace Engine.Driver.Api.Shader;
+namespace Engine.Driver.Api.Shaders;
 
 /// <summary>
 /// Enum for shader data types
