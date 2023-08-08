@@ -2,6 +2,7 @@
 using Engine.Driver.Input;
 using Engine.Driver.Window;
 using Engine.Exceptions;
+using Engine.Logging;
 using Engine.Math.Core;
 using Engine.OpenGL.Vendor.OpenGL.Core;
 
@@ -49,8 +50,7 @@ public sealed class OpenGlDriver : IDriver
     {
         if (CurrentWindow != null)
         {
-            // Implement log here
-
+            Log.LogMessageAsync("Window already created.", LogLevel.Warning, this);
             return CurrentWindow;
         }
 
