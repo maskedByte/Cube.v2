@@ -3,6 +3,8 @@ using Engine.Driver.Api.Buffers;
 using Engine.Driver.Api.Renderings;
 using Engine.Driver.Api.Shaders;
 using Engine.Driver.Api.Textures;
+using Engine.OpenGL.GraphicsApi.Buffers;
+using Engine.OpenGL.GraphicsApi.Shaders;
 
 namespace Engine.OpenGL.GraphicsApi;
 
@@ -11,56 +13,79 @@ namespace Engine.OpenGL.GraphicsApi;
 /// </summary>
 public class OpenGlGraphicsApi : IGraphicsApi
 {
+    /// <inheritdoc />
     public IBufferArray CreateBufferArray()
     {
-        throw new NotImplementedException();
+        return new GlBufferArray();
     }
 
+    /// <inheritdoc />
     public IBufferObject CreateBuffer(IBufferLayout bufferLayout)
     {
-        throw new NotImplementedException();
+        return new GlBufferObject(bufferLayout);
     }
 
-    public IShader CreateShader()
+    /// <inheritdoc />
+    public IBufferObject CreateBufferIndex(IBufferLayout bufferLayout)
     {
-        throw new NotImplementedException();
+        return new GlBufferObject(bufferLayout, true);
     }
 
+    /// <inheritdoc />
+    public IShader CreateShader(ShaderSourceType shaderSourceType, string[] source)
+    {
+        return new GlShader(shaderSourceType, source);
+    }
+
+    /// <inheritdoc />
+    public IShaderProgram CreateShaderProgram()
+    {
+        return new GlShaderProgram();
+    }
+
+    /// <inheritdoc />
     public ITexture CreateTexture()
     {
         throw new NotImplementedException();
     }
 
+    /// <inheritdoc />
     public ITexture2D CreateTexture2D()
     {
         throw new NotImplementedException();
     }
 
+    /// <inheritdoc />
     public ITextureCube CreateTextureCube()
     {
         throw new NotImplementedException();
     }
 
+    /// <inheritdoc />
     public ITextureSampler CreateTextureSampler()
     {
         throw new NotImplementedException();
     }
 
+    /// <inheritdoc />
     public IFrameBuffer CreateFrameBuffer()
     {
         throw new NotImplementedException();
     }
 
+    /// <inheritdoc />
     public IRenderBuffer CreateRenderBuffer()
     {
         throw new NotImplementedException();
     }
 
+    /// <inheritdoc />
     public IRenderCommand CreateRenderCommand()
     {
         throw new NotImplementedException();
     }
 
+    /// <inheritdoc />
     public IRenderCommandQueue CreateRenderCommandQueue()
     {
         throw new NotImplementedException();

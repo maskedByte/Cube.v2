@@ -23,10 +23,22 @@ public interface IGraphicsApi
     IBufferObject CreateBuffer(IBufferLayout bufferLayout);
 
     /// <summary>
+    /// Create a new <see cref="IBufferObject" /> for indices
+    /// </summary>
+    /// <returns>Returns the new <see cref="IBufferObject" /></returns>
+    IBufferObject CreateBufferIndex(IBufferLayout bufferLayout);
+
+    /// <summary>
     /// Create a new <see cref="IShader" />
     /// </summary>
     /// <returns>Returns the new <see cref="IShader" /></returns>
-    IShader CreateShader();
+    IShader CreateShader(ShaderSourceType shaderSourceType, string[] source);
+
+    /// <summary>
+    /// Create a new <see cref="IShaderProgram" />
+    /// </summary>
+    /// <returns>Returns the new <see cref="IShaderProgram" /></returns>
+    IShaderProgram CreateShaderProgram();
 
     /// <summary>
     /// Create a new 1D texture<see cref="ITexture" />

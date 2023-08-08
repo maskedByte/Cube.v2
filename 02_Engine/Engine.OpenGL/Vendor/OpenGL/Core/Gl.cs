@@ -44,20 +44,20 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Attaches a shader object to a program object.
+    /// Attaches a shaderProgram object to a program object.
     /// <para>
-    /// In order to create a complete shader program, there must be a way to specify the list of things that
+    /// In order to create a complete shaderProgram program, there must be a way to specify the list of things that
     /// will be linked together. Program objects provide this mechanism. Shaders that are to be linked
     /// together in a program object must first be attached to that program object. glAttachShader attaches
-    /// the shader object specified by shader to the program object specified by program. This indicates
-    /// that shader will be included in link operations that will be performed on program.
+    /// the shaderProgram object specified by shaderProgram to the program object specified by program. This indicates
+    /// that shaderProgram will be included in link operations that will be performed on program.
     /// </para>
     /// </summary>
     /// <param name="program">
-    /// Specifies the program object to which a shader object will be attached.
+    /// Specifies the program object to which a shaderProgram object will be attached.
     /// </param>
     /// <param name="shader">
-    /// Specifies the shader object that is to be attached.
+    /// Specifies the shaderProgram object that is to be attached.
     /// </param>
     public static void AttachShader(uint program, uint shader)
     {
@@ -211,8 +211,8 @@ internal partial class Gl
     /// <summary>
     /// Start transform feedback operation.
     /// <para>
-    /// Transform feedback mode captures the values of varying variables written by the vertex shader (or,
-    /// if active, the geometry shader). Transform feedback is said to be active after a call to
+    /// Transform feedback mode captures the values of varying variables written by the vertex shaderProgram (or,
+    /// if active, the geometry shaderProgram). Transform feedback is said to be active after a call to
     /// glBeginTransformFeedback until a subsequent call to glEndTransformFeedback. Transform feedback
     /// commands must be paired.
     /// </para>
@@ -229,8 +229,8 @@ internal partial class Gl
     /// <summary>
     /// Start transform feedback operation.
     /// <para>
-    /// Transform feedback mode captures the values of varying variables written by the vertex shader (or,
-    /// if active, the geometry shader). Transform feedback is said to be active after a call to
+    /// Transform feedback mode captures the values of varying variables written by the vertex shaderProgram (or,
+    /// if active, the geometry shaderProgram). Transform feedback is said to be active after a call to
     /// glBeginTransformFeedback until a subsequent call to glEndTransformFeedback. Transform feedback
     /// commands must be paired.
     /// </para>
@@ -258,7 +258,7 @@ internal partial class Gl
     /// Specifies the index of the generic vertex attribute to be bound.
     /// </param>
     /// <param name="name">
-    /// Specifies a null terminated string containing the name of the vertex shader attribute variable to
+    /// Specifies a null terminated string containing the name of the vertex shaderProgram attribute variable to
     /// which index is to be bound.
     /// </param>
     public static void BindAttribLocation(uint program, uint index, string name)
@@ -284,12 +284,15 @@ internal partial class Gl
     /// Specifies the index of the generic vertex attribute to be bound.
     /// </param>
     /// <param name="name">
-    /// Specifies a null terminated string containing the name of the vertex shader attribute variable to
+    /// Specifies a null terminated string containing the name of the vertex shaderProgram attribute variable to
     /// which index is to be bound.
     /// </param>
     public static void BindAttribLocation(uint program, int index, string name)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glBindAttribLocation(program, (uint)index, name);
     }
@@ -453,10 +456,10 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Bind a user-defined varying out variable to a fragment shader color number.
+    /// Bind a user-defined varying out variable to a fragment shaderProgram color number.
     /// <para>
     /// glBindFragDataLocation explicitly specifies the binding of the user-defined varying out variable
-    /// name to fragment shader color number colorNumber for program program. If name was bound previously,
+    /// name to fragment shaderProgram color number colorNumber for program program. If name was bound previously,
     /// its assigned binding is replaced with colorNumber. name must be a null-terminated string.
     /// colorNumber must be less than GL_MAX_DRAW_BUFFERS.
     /// </para>
@@ -476,7 +479,7 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Bind a user-defined varying out variable to a fragment shader color number and index.
+    /// Bind a user-defined varying out variable to a fragment shaderProgram color number and index.
     /// <para>
     /// glBindFragDataLocationIndexed specifies that the varying out variable name in program should be
     /// bound to fragment color colorNumber when the program is next linked. index may be zero or one to
@@ -2090,14 +2093,14 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Compiles a shader object.
+    /// Compiles a shaderProgram object.
     /// <para>
-    /// glCompileShader compiles the source code strings that have been stored in the shader object
-    /// specified by shader.
+    /// glCompileShader compiles the source code strings that have been stored in the shaderProgram object
+    /// specified by shaderProgram.
     /// </para>
     /// </summary>
     /// <param name="shader">
-    /// Specifies the shader object to be compiled.
+    /// Specifies the shaderProgram object to be compiled.
     /// </param>
     public static void CompileShader(uint shader)
     {
@@ -2982,11 +2985,11 @@ internal partial class Gl
     /// Creates a program object.
     /// <para>
     /// glCreateProgram creates an empty program object and returns a non-zero value by which it can be
-    /// referenced. A program object is an object to which shader objects can be attached. This provides a
-    /// mechanism to specify the shader objects that will be linked to create a program. It also provides a
+    /// referenced. A program object is an object to which shaderProgram objects can be attached. This provides a
+    /// mechanism to specify the shaderProgram objects that will be linked to create a program. It also provides a
     /// means for checking the compatibility of the shaders that will be used to create a program (for
-    /// instance, checking the compatibility between a vertex shader and a fragment shader). When no longer
-    /// needed as part of a program object, shader objects can be detached.
+    /// instance, checking the compatibility between a vertex shaderProgram and a fragment shaderProgram). When no longer
+    /// needed as part of a program object, shaderProgram objects can be detached.
     /// </para>
     /// </summary>
     public static uint CreateProgram()
@@ -3070,23 +3073,23 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Creates a shader object.
+    /// Creates a shaderProgram object.
     /// <para>
-    /// glCreateShader creates an empty shader object and returns a non-zero value by which it can be
-    /// referenced. A shader object is used to maintain the source code strings that define a shader.
-    /// shaderType indicates the type of shader to be created. Five types of shader are supported. A shader
-    /// of type GL_COMPUTE_SHADER is a shader that is intended to run on the programmable compute processor.
-    /// A shader of type GL_VERTEX_SHADER is a shader that is intended to run on the programmable vertex
-    /// processor. A shader of type GL_TESS_CONTROL_SHADER is a shader that is intended to run on the
-    /// programmable tessellation processor in the control stage. A shader of type GL_TESS_EVALUATION_SHADER
-    /// is a shader that is intended to run on the programmable tessellation processor in the evaluation
-    /// stage. A shader of type GL_GEOMETRY_SHADER is a shader that is intended to run on the programmable
-    /// geometry processor. A shader of type GL_FRAGMENT_SHADER is a shader that is intended to run on the
+    /// glCreateShader creates an empty shaderProgram object and returns a non-zero value by which it can be
+    /// referenced. A shaderProgram object is used to maintain the source code strings that define a shaderProgram.
+    /// shaderType indicates the type of shaderProgram to be created. Five types of shaderProgram are supported. A shaderProgram
+    /// of type GL_COMPUTE_SHADER is a shaderProgram that is intended to run on the programmable compute processor.
+    /// A shaderProgram of type GL_VERTEX_SHADER is a shaderProgram that is intended to run on the programmable vertex
+    /// processor. A shaderProgram of type GL_TESS_CONTROL_SHADER is a shaderProgram that is intended to run on the
+    /// programmable tessellation processor in the control stage. A shaderProgram of type GL_TESS_EVALUATION_SHADER
+    /// is a shaderProgram that is intended to run on the programmable tessellation processor in the evaluation
+    /// stage. A shaderProgram of type GL_GEOMETRY_SHADER is a shaderProgram that is intended to run on the programmable
+    /// geometry processor. A shaderProgram of type GL_FRAGMENT_SHADER is a shaderProgram that is intended to run on the
     /// programmable fragment processor.
     /// </para>
     /// </summary>
     /// <param name="shaderType">
-    /// Specifies the type of shader to be created. Must be one of GL_COMPUTE_SHADER, GL_VERTEX_SHADER,
+    /// Specifies the type of shaderProgram to be created. Must be one of GL_COMPUTE_SHADER, GL_VERTEX_SHADER,
     /// GL_TESS_CONTROL_SHADER, GL_TESS_EVALUATION_SHADER, GL_GEOMETRY_SHADER, or GL_FRAGMENT_SHADER.
     /// </param>
     public static uint CreateShader(ShaderType shaderType)
@@ -3098,12 +3101,12 @@ internal partial class Gl
     /// Create a stand-alone program from an array of null-terminated source code strings.
     /// <para>
     /// glCreateShaderProgram creates a program object containing compiled and linked shaders for a single
-    /// stage specified by type. strings refers to an array of count strings from which to create the shader
+    /// stage specified by type. strings refers to an array of count strings from which to create the shaderProgram
     /// executables.
     /// </para>
     /// </summary>
     /// <param name="type">
-    /// Specifies the type of shader to create.
+    /// Specifies the type of shaderProgram to create.
     /// </param>
     /// <param name="count">
     /// Specifies the number of source code strings in the array strings.
@@ -3333,14 +3336,14 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Deletes a shader object.
+    /// Deletes a shaderProgram object.
     /// <para>
-    /// glDeleteShader frees the memory and invalidates the name associated with the shader object specified
-    /// by shader. This command effectively undoes the effects of a call to glCreateShader.
+    /// glDeleteShader frees the memory and invalidates the name associated with the shaderProgram object specified
+    /// by shaderProgram. This command effectively undoes the effects of a call to glCreateShader.
     /// </para>
     /// </summary>
     /// <param name="shader">
-    /// Specifies the shader object to be deleted.
+    /// Specifies the shaderProgram object to be deleted.
     /// </param>
     public static void DeleteShader(uint shader)
     {
@@ -3562,17 +3565,17 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Detaches a shader object from a program object to which it is attached.
+    /// Detaches a shaderProgram object from a program object to which it is attached.
     /// <para>
-    /// glDetachShader detaches the shader object specified by shader from the program object specified by
+    /// glDetachShader detaches the shaderProgram object specified by shaderProgram from the program object specified by
     /// program. This command can be used to undo the effect of the command glAttachShader.
     /// </para>
     /// </summary>
     /// <param name="program">
-    /// Specifies the program object from which to detach the shader object.
+    /// Specifies the program object from which to detach the shaderProgram object.
     /// </param>
     /// <param name="shader">
-    /// Specifies the shader object to be detached.
+    /// Specifies the shaderProgram object to be detached.
     /// </param>
     public static void DetachShader(uint program, uint shader)
     {
@@ -3583,7 +3586,7 @@ internal partial class Gl
     /// Launch one or more compute work groups.
     /// <para>
     /// glDispatchCompute launches one or more compute work groups. Each work group is processed by the
-    /// active program object for the compute shader stage. While the individual shader invocations within a
+    /// active program object for the compute shaderProgram stage. While the individual shaderProgram invocations within a
     /// work group are executed as a unit, work groups are executed completely independently and in
     /// unspecified order. num_groups_x, num_groups_y and num_groups_z specify the number of local work
     /// groups that will be dispatched in the X, Y and Z dimensions, respectively.
@@ -3608,7 +3611,7 @@ internal partial class Gl
     /// <para>
     /// glDispatchComputeIndirect launches one or more compute work groups using parameters stored in the
     /// buffer object currently bound to the GL_DISPATCH_INDIRECT_BUFFER target. Each work group is
-    /// processed by the active program object for the compute shader stage. While the individual shader
+    /// processed by the active program object for the compute shaderProgram stage. While the individual shaderProgram
     /// invocations within a work group are executed as a unit, work groups are executed completely
     /// independently and in unspecified order. indirect contains the offset into the data store of the
     /// buffer object bound to the GL_DISPATCH_INDIRECT_BUFFER target at which the parameters are stored.
@@ -3677,7 +3680,7 @@ internal partial class Gl
     /// <para>
     /// glDrawArraysInstanced behaves identically to glDrawArrays except that primcount instances of the
     /// range of elements are executed and the value of the internal counter instanceID advances for each
-    /// iteration. instanceID is an internal 32-bit integer counter that may be read by a vertex shader as
+    /// iteration. instanceID is an internal 32-bit integer counter that may be read by a vertex shaderProgram as
     /// gl_InstanceID.
     /// </para>
     /// </summary>
@@ -3707,7 +3710,7 @@ internal partial class Gl
     /// glDrawArraysInstancedBaseInstance behaves identically to glDrawArrays except that primcount
     /// instances of the range of elements are executed and the value of the internal counter instanceID
     /// advances for each iteration. instanceID is an internal 32-bit integer counter that may be read by a
-    /// vertex shader as gl_InstanceID.
+    /// vertex shaderProgram as gl_InstanceID.
     /// </para>
     /// </summary>
     /// <param name="mode">
@@ -3782,7 +3785,7 @@ internal partial class Gl
     /// Specifies a list of color buffers to be drawn into.
     /// <para>
     /// glDrawBuffers and glNamedFramebufferDrawBuffers define an array of buffers into which outputs from
-    /// the fragment shader data will be written. If a fragment shader writes a value to one or more user
+    /// the fragment shaderProgram data will be written. If a fragment shaderProgram writes a value to one or more user
     /// defined output variables, then the value of each variable will be written into the buffer specified
     /// at a location within bufs corresponding to the location assigned to that user defined output. The
     /// draw buffer used for user defined outputs assigned to locations greater than or equal to n is
@@ -3805,7 +3808,7 @@ internal partial class Gl
     /// Specifies a list of color buffers to be drawn into.
     /// <para>
     /// glDrawBuffers and glNamedFramebufferDrawBuffers define an array of buffers into which outputs from
-    /// the fragment shader data will be written. If a fragment shader writes a value to one or more user
+    /// the fragment shaderProgram data will be written. If a fragment shaderProgram writes a value to one or more user
     /// defined output variables, then the value of each variable will be written into the buffer specified
     /// at a location within bufs corresponding to the location assigned to that user defined output. The
     /// draw buffer used for user defined outputs assigned to locations greater than or equal to n is
@@ -3924,7 +3927,7 @@ internal partial class Gl
     /// <para>
     /// glDrawElementsInstanced behaves identically to glDrawElements except that primcount instances of the
     /// set of elements are executed and the value of the internal counter instanceID advances for each
-    /// iteration. instanceID is an internal 32-bit integer counter that may be read by a vertex shader as
+    /// iteration. instanceID is an internal 32-bit integer counter that may be read by a vertex shaderProgram as
     /// gl_InstanceID.
     /// </para>
     /// </summary>
@@ -3959,7 +3962,7 @@ internal partial class Gl
     /// glDrawElementsInstancedBaseInstance behaves identically to glDrawElements except that primcount
     /// instances of the set of elements are executed and the value of the internal counter instanceID
     /// advances for each iteration. instanceID is an internal 32-bit integer counter that may be read by a
-    /// vertex shader as gl_InstanceID.
+    /// vertex shaderProgram as gl_InstanceID.
     /// </para>
     /// </summary>
     /// <param name="mode">
@@ -4371,7 +4374,10 @@ internal partial class Gl
     /// </param>
     public static void EnableVertexAttribArray(int index)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glEnableVertexAttribArray((uint)index);
     }
@@ -4405,7 +4411,10 @@ internal partial class Gl
     /// </param>
     public static void DisableVertexAttribArray(int index)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glDisableVertexAttribArray((uint)index);
     }
@@ -4447,7 +4456,10 @@ internal partial class Gl
     /// </param>
     public static void EnableVertexArrayAttrib(uint vaobj, int index)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glEnableVertexArrayAttrib(vaobj, (uint)index);
     }
@@ -4489,7 +4501,10 @@ internal partial class Gl
     /// </param>
     public static void DisableVertexArrayAttrib(uint vaobj, int index)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glDisableVertexArrayAttrib(vaobj, (uint)index);
     }
@@ -5441,38 +5456,41 @@ internal partial class Gl
         [Out] int[] size, [Out] ActiveAttribType[] type,
         [Out] StringBuilder name)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glGetActiveAttrib(program, (uint)index, bufSize, length, size, type, name);
     }
 
     /// <summary>
-    /// Query the name of an active shader subroutine.
+    /// Query the name of an active shaderProgram subroutine.
     /// <para>
-    /// glGetActiveSubroutineName queries the name of an active shader subroutine uniform from the program
-    /// object given in program. index specifies the index of the shader subroutine uniform within the
-    /// shader stage given by stage, and must between zero and the value of GL_ACTIVE_SUBROUTINES minus one
-    /// for the shader stage.
+    /// glGetActiveSubroutineName queries the name of an active shaderProgram subroutine uniform from the program
+    /// object given in program. index specifies the index of the shaderProgram subroutine uniform within the
+    /// shaderProgram stage given by stage, and must between zero and the value of GL_ACTIVE_SUBROUTINES minus one
+    /// for the shaderProgram stage.
     /// </para>
     /// </summary>
     /// <param name="program">
     /// Specifies the name of the program containing the subroutine.
     /// </param>
     /// <param name="shadertype">
-    /// Specifies the shader stage from which to query the subroutine name.
+    /// Specifies the shaderProgram stage from which to query the subroutine name.
     /// </param>
     /// <param name="index">
-    /// Specifies the index of the shader subroutine uniform.
+    /// Specifies the index of the shaderProgram subroutine uniform.
     /// </param>
     /// <param name="bufsize">
     /// Specifies the size of the buffer whose address is given in name.
     /// </param>
     /// <param name="length">
-    /// Specifies the address of a variable which is to receive the length of the shader subroutine uniform
+    /// Specifies the address of a variable which is to receive the length of the shaderProgram subroutine uniform
     /// name.
     /// </param>
     /// <param name="name">
-    /// Specifies the address of an array into which the name of the shader subroutine uniform will be
+    /// Specifies the address of an array into which the name of the shaderProgram subroutine uniform will be
     /// written.
     /// </param>
     public static void GetActiveSubroutineName(uint program, ShaderType shadertype, uint index, int bufsize,
@@ -5482,27 +5500,27 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Query a property of an active shader subroutine uniform.
+    /// Query a property of an active shaderProgram subroutine uniform.
     /// <para>
-    /// glGetActiveSubroutineUniform queries a parameter of an active shader subroutine uniform. program
+    /// glGetActiveSubroutineUniform queries a parameter of an active shaderProgram subroutine uniform. program
     /// contains the name of the program containing the uniform. shadertype specifies the stage which which
     /// the uniform location, given by index, is valid. index must be between zero and the value of
-    /// GL_ACTIVE_SUBROUTINE_UNIFORMS minus one for the shader stage.
+    /// GL_ACTIVE_SUBROUTINE_UNIFORMS minus one for the shaderProgram stage.
     /// </para>
     /// </summary>
     /// <param name="program">
     /// Specifies the name of the program containing the subroutine.
     /// </param>
     /// <param name="shadertype">
-    /// Specifies the shader stage from which to query for the subroutine parameter. shadertype must be one
+    /// Specifies the shaderProgram stage from which to query for the subroutine parameter. shadertype must be one
     /// of GL_VERTEX_SHADER, GL_TESS_CONTROL_SHADER, GL_TESS_EVALUATION_SHADER, GL_GEOMETRY_SHADER or
     /// GL_FRAGMENT_SHADER.
     /// </param>
     /// <param name="index">
-    /// Specifies the index of the shader subroutine uniform.
+    /// Specifies the index of the shaderProgram subroutine uniform.
     /// </param>
     /// <param name="pname">
-    /// Specifies the parameter of the shader subroutine uniform to query. pname must be
+    /// Specifies the parameter of the shaderProgram subroutine uniform to query. pname must be
     /// GL_NUM_COMPATIBLE_SUBROUTINES, GL_COMPATIBLE_SUBROUTINES, GL_UNIFORM_SIZE or GL_UNIFORM_NAME_LENGTH.
     /// </param>
     /// <param name="values">
@@ -5515,27 +5533,27 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Query a property of an active shader subroutine uniform.
+    /// Query a property of an active shaderProgram subroutine uniform.
     /// <para>
-    /// glGetActiveSubroutineUniform queries a parameter of an active shader subroutine uniform. program
+    /// glGetActiveSubroutineUniform queries a parameter of an active shaderProgram subroutine uniform. program
     /// contains the name of the program containing the uniform. shadertype specifies the stage which which
     /// the uniform location, given by index, is valid. index must be between zero and the value of
-    /// GL_ACTIVE_SUBROUTINE_UNIFORMS minus one for the shader stage.
+    /// GL_ACTIVE_SUBROUTINE_UNIFORMS minus one for the shaderProgram stage.
     /// </para>
     /// </summary>
     /// <param name="program">
     /// Specifies the name of the program containing the subroutine.
     /// </param>
     /// <param name="shadertype">
-    /// Specifies the shader stage from which to query for the subroutine parameter. shadertype must be one
+    /// Specifies the shaderProgram stage from which to query for the subroutine parameter. shadertype must be one
     /// of GL_VERTEX_SHADER, GL_TESS_CONTROL_SHADER, GL_TESS_EVALUATION_SHADER, GL_GEOMETRY_SHADER or
     /// GL_FRAGMENT_SHADER.
     /// </param>
     /// <param name="index">
-    /// Specifies the index of the shader subroutine uniform.
+    /// Specifies the index of the shaderProgram subroutine uniform.
     /// </param>
     /// <param name="pname">
-    /// Specifies the parameter of the shader subroutine uniform to query. pname must be
+    /// Specifies the parameter of the shaderProgram subroutine uniform to query. pname must be
     /// GL_NUM_COMPATIBLE_SUBROUTINES, GL_COMPATIBLE_SUBROUTINES, GL_UNIFORM_SIZE or GL_UNIFORM_NAME_LENGTH.
     /// </param>
     /// <param name="values">
@@ -5544,30 +5562,33 @@ internal partial class Gl
     public static void GetActiveSubroutineUniformiv(uint program, ShaderType shadertype, int index,
         SubroutineParameterName pname, [Out] int[] values)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glGetActiveSubroutineUniformiv(program, shadertype, (uint)index, pname, values);
     }
 
     /// <summary>
-    /// Query the name of an active shader subroutine uniform.
+    /// Query the name of an active shaderProgram subroutine uniform.
     /// <para>
-    /// glGetActiveSubroutineUniformName retrieves the name of an active shader subroutine uniform. program
+    /// glGetActiveSubroutineUniformName retrieves the name of an active shaderProgram subroutine uniform. program
     /// contains the name of the program containing the uniform. shadertype specifies the stage for which
     /// which the uniform location, given by index, is valid. index must be between zero and the value of
-    /// GL_ACTIVE_SUBROUTINE_UNIFORMS minus one for the shader stage.
+    /// GL_ACTIVE_SUBROUTINE_UNIFORMS minus one for the shaderProgram stage.
     /// </para>
     /// </summary>
     /// <param name="program">
     /// Specifies the name of the program containing the subroutine.
     /// </param>
     /// <param name="shadertype">
-    /// Specifies the shader stage from which to query for the subroutine parameter. shadertype must be one
+    /// Specifies the shaderProgram stage from which to query for the subroutine parameter. shadertype must be one
     /// of GL_VERTEX_SHADER, GL_TESS_CONTROL_SHADER, GL_TESS_EVALUATION_SHADER, GL_GEOMETRY_SHADER or
     /// GL_FRAGMENT_SHADER.
     /// </param>
     /// <param name="index">
-    /// Specifies the index of the shader subroutine uniform.
+    /// Specifies the index of the shaderProgram subroutine uniform.
     /// </param>
     /// <param name="bufsize">
     /// Specifies the size of the buffer whose address is given in name.
@@ -5576,7 +5597,7 @@ internal partial class Gl
     /// Specifies the address of a variable into which is written the number of characters copied into name.
     /// </param>
     /// <param name="name">
-    /// Specifies the address of a buffer that will receive the name of the specified shader subroutine
+    /// Specifies the address of a buffer that will receive the name of the specified shaderProgram subroutine
     /// uniform.
     /// </param>
     public static void GetActiveSubroutineUniformName(uint program, ShaderType shadertype, uint index, int bufsize,
@@ -5586,24 +5607,24 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Query the name of an active shader subroutine uniform.
+    /// Query the name of an active shaderProgram subroutine uniform.
     /// <para>
-    /// glGetActiveSubroutineUniformName retrieves the name of an active shader subroutine uniform. program
+    /// glGetActiveSubroutineUniformName retrieves the name of an active shaderProgram subroutine uniform. program
     /// contains the name of the program containing the uniform. shadertype specifies the stage for which
     /// which the uniform location, given by index, is valid. index must be between zero and the value of
-    /// GL_ACTIVE_SUBROUTINE_UNIFORMS minus one for the shader stage.
+    /// GL_ACTIVE_SUBROUTINE_UNIFORMS minus one for the shaderProgram stage.
     /// </para>
     /// </summary>
     /// <param name="program">
     /// Specifies the name of the program containing the subroutine.
     /// </param>
     /// <param name="shadertype">
-    /// Specifies the shader stage from which to query for the subroutine parameter. shadertype must be one
+    /// Specifies the shaderProgram stage from which to query for the subroutine parameter. shadertype must be one
     /// of GL_VERTEX_SHADER, GL_TESS_CONTROL_SHADER, GL_TESS_EVALUATION_SHADER, GL_GEOMETRY_SHADER or
     /// GL_FRAGMENT_SHADER.
     /// </param>
     /// <param name="index">
-    /// Specifies the index of the shader subroutine uniform.
+    /// Specifies the index of the shaderProgram subroutine uniform.
     /// </param>
     /// <param name="bufsize">
     /// Specifies the size of the buffer whose address is given in name.
@@ -5612,13 +5633,16 @@ internal partial class Gl
     /// Specifies the address of a variable into which is written the number of characters copied into name.
     /// </param>
     /// <param name="name">
-    /// Specifies the address of a buffer that will receive the name of the specified shader subroutine
+    /// Specifies the address of a buffer that will receive the name of the specified shaderProgram subroutine
     /// uniform.
     /// </param>
     public static void GetActiveSubroutineUniformName(uint program, ShaderType shadertype, int index, int bufsize,
         [Out] int[] length, [Out] StringBuilder name)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glGetActiveSubroutineUniformName(program, shadertype, (uint)index, bufsize, length,
             name);
@@ -5699,7 +5723,10 @@ internal partial class Gl
         [Out] int[] size, [Out] ActiveUniformType[] type,
         [Out] StringBuilder name)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glGetActiveUniform(program, (uint)index, bufSize, length, size, type, name);
     }
@@ -5831,12 +5858,12 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Returns the handles of the shader objects attached to a program object.
+    /// Returns the handles of the shaderProgram objects attached to a program object.
     /// <para>
-    /// glGetAttachedShaders returns the names of the shader objects attached to program. The names of
-    /// shader objects that are attached to program will be returned in shaders. The actual number of shader
-    /// names written into shaders is returned in count. If no shader objects are attached to program, count
-    /// is set to 0. The maximum number of shader names that may be returned in shaders is specified by
+    /// glGetAttachedShaders returns the names of the shaderProgram objects attached to program. The names of
+    /// shaderProgram objects that are attached to program will be returned in shaders. The actual number of shaderProgram
+    /// names written into shaders is returned in count. If no shaderProgram objects are attached to program, count
+    /// is set to 0. The maximum number of shaderProgram names that may be returned in shaders is specified by
     /// maxCount.
     /// </para>
     /// </summary>
@@ -5850,7 +5877,7 @@ internal partial class Gl
     /// Returns the number of names actually returned in shaders.
     /// </param>
     /// <param name="shaders">
-    /// Specifies an array that is used to return the names of attached shader objects.
+    /// Specifies an array that is used to return the names of attached shaderProgram objects.
     /// </param>
     public static void GetAttachedShaders(uint program, int maxCount, [Out] int[] count,
         [Out] uint[] shaders)
@@ -6297,7 +6324,7 @@ internal partial class Gl
     /// glGetFragDataLocation retrieves the assigned color number binding for the user-defined varying out
     /// variable name for program program. program must have previously been linked. name must be a
     /// null-terminated string. If name is not the name of an active user-defined varying out fragment
-    /// shader variable within program, -1 will be returned.
+    /// shaderProgram variable within program, -1 will be returned.
     /// </para>
     /// </summary>
     /// <param name="program">
@@ -6892,24 +6919,24 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Retrieve properties of a program object corresponding to a specified shader stage.
+    /// Retrieve properties of a program object corresponding to a specified shaderProgram stage.
     /// <para>
-    /// glGetProgramStage queries a parameter of a shader stage attached to a program object. program
-    /// contains the name of the program to which the shader is attached. shadertype specifies the stage
+    /// glGetProgramStage queries a parameter of a shaderProgram stage attached to a program object. program
+    /// contains the name of the program to which the shaderProgram is attached. shadertype specifies the stage
     /// from which to query the parameter. pname specifies which parameter should be queried. The value or
     /// values of the parameter to be queried is returned in the variable whose address is given in values.
     /// </para>
     /// </summary>
     /// <param name="program">
-    /// Specifies the name of the program containing shader stage.
+    /// Specifies the name of the program containing shaderProgram stage.
     /// </param>
     /// <param name="shadertype">
-    /// Specifies the shader stage from which to query for the subroutine parameter. shadertype must be one
+    /// Specifies the shaderProgram stage from which to query for the subroutine parameter. shadertype must be one
     /// of GL_VERTEX_SHADER, GL_TESS_CONTROL_SHADER, GL_TESS_EVALUATION_SHADER, GL_GEOMETRY_SHADER or
     /// GL_FRAGMENT_SHADER.
     /// </param>
     /// <param name="pname">
-    /// Specifies the parameter of the shader to query. pname must be GL_ACTIVE_SUBROUTINE_UNIFORMS,
+    /// Specifies the parameter of the shaderProgram to query. pname must be GL_ACTIVE_SUBROUTINE_UNIFORMS,
     /// GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS, GL_ACTIVE_SUBROUTINES,
     /// GL_ACTIVE_SUBROUTINE_UNIFORM_MAX_LENGTH, or GL_ACTIVE_SUBROUTINE_MAX_LENGTH.
     /// </param>
@@ -7223,14 +7250,14 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Returns a parameter from a shader object.
+    /// Returns a parameter from a shaderProgram object.
     /// <para>
-    /// glGetShader returns in params the value of a parameter for a specific shader object. The following
+    /// glGetShader returns in params the value of a parameter for a specific shaderProgram object. The following
     /// parameters are defined:.
     /// </para>
     /// </summary>
     /// <param name="shader">
-    /// Specifies the shader object to be queried.
+    /// Specifies the shaderProgram object to be queried.
     /// </param>
     /// <param name="pname">
     /// Specifies the object parameter. Accepted symbolic names are GL_SHADER_TYPE, GL_DELETE_STATUS,
@@ -7245,15 +7272,15 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Returns the information log for a shader object.
+    /// Returns the information log for a shaderProgram object.
     /// <para>
-    /// glGetShaderInfoLog returns the information log for the specified shader object. The information log
-    /// for a shader object is modified when the shader is compiled. The string that is returned will be
+    /// glGetShaderInfoLog returns the information log for the specified shaderProgram object. The information log
+    /// for a shaderProgram object is modified when the shaderProgram is compiled. The string that is returned will be
     /// null terminated.
     /// </para>
     /// </summary>
     /// <param name="shader">
-    /// Specifies the shader object whose information log is to be queried.
+    /// Specifies the shaderProgram object whose information log is to be queried.
     /// </param>
     /// <param name="maxLength">
     /// Specifies the size of the character buffer for storing the returned information log.
@@ -7271,18 +7298,18 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Retrieve the range and precision for numeric formats supported by the shader compiler.
+    /// Retrieve the range and precision for numeric formats supported by the shaderProgram compiler.
     /// <para>
     /// glGetShaderPrecisionFormat retrieves the numeric range and precision for the implementation's
-    /// representation of quantities in different numeric formats in specified shader type. shaderType
-    /// specifies the type of shader for which the numeric precision and range is to be retrieved and must
+    /// representation of quantities in different numeric formats in specified shaderProgram type. shaderType
+    /// specifies the type of shaderProgram for which the numeric precision and range is to be retrieved and must
     /// be one of GL_VERTEX_SHADER or GL_FRAGMENT_SHADER. precisionType specifies the numeric format to
     /// query and must be one of GL_LOW_FLOAT, GL_MEDIUM_FLOAT GL_HIGH_FLOAT, GL_LOW_INT, GL_MEDIUM_INT, or
     /// GL_HIGH_INT.
     /// </para>
     /// </summary>
     /// <param name="shaderType">
-    /// Specifies the type of shader whose precision to query. shaderType must be GL_VERTEX_SHADER or
+    /// Specifies the type of shaderProgram whose precision to query. shaderType must be GL_VERTEX_SHADER or
     /// GL_FRAGMENT_SHADER.
     /// </param>
     /// <param name="precisionType">
@@ -7303,15 +7330,15 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Returns the source code string from a shader object.
+    /// Returns the source code string from a shaderProgram object.
     /// <para>
-    /// glGetShaderSource returns the concatenation of the source code strings from the shader object
-    /// specified by shader. The source code strings for a shader object are the result of a previous call
+    /// glGetShaderSource returns the concatenation of the source code strings from the shaderProgram object
+    /// specified by shaderProgram. The source code strings for a shaderProgram object are the result of a previous call
     /// to glShaderSource. The string returned by the function will be null terminated.
     /// </para>
     /// </summary>
     /// <param name="shader">
-    /// Specifies the shader object to be queried.
+    /// Specifies the shaderProgram object to be queried.
     /// </param>
     /// <param name="bufSize">
     /// Specifies the size of the character buffer for storing the returned source code string.
@@ -7364,19 +7391,19 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Retrieve the index of a subroutine uniform of a given shader stage within a program.
+    /// Retrieve the index of a subroutine uniform of a given shaderProgram stage within a program.
     /// <para>
-    /// glGetSubroutineIndex returns the index of a subroutine uniform within a shader stage attached to a
-    /// program object. program contains the name of the program to which the shader is attached. shadertype
-    /// specifies the stage from which to query shader subroutine index. name contains the null-terminated
+    /// glGetSubroutineIndex returns the index of a subroutine uniform within a shaderProgram stage attached to a
+    /// program object. program contains the name of the program to which the shaderProgram is attached. shadertype
+    /// specifies the stage from which to query shaderProgram subroutine index. name contains the null-terminated
     /// name of the subroutine uniform whose name to query.
     /// </para>
     /// </summary>
     /// <param name="program">
-    /// Specifies the name of the program containing shader stage.
+    /// Specifies the name of the program containing shaderProgram stage.
     /// </param>
     /// <param name="shadertype">
-    /// Specifies the shader stage from which to query for subroutine uniform index. shadertype must be one
+    /// Specifies the shaderProgram stage from which to query for subroutine uniform index. shadertype must be one
     /// of GL_VERTEX_SHADER, GL_TESS_CONTROL_SHADER, GL_TESS_EVALUATION_SHADER, GL_GEOMETRY_SHADER or
     /// GL_FRAGMENT_SHADER.
     /// </param>
@@ -7389,18 +7416,18 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Retrieve the location of a subroutine uniform of a given shader stage within a program.
+    /// Retrieve the location of a subroutine uniform of a given shaderProgram stage within a program.
     /// <para>
     /// glGetSubroutineUniformLocation returns the location of the subroutine uniform variable name in the
-    /// shader stage of type shadertype attached to program, with behavior otherwise identical to
+    /// shaderProgram stage of type shadertype attached to program, with behavior otherwise identical to
     /// glGetUniformLocation.
     /// </para>
     /// </summary>
     /// <param name="program">
-    /// Specifies the name of the program containing shader stage.
+    /// Specifies the name of the program containing shaderProgram stage.
     /// </param>
     /// <param name="shadertype">
-    /// Specifies the shader stage from which to query for subroutine uniform index. shadertype must be one
+    /// Specifies the shaderProgram stage from which to query for subroutine uniform index. shadertype must be one
     /// of GL_VERTEX_SHADER, GL_TESS_CONTROL_SHADER, GL_TESS_EVALUATION_SHADER, GL_GEOMETRY_SHADER or
     /// GL_FRAGMENT_SHADER.
     /// </param>
@@ -8268,7 +8295,7 @@ internal partial class Gl
     /// <para>
     /// glGetUniform and glGetnUniform return in params the value(s) of the specified uniform variable. The
     /// type of the uniform variable specified by location determines the number of values returned. If the
-    /// uniform variable is defined in the shader as a boolean, int, or float, a single value will be
+    /// uniform variable is defined in the shaderProgram as a boolean, int, or float, a single value will be
     /// returned. If it is defined as a vec2, ivec2, or bvec2, two values will be returned. If it is defined
     /// as a vec3, ivec3, or bvec3, three values will be returned, and so on. To query values stored in
     /// uniform variables declared as arrays, call glGetUniform for each element of the array. To query
@@ -8296,7 +8323,7 @@ internal partial class Gl
     /// <para>
     /// glGetUniform and glGetnUniform return in params the value(s) of the specified uniform variable. The
     /// type of the uniform variable specified by location determines the number of values returned. If the
-    /// uniform variable is defined in the shader as a boolean, int, or float, a single value will be
+    /// uniform variable is defined in the shaderProgram as a boolean, int, or float, a single value will be
     /// returned. If it is defined as a vec2, ivec2, or bvec2, two values will be returned. If it is defined
     /// as a vec3, ivec3, or bvec3, three values will be returned, and so on. To query values stored in
     /// uniform variables declared as arrays, call glGetUniform for each element of the array. To query
@@ -8324,7 +8351,7 @@ internal partial class Gl
     /// <para>
     /// glGetUniform and glGetnUniform return in params the value(s) of the specified uniform variable. The
     /// type of the uniform variable specified by location determines the number of values returned. If the
-    /// uniform variable is defined in the shader as a boolean, int, or float, a single value will be
+    /// uniform variable is defined in the shaderProgram as a boolean, int, or float, a single value will be
     /// returned. If it is defined as a vec2, ivec2, or bvec2, two values will be returned. If it is defined
     /// as a vec3, ivec3, or bvec3, three values will be returned, and so on. To query values stored in
     /// uniform variables declared as arrays, call glGetUniform for each element of the array. To query
@@ -8352,7 +8379,7 @@ internal partial class Gl
     /// <para>
     /// glGetUniform and glGetnUniform return in params the value(s) of the specified uniform variable. The
     /// type of the uniform variable specified by location determines the number of values returned. If the
-    /// uniform variable is defined in the shader as a boolean, int, or float, a single value will be
+    /// uniform variable is defined in the shaderProgram as a boolean, int, or float, a single value will be
     /// returned. If it is defined as a vec2, ivec2, or bvec2, two values will be returned. If it is defined
     /// as a vec3, ivec3, or bvec3, three values will be returned, and so on. To query values stored in
     /// uniform variables declared as arrays, call glGetUniform for each element of the array. To query
@@ -8380,7 +8407,7 @@ internal partial class Gl
     /// <para>
     /// glGetUniform and glGetnUniform return in params the value(s) of the specified uniform variable. The
     /// type of the uniform variable specified by location determines the number of values returned. If the
-    /// uniform variable is defined in the shader as a boolean, int, or float, a single value will be
+    /// uniform variable is defined in the shaderProgram as a boolean, int, or float, a single value will be
     /// returned. If it is defined as a vec2, ivec2, or bvec2, two values will be returned. If it is defined
     /// as a vec3, ivec3, or bvec3, three values will be returned, and so on. To query values stored in
     /// uniform variables declared as arrays, call glGetUniform for each element of the array. To query
@@ -8411,7 +8438,7 @@ internal partial class Gl
     /// <para>
     /// glGetUniform and glGetnUniform return in params the value(s) of the specified uniform variable. The
     /// type of the uniform variable specified by location determines the number of values returned. If the
-    /// uniform variable is defined in the shader as a boolean, int, or float, a single value will be
+    /// uniform variable is defined in the shaderProgram as a boolean, int, or float, a single value will be
     /// returned. If it is defined as a vec2, ivec2, or bvec2, two values will be returned. If it is defined
     /// as a vec3, ivec3, or bvec3, three values will be returned, and so on. To query values stored in
     /// uniform variables declared as arrays, call glGetUniform for each element of the array. To query
@@ -8442,7 +8469,7 @@ internal partial class Gl
     /// <para>
     /// glGetUniform and glGetnUniform return in params the value(s) of the specified uniform variable. The
     /// type of the uniform variable specified by location determines the number of values returned. If the
-    /// uniform variable is defined in the shader as a boolean, int, or float, a single value will be
+    /// uniform variable is defined in the shaderProgram as a boolean, int, or float, a single value will be
     /// returned. If it is defined as a vec2, ivec2, or bvec2, two values will be returned. If it is defined
     /// as a vec3, ivec3, or bvec3, three values will be returned, and so on. To query values stored in
     /// uniform variables declared as arrays, call glGetUniform for each element of the array. To query
@@ -8473,7 +8500,7 @@ internal partial class Gl
     /// <para>
     /// glGetUniform and glGetnUniform return in params the value(s) of the specified uniform variable. The
     /// type of the uniform variable specified by location determines the number of values returned. If the
-    /// uniform variable is defined in the shader as a boolean, int, or float, a single value will be
+    /// uniform variable is defined in the shaderProgram as a boolean, int, or float, a single value will be
     /// returned. If it is defined as a vec2, ivec2, or bvec2, two values will be returned. If it is defined
     /// as a vec3, ivec3, or bvec3, three values will be returned, and so on. To query values stored in
     /// uniform variables declared as arrays, call glGetUniform for each element of the array. To query
@@ -8567,16 +8594,16 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Retrieve the value of a subroutine uniform of a given shader stage of the current program.
+    /// Retrieve the value of a subroutine uniform of a given shaderProgram stage of the current program.
     /// <para>
-    /// glGetUniformSubroutine retrieves the value of the subroutine uniform at location location for shader
+    /// glGetUniformSubroutine retrieves the value of the subroutine uniform at location location for shaderProgram
     /// stage shadertype of the current program. location must be less than the value of
-    /// GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS for the shader currently in use at shader stage shadertype.
+    /// GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS for the shaderProgram currently in use at shaderProgram stage shadertype.
     /// The value of the subroutine uniform is returned in values.
     /// </para>
     /// </summary>
     /// <param name="shadertype">
-    /// Specifies the shader stage from which to query for subroutine uniform index. shadertype must be one
+    /// Specifies the shaderProgram stage from which to query for subroutine uniform index. shadertype must be one
     /// of GL_VERTEX_SHADER, GL_TESS_CONTROL_SHADER, GL_TESS_EVALUATION_SHADER, GL_GEOMETRY_SHADER or
     /// GL_FRAGMENT_SHADER.
     /// </param>
@@ -8726,7 +8753,10 @@ internal partial class Gl
     /// </param>
     public static void GetVertexAttribdv(int index, VertexAttribParameter pname, [Out] double[] @params)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glGetVertexAttribdv((uint)index, pname, @params);
     }
@@ -8778,7 +8808,10 @@ internal partial class Gl
     /// </param>
     public static void GetVertexAttribfv(int index, VertexAttribParameter pname, [Out] float[] @params)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glGetVertexAttribfv((uint)index, pname, @params);
     }
@@ -8830,7 +8863,10 @@ internal partial class Gl
     /// </param>
     public static void GetVertexAttribiv(int index, VertexAttribParameter pname, [Out] int[] @params)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glGetVertexAttribiv((uint)index, pname, @params);
     }
@@ -8882,7 +8918,10 @@ internal partial class Gl
     /// </param>
     public static void GetVertexAttribIiv(int index, VertexAttribParameter pname, [Out] int[] @params)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glGetVertexAttribIiv((uint)index, pname, @params);
     }
@@ -8934,7 +8973,10 @@ internal partial class Gl
     /// </param>
     public static void GetVertexAttribIuiv(int index, VertexAttribParameter pname, [Out] uint[] @params)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glGetVertexAttribIuiv((uint)index, pname, @params);
     }
@@ -8986,7 +9028,10 @@ internal partial class Gl
     /// </param>
     public static void GetVertexAttribLdv(int index, VertexAttribParameter pname, [Out] double[] @params)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glGetVertexAttribLdv((uint)index, pname, @params);
     }
@@ -9036,7 +9081,10 @@ internal partial class Gl
     public static void GetVertexAttribPointerv(int index, VertexAttribPointerParameter pname,
         [Out] nint pointer)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glGetVertexAttribPointerv((uint)index, pname, pointer);
     }
@@ -9436,15 +9484,15 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Determines if a name corresponds to a shader object.
+    /// Determines if a name corresponds to a shaderProgram object.
     /// <para>
-    /// glIsShader returns GL_TRUE if shader is the name of a shader object previously created with
-    /// glCreateShader and not yet deleted with glDeleteShader. If shader is zero or a non-zero value that
-    /// is not the name of a shader object, or if an error occurs, glIsShader returns GL_FALSE.
+    /// glIsShader returns GL_TRUE if shaderProgram is the name of a shaderProgram object previously created with
+    /// glCreateShader and not yet deleted with glDeleteShader. If shaderProgram is zero or a non-zero value that
+    /// is not the name of a shaderProgram object, or if an error occurs, glIsShader returns GL_FALSE.
     /// </para>
     /// </summary>
     /// <param name="shader">
-    /// Specifies a potential shader object.
+    /// Specifies a potential shaderProgram object.
     /// </param>
     public static bool IsShader(uint shader)
     {
@@ -9539,11 +9587,11 @@ internal partial class Gl
     /// <summary>
     /// Links a program object.
     /// <para>
-    /// glLinkProgram links the program object specified by program. If any shader objects of type
+    /// glLinkProgram links the program object specified by program. If any shaderProgram objects of type
     /// GL_VERTEX_SHADER are attached to program, they will be used to create an executable that will run on
-    /// the programmable vertex processor. If any shader objects of type GL_GEOMETRY_SHADER are attached to
+    /// the programmable vertex processor. If any shaderProgram objects of type GL_GEOMETRY_SHADER are attached to
     /// program, they will be used to create an executable that will run on the programmable geometry
-    /// processor. If any shader objects of type GL_FRAGMENT_SHADER are attached to program, they will be
+    /// processor. If any shaderProgram objects of type GL_FRAGMENT_SHADER are attached to program, they will be
     /// used to create an executable that will run on the programmable fragment processor.
     /// </para>
     /// </summary>
@@ -11254,7 +11302,7 @@ internal partial class Gl
     /// <summary>
     /// Specifiy the vertex to be used as the source of data for flat shaded varyings.
     /// <para>
-    /// Flatshading a vertex shader varying output means to assign all vetices of the primitive the same
+    /// Flatshading a vertex shaderProgram varying output means to assign all vetices of the primitive the same
     /// value for that output. The vertex from which these values is derived is known as the provoking
     /// vertex and glProvokingVertex specifies which vertex is to be used as the source of data for flat
     /// shaded varyings.
@@ -11846,24 +11894,24 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Load pre-compiled shader binaries.
+    /// Load pre-compiled shaderProgram binaries.
     /// <para>
-    /// glShaderBinary loads pre-compiled shader binary code into the count shader objects whose handles are
-    /// given in shaders. binary points to length bytes of binary shader code stored in client memory.
+    /// glShaderBinary loads pre-compiled shaderProgram binary code into the count shaderProgram objects whose handles are
+    /// given in shaders. binary points to length bytes of binary shaderProgram code stored in client memory.
     /// binaryFormat specifies the format of the pre-compiled code.
     /// </para>
     /// </summary>
     /// <param name="count">
-    /// Specifies the number of shader object handles contained in shaders.
+    /// Specifies the number of shaderProgram object handles contained in shaders.
     /// </param>
     /// <param name="shaders">
-    /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
+    /// Specifies the address of an array of shaderProgram handles into which to load pre-compiled shaderProgram binaries.
     /// </param>
     /// <param name="binaryFormat">
-    /// Specifies the format of the shader binaries contained in binary.
+    /// Specifies the format of the shaderProgram binaries contained in binary.
     /// </param>
     /// <param name="binary">
-    /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
+    /// Specifies the address of an array of bytes containing pre-compiled binary shaderProgram code.
     /// </param>
     /// <param name="length">
     /// Specifies the length of the array whose address is given in binary.
@@ -11874,26 +11922,26 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Replaces the source code in a shader object.
+    /// Replaces the source code in a shaderProgram object.
     /// <para>
-    /// glShaderSource sets the source code in shader to the source code in the array of strings specified
-    /// by string. Any source code previously stored in the shader object is completely replaced. The number
+    /// glShaderSource sets the source code in shaderProgram to the source code in the array of strings specified
+    /// by string. Any source code previously stored in the shaderProgram object is completely replaced. The number
     /// of strings in the array is specified by count. If length is NULL, each string is assumed to be null
     /// terminated. If length is a value other than NULL, it points to an array containing a string length
     /// for each of the corresponding elements of string. Each element in the length array may contain the
     /// length of the corresponding string (the null character is not counted as part of the string length)
     /// or a value less than 0 to indicate that the string is null terminated. The source code strings are
-    /// not scanned or parsed at this time; they are simply copied into the specified shader object.
+    /// not scanned or parsed at this time; they are simply copied into the specified shaderProgram object.
     /// </para>
     /// </summary>
     /// <param name="shader">
-    /// Specifies the handle of the shader object whose source code is to be replaced.
+    /// Specifies the handle of the shaderProgram object whose source code is to be replaced.
     /// </param>
     /// <param name="count">
     /// Specifies the number of elements in the string and length arrays.
     /// </param>
     /// <param name="string">
-    /// Specifies an array of pointers to strings containing the source code to be loaded into the shader.
+    /// Specifies an array of pointers to strings containing the source code to be loaded into the shaderProgram.
     /// </param>
     /// <param name="length">
     /// Specifies an array of string lengths.
@@ -11904,14 +11952,14 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Change an active shader storage block binding.
+    /// Change an active shaderProgram storage block binding.
     /// <para>
-    /// glShaderStorageBlockBinding, changes the active shader storage block with an assigned index of
-    /// storageBlockIndex in program object program. storageBlockIndex must be an active shader storage
+    /// glShaderStorageBlockBinding, changes the active shaderProgram storage block with an assigned index of
+    /// storageBlockIndex in program object program. storageBlockIndex must be an active shaderProgram storage
     /// block index in program. storageBlockBinding must be less than the value of
     /// GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS. If successful, glShaderStorageBlockBinding specifies that
     /// program will use the data store of the buffer object bound to the binding point storageBlockBinding
-    /// to read and write the values of the buffer variables in the shader storage block identified by
+    /// to read and write the values of the buffer variables in the shaderProgram storage block identified by
     /// storageBlockIndex.
     /// </para>
     /// </summary>
@@ -13468,8 +13516,8 @@ internal partial class Gl
     /// <summary>
     /// Controls the ordering of reads and writes to rendered fragments across drawing commands.
     /// <para>
-    /// The values of rendered fragments are undefined when a shader stage fetches texels and the same
-    /// texels are written via fragment shader outputs, even if the reads and writes are not in the same
+    /// The values of rendered fragments are undefined when a shaderProgram stage fetches texels and the same
+    /// texels are written via fragment shaderProgram outputs, even if the reads and writes are not in the same
     /// drawing command. To safely read the result of a written texel via a texel fetch in a subsequent
     /// drawing command, call glTextureBarrier between the two drawing commands to guarantee that writes
     /// have completed and caches have been invalidated before subsequent drawing commands are executed.
@@ -13574,10 +13622,10 @@ internal partial class Gl
     /// <summary>
     /// Specify values to record in transform feedback buffers.
     /// <para>
-    /// The names of the vertex or geometry shader outputs to be recorded in transform feedback mode are
-    /// specified using glTransformFeedbackVaryings. When a geometry shader is active, transform feedback
-    /// records the values of selected geometry shader output variables from the emitted vertices.
-    /// Otherwise, the values of the selected vertex shader outputs are recorded.
+    /// The names of the vertex or geometry shaderProgram outputs to be recorded in transform feedback mode are
+    /// specified using glTransformFeedbackVaryings. When a geometry shaderProgram is active, transform feedback
+    /// records the values of selected geometry shaderProgram output variables from the emitted vertices.
+    /// Otherwise, the values of the selected vertex shaderProgram outputs are recorded.
     /// </para>
     /// </summary>
     /// <param name="program">
@@ -14544,15 +14592,15 @@ internal partial class Gl
     /// <summary>
     /// Load active subroutine uniforms.
     /// <para>
-    /// glUniformSubroutines loads all active subroutine uniforms for shader stage shadertype of the current
+    /// glUniformSubroutines loads all active subroutine uniforms for shaderProgram stage shadertype of the current
     /// program with subroutine indices from indices, storing indices[i] into the uniform at location i.
     /// count must be equal to the value of GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS for the program currently
-    /// in use at shader stage shadertype. Furthermore, all values in indices must be less than the value of
-    /// GL_ACTIVE_SUBROUTINES for the shader stage.
+    /// in use at shaderProgram stage shadertype. Furthermore, all values in indices must be less than the value of
+    /// GL_ACTIVE_SUBROUTINES for the shaderProgram stage.
     /// </para>
     /// </summary>
     /// <param name="shadertype">
-    /// Specifies the shader stage from which to query for subroutine uniform index. shadertype must be one
+    /// Specifies the shaderProgram stage from which to query for subroutine uniform index. shadertype must be one
     /// of GL_VERTEX_SHADER, GL_TESS_CONTROL_SHADER, GL_TESS_EVALUATION_SHADER, GL_GEOMETRY_SHADER or
     /// GL_FRAGMENT_SHADER.
     /// </param>
@@ -14560,7 +14608,7 @@ internal partial class Gl
     /// Specifies the number of uniform indices stored in indices.
     /// </param>
     /// <param name="indices">
-    /// Specifies the address of an array holding the indices to load into the shader subroutine variables.
+    /// Specifies the address of an array holding the indices to load into the shaderProgram subroutine variables.
     /// </param>
     public static void UniformSubroutinesuiv(ShaderType shadertype, int count, uint[] indices)
     {
@@ -14609,8 +14657,8 @@ internal partial class Gl
     /// Installs a program object as part of current rendering state.
     /// <para>
     /// glUseProgram installs the program object specified by program as part of current rendering state.
-    /// One or more executables are created in a program object by successfully attaching shader objects to
-    /// it with glAttachShader, successfully compiling the shader objects with glCompileShader, and
+    /// One or more executables are created in a program object by successfully attaching shaderProgram objects to
+    /// it with glAttachShader, successfully compiling the shaderProgram objects with glCompileShader, and
     /// successfully linking the program object with glLinkProgram.
     /// </para>
     /// </summary>
@@ -14627,10 +14675,10 @@ internal partial class Gl
     /// <summary>
     /// Bind stages of a program object to a program pipeline.
     /// <para>
-    /// glUseProgramStages binds executables from a program object associated with a specified set of shader
+    /// glUseProgramStages binds executables from a program object associated with a specified set of shaderProgram
     /// stages to the program pipeline object given by pipeline. pipeline specifies the program pipeline
     /// object to which to bind the executables. stages contains a logical combination of bits indicating
-    /// the shader stages to use within program with the program pipeline object pipeline. stages must be a
+    /// the shaderProgram stages to use within program with the program pipeline object pipeline. stages must be a
     /// logical combination of GL_VERTEX_SHADER_BIT, GL_TESS_CONTROL_SHADER_BIT,
     /// GL_TESS_EVALUATION_SHADER_BIT, GL_GEOMETRY_SHADER_BIT, GL_FRAGMENT_SHADER_BIT and
     /// GL_COMPUTE_SHADER_BIT. Additionally, the special value GL_ALL_SHADER_BITS may be specified to
@@ -14644,7 +14692,7 @@ internal partial class Gl
     /// Specifies a set of program stages to bind to the program pipeline object.
     /// </param>
     /// <param name="program">
-    /// Specifies the program object containing the shader executables to use in pipeline.
+    /// Specifies the program object containing the shaderProgram executables to use in pipeline.
     /// </param>
     public static void UseProgramStages(uint pipeline, uint stages, uint program)
     {
@@ -14674,9 +14722,9 @@ internal partial class Gl
     /// <summary>
     /// Validate a program pipeline object against current GL state.
     /// <para>
-    /// glValidateProgramPipeline instructs the implementation to validate the shader executables contained
+    /// glValidateProgramPipeline instructs the implementation to validate the shaderProgram executables contained
     /// in pipeline against the current GL state. The implementation may use this as an opportunity to
-    /// perform any internal shader modifications that may be required to ensure correct operation of the
+    /// perform any internal shaderProgram modifications that may be required to ensure correct operation of the
     /// installed shaders given the current GL state.
     /// </para>
     /// </summary>
@@ -14740,7 +14788,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib1f(int index, float v0)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib1f((uint)index, v0);
     }
@@ -14778,7 +14829,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib1s(int index, short v0)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib1s((uint)index, v0);
     }
@@ -14816,7 +14870,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib1d(int index, double v0)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib1d((uint)index, v0);
     }
@@ -14854,7 +14911,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI1i(int index, int v0)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI1i((uint)index, v0);
     }
@@ -14892,7 +14952,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI1ui(int index, uint v0)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI1ui((uint)index, v0);
     }
@@ -14936,7 +14999,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib2f(int index, float v0, float v1)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib2f((uint)index, v0, v1);
     }
@@ -14980,7 +15046,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib2s(int index, short v0, short v1)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib2s((uint)index, v0, v1);
     }
@@ -15024,7 +15093,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib2d(int index, double v0, double v1)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib2d((uint)index, v0, v1);
     }
@@ -15068,7 +15140,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI2i(int index, int v0, int v1)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI2i((uint)index, v0, v1);
     }
@@ -15112,7 +15187,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI2ui(int index, uint v0, uint v1)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI2ui((uint)index, v0, v1);
     }
@@ -15162,7 +15240,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib3f(int index, float v0, float v1, float v2)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib3f((uint)index, v0, v1, v2);
     }
@@ -15212,7 +15293,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib3s(int index, short v0, short v1, short v2)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib3s((uint)index, v0, v1, v2);
     }
@@ -15262,7 +15346,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib3d(int index, double v0, double v1, double v2)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib3d((uint)index, v0, v1, v2);
     }
@@ -15312,7 +15399,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI3i(int index, int v0, int v1, int v2)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI3i((uint)index, v0, v1, v2);
     }
@@ -15362,7 +15452,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI3ui(int index, uint v0, uint v1, uint v2)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI3ui((uint)index, v0, v1, v2);
     }
@@ -15418,7 +15511,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib4f(int index, float v0, float v1, float v2, float v3)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4f((uint)index, v0, v1, v2, v3);
     }
@@ -15474,7 +15570,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib4s(int index, short v0, short v1, short v2, short v3)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4s((uint)index, v0, v1, v2, v3);
     }
@@ -15530,7 +15629,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib4d(int index, double v0, double v1, double v2, double v3)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4d((uint)index, v0, v1, v2, v3);
     }
@@ -15586,7 +15688,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib4Nub(int index, byte v0, byte v1, byte v2, byte v3)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4Nub((uint)index, v0, v1, v2, v3);
     }
@@ -15642,7 +15747,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI4i(int index, int v0, int v1, int v2, int v3)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI4i((uint)index, v0, v1, v2, v3);
     }
@@ -15698,7 +15806,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI4ui(int index, uint v0, uint v1, uint v2, uint v3)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI4ui((uint)index, v0, v1, v2, v3);
     }
@@ -15736,7 +15847,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribL1d(int index, double v0)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribL1d((uint)index, v0);
     }
@@ -15780,7 +15894,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribL2d(int index, double v0, double v1)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribL2d((uint)index, v0, v1);
     }
@@ -15830,7 +15947,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribL3d(int index, double v0, double v1, double v2)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribL3d((uint)index, v0, v1, v2);
     }
@@ -15886,7 +16006,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribL4d(int index, double v0, double v1, double v2, double v3)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribL4d((uint)index, v0, v1, v2, v3);
     }
@@ -15926,7 +16049,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib1fv(int index, float[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib1fv((uint)index, v);
     }
@@ -15966,7 +16092,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib1sv(int index, short[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib1sv((uint)index, v);
     }
@@ -16006,7 +16135,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib1dv(int index, double[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib1dv((uint)index, v);
     }
@@ -16046,7 +16178,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI1iv(int index, int[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI1iv((uint)index, v);
     }
@@ -16086,7 +16221,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI1uiv(int index, uint[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI1uiv((uint)index, v);
     }
@@ -16126,7 +16264,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib2fv(int index, float[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib2fv((uint)index, v);
     }
@@ -16166,7 +16307,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib2sv(int index, short[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib2sv((uint)index, v);
     }
@@ -16206,7 +16350,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib2dv(int index, double[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib2dv((uint)index, v);
     }
@@ -16246,7 +16393,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI2iv(int index, int[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI2iv((uint)index, v);
     }
@@ -16286,7 +16436,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI2uiv(int index, uint[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI2uiv((uint)index, v);
     }
@@ -16326,7 +16479,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib3fv(int index, float[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib3fv((uint)index, v);
     }
@@ -16366,7 +16522,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib3sv(int index, short[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib3sv((uint)index, v);
     }
@@ -16406,7 +16565,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib3dv(int index, double[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib3dv((uint)index, v);
     }
@@ -16446,7 +16608,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI3iv(int index, int[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI3iv((uint)index, v);
     }
@@ -16486,7 +16651,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI3uiv(int index, uint[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI3uiv((uint)index, v);
     }
@@ -16526,7 +16694,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib4fv(int index, float[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4fv((uint)index, v);
     }
@@ -16566,7 +16737,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib4sv(int index, short[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4sv((uint)index, v);
     }
@@ -16606,7 +16780,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib4dv(int index, double[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4dv((uint)index, v);
     }
@@ -16646,7 +16823,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib4iv(int index, int[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4iv((uint)index, v);
     }
@@ -16686,7 +16866,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib4bv(int index, sbyte[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4bv((uint)index, v);
     }
@@ -16726,7 +16909,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib4ubv(int index, byte[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4ubv((uint)index, v);
     }
@@ -16766,7 +16952,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib4usv(int index, ushort[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4usv((uint)index, v);
     }
@@ -16806,7 +16995,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib4uiv(int index, uint[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4uiv((uint)index, v);
     }
@@ -16846,7 +17038,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib4Nbv(int index, sbyte[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4Nbv((uint)index, v);
     }
@@ -16886,7 +17081,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib4Nsv(int index, short[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4Nsv((uint)index, v);
     }
@@ -16926,7 +17124,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib4Niv(int index, int[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4Niv((uint)index, v);
     }
@@ -16966,7 +17167,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib4Nubv(int index, byte[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4Nubv((uint)index, v);
     }
@@ -17006,7 +17210,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib4Nusv(int index, ushort[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4Nusv((uint)index, v);
     }
@@ -17046,7 +17253,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttrib4Nuiv(int index, uint[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttrib4Nuiv((uint)index, v);
     }
@@ -17086,7 +17296,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI4bv(int index, sbyte[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI4bv((uint)index, v);
     }
@@ -17126,7 +17339,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI4ubv(int index, byte[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI4ubv((uint)index, v);
     }
@@ -17166,7 +17382,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI4sv(int index, short[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI4sv((uint)index, v);
     }
@@ -17206,7 +17425,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI4usv(int index, ushort[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI4usv((uint)index, v);
     }
@@ -17246,7 +17468,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI4iv(int index, int[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI4iv((uint)index, v);
     }
@@ -17286,7 +17511,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribI4uiv(int index, uint[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribI4uiv((uint)index, v);
     }
@@ -17326,7 +17554,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribL1dv(int index, double[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribL1dv((uint)index, v);
     }
@@ -17366,7 +17597,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribL2dv(int index, double[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribL2dv((uint)index, v);
     }
@@ -17406,7 +17640,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribL3dv(int index, double[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribL3dv((uint)index, v);
     }
@@ -17446,7 +17683,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribL4dv(int index, double[] v)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribL4dv((uint)index, v);
     }
@@ -17506,7 +17746,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribP1ui(int index, VertexAttribPType type, bool normalized, uint value)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribP1ui((uint)index, type, normalized, value);
     }
@@ -17566,7 +17809,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribP2ui(int index, VertexAttribPType type, bool normalized, uint value)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribP2ui((uint)index, type, normalized, value);
     }
@@ -17626,7 +17872,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribP3ui(int index, VertexAttribPType type, bool normalized, uint value)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribP3ui((uint)index, type, normalized, value);
     }
@@ -17686,7 +17935,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribP4ui(int index, VertexAttribPType type, bool normalized, uint value)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribP4ui((uint)index, type, normalized, value);
     }
@@ -17777,7 +18029,10 @@ internal partial class Gl
     /// </param>
     public static void VertexAttribDivisor(int index, uint divisor)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribDivisor((uint)index, divisor);
     }
@@ -18057,7 +18312,10 @@ internal partial class Gl
     public static void VertexAttribPointer(int index, int size, VertexAttribPointerType type, bool normalized,
         int stride, nint pointer)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribPointer((uint)index, size, type, normalized, stride, pointer);
     }
@@ -18139,7 +18397,10 @@ internal partial class Gl
     public static void VertexAttribIPointer(int index, int size, VertexAttribPointerType type, int stride,
         nint pointer)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribIPointer((uint)index, size, type, stride, pointer);
     }
@@ -18221,7 +18482,10 @@ internal partial class Gl
     public static void VertexAttribLPointer(int index, int size, VertexAttribPointerType type, int stride,
         nint pointer)
     {
-        if (index < 0) throw new ArgumentOutOfRangeException("index");
+        if (index < 0)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
 
         global::OpenGL.Gl.Delegates.glVertexAttribLPointer((uint)index, size, type, stride, pointer);
     }

@@ -21,7 +21,7 @@ internal partial class Gl
     private static readonly StringBuilder _errorBuffer = new StringBuilder();
 
     /// <summary>
-    /// Gets the program ID of the currently active shader program.
+    /// Gets the program ID of the currently active shaderProgram program.
     /// </summary>
     public static uint CurrentProgram { get; private set; }
 
@@ -42,7 +42,10 @@ internal partial class Gl
     public static bool GetErrors(StringBuilder sb)
     {
         var error = GetError();
-        if (error == ErrorCode.NoError) return false;
+        if (error == ErrorCode.NoError)
+        {
+            return false;
+        }
 
         sb.Append("\t");
         sb.Append(error.ToString());
@@ -55,7 +58,10 @@ internal partial class Gl
     {
         _errorBuffer.Clear();
 
-        if (GetErrors(_errorBuffer)) Console.WriteLine(command + "\n" + _errorBuffer);
+        if (GetErrors(_errorBuffer))
+        {
+            Console.WriteLine(command + "\n" + _errorBuffer);
+        }
     }
 
     /// <summary>
@@ -137,7 +143,10 @@ internal partial class Gl
     public static void TexParameteriv(TextureTarget target, TextureParameterName pname, TextureParameter[] @params)
     {
         var iparams = new int[@params.Length];
-        for (var i = 0; i < iparams.Length; i++) iparams[i] = (int)@params[i];
+        for (var i = 0; i < iparams.Length; i++)
+        {
+            iparams[i] = (int)@params[i];
+        }
 
         global::OpenGL.Gl.Delegates.glTexParameteriv(target, pname, iparams);
     }
@@ -236,9 +245,9 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Gets whether the shader compiled successfully.
+    /// Gets whether the shaderProgram compiled successfully.
     /// </summary>
-    /// <param name="shader">The ID of the shader program.</param>
+    /// <param name="shader">The ID of the shaderProgram program.</param>
     /// <returns></returns>
     public static bool GetShaderCompileStatus(uint shader)
     {
@@ -260,13 +269,16 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Gets the program info from a shader program.
+    /// Gets the program info from a shaderProgram program.
     /// </summary>
-    /// <param name="program">The ID of the shader program.</param>
+    /// <param name="program">The ID of the shaderProgram program.</param>
     public static string GetProgramInfoLog(uint program)
     {
         GetProgramiv(program, ProgramParameter.InfoLogLength, Int1);
-        if (Int1[0] == 0) return string.Empty;
+        if (Int1[0] == 0)
+        {
+            return string.Empty;
+        }
 
         var sb = new StringBuilder(Int1[0]);
         GetProgramInfoLog(program, sb.Capacity, Int1, sb);
@@ -274,13 +286,16 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Gets the program info from a shader program.
+    /// Gets the program info from a shaderProgram program.
     /// </summary>
-    /// <param name="shader">The ID of the shader program.</param>
+    /// <param name="shader">The ID of the shaderProgram program.</param>
     public static string GetShaderInfoLog(uint shader)
     {
         GetShaderiv(shader, ShaderParameter.InfoLogLength, Int1);
-        if (Int1[0] == 0) return string.Empty;
+        if (Int1[0] == 0)
+        {
+            return string.Empty;
+        }
 
         var sb = new StringBuilder(Int1[0]);
         GetShaderInfoLog(shader, sb.Capacity, Int1, sb);
@@ -288,10 +303,10 @@ internal partial class Gl
     }
 
     /// <summary>
-    /// Replaces the source code in a shader object.
+    /// Replaces the source code in a shaderProgram object.
     /// </summary>
-    /// <param name="shader">Specifies the handle of the shader object whose source code is to be replaced.</param>
-    /// <param name="source">Specifies a string containing the source code to be loaded into the shader.</param>
+    /// <param name="shader">Specifies the handle of the shaderProgram object whose source code is to be replaced.</param>
+    /// <param name="source">Specifies a string containing the source code to be loaded into the shaderProgram.</param>
     public static void ShaderSource(uint shader, string[] source)
     {
         Int1[0] = source[0].Length;
@@ -378,7 +393,10 @@ internal partial class Gl
         where T : struct
     {
         var vboHandle = GenBuffer();
-        if (vboHandle == 0) return 0;
+        if (vboHandle == 0)
+        {
+            return 0;
+        }
 
         var size = data.Length * Marshal.SizeOf<T>();
 
@@ -401,7 +419,10 @@ internal partial class Gl
         where T : struct
     {
         var vboHandle = GenBuffer();
-        if (vboHandle == 0) return 0;
+        if (vboHandle == 0)
+        {
+            return 0;
+        }
 
         var size = length * Marshal.SizeOf<T>();
 
@@ -426,7 +447,10 @@ internal partial class Gl
         where T : struct
     {
         var vboHandle = GenBuffer();
-        if (vboHandle == 0) return 0;
+        if (vboHandle == 0)
+        {
+            return 0;
+        }
 
         var offset = position * Marshal.SizeOf<T>();
         var size = length * Marshal.SizeOf<T>();
@@ -449,7 +473,10 @@ internal partial class Gl
         where T : struct
     {
         var vboHandle = GenBuffer();
-        if (vboHandle == 0) return 0;
+        if (vboHandle == 0)
+        {
+            return 0;
+        }
 
         var size = length * Marshal.SizeOf<T>();
 
@@ -465,7 +492,10 @@ internal partial class Gl
     /// <returns>The current major OpenGL version, or 0 on an error.</returns>
     public static int Version()
     {
-        if (_version != 0) return _version; // cache the version information
+        if (_version != 0)
+        {
+            return _version; // cache the version information
+        }
 
         try
         {
@@ -487,7 +517,10 @@ internal partial class Gl
     /// <returns>The current minor OpenGL version, or -1 on an error.</returns>
     public static int VersionMinor()
     {
-        if (_versionMinor != 0) return _versionMinor; // cache the version information
+        if (_versionMinor != 0)
+        {
+            return _versionMinor; // cache the version information
+        }
 
         try
         {
