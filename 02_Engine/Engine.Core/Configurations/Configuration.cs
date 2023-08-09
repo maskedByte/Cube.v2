@@ -1,15 +1,15 @@
 ﻿using System.Globalization;
-using Engine.Configurations.Interface;
-using Engine.Configurations.Loader;
-using Engine.Exceptions;
-using Engine.Extensions;
-using Engine.Math.Core;
-using Engine.Math.Matrix;
-using Engine.Math.Vector;
+using Engine.Core.Configurations.Interface;
+using Engine.Core.Configurations.Loader;
+using Engine.Core.Exceptions;
+using Engine.Core.Extensions;
+using Engine.Core.Math.Base;
+using Engine.Core.Math.Matrices;
+using Engine.Core.Math.Vectors;
 
 #pragma warning disable CS8604
 
-namespace Engine.Configurations;
+namespace Engine.Core.Configurations;
 
 /// <summary>
 /// Implementation for <see cref="IConfiguration" /> to provide application wide configurations

@@ -1,4 +1,4 @@
-﻿namespace Engine.Driver.Api.Buffers;
+﻿namespace Engine.Core.Driver.Api.Buffers;
 
 public interface IFrameBuffer
 {

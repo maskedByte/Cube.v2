@@ -1,7 +1,7 @@
-﻿using Engine.Configurations;
-using Engine.Driver.Window;
-using Engine.Events;
-using Engine.Math.Core;
+﻿using Engine.Core.Configurations;
+using Engine.Core.Driver.Window;
+using Engine.Core.Events;
+using Engine.Core.Math.Base;
 using Engine.OpenGL.Vendor.SFML.Window;
 using SFML.System;
 

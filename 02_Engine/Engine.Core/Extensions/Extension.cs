@@ -1,8 +1,8 @@
 ﻿using System.Globalization;
-using Engine.Math.Matrix;
-using Engine.Math.Vector;
+using Engine.Core.Math.Matrices;
+using Engine.Core.Math.Vectors;
 
-namespace Engine.Extensions;
+namespace Engine.Core.Extensions;
 
 public static class Extension
 {

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
-using Engine.Metric.Abstraction;
+using Engine.Core.Metric.Abstraction;
 
-namespace Engine.Metric.Measures;
+namespace Engine.Core.Metric.Measures;
 
 /// <summary>
 /// <see cref="TimeMetric" /> implementation to measure some timings

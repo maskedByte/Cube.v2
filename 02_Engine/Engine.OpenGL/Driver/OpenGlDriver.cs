@@ -1,10 +1,10 @@
-﻿using Engine.Driver;
-using Engine.Driver.Api;
-using Engine.Driver.Input;
-using Engine.Driver.Window;
-using Engine.Exceptions;
-using Engine.Logging;
-using Engine.Math.Core;
+﻿using Engine.Core.Driver;
+using Engine.Core.Driver.Api;
+using Engine.Core.Driver.Input;
+using Engine.Core.Driver.Window;
+using Engine.Core.Exceptions;
+using Engine.Core.Logging;
+using Engine.Core.Math.Base;
 using Engine.OpenGL.Driver.GraphicsApi;
 using Engine.OpenGL.Vendor.OpenGL.Core;
 

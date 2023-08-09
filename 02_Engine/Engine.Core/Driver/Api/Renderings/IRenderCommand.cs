@@ -1,4 +1,4 @@
-﻿namespace Engine.Driver.Api.Renderings;
+﻿namespace Engine.Core.Driver.Api.Renderings;
 
 public interface IRenderCommand
 {

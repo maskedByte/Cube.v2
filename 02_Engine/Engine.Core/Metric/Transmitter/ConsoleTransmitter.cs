@@ -1,6 +1,6 @@
-﻿using Engine.Metric.Abstraction;
+﻿using Engine.Core.Metric.Abstraction;
 
-namespace Engine.Metric.Transmitter;
+namespace Engine.Core.Metric.Transmitter;
 
 /// <summary>
 /// This class implements the IMetricsTransmitter interface and provides the specific
@@ -12,6 +12,8 @@ public sealed class ConsoleTransmitter : IMetricsTransmitter
     public void Transmit()
     {
         foreach (var metric in PerformanceMetricManager.Instance.GetAll())
+        {
             Console.WriteLine($"{metric.Key} - {metric.Value}");
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Engine.Driver.Window;
+﻿namespace Engine.Core.Driver.Window;
 
 /// <summary>
 /// Interface for window.

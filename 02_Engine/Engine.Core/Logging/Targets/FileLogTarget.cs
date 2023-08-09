@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Engine.Logging.Targets;
+namespace Engine.Core.Logging.Targets;
 
 /// <summary>
 /// Log target for logging to a file

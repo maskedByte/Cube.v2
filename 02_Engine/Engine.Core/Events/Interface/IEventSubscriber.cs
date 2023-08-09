@@ -1,4 +1,4 @@
-﻿namespace Engine.Events.Interface;
+﻿namespace Engine.Core.Events.Interface;
 
 /// <summary>
 /// Provides a interface to handle event subscriptions

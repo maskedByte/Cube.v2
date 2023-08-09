@@ -1,6 +1,6 @@
-using Engine.Driver.Api.Buffers;
-using Engine.Driver.Api.Shaders;
-using Engine.Logging;
+using Engine.Core.Driver.Api.Buffers;
+using Engine.Core.Driver.Api.Shaders;
+using Engine.Core.Logging;
 using Engine.OpenGL.Vendor.OpenGL.Core;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
@@ -98,6 +98,7 @@ internal sealed class GlBufferArray : IBufferArray
                 bufferElement.Offset);
             Gl.CheckError($"{nameof(GlBufferArray)}#Gl.BufferData");
         }
+
         buffer.Unbind();
     }
 

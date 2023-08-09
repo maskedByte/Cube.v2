@@ -26,7 +26,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Engine.Extensions;
+namespace Engine.Core.Extensions;
 
 /// <summary>
 /// Class to provide string extension methods

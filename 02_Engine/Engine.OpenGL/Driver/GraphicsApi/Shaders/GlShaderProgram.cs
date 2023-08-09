@@ -1,8 +1,8 @@
 using System.Text;
-using Engine.Driver.Api.Shaders;
-using Engine.Logging;
-using Engine.Math.Matrix;
-using Engine.Math.Vector;
+using Engine.Core.Driver.Api.Shaders;
+using Engine.Core.Logging;
+using Engine.Core.Math.Matrices;
+using Engine.Core.Math.Vectors;
 using Engine.OpenGL.Vendor.OpenGL.Core;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
@@ -47,10 +47,11 @@ internal sealed class GlShaderProgram : IShaderProgram
     {
         ArgumentNullException.ThrowIfNull(shader);
 
-        if (_shaders.TryGetValue(shader.Type, out var glShader))
+        if (_shaders.TryGetValue(shader.Type, out _))
         {
             // Hot reload shader if program is ShaderProgramState is compiled
             _programState = ShaderProgramState.Reload;
+            throw new NotImplementedException();
         }
         else
         {
@@ -87,7 +88,7 @@ internal sealed class GlShaderProgram : IShaderProgram
 
         foreach (var t in _shaders)
         {
-            Gl.AttachShader(_shaderProgramId, t.Value.ShaderId);
+            Gl.AttachShader(_shaderProgramId, t.Value.GetId());
         }
 
         Gl.LinkProgram(_shaderProgramId);
@@ -177,7 +178,7 @@ internal sealed class GlShaderProgram : IShaderProgram
 
         foreach (var shader in _shaders)
         {
-            Gl.DetachShader(_shaderProgramId, shader.Value.ShaderId);
+            Gl.DetachShader(_shaderProgramId, shader.Value.GetId());
         }
 
         Gl.DeleteProgram(_shaderProgramId);

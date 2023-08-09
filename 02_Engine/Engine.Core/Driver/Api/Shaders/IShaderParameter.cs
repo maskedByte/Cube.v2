@@ -1,8 +1,8 @@
-using Engine.Math.Core;
-using Engine.Math.Matrix;
-using Engine.Math.Vector;
+using Engine.Core.Math.Base;
+using Engine.Core.Math.Matrices;
+using Engine.Core.Math.Vectors;
 
-namespace Engine.Driver.Api.Shaders;
+namespace Engine.Core.Driver.Api.Shaders;
 
 /// <summary>
 /// Interface for <see cref="IShaderParameter" />

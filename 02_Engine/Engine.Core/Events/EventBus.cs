@@ -1,6 +1,6 @@
-using Engine.Events.Interface;
+using Engine.Core.Events.Interface;
 
-namespace Engine.Events;
+namespace Engine.Core.Events;
 
 /// <summary>
 /// Implementation for EventSystem

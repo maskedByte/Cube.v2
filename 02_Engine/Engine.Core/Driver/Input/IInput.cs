@@ -1,6 +1,6 @@
-using Engine.Math.Vector;
+using Engine.Core.Math.Vectors;
 
-namespace Engine.Driver.Input;
+namespace Engine.Core.Driver.Input;
 
 /// <summary>
 /// Interface for handling user input

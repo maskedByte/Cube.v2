@@ -1,4 +1,4 @@
-﻿namespace Engine.Metric.Abstraction;
+﻿namespace Engine.Core.Metric.Abstraction;
 
 /// <summary>
 /// Public interface for state

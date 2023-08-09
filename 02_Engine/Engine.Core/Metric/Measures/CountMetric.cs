@@ -1,6 +1,6 @@
-﻿using Engine.Metric.Abstraction;
+﻿using Engine.Core.Metric.Abstraction;
 
-namespace Engine.Metric.Measures;
+namespace Engine.Core.Metric.Measures;
 
 /// <summary>
 /// <see cref="CountMetric" /> implementation to measure the count of something

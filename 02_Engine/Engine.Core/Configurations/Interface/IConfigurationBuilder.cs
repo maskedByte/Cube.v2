@@ -1,4 +1,4 @@
-namespace Engine.Configurations.Interface;
+namespace Engine.Core.Configurations.Interface;
 
 /// <summary>
 /// <see cref="IConfigurationBuilder" /> interface

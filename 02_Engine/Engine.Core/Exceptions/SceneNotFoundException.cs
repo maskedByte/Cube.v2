@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Engine.Exceptions;
+namespace Engine.Core.Exceptions;
 
 public class SceneNotFoundException : Exception
 {

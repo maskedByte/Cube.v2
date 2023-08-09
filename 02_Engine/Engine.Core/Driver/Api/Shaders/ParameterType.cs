@@ -1,4 +1,4 @@
-namespace Engine.Driver.Api.Shaders;
+namespace Engine.Core.Driver.Api.Shaders;
 
 /// <summary>
 /// Type of the parameters for a shader

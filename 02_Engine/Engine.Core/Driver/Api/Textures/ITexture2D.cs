@@ -1,4 +1,4 @@
-﻿namespace Engine.Driver.Api.Textures;
+﻿namespace Engine.Core.Driver.Api.Textures;
 
 public interface ITexture2D
 {

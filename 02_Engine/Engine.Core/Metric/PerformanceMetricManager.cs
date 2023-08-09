@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Immutable;
-using Engine.Metric.Abstraction;
+using Engine.Core.Metric.Abstraction;
 using Newtonsoft.Json;
 
-namespace Engine.Metric;
+namespace Engine.Core.Metric;
 
 /// <summary>
 /// Holds all states that were generated
@@ -73,6 +73,9 @@ public sealed class PerformanceMetricManager : IEnumerable<IMetric>
     /// </summary>
     public void Reset()
     {
-        foreach (var state in this) state.Reset();
+        foreach (var state in this)
+        {
+            state.Reset();
+        }
     }
 }

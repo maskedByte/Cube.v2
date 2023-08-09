@@ -1,4 +1,4 @@
-namespace Engine.Driver.Input;
+namespace Engine.Core.Driver.Input;
 
 /// <summary>
 /// Mouse buttons

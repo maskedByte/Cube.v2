@@ -1,5 +1,5 @@
-using Engine.Driver.Input;
-using Engine.Math.Vector;
+using Engine.Core.Driver.Input;
+using Engine.Core.Math.Vectors;
 using Engine.OpenGL.Vendor.SFML.Window;
 using Keyboard = SFML.Window.Keyboard;
 

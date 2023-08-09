@@ -1,4 +1,4 @@
-namespace Engine.Metric.Abstraction;
+namespace Engine.Core.Metric.Abstraction;
 
 /// <summary>
 /// Abstract monitor class

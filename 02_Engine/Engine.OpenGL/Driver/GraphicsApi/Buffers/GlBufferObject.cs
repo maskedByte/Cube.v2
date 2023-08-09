@@ -1,6 +1,6 @@
-using Engine.Driver.Api.Buffers;
-using Engine.Math.Geometry;
-using Engine.Math.Vector;
+using Engine.Core.Driver.Api.Buffers;
+using Engine.Core.Math.Geometrics;
+using Engine.Core.Math.Vectors;
 using Engine.OpenGL.Vendor.OpenGL.Core;
 
 namespace Engine.OpenGL.Driver.GraphicsApi.Buffers;

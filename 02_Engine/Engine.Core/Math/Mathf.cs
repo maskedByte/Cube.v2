@@ -3,7 +3,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 
-namespace Engine.Math;
+namespace Engine.Core.Math;
 
 internal struct MathfInternal
 {
@@ -293,10 +293,12 @@ public struct Mathf
 
         var m = values[0];
         for (var i = 1; i < len; i++)
+        {
             if (values[i] < m)
             {
                 m = values[i];
             }
+        }
 
         return m;
     }
@@ -318,10 +320,12 @@ public struct Mathf
 
         var m = values[0];
         for (var i = 1; i < len; i++)
+        {
             if (values[i] < m)
             {
                 m = values[i];
             }
+        }
 
         return m;
     }
@@ -349,10 +353,12 @@ public struct Mathf
 
         var m = values[0];
         for (var i = 1; i < len; i++)
+        {
             if (values[i] > m)
             {
                 m = values[i];
             }
+        }
 
         return m;
     }
@@ -374,10 +380,12 @@ public struct Mathf
 
         var m = values[0];
         for (var i = 1; i < len; i++)
+        {
             if (values[i] > m)
             {
                 m = values[i];
             }
+        }
 
         return m;
     }
@@ -1236,7 +1244,10 @@ public struct Mathf
     {
         long result = 1;
 
-        for (; n > 1; n--) result *= n;
+        for (; n > 1; n--)
+        {
+            result *= n;
+        }
 
         return result;
     }

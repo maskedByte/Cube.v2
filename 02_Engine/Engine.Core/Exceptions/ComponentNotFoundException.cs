@@ -1,4 +1,4 @@
-namespace Engine.Exceptions;
+namespace Engine.Core.Exceptions;
 
 internal sealed class ComponentNotFoundException : Exception
 {

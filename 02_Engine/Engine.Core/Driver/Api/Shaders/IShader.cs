@@ -1,12 +1,7 @@
-﻿namespace Engine.Driver.Api.Shaders;
+﻿namespace Engine.Core.Driver.Api.Shaders;
 
 public interface IShader : IDisposable
 {
-    /// <summary>
-    /// The shader id.
-    /// </summary>
-    uint ShaderId { get; set; }
-
     /// <summary>
     /// The compiled status of the shader.
     /// </summary>
@@ -26,4 +21,10 @@ public interface IShader : IDisposable
     /// Compiles the shader.
     /// </summary>
     void Compile();
+
+    /// <summary>
+    /// Gets the internal id of the shader.
+    /// </summary>
+    /// <returns>An unsigned integer representing the internal id of the shader.</returns>
+    uint GetId();
 }

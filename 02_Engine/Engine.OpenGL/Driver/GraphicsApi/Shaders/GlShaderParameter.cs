@@ -1,9 +1,9 @@
 // ReSharper disable InconsistentNaming
 
-using Engine.Driver.Api.Shaders;
-using Engine.Math.Core;
-using Engine.Math.Matrix;
-using Engine.Math.Vector;
+using Engine.Core.Driver.Api.Shaders;
+using Engine.Core.Math.Base;
+using Engine.Core.Math.Matrices;
+using Engine.Core.Math.Vectors;
 using Engine.OpenGL.Vendor.OpenGL.Core;
 
 namespace Engine.OpenGL.Driver.GraphicsApi.Shaders;

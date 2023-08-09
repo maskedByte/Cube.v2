@@ -1,6 +1,6 @@
-﻿using Engine.Metric.Abstraction;
+﻿using Engine.Core.Metric.Abstraction;
 
-namespace Engine.Metric.Transmitter;
+namespace Engine.Core.Metric.Transmitter;
 
 /// <summary>
 /// This class implements the IMetricsTransmitter interface and provides the specific
@@ -13,6 +13,8 @@ public class LogFileTransmitter : IMetricsTransmitter
     {
         using var writer = File.AppendText("performance.log");
         foreach (var metric in PerformanceMetricManager.Instance.GetAll())
+        {
             writer.WriteLine($"{metric.Key} - {metric.Value}");
+        }
     }
 }

@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace Engine.Exceptions;
+namespace Engine.Core.Exceptions;
 
 /// <summary>
 /// Implementation of <see cref="Exception" /> for throw exception if a <see cref="IComponent" /> is required in

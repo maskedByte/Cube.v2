@@ -1,9 +1,9 @@
-﻿using Engine.Driver.Api;
-using Engine.Driver.Input;
-using Engine.Driver.Window;
-using Engine.Math.Core;
+﻿using Engine.Core.Driver.Api;
+using Engine.Core.Driver.Input;
+using Engine.Core.Driver.Window;
+using Engine.Core.Math.Base;
 
-namespace Engine.Driver;
+namespace Engine.Core.Driver;
 
 /// <summary>
 /// Base interface for all graphics drivers.

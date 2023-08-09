@@ -1,4 +1,4 @@
-namespace Engine.Exceptions;
+namespace Engine.Core.Exceptions;
 
 public class ContextNotInitializedException : Exception
 {

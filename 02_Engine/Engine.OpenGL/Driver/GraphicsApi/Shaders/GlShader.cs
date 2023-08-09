@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
-using Engine.Driver.Api.Shaders;
-using Engine.Extensions;
-using Engine.Logging;
+using Engine.Core.Driver.Api.Shaders;
+using Engine.Core.Extensions;
+using Engine.Core.Logging;
 using Engine.OpenGL.Vendor.OpenGL.Core;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
@@ -22,6 +22,8 @@ internal sealed class GlShader : IShader
         { ShaderSourceType.TessEvaluation, ShaderType.TessEvaluationShader },
         { ShaderSourceType.Compute, ShaderType.ComputeShader }
     };
+
+    private readonly uint _shaderId;
 
     /// <summary>
     /// Creates a new shader.
@@ -44,17 +46,12 @@ internal sealed class GlShader : IShader
         Type = shaderSourceType;
         Source = source;
 
-        ShaderId = Gl.CreateShader(_shaderType[shaderSourceType]);
+        _shaderId = Gl.CreateShader(_shaderType[shaderSourceType]);
         Gl.CheckError($"{nameof(GlShader)}#Gl.CreateShader");
 
-        Gl.ShaderSource(ShaderId, source);
+        Gl.ShaderSource(_shaderId, source);
         Gl.CheckError($"{nameof(GlShader)}#Gl.ShaderSource");
     }
-
-    /// <summary>
-    /// The shader id.
-    /// </summary>
-    public uint ShaderId { get; set; }
 
     /// <summary>
     /// The compiled status of the shader.
@@ -74,7 +71,7 @@ internal sealed class GlShader : IShader
     /// <inheritdoc />
     public void Dispose()
     {
-        Gl.DeleteShader(ShaderId);
+        Gl.DeleteShader(_shaderId);
         Gl.CheckError($"{nameof(GlShader)}#Gl.DeleteShader");
     }
 
@@ -83,8 +80,14 @@ internal sealed class GlShader : IShader
     /// </summary>
     public void Compile()
     {
-        Gl.CompileShader(ShaderId);
-        CheckCompileError(ShaderId);
+        Gl.CompileShader(_shaderId);
+        CheckCompileError(_shaderId);
+    }
+
+    /// <inheritdoc />
+    public uint GetId()
+    {
+        return _shaderId;
     }
 
     private void CheckCompileError(uint shader)

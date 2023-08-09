@@ -18,7 +18,7 @@
  * SOFTWARE.
  */
 
-namespace Engine.Extensions;
+namespace Engine.Core.Extensions;
 
 public static class ArrayExtensions
 {

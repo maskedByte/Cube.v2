@@ -1,4 +1,4 @@
-namespace Engine.Driver;
+namespace Engine.Core.Driver;
 
 /// <summary>
 /// Bindable interface

@@ -1,4 +1,4 @@
-﻿namespace Engine.Driver.Api.Buffers;
+﻿namespace Engine.Core.Driver.Api.Buffers;
 
 /// <summary>
 /// Defines the type of buffer

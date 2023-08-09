@@ -1,7 +1,7 @@
 using System.Text;
-using Engine.Configurations.Interface;
+using Engine.Core.Configurations.Interface;
 
-namespace Engine.Configurations.Loader;
+namespace Engine.Core.Configurations.Loader;
 
 /// <summary>
 /// <see cref="IConfigurationBuilder" /> implementation to load *.ini files

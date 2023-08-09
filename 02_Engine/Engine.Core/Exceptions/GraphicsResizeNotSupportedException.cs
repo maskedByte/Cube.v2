@@ -1,4 +1,4 @@
-namespace Engine.Exceptions;
+namespace Engine.Core.Exceptions;
 
 /// <summary>
 /// Exception thrown if resize is not supported
