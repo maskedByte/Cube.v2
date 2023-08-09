@@ -33,5 +33,5 @@ public interface IBufferLayout
     /// Return the array of buffer elements
     /// </summary>
     /// <returns>Returns an array of <see cref="BufferElement" /></returns>
-    BufferElement[] GetElements();
+    IEnumerable<BufferElement> GetElements();
 }

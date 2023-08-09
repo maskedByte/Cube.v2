@@ -8,6 +8,11 @@ namespace Engine.Driver.Api.Buffers;
 public sealed class BufferElement
 {
     /// <summary>
+    /// Defines the index of the layout location
+    /// </summary>
+    public uint Index { get; }
+
+    /// <summary>
     /// Name of the <see cref="BufferElement" />
     /// </summary>
     public string Name { get; }
@@ -35,10 +40,12 @@ public sealed class BufferElement
     /// <summary>
     /// Creates a new instance of <see cref="BufferElement" />
     /// </summary>
-    /// <param name="name"></param>
-    /// <param name="type"></param>
-    public BufferElement(string name, ShaderDataType type)
+    /// <param name="index">The index for the shader layout location</param>
+    /// <param name="name">The name of the shader element</param>
+    /// <param name="type">The type of the shader element</param>
+    public BufferElement(uint index, string name, ShaderDataType type)
     {
+        Index = index;
         Name = name;
         Type = type;
         Size = 0;

@@ -1,6 +1,9 @@
 using Engine.Driver.Api.Buffers;
 using Engine.Driver.Api.Shaders;
+using Engine.Logging;
 using Engine.OpenGL.Vendor.OpenGL.Core;
+
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
 namespace Engine.OpenGL.Driver.GraphicsApi.Buffers;
 
@@ -9,53 +12,37 @@ namespace Engine.OpenGL.Driver.GraphicsApi.Buffers;
 /// </summary>
 internal sealed class GlBufferArray : IBufferArray
 {
-    private readonly uint _vertexArrayId;
+    private readonly uint _vertexArrayObjectId;
     private uint _index;
-    private IBufferObject _indexBuffer;
-    private IBufferObject? _normalBuffer;
-    private IBufferObject? _uvBuffer;
-    private IBufferObject _vertexBuffer;
+    private readonly Dictionary<BufferType, IBufferObject?> _bufferObjects;
 
     /// <summary>
     /// Create new instance of <see cref="IBufferArray" />
     /// </summary>
     public GlBufferArray()
     {
-        _vertexArrayId = Gl.GenVertexArray();
+        _vertexArrayObjectId = Gl.GenVertexArray();
         Gl.CheckError($"{nameof(GlBufferArray)}#Gl.GenVertexArray");
 
-        _vertexBuffer = null!;
-        _indexBuffer = null!;
-        _uvBuffer = null;
-        _normalBuffer = null;
+        _bufferObjects = new Dictionary<BufferType, IBufferObject?>();
+    }
+
+    /// <inheritdoc />
+    public uint GetId()
+    {
+        return _vertexArrayObjectId;
     }
 
     /// <inheritdoc />
     public void AddBuffer(IBufferObject buffer, BufferType bufferType)
     {
-        switch (bufferType)
-        {
-            case BufferType.Vertex:
-                _vertexBuffer = buffer;
-                break;
-            case BufferType.Index:
-                _indexBuffer = buffer;
-                break;
-            case BufferType.Uv:
-                _uvBuffer = buffer;
-                break;
-            case BufferType.Normal:
-                _normalBuffer = buffer;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(bufferType), bufferType, null);
-        }
+        _bufferObjects.Add(bufferType, buffer);
     }
 
     /// <inheritdoc />
     public void Bind()
     {
-        Gl.BindVertexArray(_vertexArrayId);
+        Gl.BindVertexArray(_vertexArrayObjectId);
     }
 
     /// <inheritdoc />
@@ -67,27 +54,54 @@ internal sealed class GlBufferArray : IBufferArray
     /// <inheritdoc />
     public void Build()
     {
-        Bind();
-        AddElements(_vertexBuffer);
-        AddElements(_uvBuffer);
-        AddElements(_normalBuffer);
-        AddElements(_indexBuffer);
-        Unbind();
-    }
+        if (!_bufferObjects.Any())
+        {
+            Log.LogMessageAsync("No buffer objects to build", LogLevel.Warning, this);
+            return;
+        }
 
-    /// <inheritdoc />
-    public uint GetId()
-    {
-        return _vertexArrayId;
+        Bind();
+        foreach (var bufferObject in _bufferObjects.Values)
+        {
+            AddElements(bufferObject);
+        }
+
+        Unbind();
     }
 
     /// <inheritdoc />
     public void Dispose()
     {
-        Gl.DeleteVertexArrays(1, new[] { _vertexArrayId });
+        Gl.DeleteVertexArrays(1, new[] { _vertexArrayObjectId });
     }
 
-    private VertexAttribPointerType GetPointerDataType(ShaderDataType type)
+    private static void AddElements(IBufferObject? buffer)
+    {
+        if (buffer == null)
+        {
+            return;
+        }
+
+        buffer.Bind();
+        var bufferLayout = buffer.GetLayout();
+        foreach (var bufferElement in bufferLayout.GetElements())
+        {
+            Gl.EnableVertexAttribArray(bufferElement.Index);
+            Gl.CheckError($"{nameof(GlBufferArray)}#Gl.BufferData");
+
+            Gl.VertexAttribPointer(
+                bufferElement.Index,
+                bufferElement.GetElementSize(),
+                GetPointerDataType(bufferElement.Type),
+                bufferElement.Normalized,
+                bufferLayout.GetStride(),
+                bufferElement.Offset);
+            Gl.CheckError($"{nameof(GlBufferArray)}#Gl.BufferData");
+        }
+        buffer.Unbind();
+    }
+
+    private static VertexAttribPointerType GetPointerDataType(ShaderDataType type)
     {
         return type switch
         {
@@ -104,34 +118,5 @@ internal sealed class GlBufferArray : IBufferArray
             ShaderDataType.Bool => VertexAttribPointerType.Byte,
             _ => throw new ArgumentOutOfRangeException()
         };
-    }
-
-    private void AddElements(IBufferObject? buffer)
-    {
-        if (buffer == null)
-        {
-            return;
-        }
-
-        buffer.Bind();
-        var bufferLayout = buffer.GetLayout();
-        foreach (var bufferElement in bufferLayout.GetElements())
-        {
-            Gl.EnableVertexAttribArray(_index);
-            Gl.CheckError($"{nameof(GlBufferArray)}#Gl.BufferData");
-
-            Gl.VertexAttribPointer(
-                _index,
-                bufferElement.GetElementSize(),
-                GetPointerDataType(bufferElement.Type),
-                bufferElement.Normalized,
-                bufferLayout.GetStride(),
-                bufferElement.Offset);
-            Gl.CheckError($"{nameof(GlBufferArray)}#Gl.BufferData");
-
-            _index++;
-        }
-
-        buffer.Unbind();
     }
 }

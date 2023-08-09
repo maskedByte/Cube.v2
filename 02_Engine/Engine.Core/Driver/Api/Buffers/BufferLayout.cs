@@ -54,7 +54,7 @@ public sealed class BufferLayout : IBufferLayout
     }
 
     /// <inheritdoc />
-    public BufferElement[] GetElements()
+    public IEnumerable<BufferElement> GetElements()
     {
         CalculateBufferAndStride();
         return _elements.Values.ToArray();
