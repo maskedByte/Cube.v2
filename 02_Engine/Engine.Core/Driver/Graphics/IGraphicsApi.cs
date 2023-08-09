@@ -1,9 +1,9 @@
-using Engine.Core.Driver.Api.Buffers;
-using Engine.Core.Driver.Api.Renderings;
-using Engine.Core.Driver.Api.Shaders;
-using Engine.Core.Driver.Api.Textures;
+using Engine.Core.Driver.Graphics.Buffers;
+using Engine.Core.Driver.Graphics.Renderings;
+using Engine.Core.Driver.Graphics.Shaders;
+using Engine.Core.Driver.Graphics.Textures;
 
-namespace Engine.Core.Driver.Api;
+namespace Engine.Core.Driver.Graphics;
 
 /// <summary>
 /// Provides height level access to the graphics api

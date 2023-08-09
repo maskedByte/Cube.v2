@@ -1,4 +1,4 @@
-using Engine.Core.Driver.Api.Buffers;
+using Engine.Core.Driver.Graphics.Buffers;
 using Engine.Core.Math.Geometrics;
 using Engine.Core.Math.Vectors;
 using Engine.OpenGL.Vendor.OpenGL.Core;

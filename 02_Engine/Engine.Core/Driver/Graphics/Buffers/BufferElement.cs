@@ -1,6 +1,6 @@
-using Engine.Core.Driver.Api.Shaders;
+using Engine.Core.Driver.Graphics.Shaders;
 
-namespace Engine.Core.Driver.Api.Buffers;
+namespace Engine.Core.Driver.Graphics.Buffers;
 
 /// <summary>
 /// <see cref="BufferElement" /> struct implementation

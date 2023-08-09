@@ -1,4 +1,4 @@
-﻿namespace Engine.Core.Driver.Api.Buffers;
+﻿namespace Engine.Core.Driver.Graphics.Buffers;
 
 /// <summary>
 /// Represents a buffer array

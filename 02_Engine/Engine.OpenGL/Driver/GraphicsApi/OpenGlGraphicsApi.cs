@@ -1,8 +1,8 @@
-﻿using Engine.Core.Driver.Api;
-using Engine.Core.Driver.Api.Buffers;
-using Engine.Core.Driver.Api.Renderings;
-using Engine.Core.Driver.Api.Shaders;
-using Engine.Core.Driver.Api.Textures;
+﻿using Engine.Core.Driver.Graphics;
+using Engine.Core.Driver.Graphics.Buffers;
+using Engine.Core.Driver.Graphics.Renderings;
+using Engine.Core.Driver.Graphics.Shaders;
+using Engine.Core.Driver.Graphics.Textures;
 using Engine.OpenGL.Driver.GraphicsApi.Buffers;
 using Engine.OpenGL.Driver.GraphicsApi.Shaders;
 

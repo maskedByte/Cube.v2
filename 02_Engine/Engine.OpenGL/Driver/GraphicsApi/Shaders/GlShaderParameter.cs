@@ -1,6 +1,6 @@
 // ReSharper disable InconsistentNaming
 
-using Engine.Core.Driver.Api.Shaders;
+using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Math.Base;
 using Engine.Core.Math.Matrices;
 using Engine.Core.Math.Vectors;

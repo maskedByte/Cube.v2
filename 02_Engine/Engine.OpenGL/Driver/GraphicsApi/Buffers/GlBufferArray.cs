@@ -1,5 +1,5 @@
-using Engine.Core.Driver.Api.Buffers;
-using Engine.Core.Driver.Api.Shaders;
+using Engine.Core.Driver.Graphics.Buffers;
+using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Logging;
 using Engine.OpenGL.Vendor.OpenGL.Core;
 

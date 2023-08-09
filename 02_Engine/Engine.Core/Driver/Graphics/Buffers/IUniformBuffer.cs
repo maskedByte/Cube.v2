@@ -1,9 +1,9 @@
-using Engine.Core.Driver.Api.Shaders;
+using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Math.Base;
 using Engine.Core.Math.Matrices;
 using Engine.Core.Math.Vectors;
 
-namespace Engine.Core.Driver.Api.Buffers;
+namespace Engine.Core.Driver.Graphics.Buffers;
 
 /// <summary>
 /// <see cref="IUniformBuffer" /> interface

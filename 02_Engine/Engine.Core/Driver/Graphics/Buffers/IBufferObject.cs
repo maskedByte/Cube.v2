@@ -1,7 +1,7 @@
 ﻿using Engine.Core.Math.Geometrics;
 using Engine.Core.Math.Vectors;
 
-namespace Engine.Core.Driver.Api.Buffers;
+namespace Engine.Core.Driver.Graphics.Buffers;
 
 public interface IBufferObject : IBindable, IDisposable
 {
