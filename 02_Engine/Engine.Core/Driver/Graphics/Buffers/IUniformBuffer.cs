@@ -11,11 +11,11 @@ namespace Engine.Core.Driver.Graphics.Buffers;
 public interface IUniformBuffer : IBindable, IDisposable
 {
     /// <summary>
-    /// Attach the <see cref="IUniformBuffer" /> to an existing <see cref="shader" />
+    /// Attach the <see cref="IUniformBuffer" /> to an existing <see cref="shaderProgram" />
     /// </summary>
     /// <remarks>Checks internally if the buffer was already bound to this shader</remarks>
-    /// <param name="shader"><see cref="IUniformBuffer" /> to attach the <see cref="IShader" /> to</param>
-    void Attach(IShader shader);
+    /// <param name="shaderProgram"><see cref="IUniformBuffer" /> to attach the <see cref="IShaderProgram" /> to</param>
+    void Attach(IShaderProgram shaderProgram);
 
     /// <summary>
     /// Set <see cref="IUniformBuffer" /> buffer date for <paramref name="name" /> of type <see cref="float" />

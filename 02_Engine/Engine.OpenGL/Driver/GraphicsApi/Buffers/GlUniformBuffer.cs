@@ -76,14 +76,19 @@ internal sealed class GlUniformBuffer : IUniformBuffer
     }
 
     /// <inheritdoc />
-    public void Attach(IShader shader)
+    public void Attach(IShaderProgram shaderProgram)
     {
-        ArgumentNullException.ThrowIfNull(shader);
-        var shaderId = shader.GetId();
+        ArgumentNullException.ThrowIfNull(shaderProgram);
+        var shaderId = shaderProgram.GetId();
 
         if (_attachedShader.Contains(shaderId))
         {
             return;
+        }
+
+        if (shaderProgram.GetProgramState() != ShaderProgramState.Compiled)
+        {
+            shaderProgram.Compile();
         }
 
         var blockId = Gl.GetUniformBlockIndex(shaderId, _name);
