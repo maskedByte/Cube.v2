@@ -20,7 +20,7 @@ public interface IShader : IDisposable
     /// <summary>
     /// Compiles the shader.
     /// </summary>
-    void Compile();
+    void Compile(bool force = false);
 
     /// <summary>
     /// Gets the internal id of the shader.

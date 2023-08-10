@@ -1,5 +1,6 @@
 ﻿using Engine.Core.Driver;
 using Engine.Core.Driver.Graphics;
+using Engine.Core.Driver.Graphics.Buffers;
 using Engine.Core.Driver.Input;
 using Engine.Core.Driver.Window;
 using Engine.Core.Exceptions;
@@ -18,7 +19,7 @@ namespace Engine.OpenGL.Driver;
 /// </summary>
 public sealed class OpenGlDriver : IDriver
 {
-    private static readonly Dictionary<DrawMode, BeginMode> DrawModeToBeginMode = new Dictionary<DrawMode, BeginMode>
+    private static readonly Dictionary<DrawMode, BeginMode> DrawModeToBeginMode = new()
     {
         { DrawMode.Points, BeginMode.Points },
         { DrawMode.Lines, BeginMode.Lines },
@@ -52,8 +53,14 @@ public sealed class OpenGlDriver : IDriver
     }
 
     /// <inheritdoc />
-    public IWindow CreateWindow(int width, int height, bool vSync, bool fullscreen, bool resizeAble = false,
-        bool showStats = false)
+    public IWindow CreateWindow(
+        int width,
+        int height,
+        bool vSync,
+        bool fullscreen,
+        bool resizeAble = false,
+        bool showStats = false
+    )
     {
         if (CurrentWindow != null)
         {
@@ -75,10 +82,12 @@ public sealed class OpenGlDriver : IDriver
         Gl.Enable(EnableCap.CullFace);
         Gl.CullFace(CullFaceMode.Back);
         Gl.FrontFace(FrontFaceDirection.Cw);
+        Gl.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
 
         Gl.Enable(EnableCap.Blend);
         Gl.DepthFunc(DepthFunction.Less);
         Gl.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+        Gl.Viewport(0, 0, width, height);
 
         _isInitialized = true;
         _graphicsApi = new OpenGlGraphicsApi();
@@ -116,13 +125,16 @@ public sealed class OpenGlDriver : IDriver
     /// <inheritdoc />
     public void Close()
     {
-        CurrentWindow?.Close();
+        if (CurrentWindow == null)
+        {
+            Log.LogMessageAsync("Window not created.", LogLevel.Warning, this);
+        }
     }
 
     /// <inheritdoc />
     public void Clear(ClearBufferFlag clearBufferFlag = ClearBufferFlag.AllBufferBits)
     {
-        var clearMask = ClearBufferMask.ColorBufferBit;
+        var clearMask = ClearBufferMask.None;
 
         if (clearBufferFlag.HasFlag(ClearBufferFlag.ColorBufferBit))
         {
@@ -148,10 +160,7 @@ public sealed class OpenGlDriver : IDriver
     }
 
     /// <inheritdoc />
-    public void HandleEvents()
-    {
-        CurrentWindow?.HandleEvents();
-    }
+    public void HandleEvents() => CurrentWindow?.HandleEvents();
 
     /// <inheritdoc />
     public void Swap()
@@ -162,21 +171,13 @@ public sealed class OpenGlDriver : IDriver
     }
 
     /// <inheritdoc />
-    public IInput GetInput()
-    {
-        return _input;
-    }
+    public IInput GetInput() => _input;
 
     /// <inheritdoc />
-    public void DrawIndexed(IBindable bindable, DrawMode drawMode, int indexCount)
+    public void DrawIndexed(IBufferArray bufferArray, DrawMode drawMode, int indexCount)
     {
-        bindable.Bind();
-        if (!DrawModeToBeginMode.TryGetValue(drawMode, out var beginMode))
-        {
-            throw new ArgumentOutOfRangeException(nameof(drawMode), drawMode, null);
-        }
-
-        Gl.DrawElements(beginMode, indexCount, DrawElementsType.UnsignedInt, nint.Zero);
+        bufferArray.Bind();
+        Gl.DrawElements(DrawModeToBeginMode[drawMode], indexCount, DrawElementsType.UnsignedInt, nint.Zero);
     }
 
     /// <inheritdoc />

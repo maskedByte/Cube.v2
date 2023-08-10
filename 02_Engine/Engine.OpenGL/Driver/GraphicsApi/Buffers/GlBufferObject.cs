@@ -6,7 +6,7 @@ using Engine.OpenGL.Vendor.OpenGL.Core;
 namespace Engine.OpenGL.Driver.GraphicsApi.Buffers;
 
 /// <summary>
-/// Implementation of <see cref="GlBufferObject" />
+///     Implementation of <see cref="GlBufferObject" />
 /// </summary>
 internal sealed class GlBufferObject : IBufferObject
 {
@@ -15,7 +15,7 @@ internal sealed class GlBufferObject : IBufferObject
     private IBufferLayout _layout;
 
     /// <summary>
-    /// Creates a new instance of <see cref="GlBufferObject" />
+    ///     Creates a new instance of <see cref="GlBufferObject" />
     /// </summary>
     public GlBufferObject(IBufferLayout layout, bool isIndexBuffer = false)
     {
@@ -44,10 +44,11 @@ internal sealed class GlBufferObject : IBufferObject
         // Set data
         Bind();
         Gl.BufferData(
-            _isIndexBuffer ? BufferTarget.ElementArrayBuffer : BufferTarget.ArrayBuffer,
-            sizeof(float) * data[0].GetComponentCount() * data.Length,
+            DetermineBufferTarget(),
+            DetermineComponentSize() * data[0].GetComponentCount() * data.Length,
             bufferData.ToArray(),
-            BufferUsageHint.StaticDraw);
+            BufferUsageHint.StaticDraw
+        );
         Gl.CheckError($"{nameof(GlBufferObject)}#Gl.BufferData");
         Unbind();
     }
@@ -59,16 +60,23 @@ internal sealed class GlBufferObject : IBufferObject
 
         for (var i = 0; i < data.Length; i++)
         {
-            bufferData = bufferData.Concat(new[] { data[i].X, data[i].Y });
+            bufferData = bufferData.Concat(
+                new[]
+                {
+                    data[i].X,
+                    data[i].Y
+                }
+            );
         }
 
         // Set data
         Bind();
         Gl.BufferData(
-            _isIndexBuffer ? BufferTarget.ElementArrayBuffer : BufferTarget.ArrayBuffer,
-            sizeof(float) * 2 * data.Length,
+            DetermineBufferTarget(),
+            DetermineComponentSize() * 2 * data.Length,
             bufferData.ToArray(),
-            BufferUsageHint.StaticDraw);
+            BufferUsageHint.StaticDraw
+        );
         Gl.CheckError($"{nameof(GlBufferObject)}#Gl.BufferData");
         Unbind();
     }
@@ -80,16 +88,24 @@ internal sealed class GlBufferObject : IBufferObject
 
         for (var i = 0; i < data.Length; i++)
         {
-            bufferData = bufferData.Concat(new[] { data[i].X, data[i].Y, data[i].Z });
+            bufferData = bufferData.Concat(
+                new[]
+                {
+                    data[i].X,
+                    data[i].Y,
+                    data[i].Z
+                }
+            );
         }
 
         // Set data
         Bind();
         Gl.BufferData(
-            _isIndexBuffer ? BufferTarget.ElementArrayBuffer : BufferTarget.ArrayBuffer,
-            sizeof(float) * 3 * data.Length,
+            DetermineBufferTarget(),
+            DetermineComponentSize() * 3 * data.Length,
             bufferData.ToArray(),
-            BufferUsageHint.StaticDraw);
+            BufferUsageHint.StaticDraw
+        );
         Gl.CheckError($"{nameof(GlBufferObject)}#Gl.BufferData");
         Unbind();
     }
@@ -99,10 +115,11 @@ internal sealed class GlBufferObject : IBufferObject
     {
         Bind();
         Gl.BufferData(
-            _isIndexBuffer ? BufferTarget.ElementArrayBuffer : BufferTarget.ArrayBuffer,
-            sizeof(int) * data.Length,
+            DetermineBufferTarget(),
+            DetermineComponentSize() * data.Length,
             data,
-            BufferUsageHint.StaticDraw);
+            BufferUsageHint.StaticDraw
+        );
         Gl.CheckError($"{nameof(GlBufferObject)}#Gl.BufferData");
         Unbind();
     }
@@ -112,38 +129,27 @@ internal sealed class GlBufferObject : IBufferObject
     {
         Bind();
         Gl.BufferData(
-            _isIndexBuffer ? BufferTarget.ElementArrayBuffer : BufferTarget.ArrayBuffer,
-            sizeof(float) * data.Length,
+            DetermineBufferTarget(),
+            DetermineComponentSize() * data.Length,
             data,
-            BufferUsageHint.StaticDraw);
+            BufferUsageHint.StaticDraw
+        );
         Gl.CheckError($"{nameof(GlBufferObject)}#Gl.BufferData");
         Unbind();
     }
 
     /// <inheritdoc />
-    public void Bind()
-    {
+    public void Bind() =>
         Gl.BindBuffer(
-            _isIndexBuffer
-                ? BufferTarget.ElementArrayBuffer
-                : BufferTarget.ArrayBuffer,
-            _bufferId);
-    }
+            DetermineBufferTarget(),
+            _bufferId
+        );
 
     /// <inheritdoc />
-    public void Unbind()
-    {
-        Gl.BindBuffer(_isIndexBuffer
-                ? BufferTarget.ElementArrayBuffer
-                : BufferTarget.ArrayBuffer,
-            _bufferId);
-    }
+    public void Unbind() => Gl.BindBuffer(DetermineBufferTarget(), 0);
 
     /// <inheritdoc />
-    public uint GetId()
-    {
-        return _bufferId;
-    }
+    public uint GetId() => _bufferId;
 
     /// <inheritdoc />
     public void SetLayout(IBufferLayout layout)
@@ -153,14 +159,18 @@ internal sealed class GlBufferObject : IBufferObject
     }
 
     /// <inheritdoc />
-    public IBufferLayout GetLayout()
-    {
-        return _layout;
-    }
+    public IBufferLayout GetLayout() => _layout;
 
     /// <inheritdoc />
-    void IDisposable.Dispose()
-    {
-        Gl.DeleteBuffer(_bufferId);
-    }
+    void IDisposable.Dispose() => Gl.DeleteBuffer(_bufferId);
+
+    private BufferTarget DetermineBufferTarget() =>
+        _isIndexBuffer
+            ? BufferTarget.ElementArrayBuffer
+            : BufferTarget.ArrayBuffer;
+
+    private int DetermineComponentSize() =>
+        _isIndexBuffer
+            ? sizeof(int)
+            : sizeof(float);
 }

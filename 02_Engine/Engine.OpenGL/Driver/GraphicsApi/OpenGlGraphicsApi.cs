@@ -14,80 +14,41 @@ namespace Engine.OpenGL.Driver.GraphicsApi;
 public class OpenGlGraphicsApi : IGraphicsApi
 {
     /// <inheritdoc />
-    public IBufferArray CreateBufferArray()
-    {
-        return new GlBufferArray();
-    }
+    public IBufferArray CreateBufferArray() => new GlBufferArray();
 
     /// <inheritdoc />
-    public IBufferObject CreateBuffer(IBufferLayout bufferLayout)
-    {
-        return new GlBufferObject(bufferLayout);
-    }
+    public IBufferObject CreateBuffer(IBufferLayout bufferLayout) => new GlBufferObject(bufferLayout);
 
     /// <inheritdoc />
-    public IBufferObject CreateBufferIndex(IBufferLayout bufferLayout)
-    {
-        return new GlBufferObject(bufferLayout, true);
-    }
+    public IBufferObject CreateIndexBuffer(IBufferLayout bufferLayout) => new GlBufferObject(bufferLayout, true);
 
     /// <inheritdoc />
-    public IShader CreateShader(ShaderSourceType shaderSourceType, string[] source)
-    {
-        return new GlShader(shaderSourceType, source);
-    }
+    public IShader CreateShader(ShaderSourceType shaderSourceType, string[] source) => new GlShader(shaderSourceType, source);
 
     /// <inheritdoc />
-    public IShaderProgram CreateShaderProgram()
-    {
-        return new GlShaderProgram();
-    }
+    public IShaderProgram CreateShaderProgram() => new GlShaderProgram();
 
     /// <inheritdoc />
-    public ITexture CreateTexture()
-    {
-        throw new NotImplementedException();
-    }
+    public ITexture CreateTexture() => throw new NotImplementedException();
 
     /// <inheritdoc />
-    public ITexture2D CreateTexture2D()
-    {
-        throw new NotImplementedException();
-    }
+    public ITexture2D CreateTexture2D() => throw new NotImplementedException();
 
     /// <inheritdoc />
-    public ITextureCube CreateTextureCube()
-    {
-        throw new NotImplementedException();
-    }
+    public ITextureCube CreateTextureCube() => throw new NotImplementedException();
 
     /// <inheritdoc />
-    public ITextureSampler CreateTextureSampler()
-    {
-        throw new NotImplementedException();
-    }
+    public ITextureSampler CreateTextureSampler() => throw new NotImplementedException();
 
     /// <inheritdoc />
-    public IFrameBuffer CreateFrameBuffer()
-    {
-        throw new NotImplementedException();
-    }
+    public IFrameBuffer CreateFrameBuffer() => throw new NotImplementedException();
 
     /// <inheritdoc />
-    public IRenderBuffer CreateRenderBuffer()
-    {
-        throw new NotImplementedException();
-    }
+    public IRenderBuffer CreateRenderBuffer() => throw new NotImplementedException();
 
     /// <inheritdoc />
-    public IRenderCommand CreateRenderCommand()
-    {
-        throw new NotImplementedException();
-    }
+    public IRenderCommand CreateRenderCommand() => throw new NotImplementedException();
 
     /// <inheritdoc />
-    public IRenderCommandQueue CreateRenderCommandQueue()
-    {
-        throw new NotImplementedException();
-    }
+    public IRenderCommandQueue CreateRenderCommandQueue() => throw new NotImplementedException();
 }

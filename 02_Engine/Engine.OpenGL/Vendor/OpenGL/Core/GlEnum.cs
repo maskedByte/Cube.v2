@@ -294,6 +294,7 @@ internal enum ClearBuffer
 [Flags]
 internal enum ClearBufferMask
 {
+    None = 0x00000000,
     DepthBufferBit = 0x00000100,
     AccumBufferBit = 0x00000200,
     StencilBufferBit = 0x00000400,
@@ -1370,7 +1371,9 @@ internal enum GetPName
     ArrayBufferBinding = 0x8894,
     Blend = 0x0BE2,
     BlendColor = 0x8005,
-    [Obsolete("Use BlendColor instead.")] BlendColorExt = 0x8005,
+
+    [Obsolete("Use BlendColor instead.")]
+    BlendColorExt = 0x8005,
     BlendDstAlpha = 0x80CA,
     BlendDstRgb = 0x80C8,
     BlendEquationAlpha = 0x883D,
@@ -2520,7 +2523,8 @@ internal enum TextureTargetMultisample
 }
 
 [Obsolete(
-    "The TextureUnit enum is deprecated and may be removed in a future build.  Use ActiveTexture(Int32) instead, which will automatically offset your texture by the GL_TEXTURE0.")]
+    "The TextureUnit enum is deprecated and may be removed in a future build.  Use ActiveTexture(Int32) instead, which will automatically offset your texture by the GL_TEXTURE0."
+)]
 internal enum TextureUnit
 {
     Texture0 = 0x84C0,

@@ -1,4 +1,5 @@
 ﻿using Engine.Core.Driver.Graphics;
+using Engine.Core.Driver.Graphics.Buffers;
 using Engine.Core.Driver.Input;
 using Engine.Core.Driver.Window;
 using Engine.Core.Math.Base;
@@ -25,8 +26,14 @@ public interface IDriver
     /// <param name="fullscreen">Sets if the window should be fullscreen</param>
     /// <param name="resizeAble">Sets if the window should be resizeable</param>
     /// <param name="showStats">Sets if stats should be shown</param>
-    IWindow CreateWindow(int width, int height, bool vSync, bool fullscreen = false, bool resizeAble = false,
-        bool showStats = false);
+    IWindow CreateWindow(
+        int width,
+        int height,
+        bool vSync,
+        bool fullscreen = false,
+        bool resizeAble = false,
+        bool showStats = false
+    );
 
     /// <summary>
     /// Sets the clear color
@@ -63,8 +70,8 @@ public interface IDriver
     /// <summary>
     /// Render indexed triangles to actual frame buffer
     /// </summary>
-    /// <param name="bindable">A <see cref="IBindable" /> to render</param>
+    /// <param name="bindable">A <see cref="IBufferArray" /> to render</param>
     /// <param name="drawMode">Set draw mode, <see cref="DrawMode" /></param>
     /// <param name="indexCount">Set count of indices to render</param>
-    void DrawIndexed(IBindable bindable, DrawMode drawMode, int indexCount);
+    void DrawIndexed(IBufferArray bindable, DrawMode drawMode, int indexCount);
 }

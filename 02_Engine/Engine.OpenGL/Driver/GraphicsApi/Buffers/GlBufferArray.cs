@@ -13,7 +13,6 @@ namespace Engine.OpenGL.Driver.GraphicsApi.Buffers;
 internal sealed class GlBufferArray : IBufferArray
 {
     private readonly uint _vertexArrayObjectId;
-    private uint _index;
     private readonly Dictionary<BufferType, IBufferObject?> _bufferObjects;
 
     /// <summary>
@@ -28,28 +27,16 @@ internal sealed class GlBufferArray : IBufferArray
     }
 
     /// <inheritdoc />
-    public uint GetId()
-    {
-        return _vertexArrayObjectId;
-    }
+    public uint GetId() => _vertexArrayObjectId;
 
     /// <inheritdoc />
-    public void AddBuffer(IBufferObject buffer, BufferType bufferType)
-    {
-        _bufferObjects.Add(bufferType, buffer);
-    }
+    public void AddBuffer(IBufferObject buffer, BufferType bufferType) => _bufferObjects.Add(bufferType, buffer);
 
     /// <inheritdoc />
-    public void Bind()
-    {
-        Gl.BindVertexArray(_vertexArrayObjectId);
-    }
+    public void Bind() => Gl.BindVertexArray(_vertexArrayObjectId);
 
     /// <inheritdoc />
-    public void Unbind()
-    {
-        Gl.BindVertexArray(0);
-    }
+    public void Unbind() => Gl.BindVertexArray(0);
 
     /// <inheritdoc />
     public void Build()
@@ -61,19 +48,33 @@ internal sealed class GlBufferArray : IBufferArray
         }
 
         Bind();
-        foreach (var bufferObject in _bufferObjects.Values)
+        foreach (var (bufferType, bufferObject) in _bufferObjects)
         {
+            if (bufferObject == null)
+            {
+                continue;
+            }
+
+            bufferObject.Bind();
             AddElements(bufferObject);
+            if (bufferType != BufferType.Index)
+            {
+                bufferObject.Unbind();
+            }
         }
 
         Unbind();
     }
 
     /// <inheritdoc />
-    public void Dispose()
-    {
-        Gl.DeleteVertexArrays(1, new[] { _vertexArrayObjectId });
-    }
+    public void Dispose() =>
+        Gl.DeleteVertexArrays(
+            1,
+            new[]
+            {
+                _vertexArrayObjectId
+            }
+        );
 
     private static void AddElements(IBufferObject? buffer)
     {
@@ -82,7 +83,6 @@ internal sealed class GlBufferArray : IBufferArray
             return;
         }
 
-        buffer.Bind();
         var bufferLayout = buffer.GetLayout();
         foreach (var bufferElement in bufferLayout.GetElements())
         {
@@ -95,29 +95,26 @@ internal sealed class GlBufferArray : IBufferArray
                 GetPointerDataType(bufferElement.Type),
                 bufferElement.Normalized,
                 bufferLayout.GetStride(),
-                bufferElement.Offset);
+                bufferElement.Offset
+            );
             Gl.CheckError($"{nameof(GlBufferArray)}#Gl.BufferData");
         }
-
-        buffer.Unbind();
     }
 
-    private static VertexAttribPointerType GetPointerDataType(ShaderDataType type)
-    {
-        return type switch
+    private static VertexAttribPointerType GetPointerDataType(ShaderDataType type) =>
+        type switch
         {
-            ShaderDataType.Float => VertexAttribPointerType.Float,
+            ShaderDataType.Float   => VertexAttribPointerType.Float,
             ShaderDataType.Vector2 => VertexAttribPointerType.Float,
             ShaderDataType.Vector3 => VertexAttribPointerType.Float,
             ShaderDataType.Vector4 => VertexAttribPointerType.Float,
             ShaderDataType.Matrix3 => VertexAttribPointerType.Float,
             ShaderDataType.Matrix4 => VertexAttribPointerType.Float,
-            ShaderDataType.Int => VertexAttribPointerType.Int,
-            ShaderDataType.Int2 => VertexAttribPointerType.Int,
-            ShaderDataType.Int3 => VertexAttribPointerType.Int,
-            ShaderDataType.Int4 => VertexAttribPointerType.Int,
-            ShaderDataType.Bool => VertexAttribPointerType.Byte,
-            _ => throw new ArgumentOutOfRangeException()
+            ShaderDataType.Int     => VertexAttribPointerType.Int,
+            ShaderDataType.Int2    => VertexAttribPointerType.Int,
+            ShaderDataType.Int3    => VertexAttribPointerType.Int,
+            ShaderDataType.Int4    => VertexAttribPointerType.Int,
+            ShaderDataType.Bool    => VertexAttribPointerType.Byte,
+            _                      => throw new ArgumentOutOfRangeException()
         };
-    }
 }

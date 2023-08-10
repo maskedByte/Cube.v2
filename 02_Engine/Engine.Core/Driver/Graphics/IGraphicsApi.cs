@@ -26,7 +26,7 @@ public interface IGraphicsApi
     /// Create a new <see cref="IBufferObject" /> for indices
     /// </summary>
     /// <returns>Returns the new <see cref="IBufferObject" /></returns>
-    IBufferObject CreateBufferIndex(IBufferLayout bufferLayout);
+    IBufferObject CreateIndexBuffer(IBufferLayout bufferLayout);
 
     /// <summary>
     /// Create a new <see cref="IShader" />

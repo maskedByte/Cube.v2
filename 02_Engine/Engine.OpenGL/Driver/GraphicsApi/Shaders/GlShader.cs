@@ -9,11 +9,13 @@ using Engine.OpenGL.Vendor.OpenGL.Core;
 namespace Engine.OpenGL.Driver.GraphicsApi.Shaders;
 
 /// <summary>
-/// Represents a shader and its compiled status.
+///     Represents a shader and its compiled status.
 /// </summary>
 internal sealed class GlShader : IShader
 {
-    private readonly Dictionary<ShaderSourceType, ShaderType> _shaderType = new Dictionary<ShaderSourceType, ShaderType>
+    private readonly uint _shaderId;
+
+    private readonly Dictionary<ShaderSourceType, ShaderType> _shaderType = new()
     {
         { ShaderSourceType.Vertex, ShaderType.VertexShader },
         { ShaderSourceType.Fragment, ShaderType.FragmentShader },
@@ -23,10 +25,17 @@ internal sealed class GlShader : IShader
         { ShaderSourceType.Compute, ShaderType.ComputeShader }
     };
 
-    private readonly uint _shaderId;
+    /// <inheritdoc />
+    public bool Compiled { get; set; }
+
+    /// <inheritdoc />
+    public ShaderSourceType Type { get; }
+
+    /// <inheritdoc />
+    public string[] Source { get; }
 
     /// <summary>
-    /// Creates a new shader.
+    ///     Creates a new shader.
     /// </summary>
     /// <param name="shaderSourceType">The type of shader.</param>
     /// <param name="source">The source code of the shader.</param>
@@ -34,8 +43,11 @@ internal sealed class GlShader : IShader
     {
         if (!Enum.IsDefined(typeof(ShaderSourceType), shaderSourceType))
         {
-            throw new InvalidEnumArgumentException(nameof(shaderSourceType), (int)shaderSourceType,
-                typeof(ShaderSourceType));
+            throw new InvalidEnumArgumentException(
+                nameof(shaderSourceType),
+                (int)shaderSourceType,
+                typeof(ShaderSourceType)
+            );
         }
 
         if (source.IsNullOrAllElementsNull())
@@ -53,21 +65,6 @@ internal sealed class GlShader : IShader
         Gl.CheckError($"{nameof(GlShader)}#Gl.ShaderSource");
     }
 
-    /// <summary>
-    /// The compiled status of the shader.
-    /// </summary>
-    public bool Compiled { get; set; }
-
-    /// <summary>
-    /// The type of shader.
-    /// </summary>
-    public ShaderSourceType Type { get; }
-
-    /// <summary>
-    /// The source code of the shader.
-    /// </summary>
-    public string[] Source { get; }
-
     /// <inheritdoc />
     public void Dispose()
     {
@@ -75,20 +72,20 @@ internal sealed class GlShader : IShader
         Gl.CheckError($"{nameof(GlShader)}#Gl.DeleteShader");
     }
 
-    /// <summary>
-    /// Compiles the shader.
-    /// </summary>
-    public void Compile()
+    /// <inheritdoc />
+    public void Compile(bool force = false)
     {
+        if (Compiled && !force)
+        {
+            return;
+        }
+
         Gl.CompileShader(_shaderId);
         CheckCompileError(_shaderId);
     }
 
     /// <inheritdoc />
-    public uint GetId()
-    {
-        return _shaderId;
-    }
+    public uint GetId() => _shaderId;
 
     private void CheckCompileError(uint shader)
     {
