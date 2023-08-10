@@ -32,14 +32,14 @@ internal sealed class GlShader : IShader
     public ShaderSourceType Type { get; }
 
     /// <inheritdoc />
-    public string[] Source { get; }
+    public string Source { get; }
 
     /// <summary>
     ///     Creates a new shader.
     /// </summary>
     /// <param name="shaderSourceType">The type of shader.</param>
     /// <param name="source">The source code of the shader.</param>
-    public GlShader(ShaderSourceType shaderSourceType, string[] source)
+    public GlShader(ShaderSourceType shaderSourceType, string source)
     {
         if (!Enum.IsDefined(typeof(ShaderSourceType), shaderSourceType))
         {
@@ -50,7 +50,7 @@ internal sealed class GlShader : IShader
             );
         }
 
-        if (source.IsNullOrAllElementsNull())
+        if (string.IsNullOrWhiteSpace(source))
         {
             throw new ArgumentException("Source cannot be null or whitespace.", nameof(source));
         }
@@ -61,7 +61,13 @@ internal sealed class GlShader : IShader
         _shaderId = Gl.CreateShader(_shaderType[shaderSourceType]);
         Gl.CheckError($"{nameof(GlShader)}#Gl.CreateShader");
 
-        Gl.ShaderSource(_shaderId, source);
+        Gl.ShaderSource(
+            _shaderId,
+            new[]
+            {
+                source
+            }
+        );
         Gl.CheckError($"{nameof(GlShader)}#Gl.ShaderSource");
     }
 

@@ -10,7 +10,7 @@ using Engine.OpenGL.Driver;
 
 public class TestApp
 {
-    public static void Main(string[] args)
+    public static void Main()
     {
         // Create simple OpenGl window
         IDriver driver = new OpenGlDriver();
@@ -21,33 +21,12 @@ public class TestApp
 
         var vShader = api.CreateShader(
             ShaderSourceType.Vertex,
-            new[]
-            {
-                "#version 450 core \n",
-                "layout (location = 0) in vec4 a_Position; \n",
-                "layout (location = 1) in vec4 a_Color; \n",
-                "layout (location = 2) in vec2 a_TexCoord; \n",
-                "out vec3 v_VertexColorOut; \n",
-                "void main() \n",
-                "{ \n",
-                "   gl_Position = aPos; \n",
-                "   v_VertexColorOut = a_Color; \n",
-                "} \n"
-            }
+            File.ReadAllText("vertex.glsl")
         );
 
         var fShader = api.CreateShader(
             ShaderSourceType.Fragment,
-            new[]
-            {
-                "#version 450 core \n",
-                "out vec4 FragColor; \n",
-                "in vec3 ourColor; \n",
-                "void main() \n",
-                "{ \n",
-                "   FragColor = vec4(ourColor, 1.0f); \n",
-                "} \n"
-            }
+            File.ReadAllText("fragment.glsl")
         );
 
         var shaderProgram = api.CreateShaderProgram();
@@ -72,6 +51,9 @@ public class TestApp
 
             driver.Swap();
         }
+
+        shaderProgram.Dispose();
+        triangle.Dispose();
 
         driver.Close();
     }

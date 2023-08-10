@@ -23,7 +23,7 @@ public class OpenGlGraphicsApi : IGraphicsApi
     public IBufferObject CreateIndexBuffer(IBufferLayout bufferLayout) => new GlBufferObject(bufferLayout, true);
 
     /// <inheritdoc />
-    public IShader CreateShader(ShaderSourceType shaderSourceType, string[] source) => new GlShader(shaderSourceType, source);
+    public IShader CreateShader(ShaderSourceType shaderSourceType, string source) => new GlShader(shaderSourceType, source);
 
     /// <inheritdoc />
     public IShaderProgram CreateShaderProgram() => new GlShaderProgram();

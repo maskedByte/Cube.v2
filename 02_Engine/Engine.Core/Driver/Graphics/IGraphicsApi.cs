@@ -32,7 +32,7 @@ public interface IGraphicsApi
     /// Create a new <see cref="IShader" />
     /// </summary>
     /// <returns>Returns the new <see cref="IShader" /></returns>
-    IShader CreateShader(ShaderSourceType shaderSourceType, string[] source);
+    IShader CreateShader(ShaderSourceType shaderSourceType, string source);
 
     /// <summary>
     /// Create a new <see cref="IShaderProgram" />

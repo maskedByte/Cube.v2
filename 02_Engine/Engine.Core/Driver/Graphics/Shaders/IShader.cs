@@ -15,7 +15,7 @@ public interface IShader : IDisposable
     /// <summary>
     /// The source code of the shader.
     /// </summary>
-    string[] Source { get; }
+    string Source { get; }
 
     /// <summary>
     /// Compiles the shader.

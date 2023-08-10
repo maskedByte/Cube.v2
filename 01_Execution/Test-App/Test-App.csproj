@@ -14,4 +14,14 @@
         <ProjectReference Include="..\..\02_Engine\Engine.OpenGL\Engine.OpenGL.csproj"/>
     </ItemGroup>
 
+
+    <ItemGroup>
+        <None Update="fragment.glsl">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="vertex.glsl">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
 </Project>

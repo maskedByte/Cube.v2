@@ -81,7 +81,7 @@ public sealed class OpenGlDriver : IDriver
 
         Gl.Enable(EnableCap.CullFace);
         Gl.CullFace(CullFaceMode.Back);
-        Gl.FrontFace(FrontFaceDirection.Cw);
+        Gl.FrontFace(FrontFaceDirection.Ccw);
         Gl.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
 
         Gl.Enable(EnableCap.Blend);
