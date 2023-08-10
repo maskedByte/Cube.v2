@@ -1,14 +1,14 @@
 ﻿namespace Engine.Core.Memory.Pinning;
 
 /// <summary>
-/// A class that manages pinned structures.
+///     A class that manages pinned structures.
 /// </summary>
 public class PinnedStructures : IDisposable
 {
     private readonly Dictionary<Type, IPinnedStructure> _pinnedStructures;
 
     /// <summary>
-    /// Initializes a new instance of the PinnedStructures class.
+    ///     Initializes a new instance of the PinnedStructures class.
     /// </summary>
     public PinnedStructures()
     {
@@ -16,7 +16,7 @@ public class PinnedStructures : IDisposable
     }
 
     /// <summary>
-    /// Disposes the PinnedStructures instance.
+    ///     Disposes the PinnedStructures instance.
     /// </summary>
     public void Dispose()
     {
@@ -28,16 +28,13 @@ public class PinnedStructures : IDisposable
     }
 
     /// <summary>
-    /// Adds a new pinned structure of the specified type.
+    ///     Adds a new pinned structure of the specified type.
     /// </summary>
     /// <typeparam name="T">The type of the structure to add.</typeparam>
-    public void Add<T>()
-    {
-        _pinnedStructures.Add(typeof(T), new PinnedStructure<T>());
-    }
+    public void Add<T>() => _pinnedStructures.Add(typeof(T), new PinnedStructure<T>());
 
     /// <summary>
-    /// Removes the pinned structure of the specified type.
+    ///     Removes the pinned structure of the specified type.
     /// </summary>
     /// <typeparam name="T">The type of the structure to remove.</typeparam>
     public void Remove<T>()
@@ -51,17 +48,14 @@ public class PinnedStructures : IDisposable
     }
 
     /// <summary>
-    /// Retrieves the pinned structure of the specified type.
+    ///     Retrieves the pinned structure of the specified type.
     /// </summary>
     /// <typeparam name="T">The type of the structure to retrieve.</typeparam>
     /// <returns>The pinned structure of the specified type.</returns>
-    public IPinnedStructure<T> Get<T>()
-    {
-        return (IPinnedStructure<T>)_pinnedStructures[typeof(T)];
-    }
+    public IPinnedStructure<T> Get<T>() => (IPinnedStructure<T>)_pinnedStructures[typeof(T)];
 
     /// <summary>
-    /// Frees all pinned structures.
+    ///     Frees all pinned structures.
     /// </summary>
     public void Free()
     {

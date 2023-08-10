@@ -23,7 +23,7 @@ namespace Engine.Core.Extensions;
 public static class ArrayExtensions
 {
     /// <summary>
-    /// Appends one or more elements to the end of an array.
+    ///     Appends one or more elements to the end of an array.
     /// </summary>
     /// <typeparam name="T">The type of elements in the array.</typeparam>
     /// <param name="array">The array to append to.</param>
@@ -47,7 +47,7 @@ public static class ArrayExtensions
     }
 
     /// <summary>
-    /// Clears all elements in an array.
+    ///     Clears all elements in an array.
     /// </summary>
     /// <typeparam name="T">The type of elements in the array.</typeparam>
     /// <param name="array">The array to clear.</param>
@@ -62,7 +62,7 @@ public static class ArrayExtensions
     }
 
     /// <summary>
-    /// Counts the number of occurrences of a value in an array.
+    ///     Counts the number of occurrences of a value in an array.
     /// </summary>
     /// <typeparam name="T">The type of elements in the array.</typeparam>
     /// <param name="array">The array to search.</param>
@@ -79,7 +79,7 @@ public static class ArrayExtensions
     }
 
     /// <summary>
-    /// Finds the index of the first occurrence of a value in an array.
+    ///     Finds the index of the first occurrence of a value in an array.
     /// </summary>
     /// <typeparam name="T">The type of elements in the array.</typeparam>
     /// <param name="array">The array to search.</param>
@@ -104,7 +104,7 @@ public static class ArrayExtensions
     }
 
     /// <summary>
-    /// Inserts a value into an array at a specified index.
+    ///     Inserts a value into an array at a specified index.
     /// </summary>
     /// <typeparam name="T">The type of elements in the array.</typeparam>
     /// <param name="array">The array to insert into.</param>
@@ -119,8 +119,10 @@ public static class ArrayExtensions
 
         if (index < 0 || index > array.Length)
         {
-            throw new ArgumentOutOfRangeException(nameof(index),
-                "The index must be within the bounds of the array.");
+            throw new ArgumentOutOfRangeException(
+                nameof(index),
+                "The index must be within the bounds of the array."
+            );
         }
 
         Array.Resize(ref array, array.Length + 1);
@@ -132,7 +134,7 @@ public static class ArrayExtensions
     }
 
     /// <summary>
-    /// Reverts the order of the elements in an array.
+    ///     Reverts the order of the elements in an array.
     /// </summary>
     /// <typeparam name="T">The type of elements in the array.</typeparam>
     /// <param name="array">The array to revert.</param>
@@ -147,7 +149,7 @@ public static class ArrayExtensions
     }
 
     /// <summary>
-    /// Removes all occurrences of a specific element from an array.
+    ///     Removes all occurrences of a specific element from an array.
     /// </summary>
     /// <typeparam name="T">The type of elements in the array.</typeparam>
     /// <param name="array">The array to remove from.</param>
@@ -181,24 +183,18 @@ public static class ArrayExtensions
     }
 
     /// <summary>
-    /// Determines whether the specified array is null or empty.
+    ///     Determines whether the specified array is null or empty.
     /// </summary>
     /// <typeparam name="T">The type of the elements in the array.</typeparam>
     /// <param name="array">The array to check.</param>
     /// <returns>true if the array is null or empty; otherwise, false.</returns>
-    public static bool IsNullOrEmpty<T>(this T[]? array)
-    {
-        return array == null || array.Length == 0;
-    }
+    public static bool IsNullOrEmpty<T>(this T[]? array) => array == null || array.Length == 0;
 
     /// <summary>
-    /// Determines whether the specified array is null or all of its elements are null.
+    ///     Determines whether the specified array is null or all of its elements are null.
     /// </summary>
     /// <typeparam name="T">The type of the elements in the array.</typeparam>
     /// <param name="array">The array to check.</param>
     /// <returns>true if the array is null or all of its elements are null; otherwise, false.</returns>
-    public static bool IsNullOrAllElementsNull<T>(this T[]? array)
-    {
-        return array == null || array.All(t => t == null);
-    }
+    public static bool IsNullOrAllElementsNull<T>(this T[]? array) => array == null || array.All(t => t == null);
 }

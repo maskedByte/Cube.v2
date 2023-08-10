@@ -4,7 +4,7 @@ using Engine.Core.Math.Vectors;
 namespace Engine.Core.Math.Geometrics;
 
 /// <summary>
-/// Represents a bezier curve with as many points as you want.
+///     Represents a bezier curve with as many points as you want.
 /// </summary>
 [Serializable]
 public struct BezierCurve
@@ -12,27 +12,24 @@ public struct BezierCurve
     private readonly List<Vector2> _points;
 
     /// <summary>
-    /// The parallel value.
+    ///     The parallel value.
     /// </summary>
     /// <remarks>
-    /// This value defines whether the curve should be calculated as a
-    /// parallel curve to the original bezier curve. A value of 0.0f represents
-    /// the original curve, 5.0f i.e. stands for a curve that has always a distance
-    /// of 5.0f to the orignal curve at any point.
+    ///     This value defines whether the curve should be calculated as a
+    ///     parallel curve to the original bezier curve. A value of 0.0f represents
+    ///     the original curve, 5.0f i.e. stands for a curve that has always a distance
+    ///     of 5.0f to the orignal curve at any point.
     /// </remarks>
     public float Parallel;
 
     /// <summary>
-    /// Gets the points of this curve.
+    ///     Gets the points of this curve.
     /// </summary>
     /// <remarks>The first point and the last points represent the anchor points.</remarks>
-    public IList<Vector2> Points
-    {
-        get { return _points; }
-    }
+    public IList<Vector2> Points => _points;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="BezierCurve" /> struct.
+    ///     Initializes a new instance of the <see cref="BezierCurve" /> struct.
     /// </summary>
     /// <param name="points">The points.</param>
     public BezierCurve(IEnumerable<Vector2> points)
@@ -47,7 +44,7 @@ public struct BezierCurve
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="BezierCurve" /> struct.
+    ///     Initializes a new instance of the <see cref="BezierCurve" /> struct.
     /// </summary>
     /// <param name="points">The points.</param>
     public BezierCurve(params Vector2[] points)
@@ -62,7 +59,7 @@ public struct BezierCurve
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="BezierCurve" /> struct.
+    ///     Initializes a new instance of the <see cref="BezierCurve" /> struct.
     /// </summary>
     /// <param name="parallel">The parallel value.</param>
     /// <param name="points">The points.</param>
@@ -78,7 +75,7 @@ public struct BezierCurve
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="BezierCurve" /> struct.
+    ///     Initializes a new instance of the <see cref="BezierCurve" /> struct.
     /// </summary>
     /// <param name="parallel">The parallel value.</param>
     /// <param name="points">The points.</param>
@@ -94,48 +91,39 @@ public struct BezierCurve
     }
 
     /// <summary>
-    /// Calculates the point with the specified t.
+    ///     Calculates the point with the specified t.
     /// </summary>
     /// <param name="t">The t value, between 0.0f and 1.0f.</param>
     /// <returns>Resulting point.</returns>
     [Pure]
-    public Vector2 CalculatePoint(float t)
-    {
-        return CalculatePoint(_points, t, Parallel);
-    }
+    public Vector2 CalculatePoint(float t) => CalculatePoint(_points, t, Parallel);
 
     /// <summary>
-    /// Calculates the length of this bezier curve.
+    ///     Calculates the length of this bezier curve.
     /// </summary>
     /// <param name="precision">The precision.</param>
     /// <returns>Length of curve.</returns>
     /// <remarks>
-    /// The precision gets better as the <paramref name="precision" />
-    /// value gets smaller.
+    ///     The precision gets better as the <paramref name="precision" />
+    ///     value gets smaller.
     /// </remarks>
     [Pure]
-    public float CalculateLength(float precision)
-    {
-        return CalculateLength(_points, precision, Parallel);
-    }
+    public float CalculateLength(float precision) => CalculateLength(_points, precision, Parallel);
 
     /// <summary>
-    /// Calculates the length of the specified bezier curve.
+    ///     Calculates the length of the specified bezier curve.
     /// </summary>
     /// <param name="points">The points.</param>
     /// <param name="precision">The precision value.</param>
     /// <returns>
-    /// The precision gets better as the <paramref name="precision" />
-    /// value gets smaller.
+    ///     The precision gets better as the <paramref name="precision" />
+    ///     value gets smaller.
     /// </returns>
     [Pure]
-    public static float CalculateLength(IList<Vector2> points, float precision)
-    {
-        return CalculateLength(points, precision, 0.0f);
-    }
+    public static float CalculateLength(IList<Vector2> points, float precision) => CalculateLength(points, precision, 0.0f);
 
     /// <summary>
-    /// Calculates the length of the specified bezier curve.
+    ///     Calculates the length of the specified bezier curve.
     /// </summary>
     /// <param name="points">The points.</param>
     /// <param name="precision">The precision value.</param>
@@ -143,14 +131,14 @@ public struct BezierCurve
     /// <returns>Length of curve.</returns>
     /// <remarks>
     ///     <para>
-    /// The precision gets better as the <paramref name="precision" />
-    /// value gets smaller.
+    ///         The precision gets better as the <paramref name="precision" />
+    ///         value gets smaller.
     ///     </para>
     ///     <para>
-    /// The <paramref name="parallel" /> parameter defines whether the curve should be calculated as a
-    /// parallel curve to the original bezier curve. A value of 0.0f represents
-    /// the original curve, 5.0f represents a curve that has always a distance
-    /// of 5.0f to the orignal curve.
+    ///         The <paramref name="parallel" /> parameter defines whether the curve should be calculated as a
+    ///         parallel curve to the original bezier curve. A value of 0.0f represents
+    ///         the original curve, 5.0f represents a curve that has always a distance
+    ///         of 5.0f to the orignal curve.
     ///     </para>
     /// </remarks>
     [Pure]
@@ -170,29 +158,26 @@ public struct BezierCurve
     }
 
     /// <summary>
-    /// Calculates the point on the given bezier curve with the specified t parameter.
+    ///     Calculates the point on the given bezier curve with the specified t parameter.
     /// </summary>
     /// <param name="points">The points.</param>
     /// <param name="t">The t parameter, a value between 0.0f and 1.0f.</param>
     /// <returns>Resulting point.</returns>
     [Pure]
-    public static Vector2 CalculatePoint(IList<Vector2> points, float t)
-    {
-        return CalculatePoint(points, t, 0.0f);
-    }
+    public static Vector2 CalculatePoint(IList<Vector2> points, float t) => CalculatePoint(points, t, 0.0f);
 
     /// <summary>
-    /// Calculates the point on the given bezier curve with the specified t parameter.
+    ///     Calculates the point on the given bezier curve with the specified t parameter.
     /// </summary>
     /// <param name="points">The points.</param>
     /// <param name="t">The t parameter, a value between 0.0f and 1.0f.</param>
     /// <param name="parallel">The parallel value.</param>
     /// <returns>Resulting point.</returns>
     /// <remarks>
-    /// The <paramref name="parallel" /> parameter defines whether the curve should be calculated as a
-    /// parallel curve to the original bezier curve. A value of 0.0f represents
-    /// the original curve, 5.0f represents a curve that has always a distance
-    /// of 5.0f to the orignal curve.
+    ///     The <paramref name="parallel" /> parameter defines whether the curve should be calculated as a
+    ///     parallel curve to the original bezier curve. A value of 0.0f represents
+    ///     the original curve, 5.0f represents a curve that has always a distance
+    ///     of 5.0f to the orignal curve.
     /// </remarks>
     [Pure]
     public static Vector2 CalculatePoint(IList<Vector2> points, float t, float parallel)
@@ -204,10 +189,9 @@ public struct BezierCurve
 
         foreach (var pt in points)
         {
-            temp = Mathf.BinomialCoefficient
-                (
-                    points.Count - 1, i) * (float)(System.Math.Pow(t, i) * System.Math.Pow(c, points.Count - 1 - i)
-                );
+            temp = Mathf.BinomialCoefficient(points.Count - 1, i)
+                   * (float)(System.Math.Pow(t, i) * System.Math.Pow(c, points.Count - 1 - i)
+                   );
 
             r.X += temp * pt.X;
             r.Y += temp * pt.Y;
@@ -234,7 +218,7 @@ public struct BezierCurve
     }
 
     /// <summary>
-    /// Calculates the point with the specified t of the derivative of the given bezier function.
+    ///     Calculates the point with the specified t of the derivative of the given bezier function.
     /// </summary>
     /// <param name="points">The points.</param>
     /// <param name="t">The t parameter, value between 0.0f and 1.0f.</param>
@@ -249,10 +233,9 @@ public struct BezierCurve
 
         foreach (var pt in points)
         {
-            temp = Mathf.BinomialCoefficient
-                (
-                    points.Count - 2, i) * (float)(System.Math.Pow(t, i) * System.Math.Pow(c, points.Count - 2 - i)
-                );
+            temp = Mathf.BinomialCoefficient(points.Count - 2, i)
+                   * (float)(System.Math.Pow(t, i) * System.Math.Pow(c, points.Count - 2 - i)
+                   );
 
             r.X += temp * pt.X;
             r.Y += temp * pt.Y;

@@ -5,8 +5,8 @@ using Engine.Core.Metric.Abstraction;
 namespace Engine.Core.Metric.Transmitter;
 
 /// <summary>
-/// This class implements the IMetricsTransmitter interface and provides the specific
-/// behavior for transmitting performance metrics over a TCP connection.
+///     This class implements the IMetricsTransmitter interface and provides the specific
+///     behavior for transmitting performance metrics over a TCP connection.
 /// </summary>
 public class TcpTransmitter : IMetricsTransmitter
 {
@@ -26,7 +26,7 @@ public class TcpTransmitter : IMetricsTransmitter
     }
 
     /// <summary>
-    /// Transmits the specified performance metrics over the TCP connection.
+    ///     Transmits the specified performance metrics over the TCP connection.
     /// </summary>
     public void Transmit()
     {

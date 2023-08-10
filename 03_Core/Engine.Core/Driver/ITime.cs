@@ -1,27 +1,27 @@
 namespace Engine.Core.Driver;
 
 /// <summary>
-/// Time interface for providing timing functions
+///     Time interface for providing timing functions
 /// </summary>
 public interface ITime
 {
     /// <summary>
-    /// Return DeltaTime
+    ///     Return DeltaTime
     /// </summary>
     float DeltaTime { get; }
 
     /// <summary>
-    /// Return actual FPS
+    ///     Return actual FPS
     /// </summary>
     float FramesPerSecond { get; }
 
     /// <summary>
-    /// Return time since start
+    ///     Return time since start
     /// </summary>
     float Millisecs { get; }
 
     /// <summary>
-    /// Update Time
+    ///     Update Time
     /// </summary>
     void Update();
 }

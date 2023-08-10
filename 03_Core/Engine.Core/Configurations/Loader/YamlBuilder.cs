@@ -5,24 +5,21 @@ using Engine.Core.Exceptions;
 namespace Engine.Core.Configurations.Loader;
 
 /// <summary>
-/// <see cref="IConfigurationBuilder" /> implementation to load *.yml files
+///     <see cref="IConfigurationBuilder" /> implementation to load *.yml files
 /// </summary>
 public sealed class YamlBuilder : IConfigurationBuilder
 {
     private readonly string _loadPath;
 
+    /// <inheritdoc />
+    public string Extension => "yml;yaml";
+
     /// <summary>
-    /// Create new instance of <see cref="IniBuilder" />
+    ///     Create new instance of <see cref="IniBuilder" />
     /// </summary>
     public YamlBuilder()
     {
         _loadPath = $"settings.{Extension}";
-    }
-
-    /// <inheritdoc />
-    public string Extension
-    {
-        get { return "yml;yaml"; }
     }
 
     /// <inheritdoc />

@@ -8,69 +8,47 @@ using Engine.Core.Math.Vectors;
 namespace Engine.Core.Math.Base;
 
 /// <summary>
-/// Representation of a color as R,G,B,A byte values ranging from 0-255
+///     Representation of a color as R,G,B,A byte values ranging from 0-255
 /// </summary>
-[StructLayout(LayoutKind.Sequential)]
-[SuppressMessage("ReSharper", "InvalidXmlDocComment")]
+[StructLayout(LayoutKind.Sequential), SuppressMessage("ReSharper", "InvalidXmlDocComment")]
 public sealed class Color : IEquatable<Color>
 {
     /// <summary>
-    /// Red value from 0 - 255
+    ///     Red value from 0 - 255
     /// </summary>
     public byte R { get; }
 
     /// <summary>
-    /// Green value from 0 - 255
+    ///     Green value from 0 - 255
     /// </summary>
     public byte G { get; }
 
     /// <summary>
-    /// Blue value from 0 - 255
+    ///     Blue value from 0 - 255
     /// </summary>
     public byte B { get; }
 
     /// <summary>
-    /// Alpha value from 0 - 255
+    ///     Alpha value from 0 - 255
     /// </summary>
     public byte A { get; }
 
-    public bool IsTranslucent
-    {
-        get { return A < 255; }
-    }
+    public bool IsTranslucent => A < 255;
 
-    public static Color Black
-    {
-        get { return new Color(0, 0, 0, 255); }
-    }
+    public static Color Black => new(0, 0, 0, 255);
 
-    public static Color White
-    {
-        get { return new Color(255, 255, 255, 255); }
-    }
+    public static Color White => new(255, 255, 255, 255);
 
-    public static Color Transparent
-    {
-        get { return new Color(255, 255, 255, 0); }
-    }
+    public static Color Transparent => new(255, 255, 255, 0);
 
-    public static Color Red
-    {
-        get { return new Color(255, 0, 0, 255); }
-    }
+    public static Color Red => new(255, 0, 0, 255);
 
-    public static Color Green
-    {
-        get { return new Color(0, 255, 0, 255); }
-    }
+    public static Color Green => new(0, 255, 0, 255);
 
-    public static Color Blue
-    {
-        get { return new Color(0, 0, 255, 255); }
-    }
+    public static Color Blue => new(0, 0, 255, 255);
 
     /// <summary>
-    /// Create new instance of Color class by set a single value as RGB values
+    ///     Create new instance of Color class by set a single value as RGB values
     /// </summary>
     public Color(int value)
         : this(value, value, value, 255)
@@ -78,7 +56,7 @@ public sealed class Color : IEquatable<Color>
     }
 
     /// <summary>
-    /// Create new instance of Color class
+    ///     Create new instance of Color class
     /// </summary>
     /// <param name="red">Red color value range 0 - 255</param>
     /// <param name="green">Green color value range 0 - 255</param>
@@ -89,13 +67,18 @@ public sealed class Color : IEquatable<Color>
     }
 
     /// <summary>
-    /// Create new instance of Color class
+    ///     Create new instance of Color class
     /// </summary>
     /// <param name="red">Red color value range 0 - 255</param>
     /// <param name="green">Green color value range 0 - 255</param>
     /// <param name="blue">Blue color value range 0 - 255</param>
     /// <param name="alpha">Alpha color value range 0 - 255</param>
-    public Color(int red, int green, int blue, int alpha)
+    public Color(
+        int red,
+        int green,
+        int blue,
+        int alpha
+    )
     {
         R = (byte)Mathf.Clamp(red, 0, 255);
         G = (byte)Mathf.Clamp(green, 0, 255);
@@ -104,13 +87,18 @@ public sealed class Color : IEquatable<Color>
     }
 
     /// <summary>
-    /// Create new instance of Color class
+    ///     Create new instance of Color class
     /// </summary>
     /// <param name="red">Red color value range 0.0 - 1.0</param>
     /// <param name="green">Green color value range 0.0 - 1.0</param>
     /// <param name="blue">Blue color value range 0.0 - 1.0</param>
     /// <param name="alpha">Alpha color value range 0.0 - 1.0</param>
-    public Color(float red, float green, float blue, float alpha)
+    public Color(
+        float red,
+        float green,
+        float blue,
+        float alpha
+    )
     {
         R = (byte)Mathf.Clamp(255 * red, 0f, 1f);
         G = (byte)Mathf.Clamp(255 * green, 0f, 1f);
@@ -119,7 +107,7 @@ public sealed class Color : IEquatable<Color>
     }
 
     /// <summary>
-    /// Check if color is equal to <paramref name="other" />
+    ///     Check if color is equal to <paramref name="other" />
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
@@ -131,117 +119,87 @@ public sealed class Color : IEquatable<Color>
         }
 
         return
-            R == other!.R &&
-            G == other.G &&
-            B == other.B &&
-            A == other.A;
+            R == other!.R && G == other.G && B == other.B && A == other.A;
     }
 
     /// <summary>
-    /// Implicit convert System.Drawing.Color into <see cref="Color" />
+    ///     Implicit convert System.Drawing.Color into <see cref="Color" />
     /// </summary>
-    public static implicit operator Color(System.Drawing.Color color)
-    {
-        return new Color(color.R, color.G, color.B, color.A);
-    }
+    public static implicit operator Color(System.Drawing.Color color) => new(color.R, color.G, color.B, color.A);
 
-    public static Color operator +(Color color1, Color color2)
-    {
-        return new Color(
+    public static Color operator +(Color color1, Color color2) =>
+        new(
             color1.R + color2.R,
             color1.G + color2.G,
             color1.B + color2.B,
-            color1.A + color2.A);
-    }
+            color1.A + color2.A
+        );
 
-    public static Color operator -(Color color1, Color color2)
-    {
-        return new Color(
+    public static Color operator -(Color color1, Color color2) =>
+        new(
             color1.R - color2.R,
             color1.G - color2.G,
             color1.B - color2.B,
-            color1.A - color2.A);
-    }
+            color1.A - color2.A
+        );
 
-    public static Color operator *(Color color1, Color color2)
-    {
-        return new Color(
+    public static Color operator *(Color color1, Color color2) =>
+        new(
             color1.R * color2.R,
             color1.G * color2.G,
             color1.B * color2.B,
-            color1.A * color2.A);
-    }
+            color1.A * color2.A
+        );
 
     /// <summary>
-    /// Convert <see cref="System.Drawing.Color" /> into <see cref="Color" />
+    ///     Convert <see cref="System.Drawing.Color" /> into <see cref="Color" />
     /// </summary>
     /// <param name="color"></param>
     /// <returns>New created <see cref="Color" /></returns>
-    public static Color FromDrawingColor(System.Drawing.Color color)
-    {
-        return new Color(color.R, color.G, color.B, color.A);
-    }
+    public static Color FromDrawingColor(System.Drawing.Color color) => new(color.R, color.G, color.B, color.A);
 
     /// <summary>
-    /// Convert <see cref="System.Drawing.Color" /> into <see cref="Color" />
+    ///     Convert <see cref="System.Drawing.Color" /> into <see cref="Color" />
     /// </summary>
     /// <param name="color"></param>
     /// <param name="alpha"></param>
     /// <returns>New created <see cref="Color" /></returns>
-    public static Color FromDrawingColor(System.Drawing.Color color, byte alpha)
-    {
-        return new Color(color.R, color.G, color.B, alpha);
-    }
+    public static Color FromDrawingColor(System.Drawing.Color color, byte alpha) => new(color.R, color.G, color.B, alpha);
 
     /// <summary>
-    /// Return a vector4 for this color where color values converted from RGBA into Float
+    ///     Return a vector4 for this color where color values converted from RGBA into Float
     /// </summary>
     /// <returns>New <see cref="Vector3" /> containing the color value</returns>
-    public Vector3 ToVector3()
-    {
-        return new Vector3(R / 255f, G / 255f, B / 255f);
-    }
+    public Vector3 ToVector3() => new(R / 255f, G / 255f, B / 255f);
 
     /// <summary>
-    /// Return a <see cref="Vector4" /> for this color where color values converted from RGBA into Float
+    ///     Return a <see cref="Vector4" /> for this color where color values converted from RGBA into Float
     /// </summary>
     /// <returns>New <see cref="Vector4" /> containing the color value</returns>
-    public Vector4 ToVector4()
-    {
-        return new Vector4(R / 255f, G / 255f, B / 255f, A / 255f);
-    }
+    public Vector4 ToVector4() => new(R / 255f, G / 255f, B / 255f, A / 255f);
 
     /// <summary>
-    /// Convert RGB color to Hsl color
+    ///     Convert RGB color to Hsl color
     /// </summary>
     /// <returns></returns>
-    public HslColor ToHsl()
-    {
-        return this;
-    }
+    public HslColor ToHsl() => this;
 
     /// <summary>
-    /// Convert <see cref="Vector3" /> into <see cref="Color" />
+    ///     Convert <see cref="Vector3" /> into <see cref="Color" />
     /// </summary>
     /// <param name="color"><see cref="Vector3" /> vector to convert to <see cref="Color" />, value range from 0-1 </param>
     /// <returns></returns>
-    public static Color FromVector(Vector3 color)
-    {
-        return new Color(color.X, color.Y, color.Z, 1.0f);
-    }
+    public static Color FromVector(Vector3 color) => new(color.X, color.Y, color.Z, 1.0f);
 
     /// <summary>
-    /// Convert <see cref="Vector4" /> into <see cref="Color" />
+    ///     Convert <see cref="Vector4" /> into <see cref="Color" />
     /// </summary>
     /// <param name="color"><see cref="Vector4" /> vector to convert to <see cref="Color" />, value range from 0-1 </param>
     /// <returns></returns>
-    public static Color FromVector(Vector4 color)
-    {
-        return new Color(color.X, color.Y, color.Z, color.W);
-    }
+    public static Color FromVector(Vector4 color) => new(color.X, color.Y, color.Z, color.W);
 
     /// <summary>
-    /// Returns the Lightness
+    ///     Returns the Lightness
     /// </summary>
     public float GetBrightness()
     {
@@ -276,12 +234,11 @@ public sealed class Color : IEquatable<Color>
     }
 
     /// <summary>
-    /// Returns the hue value, in degrees
+    ///     Returns the hue value, in degrees
     /// </summary>
     public float GetHue()
     {
-        if (R == G &&
-            G == B)
+        if (R == G && G == B)
         {
             return 0; // 0 makes as good an UNDEFINED value as any
         }
@@ -341,7 +298,7 @@ public sealed class Color : IEquatable<Color>
     }
 
     /// <summary>
-    /// Returns the Saturation value
+    ///     Returns the Saturation value
     /// </summary>
     public float GetSaturation()
     {
@@ -397,13 +354,13 @@ public sealed class Color : IEquatable<Color>
     }
 
     /// <summary>
-    /// Interpolates the current color with another color by a given factor.
+    ///     Interpolates the current color with another color by a given factor.
     /// </summary>
     /// <param name="color">The color to interpolate with</param>
     /// <param name="factor">The interpolation factor, a value between 0 and 1.</param>
     /// <remarks>
-    /// A factor of 0 will result in the current color, a factor of 1 will result in the provided color,
-    /// and a factor of 0.5 will result in a color halfway between the two.
+    ///     A factor of 0 will result in the current color, a factor of 1 will result in the provided color,
+    ///     and a factor of 0.5 will result in a color halfway between the two.
     /// </remarks>
     /// <returns>The interpolated color</returns>
     public Color Interpolate(Color color, float factor)
@@ -416,13 +373,10 @@ public sealed class Color : IEquatable<Color>
         return new Color(red, green, blue, alpha);
     }
 
-    public override string ToString()
-    {
-        return $"{R} {G} {B} {A}";
-    }
+    public override string ToString() => $"{R} {G} {B} {A}";
 
     /// <summary>
-    /// Parse a string to <see cref="Color" />, format can be #ff44aa or <255,255,255,255> or 255,255,255,255
+    ///     Parse a string to <see cref="Color" />, format can be #ff44aa or <255,255,255,255> or 255,255,255,255
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
@@ -455,13 +409,7 @@ public sealed class Color : IEquatable<Color>
         );
     }
 
-    public override bool Equals(object? obj)
-    {
-        return Equals(obj as Color);
-    }
+    public override bool Equals(object? obj) => Equals(obj as Color);
 
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(R, G, B, A);
-    }
+    public override int GetHashCode() => HashCode.Combine(R, G, B, A);
 }

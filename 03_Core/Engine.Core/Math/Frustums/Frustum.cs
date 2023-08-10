@@ -1,7 +1,7 @@
 ﻿namespace Engine.Core.Math.Frustums;
 
 /// <summary>
-/// Represents a frustum in 3D space
+///     Represents a frustum in 3D space
 /// </summary>
 public class Frustum
 {

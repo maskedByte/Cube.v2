@@ -21,7 +21,7 @@ public struct Rect : IEquatable<Rect>
 
     public int X
     {
-        get { return _x; }
+        get => _x;
         set
         {
             _x = value;
@@ -31,7 +31,7 @@ public struct Rect : IEquatable<Rect>
 
     public int Y
     {
-        get { return _y; }
+        get => _y;
         set
         {
             _y = value;
@@ -41,7 +41,7 @@ public struct Rect : IEquatable<Rect>
 
     public int Width
     {
-        get { return _width; }
+        get => _width;
         set
         {
             _width = value;
@@ -51,7 +51,7 @@ public struct Rect : IEquatable<Rect>
 
     public int Height
     {
-        get { return _height; }
+        get => _height;
         set
         {
             _height = value;
@@ -59,27 +59,15 @@ public struct Rect : IEquatable<Rect>
         }
     }
 
-    public Point UpperLeft
-    {
-        get { return new Point(_x, _y); }
-    }
+    public Point UpperLeft => new(_x, _y);
 
-    public Point UpperRight
-    {
-        get { return new Point(_x + _width, _y); }
-    }
+    public Point UpperRight => new(_x + _width, _y);
 
-    public Point BottomLeft
-    {
-        get { return new Point(_x, _y + _height); }
-    }
+    public Point BottomLeft => new(_x, _y + _height);
 
-    public Point BottomRight
-    {
-        get { return new Point(_x + _width, _y + _height); }
-    }
+    public Point BottomRight => new(_x + _width, _y + _height);
 
-    public static Rect Zero = new Rect(0, 0, 0, 0);
+    public static Rect Zero = new(0, 0, 0, 0);
 
     public Rect()
     {
@@ -93,7 +81,12 @@ public struct Rect : IEquatable<Rect>
         _size = Vector2.Zero;
     }
 
-    public Rect(int x, int y, int w, int h)
+    public Rect(
+        int x,
+        int y,
+        int w,
+        int h
+    )
         : this()
     {
         _x = x;
@@ -137,46 +130,35 @@ public struct Rect : IEquatable<Rect>
         CalculateLenght();
     }
 
-    public static Rect operator +(Rect a, Rect b)
-    {
-        return new Rect(
+    public static Rect operator +(Rect a, Rect b) =>
+        new(
             a.X + b.X,
             a.Y + b.Y,
             a.Width + b.Width,
-            a.Height + b.Height);
-    }
+            a.Height + b.Height
+        );
 
-    public static Rect operator -(Rect a, Rect b)
-    {
-        return new Rect(
+    public static Rect operator -(Rect a, Rect b) =>
+        new(
             a.X * b.X,
             a.Y * b.Y,
             a.Width - b.Width,
-            a.Height - b.Height);
-    }
+            a.Height - b.Height
+        );
 
-    public static bool operator ==(Rect left, Rect right)
-    {
-        return left.Equals(right);
-    }
+    public static bool operator ==(Rect left, Rect right) => left.Equals(right);
 
-    public static bool operator !=(Rect left, Rect right)
-    {
-        return !(left == right);
-    }
+    public static bool operator !=(Rect left, Rect right) => !(left == right);
 
-    public static implicit operator string(Rect b)
-    {
-        return b.ToString();
-    }
+    public static implicit operator string(Rect b) => b.ToString();
 
-    public static explicit operator Rect(string b)
-    {
-        return Parse(b);
-    }
+    public static explicit operator Rect(string b) => Parse(b);
 
-    public static Rect Parse(string value, string separator = ",",
-        StringSplitOptions stringSplitOptions = StringSplitOptions.None)
+    public static Rect Parse(
+        string value,
+        string separator = ",",
+        StringSplitOptions stringSplitOptions = StringSplitOptions.None
+    )
     {
         var values = value.Split(separator, stringSplitOptions);
 
@@ -188,100 +170,61 @@ public struct Rect : IEquatable<Rect>
         );
     }
 
-    public static implicit operator Size(Rect value)
-    {
-        return new Size(value.Width, value.Height);
-    }
+    public static implicit operator Size(Rect value) => new(value.Width, value.Height);
 
-    public static Rect Min(Rect a, Rect b)
-    {
-        return new Rect(
-            a.X > b.X ? b.X : a.X,
-            a.Y > b.Y ? b.Y : a.Y,
-            a._width > b._width ? b._width : a._width,
-            a._height > b._height ? b._height : a._height
+    public static Rect Min(Rect a, Rect b) =>
+        new(
+            a.X > b.X
+                ? b.X
+                : a.X,
+            a.Y > b.Y
+                ? b.Y
+                : a.Y,
+            a._width > b._width
+                ? b._width
+                : a._width,
+            a._height > b._height
+                ? b._height
+                : a._height
         );
-    }
 
-    public static Rect Max(Rect a, Rect b)
-    {
-        return new Rect(
-            a.X < b.X ? b.X : a.X,
-            a.Y < b.Y ? b.Y : a.Y,
-            a._width < b._width ? b._width : a._width,
-            a._height < b._height ? b._height : a._height
+    public static Rect Max(Rect a, Rect b) =>
+        new(
+            a.X < b.X
+                ? b.X
+                : a.X,
+            a.Y < b.Y
+                ? b.Y
+                : a.Y,
+            a._width < b._width
+                ? b._width
+                : a._width,
+            a._height < b._height
+                ? b._height
+                : a._height
         );
-    }
 
-    public bool IsWithin(Rect rect)
-    {
-        return X >= rect.X &&
-               Y >= rect.Y &&
-               X + Width <= rect.X + rect.Width &&
-               Y + Height <= rect.Y + rect.Height;
-    }
+    public bool IsWithin(Rect rect) => X >= rect.X && Y >= rect.Y && X + Width <= rect.X + rect.Width && Y + Height <= rect.Y + rect.Height;
 
-    public bool IsWithin(Vector2 point)
-    {
-        return point.X >= X &&
-               point.Y >= Y &&
-               point.X <= _lenghtW &&
-               point.Y <= _lenghtH;
-    }
+    public bool IsWithin(Vector2 point) => point.X >= X && point.Y >= Y && point.X <= _lenghtW && point.Y <= _lenghtH;
 
-    public bool IsWithin(float x, float y)
-    {
-        return x >= X &&
-               y >= Y &&
-               x <= _lenghtW &&
-               y <= _lenghtH;
-    }
+    public bool IsWithin(float x, float y) => x >= X && y >= Y && x <= _lenghtW && y <= _lenghtH;
 
-    public bool IsWithin(Point point)
-    {
-        return point.X >= X &&
-               point.Y >= Y &&
-               point.X <= _lenghtW &&
-               point.Y <= _lenghtH;
-    }
+    public bool IsWithin(Point point) => point.X >= X && point.Y >= Y && point.X <= _lenghtW && point.Y <= _lenghtH;
 
-    public Vector2 ToPosition()
-    {
-        return _position.Xy;
-    }
+    public Vector2 ToPosition() => _position.Xy;
 
-    public Vector3 ToPosition3()
-    {
-        return _position;
-    }
+    public Vector3 ToPosition3() => _position;
 
-    public Vector2 ToSize()
-    {
-        return _size;
-    }
+    public Vector2 ToSize() => _size;
 
-    public bool Equals(Rect other)
-    {
-        return X == other.X &&
-               Y == other.Y &&
-               Width == other.Width &&
-               Height == other.Height;
-    }
+    public bool Equals(Rect other) => X == other.X && Y == other.Y && Width == other.Width && Height == other.Height;
 
-    public override bool Equals(object? obj)
-    {
-        return obj is Rect other && Equals(other);
-    }
+    public override bool Equals(object? obj) => obj is Rect other && Equals(other);
 
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(_x, _y, _width, _height);
-    }
+    public override int GetHashCode() => HashCode.Combine(_x, _y, _width, _height);
 
-    public override string ToString()
-    {
-        return $"{X}, {Y}, {Width}, {Height}";
-    }
+    public override string ToString() => $"{X}, {Y}, {Width}, {Height}";
 
     private void CalculateLenght()
     {

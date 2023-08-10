@@ -1,18 +1,25 @@
 namespace Engine.Core.Metric.Abstraction;
 
 /// <summary>
-/// Abstract monitor class
+///     Abstract monitor class
 /// </summary>
 /// <typeparam name="TValueType"></typeparam>
 public abstract class PerformanceMetric<TValueType> : IMetric where TValueType : struct
 {
     /// <summary>
-    /// Get or set the value for this <see cref="PerformanceMetric{TValueType}" />
+    ///     Get or set the value for this <see cref="PerformanceMetric{TValueType}" />
     /// </summary>
     public TValueType Value { get; set; }
 
+    object IMetric.Data => Value;
+
+    Type IMetric.DataType => typeof(TValueType);
+
+    /// <inheritdoc />
+    public string Name { get; }
+
     /// <summary>
-    /// Create a new state
+    ///     Create a new state
     /// </summary>
     /// <param name="name">Name of the <see cref="PerformanceMetric{TValueType}" /></param>
     /// <param name="initial">Initial value of the <see cref="PerformanceMetric{TValueType}" /></param>
@@ -24,24 +31,8 @@ public abstract class PerformanceMetric<TValueType> : IMetric where TValueType :
         PerformanceMetricManager.Instance.Add(this);
     }
 
-    object IMetric.Data
-    {
-        get { return Value; }
-    }
-
-    Type IMetric.DataType
-    {
-        get { return typeof(TValueType); }
-    }
-
     /// <inheritdoc />
-    public string Name { get; }
-
-    /// <inheritdoc />
-    public void Reset()
-    {
-        Value = default;
-    }
+    public void Reset() => Value = default;
 
     ~PerformanceMetric()
     {

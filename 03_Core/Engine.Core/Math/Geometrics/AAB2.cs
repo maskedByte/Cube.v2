@@ -6,20 +6,19 @@ using Engine.Core.Math.Vectors;
 namespace Engine.Core.Math.Geometrics;
 
 /// <summary>
-/// Defines an axis-aligned 2d box (rectangle).
+///     Defines an axis-aligned 2d box (rectangle).
 /// </summary>
-[StructLayout(LayoutKind.Sequential)]
-[Serializable]
+[StructLayout(LayoutKind.Sequential), Serializable]
 public struct AAB2 : IEquatable<AAB2>
 {
     private Vector2 _min;
 
     /// <summary>
-    /// Gets or sets the minimum boundary of the structure.
+    ///     Gets or sets the minimum boundary of the structure.
     /// </summary>
     public Vector2 Min
     {
-        get { return _min; }
+        get => _min;
         set
         {
             if (value.X > _max.X)
@@ -39,11 +38,11 @@ public struct AAB2 : IEquatable<AAB2>
     private Vector2 _max;
 
     /// <summary>
-    /// Gets or sets the maximum boundary of the structure.
+    ///     Gets or sets the maximum boundary of the structure.
     /// </summary>
     public Vector2 Max
     {
-        get { return _max; }
+        get => _max;
         set
         {
             if (value.X < _min.X)
@@ -61,7 +60,7 @@ public struct AAB2 : IEquatable<AAB2>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="AAB2" /> struct.
+    ///     Initializes a new instance of the <see cref="AAB2" /> struct.
     /// </summary>
     /// <param name="min">The minimum point on the XY plane this box encloses.</param>
     /// <param name="max">The maximum point on the XY plane this box encloses.</param>
@@ -72,24 +71,29 @@ public struct AAB2 : IEquatable<AAB2>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="AAB2" /> struct.
+    ///     Initializes a new instance of the <see cref="AAB2" /> struct.
     /// </summary>
     /// <param name="minX">The minimum X value to be enclosed.</param>
     /// <param name="minY">The minimum Y value to be enclosed.</param>
     /// <param name="maxX">The maximum X value to be enclosed.</param>
     /// <param name="maxY">The maximum Y value to be enclosed.</param>
-    public AAB2(float minX, float minY, float maxX, float maxY)
+    public AAB2(
+        float minX,
+        float minY,
+        float maxX,
+        float maxY
+    )
         : this(new Vector2(minX, minY), new Vector2(maxX, maxY))
     {
     }
 
     /// <summary>
-    /// Gets or sets a vector describing the size of the AAB2 structure.
+    ///     Gets or sets a vector describing the size of the AAB2 structure.
     /// </summary>
     [XmlIgnore]
     public Vector2 Size
     {
-        get { return Max - Min; }
+        get => Max - Min;
         set
         {
             var center = Center;
@@ -99,90 +103,77 @@ public struct AAB2 : IEquatable<AAB2>
     }
 
     /// <summary>
-    /// Gets or sets a vector describing half the size of the box.
+    ///     Gets or sets a vector describing half the size of the box.
     /// </summary>
     [XmlIgnore]
     public Vector2 HalfSize
     {
-        get { return Size / 2; }
-        set { Size = value * 2; }
+        get => Size / 2;
+        set => Size = value * 2;
     }
 
     /// <summary>
-    /// Gets or sets a vector describing the center of the box.
+    ///     Gets or sets a vector describing the center of the box.
     /// </summary>
     [XmlIgnore]
     public Vector2 Center
     {
-        get { return HalfSize + _min; }
-        set { Translate(value - Center); }
+        get => HalfSize + _min;
+        set => Translate(value - Center);
     }
 
     /// <summary>
-    /// Returns whether the box contains the specified point (borders exclusive).
+    ///     Returns whether the box contains the specified point (borders exclusive).
+    /// </summary>
+    /// <param name="point">The point to query.</param>
+    /// <returns>Whether this box contains the point.</returns>
+    [Pure,
+     Obsolete(
+         "This function used to exclude borders, but to follow changes from the other Box structs it's deprecated. Use ContainsInclusive and ContainsExclusive for the desired behaviour."
+     )]
+    public bool Contains(Vector2 point) => _min.X < point.X && point.X < _max.X && _min.Y < point.Y && point.Y < _max.Y;
+
+    /// <summary>
+    ///     Returns whether the box contains the specified point (borders inclusive).
     /// </summary>
     /// <param name="point">The point to query.</param>
     /// <returns>Whether this box contains the point.</returns>
     [Pure]
-    [Obsolete(
-        "This function used to exclude borders, but to follow changes from the other Box structs it's deprecated. Use ContainsInclusive and ContainsExclusive for the desired behaviour.")]
-    public bool Contains(Vector2 point)
-    {
-        return _min.X < point.X && point.X < _max.X && _min.Y < point.Y && point.Y < _max.Y;
-    }
+    public bool ContainsInclusive(Vector2 point) => _min.X <= point.X && point.X <= _max.X && _min.Y <= point.Y && point.Y <= _max.Y;
 
     /// <summary>
-    /// Returns whether the box contains the specified point (borders inclusive).
+    ///     Returns whether the box contains the specified point (borders exclusive).
     /// </summary>
     /// <param name="point">The point to query.</param>
     /// <returns>Whether this box contains the point.</returns>
     [Pure]
-    public bool ContainsInclusive(Vector2 point)
-    {
-        return _min.X <= point.X && point.X <= _max.X && _min.Y <= point.Y && point.Y <= _max.Y;
-    }
+    public bool ContainsExclusive(Vector2 point) => _min.X < point.X && point.X < _max.X && _min.Y < point.Y && point.Y < _max.Y;
 
     /// <summary>
-    /// Returns whether the box contains the specified point (borders exclusive).
-    /// </summary>
-    /// <param name="point">The point to query.</param>
-    /// <returns>Whether this box contains the point.</returns>
-    [Pure]
-    public bool ContainsExclusive(Vector2 point)
-    {
-        return _min.X < point.X && point.X < _max.X && _min.Y < point.Y && point.Y < _max.Y;
-    }
-
-    /// <summary>
-    /// Returns whether the box contains the specified point.
+    ///     Returns whether the box contains the specified point.
     /// </summary>
     /// <param name="point">The point to query.</param>
     /// <param name="boundaryInclusive">
-    /// Whether points on the box boundary should be recognised as contained as well.
+    ///     Whether points on the box boundary should be recognised as contained as well.
     /// </param>
     /// <returns>Whether this box contains the point.</returns>
     [Pure]
-    public bool Contains(Vector2 point, bool boundaryInclusive)
-    {
-        return boundaryInclusive
+    public bool Contains(Vector2 point, bool boundaryInclusive) =>
+        boundaryInclusive
             ? ContainsInclusive(point)
             : ContainsExclusive(point);
-    }
 
     /// <summary>
-    /// Returns whether the box contains the specified box (borders inclusive).
+    ///     Returns whether the box contains the specified box (borders inclusive).
     /// </summary>
     /// <param name="other">The box to query.</param>
     /// <returns>Whether this box contains the other box.</returns>
     [Pure]
-    public bool Contains(AAB2 other)
-    {
-        return _max.X >= other._min.X && _min.X <= other._max.X && _max.Y >= other._min.Y &&
-               _min.Y <= other._max.Y;
-    }
+    public bool Contains(AAB2 other) =>
+        _max.X >= other._min.X && _min.X <= other._max.X && _max.Y >= other._min.Y && _min.Y <= other._max.Y;
 
     /// <summary>
-    /// Returns the distance between the nearest edge and the specified point.
+    ///     Returns the distance between the nearest edge and the specified point.
     /// </summary>
     /// <param name="point">The point to find distance for.</param>
     /// <returns>The distance between the specified point and the nearest edge.</returns>
@@ -191,12 +182,13 @@ public struct AAB2 : IEquatable<AAB2>
     {
         var distX = new Vector2(
             System.Math.Max(0f, System.Math.Max(_min.X - point.X, point.X - _max.X)),
-            System.Math.Max(0f, System.Math.Max(_min.Y - point.Y, point.Y - _max.Y)));
+            System.Math.Max(0f, System.Math.Max(_min.Y - point.Y, point.Y - _max.Y))
+        );
         return distX.Length;
     }
 
     /// <summary>
-    /// Translates this AAB2 by the given amount.
+    ///     Translates this AAB2 by the given amount.
     /// </summary>
     /// <param name="distance">The distance to translate the box.</param>
     public void Translate(Vector2 distance)
@@ -206,7 +198,7 @@ public struct AAB2 : IEquatable<AAB2>
     }
 
     /// <summary>
-    /// Returns a AAB2 translated by the given amount.
+    ///     Returns a AAB2 translated by the given amount.
     /// </summary>
     /// <param name="distance">The distance to translate the box.</param>
     /// <returns>The translated box.</returns>
@@ -220,7 +212,7 @@ public struct AAB2 : IEquatable<AAB2>
     }
 
     /// <summary>
-    /// Scales this AAB2 by the given amount.
+    ///     Scales this AAB2 by the given amount.
     /// </summary>
     /// <param name="scale">The scale to scale the box.</param>
     /// <param name="anchor">The anchor to scale the box from.</param>
@@ -231,7 +223,7 @@ public struct AAB2 : IEquatable<AAB2>
     }
 
     /// <summary>
-    /// Returns a AAB2 scaled by a given amount from an anchor point.
+    ///     Returns a AAB2 scaled by a given amount from an anchor point.
     /// </summary>
     /// <param name="scale">The scale to scale the box.</param>
     /// <param name="anchor">The anchor to scale the box from.</param>
@@ -246,7 +238,7 @@ public struct AAB2 : IEquatable<AAB2>
     }
 
     /// <summary>
-    /// Inflate this AAB2 to encapsulate a given point.
+    ///     Inflate this AAB2 to encapsulate a given point.
     /// </summary>
     /// <param name="point">The point to query.</param>
     public void Inflate(Vector2 point)
@@ -256,7 +248,7 @@ public struct AAB2 : IEquatable<AAB2>
     }
 
     /// <summary>
-    /// Inflate this AAB2 to encapsulate a given point.
+    ///     Inflate this AAB2 to encapsulate a given point.
     /// </summary>
     /// <param name="point">The point to query.</param>
     /// <returns>The inflated box.</returns>
@@ -270,40 +262,25 @@ public struct AAB2 : IEquatable<AAB2>
     }
 
     /// <summary>
-    /// Equality comparator.
+    ///     Equality comparator.
     /// </summary>
     /// <param name="left">The left operand.</param>
     /// <param name="right">The right operand.</param>
-    public static bool operator ==(AAB2 left, AAB2 right)
-    {
-        return left.Equals(right);
-    }
+    public static bool operator ==(AAB2 left, AAB2 right) => left.Equals(right);
 
     /// <summary>
-    /// Inequality comparator.
+    ///     Inequality comparator.
     /// </summary>
     /// <param name="left">The left operand.</param>
     /// <param name="right">The right operand.</param>
-    public static bool operator !=(AAB2 left, AAB2 right)
-    {
-        return !(left == right);
-    }
+    public static bool operator !=(AAB2 left, AAB2 right) => !(left == right);
 
     /// <inheritdoc />
-    public override bool Equals(object? obj)
-    {
-        return obj is AAB2 aab2 && Equals(aab2);
-    }
+    public override bool Equals(object? obj) => obj is AAB2 aab2 && Equals(aab2);
 
     /// <inheritdoc />
-    public bool Equals(AAB2 other)
-    {
-        return _min.Equals(other._min) && _max.Equals(other._max);
-    }
+    public bool Equals(AAB2 other) => _min.Equals(other._min) && _max.Equals(other._max);
 
     /// <inheritdoc />
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(_min, _max);
-    }
+    public override int GetHashCode() => HashCode.Combine(_min, _max);
 }

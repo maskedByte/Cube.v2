@@ -1,7 +1,7 @@
 ﻿namespace Engine.Core.Driver;
 
 /// <summary>
-/// Enum for different draw modes
+///     Enum for different draw modes
 /// </summary>
 public enum DrawMode
 {

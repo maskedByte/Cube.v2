@@ -1,7 +1,7 @@
 namespace Engine.Core.Driver.Input;
 
 /// <summary>
-/// Key codes
+///     Key codes
 /// </summary>
 public enum KeyCode
 {

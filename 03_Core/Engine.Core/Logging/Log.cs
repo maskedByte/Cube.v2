@@ -1,15 +1,15 @@
 ﻿namespace Engine.Core.Logging;
 
 /// <summary>
-/// Log system implementation.
+///     Log system implementation.
 /// </summary>
 public static class Log
 {
-    private static readonly object Lock = new object();
-    private static readonly List<ILogTarget> Targets = new List<ILogTarget>();
+    private static readonly object Lock = new();
+    private static readonly List<ILogTarget> Targets = new();
 
     /// <summary>
-    /// Adds a new log target
+    ///     Adds a new log target
     /// </summary>
     /// <param name="target">The target to add.</param>
     public static void AddTarget(ILogTarget target)
@@ -21,7 +21,7 @@ public static class Log
     }
 
     /// <summary>
-    /// Removes a log target
+    ///     Removes a log target
     /// </summary>
     /// <param name="target">The target to remove.</param>
     public static void RemoveTarget(ILogTarget target)
@@ -33,7 +33,7 @@ public static class Log
     }
 
     /// <summary>
-    /// Logs a message
+    ///     Logs a message
     /// </summary>
     /// <param name="message">The message to log</param>
     /// <param name="level">The log level</param>

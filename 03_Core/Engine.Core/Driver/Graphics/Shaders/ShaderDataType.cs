@@ -1,7 +1,7 @@
 namespace Engine.Core.Driver.Graphics.Shaders;
 
 /// <summary>
-/// Enum for shader data types
+///     Enum for shader data types
 /// </summary>
 public enum ShaderDataType
 {

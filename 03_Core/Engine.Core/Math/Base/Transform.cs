@@ -7,7 +7,7 @@ using Engine.Core.Math.Vectors;
 namespace Engine.Core.Math.Base;
 
 /// <summary>
-/// Implementation of <see cref="Transform" />
+///     Implementation of <see cref="Transform" />
 /// </summary>
 [Serializable]
 public sealed class Transform
@@ -27,35 +27,33 @@ public sealed class Transform
     private Matrix4 _scaleMatrix;
 
     /// <summary>
-    /// Set to true to automatically update the model matrix
+    ///     Set to true to automatically update the model matrix
     /// </summary>
     public bool AutoRecalculate { get; set; } = true;
 
     /// <summary>
-    /// Gets or sets a parent transform
+    ///     Gets or sets a parent transform
     /// </summary>
     public Transform? Parent { get; set; }
 
     /// <summary>
-    /// World-Space Position vector
+    ///     World-Space Position vector
     /// </summary>
     public Vector3 Position
     {
-        get
-        {
-            return Parent != null
+        get =>
+            Parent != null
                 ? _localPosition + Parent.Position
                 : _localPosition;
-        }
-        set { LocalPosition = value; }
+        set => LocalPosition = value;
     }
 
     /// <summary>
-    /// Local-Space Position vector
+    ///     Local-Space Position vector
     /// </summary>
     public Vector3 LocalPosition
     {
-        get { return _localPosition; }
+        get => _localPosition;
         set
         {
             _localPosition = value;
@@ -65,16 +63,14 @@ public sealed class Transform
     }
 
     /// <summary>
-    /// World-Space Rotation Quaternion
+    ///     World-Space Rotation Quaternion
     /// </summary>
     public Quaternion Rotation
     {
-        get
-        {
-            return Parent != null
+        get =>
+            Parent != null
                 ? _localRotation * Parent.Rotation
                 : _localRotation;
-        }
         set
         {
             LocalRotation = value;
@@ -83,11 +79,11 @@ public sealed class Transform
     }
 
     /// <summary>
-    /// Local-Space Rotation Quaternion
+    ///     Local-Space Rotation Quaternion
     /// </summary>
     public Quaternion LocalRotation
     {
-        get { return _localRotation; }
+        get => _localRotation;
         set
         {
             _localRotation = value;
@@ -97,11 +93,11 @@ public sealed class Transform
     }
 
     /// <summary>
-    /// Scale Vector
+    ///     Scale Vector
     /// </summary>
     public Vector3 Scale
     {
-        get { return _scale; }
+        get => _scale;
         set
         {
             _scale = value;
@@ -111,7 +107,7 @@ public sealed class Transform
     }
 
     /// <summary>
-    /// Returns the calculated model matrix
+    ///     Returns the calculated model matrix
     /// </summary>
     public Matrix4 Transformation
     {
@@ -123,11 +119,11 @@ public sealed class Transform
     }
 
     /// <summary>
-    /// Set an vector as origin
+    ///     Set an vector as origin
     /// </summary>
     public Vector3 Origin
     {
-        get { return _origin; }
+        get => _origin;
         set
         {
             _origin = value;
@@ -137,7 +133,7 @@ public sealed class Transform
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="Transform" />
+    ///     Creates a new instance of <see cref="Transform" />
     /// </summary>
     public Transform()
     {
@@ -154,7 +150,7 @@ public sealed class Transform
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="Transform" /> and sets its position.
+    ///     Creates a new instance of <see cref="Transform" /> and sets its position.
     /// </summary>
     /// <param name="position">The initial position to set for the transform.</param>
     public Transform(Vector3 position)
@@ -165,7 +161,7 @@ public sealed class Transform
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="Transform" /> and sets its position and scale.
+    ///     Creates a new instance of <see cref="Transform" /> and sets its position and scale.
     /// </summary>
     /// <param name="position">The initial position to set for the transform.</param>
     /// <param name="scale">The initial scale to set for the transform.</param>
@@ -178,7 +174,7 @@ public sealed class Transform
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="Transform" /> and sets its position, scale and rotation.
+    ///     Creates a new instance of <see cref="Transform" /> and sets its position, scale and rotation.
     /// </summary>
     /// <param name="position">The initial position to set for the transform.</param>
     /// <param name="scale">The initial scale to set for the transform.</param>
@@ -192,13 +188,18 @@ public sealed class Transform
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="Transform" /> and sets its position, scale, rotation and origin.
+    ///     Creates a new instance of <see cref="Transform" /> and sets its position, scale, rotation and origin.
     /// </summary>
     /// <param name="position">The initial position to set for the transform.</param>
     /// <param name="scale">The initial scale to set for the transform.</param>
     /// <param name="rotation">The initial rotation to set for the transform.</param>
     /// <param name="origin">The initial origin to set for the transform.</param>
-    public Transform(Vector3 position, Vector3 scale, Quaternion rotation, Vector3 origin)
+    public Transform(
+        Vector3 position,
+        Vector3 scale,
+        Quaternion rotation,
+        Vector3 origin
+    )
         : this(position, scale, rotation)
     {
         Origin = origin;
@@ -206,7 +207,7 @@ public sealed class Transform
     }
 
     /// <summary>
-    /// Translate into specific direction given by <paramref name="translation" />
+    ///     Translate into specific direction given by <paramref name="translation" />
     /// </summary>
     /// <param name="translation"></param>
     /// <param name="space"></param>
@@ -226,14 +227,11 @@ public sealed class Transform
     }
 
     /// <summary>
-    /// Calculate the distance between this object and another objects positions
+    ///     Calculate the distance between this object and another objects positions
     /// </summary>
     /// <param name="transform">The target <see cref="Transform" /> to calculate distance to.</param>
     /// <returns></returns>
-    public float Distance(Transform transform)
-    {
-        return Vector3.Distance(Position, transform.Position);
-    }
+    public float Distance(Transform transform) => Vector3.Distance(Position, transform.Position);
 
     private void CalculateMatrix()
     {
@@ -245,23 +243,16 @@ public sealed class Transform
         _modelMatrix = Matrix4.Identity;
 
         if (Parent != null)
+
             // World transformation
         {
             _modelMatrix *= Parent.Transformation;
         }
 
-        _modelMatrix = _scaleMatrix *
-                       _originMatrix.Inverted() *
-                       _localRotationMatrix *
-                       _originMatrix *
-                       _localPositionMatrix *
-                       _modelMatrix;
+        _modelMatrix = _scaleMatrix * _originMatrix.Inverted() * _localRotationMatrix * _originMatrix * _localPositionMatrix * _modelMatrix;
 
         _dirty = false;
     }
 
-    private void SetDirty()
-    {
-        _dirty = AutoRecalculate;
-    }
+    private void SetDirty() => _dirty = AutoRecalculate;
 }

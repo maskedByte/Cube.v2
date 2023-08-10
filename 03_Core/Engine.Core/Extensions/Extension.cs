@@ -7,18 +7,16 @@ namespace Engine.Core.Extensions;
 public static class Extension
 {
     /// <summary>
-    /// Extension method for use in foreach to get both (item and index)
+    ///     Extension method for use in foreach to get both (item and index)
     /// </summary>
     /// <param name="source"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> source)
-    {
-        return source.Select((item, index) => (item, index));
-    }
+    public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> source) =>
+        source.Select((item, index) => (item, index));
 
     /// <summary>
-    /// Create a new instance for a given class name <paramref name="fullName" />
+    ///     Create a new instance for a given class name <paramref name="fullName" />
     /// </summary>
     /// <param name="fullName">FullName of the class to create a new instance for</param>
     public static object? GetInstanceFromFullName(this string fullName)
@@ -42,7 +40,7 @@ public static class Extension
     }
 
     /// <summary>
-    /// Add element to <see cref="List{T}" /> and return
+    ///     Add element to <see cref="List{T}" /> and return
     /// </summary>
     /// <param name="list"></param>
     /// <param name="value"></param>
@@ -54,7 +52,6 @@ public static class Extension
         return value;
     }
 
-
     #region String conversion
 
     public static Vector2 ToVector2(this string str)
@@ -64,7 +61,8 @@ public static class Extension
             ? Vector2.Zero
             : new Vector2(
                 float.Parse(split[0], CultureInfo.InvariantCulture),
-                float.Parse(split[1], CultureInfo.InvariantCulture));
+                float.Parse(split[1], CultureInfo.InvariantCulture)
+            );
     }
 
     public static Vector3 ToVector3(this string str)
@@ -75,7 +73,8 @@ public static class Extension
             : new Vector3(
                 float.Parse(split[0], CultureInfo.InvariantCulture),
                 float.Parse(split[1], CultureInfo.InvariantCulture),
-                float.Parse(split[2], CultureInfo.InvariantCulture));
+                float.Parse(split[2], CultureInfo.InvariantCulture)
+            );
     }
 
     public static Vector4 ToVector4(this string str)
@@ -87,23 +86,15 @@ public static class Extension
                 float.Parse(split[0], CultureInfo.InvariantCulture),
                 float.Parse(split[1], CultureInfo.InvariantCulture),
                 float.Parse(split[2], CultureInfo.InvariantCulture),
-                float.Parse(split[3], CultureInfo.InvariantCulture));
+                float.Parse(split[3], CultureInfo.InvariantCulture)
+            );
     }
 
-    public static Matrix2 ToMatrix2(this string str)
-    {
-        return Matrix2.Zero;
-    }
+    public static Matrix2 ToMatrix2(this string str) => Matrix2.Zero;
 
-    public static Matrix3 ToMatrix3(this string str)
-    {
-        return Matrix3.Zero;
-    }
+    public static Matrix3 ToMatrix3(this string str) => Matrix3.Zero;
 
-    public static Matrix4 ToMatrix4(this string str)
-    {
-        return Matrix4.Zero;
-    }
+    public static Matrix4 ToMatrix4(this string str) => Matrix4.Zero;
 
     #endregion
 }

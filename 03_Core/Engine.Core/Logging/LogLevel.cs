@@ -1,7 +1,7 @@
 ﻿namespace Engine.Core.Logging;
 
 /// <summary>
-/// Log level
+///     Log level
 /// </summary>
 public enum LogLevel
 {

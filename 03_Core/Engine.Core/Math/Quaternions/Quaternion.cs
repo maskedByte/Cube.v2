@@ -7,24 +7,23 @@ using Engine.Core.Math.Vectors;
 namespace Engine.Core.Math.Quaternions;
 
 /// <summary>
-/// Represents a Quaternion.
+///     Represents a Quaternion.
 /// </summary>
-[Serializable]
-[StructLayout(LayoutKind.Sequential)]
+[Serializable, StructLayout(LayoutKind.Sequential)]
 public struct Quaternion : IEquatable<Quaternion>
 {
     /// <summary>
-    /// The X, Y and Z components of this instance.
+    ///     The X, Y and Z components of this instance.
     /// </summary>
     public Vector3 Xyz;
 
     /// <summary>
-    /// The W component of this instance.
+    ///     The W component of this instance.
     /// </summary>
     public float W;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Quaternion" /> struct.
+    ///     Initializes a new instance of the <see cref="Quaternion" /> struct.
     /// </summary>
     /// <param name="v">The vector part.</param>
     /// <param name="w">The w part.</param>
@@ -35,21 +34,26 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Quaternion" /> struct.
+    ///     Initializes a new instance of the <see cref="Quaternion" /> struct.
     /// </summary>
     /// <param name="x">The x component.</param>
     /// <param name="y">The y component.</param>
     /// <param name="z">The z component.</param>
     /// <param name="w">The w component.</param>
-    public Quaternion(float x, float y, float z, float w)
+    public Quaternion(
+        float x,
+        float y,
+        float z,
+        float w
+    )
         : this(new Vector3(x, y, z), w)
     {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Quaternion" /> struct from given Euler angles in radians.
-    /// The rotations will get applied in following order:
-    /// 1. around X axis, 2. around Y axis, 3. around Z axis.
+    ///     Initializes a new instance of the <see cref="Quaternion" /> struct from given Euler angles in radians.
+    ///     The rotations will get applied in following order:
+    ///     1. around X axis, 2. around Y axis, 3. around Z axis.
     /// </summary>
     /// <param name="rotationX">Counterclockwise rotation around X axis in radian.</param>
     /// <param name="rotationY">Counterclockwise rotation around Y axis in radian.</param>
@@ -74,9 +78,9 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Quaternion" /> struct from given Euler angles in radians.
-    /// The rotations will get applied in following order:
-    /// 1. Around X, 2. Around Y, 3. Around Z.
+    ///     Initializes a new instance of the <see cref="Quaternion" /> struct from given Euler angles in radians.
+    ///     The rotations will get applied in following order:
+    ///     1. Around X, 2. Around Y, 3. Around Z.
     /// </summary>
     /// <param name="eulerAngles">The counterclockwise euler angles as a Vector3.</param>
     public Quaternion(Vector3 eulerAngles)
@@ -85,37 +89,37 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Gets or sets the X component of this instance.
+    ///     Gets or sets the X component of this instance.
     /// </summary>
     [XmlIgnore]
     public float X
     {
-        get { return Xyz.X; }
-        set { Xyz.X = value; }
+        get => Xyz.X;
+        set => Xyz.X = value;
     }
 
     /// <summary>
-    /// Gets or sets the Y component of this instance.
+    ///     Gets or sets the Y component of this instance.
     /// </summary>
     [XmlIgnore]
     public float Y
     {
-        get { return Xyz.Y; }
-        set { Xyz.Y = value; }
+        get => Xyz.Y;
+        set => Xyz.Y = value;
     }
 
     /// <summary>
-    /// Gets or sets the Z component of this instance.
+    ///     Gets or sets the Z component of this instance.
     /// </summary>
     [XmlIgnore]
     public float Z
     {
-        get { return Xyz.Z; }
-        set { Xyz.Z = value; }
+        get => Xyz.Z;
+        set => Xyz.Z = value;
     }
 
     /// <summary>
-    /// Convert the current quaternion to axis angle representation.
+    ///     Convert the current quaternion to axis angle representation.
     /// </summary>
     /// <param name="axis">The resultant axis.</param>
     /// <param name="angle">The resultant angle.</param>
@@ -127,7 +131,7 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Convert this instance to an axis-angle representation.
+    ///     Convert this instance to an axis-angle representation.
     /// </summary>
     /// <returns>A Vector4 that is the axis-angle representation of this quaternion.</returns>
     public Vector4 ToAxisAngle()
@@ -149,6 +153,7 @@ public struct Quaternion : IEquatable<Quaternion>
             result.Xyz = q.Xyz / den;
         }
         else
+
             // This occurs when the angle is zero.
             // Not a problem: just set an arbitrary normalized axis.
         {
@@ -159,16 +164,13 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Convert the current quaternion to Euler angle representation.
+    ///     Convert the current quaternion to Euler angle representation.
     /// </summary>
     /// <param name="angles">The Euler angles in radians.</param>
-    public void ToEulerAngles(out Vector3 angles)
-    {
-        angles = ToEulerAngles();
-    }
+    public void ToEulerAngles(out Vector3 angles) => angles = ToEulerAngles();
 
     /// <summary>
-    /// Convert this instance to an Euler angle representation.
+    ///     Convert this instance to an Euler angle representation.
     /// </summary>
     /// <returns>The Euler angles in radians.</returns>
     public Vector3 ToEulerAngles()
@@ -216,24 +218,18 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Gets the length (magnitude) of the quaternion.
+    ///     Gets the length (magnitude) of the quaternion.
     /// </summary>
     /// <seealso cref="LengthSquared" />
-    public float Length
-    {
-        get { return MathF.Sqrt(W * W + Xyz.LengthSquared); }
-    }
+    public float Length => MathF.Sqrt(W * W + Xyz.LengthSquared);
 
     /// <summary>
-    /// Gets the square of the quaternion length (magnitude).
+    ///     Gets the square of the quaternion length (magnitude).
     /// </summary>
-    public float LengthSquared
-    {
-        get { return W * W + Xyz.LengthSquared; }
-    }
+    public float LengthSquared => W * W + Xyz.LengthSquared;
 
     /// <summary>
-    /// Returns a copy of the Quaternion scaled to unit length.
+    ///     Returns a copy of the Quaternion scaled to unit length.
     /// </summary>
     /// <returns>The normalized copy.</returns>
     public Quaternion Normalized()
@@ -244,15 +240,12 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Inverts this Quaternion.
+    ///     Inverts this Quaternion.
     /// </summary>
-    public void Invert()
-    {
-        Invert(in this, out this);
-    }
+    public void Invert() => Invert(in this, out this);
 
     /// <summary>
-    /// Returns the inverse of this Quaternion.
+    ///     Returns the inverse of this Quaternion.
     /// </summary>
     /// <returns>The inverted copy.</returns>
     public Quaternion Inverted()
@@ -263,7 +256,7 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Scales the Quaternion to unit length.
+    ///     Scales the Quaternion to unit length.
     /// </summary>
     public void Normalize()
     {
@@ -273,74 +266,67 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Inverts the Vector3 component of this Quaternion.
+    ///     Inverts the Vector3 component of this Quaternion.
     /// </summary>
-    public void Conjugate()
-    {
-        Xyz = -Xyz;
-    }
+    public void Conjugate() => Xyz = -Xyz;
 
     /// <summary>
-    /// Defines the identity quaternion.
+    ///     Defines the identity quaternion.
     /// </summary>
-    public static readonly Quaternion Identity = new Quaternion(0, 0, 0, 1);
+    public static readonly Quaternion Identity = new(0, 0, 0, 1);
 
     /// <summary>
-    /// Add two quaternions.
+    ///     Add two quaternions.
     /// </summary>
     /// <param name="left">The first operand.</param>
     /// <param name="right">The second operand.</param>
     /// <returns>The result of the addition.</returns>
     [Pure]
-    public static Quaternion Add(Quaternion left, Quaternion right)
-    {
-        return new Quaternion(
+    public static Quaternion Add(Quaternion left, Quaternion right) =>
+        new(
             left.Xyz + right.Xyz,
-            left.W + right.W);
-    }
+            left.W + right.W
+        );
 
     /// <summary>
-    /// Add two quaternions.
+    ///     Add two quaternions.
     /// </summary>
     /// <param name="left">The first operand.</param>
     /// <param name="right">The second operand.</param>
     /// <param name="result">The result of the addition.</param>
-    public static void Add(in Quaternion left, in Quaternion right, out Quaternion result)
-    {
+    public static void Add(in Quaternion left, in Quaternion right, out Quaternion result) =>
         result = new Quaternion(
             left.Xyz + right.Xyz,
-            left.W + right.W);
-    }
+            left.W + right.W
+        );
 
     /// <summary>
-    /// Subtracts two instances.
+    ///     Subtracts two instances.
     /// </summary>
     /// <param name="left">The left instance.</param>
     /// <param name="right">The right instance.</param>
     /// <returns>The result of the operation.</returns>
     [Pure]
-    public static Quaternion Sub(Quaternion left, Quaternion right)
-    {
-        return new Quaternion(
+    public static Quaternion Sub(Quaternion left, Quaternion right) =>
+        new(
             left.Xyz - right.Xyz,
-            left.W - right.W);
-    }
+            left.W - right.W
+        );
 
     /// <summary>
-    /// Subtracts two instances.
+    ///     Subtracts two instances.
     /// </summary>
     /// <param name="left">The left instance.</param>
     /// <param name="right">The right instance.</param>
     /// <param name="result">The result of the operation.</param>
-    public static void Sub(in Quaternion left, in Quaternion right, out Quaternion result)
-    {
+    public static void Sub(in Quaternion left, in Quaternion right, out Quaternion result) =>
         result = new Quaternion(
             left.Xyz - right.Xyz,
-            left.W - right.W);
-    }
+            left.W - right.W
+        );
 
     /// <summary>
-    /// Multiplies two instances.
+    ///     Multiplies two instances.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
@@ -353,76 +339,63 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Multiplies two instances.
+    ///     Multiplies two instances.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
     /// <param name="result">A new instance containing the result of the calculation.</param>
-    public static void Multiply(in Quaternion left, in Quaternion right, out Quaternion result)
-    {
+    public static void Multiply(in Quaternion left, in Quaternion right, out Quaternion result) =>
         result = new Quaternion(
             right.W * left.Xyz + left.W * right.Xyz + Vector3.Cross(left.Xyz, right.Xyz),
-            left.W * right.W - Vector3.Dot(left.Xyz, right.Xyz));
-    }
+            left.W * right.W - Vector3.Dot(left.Xyz, right.Xyz)
+        );
 
     /// <summary>
-    /// Multiplies an instance by a scalar.
+    ///     Multiplies an instance by a scalar.
     /// </summary>
     /// <param name="quaternion">The instance.</param>
     /// <param name="scale">The scalar.</param>
     /// <param name="result">A new instance containing the result of the calculation.</param>
-    public static void Multiply(in Quaternion quaternion, float scale, out Quaternion result)
-    {
-        result = new Quaternion
-        (
+    public static void Multiply(in Quaternion quaternion, float scale, out Quaternion result) =>
+        result = new Quaternion(
             quaternion.X * scale,
             quaternion.Y * scale,
             quaternion.Z * scale,
             quaternion.W * scale
         );
-    }
 
     /// <summary>
-    /// Multiplies an instance by a scalar.
+    ///     Multiplies an instance by a scalar.
     /// </summary>
     /// <param name="quaternion">The instance.</param>
     /// <param name="scale">The scalar.</param>
     /// <returns>A new instance containing the result of the calculation.</returns>
     [Pure]
-    public static Quaternion Multiply(Quaternion quaternion, float scale)
-    {
-        return new Quaternion
-        (
+    public static Quaternion Multiply(Quaternion quaternion, float scale) =>
+        new(
             quaternion.X * scale,
             quaternion.Y * scale,
             quaternion.Z * scale,
             quaternion.W * scale
         );
-    }
 
     /// <summary>
-    /// Get the conjugate of the given quaternion.
+    ///     Get the conjugate of the given quaternion.
     /// </summary>
     /// <param name="q">The quaternion.</param>
     /// <returns>The conjugate of the given quaternion.</returns>
     [Pure]
-    public static Quaternion Conjugate(Quaternion q)
-    {
-        return new Quaternion(-q.Xyz, q.W);
-    }
+    public static Quaternion Conjugate(Quaternion q) => new(-q.Xyz, q.W);
 
     /// <summary>
-    /// Get the conjugate of the given quaternion.
+    ///     Get the conjugate of the given quaternion.
     /// </summary>
     /// <param name="q">The quaternion.</param>
     /// <param name="result">The conjugate of the given quaternion.</param>
-    public static void Conjugate(in Quaternion q, out Quaternion result)
-    {
-        result = new Quaternion(-q.Xyz, q.W);
-    }
+    public static void Conjugate(in Quaternion q, out Quaternion result) => result = new Quaternion(-q.Xyz, q.W);
 
     /// <summary>
-    /// Get the inverse of the given quaternion.
+    ///     Get the inverse of the given quaternion.
     /// </summary>
     /// <param name="q">The quaternion to invert.</param>
     /// <returns>The inverse of the given quaternion.</returns>
@@ -434,7 +407,7 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Get the inverse of the given quaternion.
+    ///     Get the inverse of the given quaternion.
     /// </summary>
     /// <param name="q">The quaternion to invert.</param>
     /// <param name="result">The inverse of the given quaternion.</param>
@@ -453,7 +426,7 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Scale the given quaternion to unit length.
+    ///     Scale the given quaternion to unit length.
     /// </summary>
     /// <param name="q">The quaternion to normalize.</param>
     /// <returns>The normalized copy.</returns>
@@ -465,7 +438,7 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Scale the given quaternion to unit length.
+    ///     Scale the given quaternion to unit length.
     /// </summary>
     /// <param name="q">The quaternion to normalize.</param>
     /// <param name="result">The normalized quaternion.</param>
@@ -476,7 +449,7 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Build a quaternion from the given axis and angle in radians.
+    ///     Build a quaternion from the given axis and angle in radians.
     /// </summary>
     /// <param name="axis">The axis to rotate about.</param>
     /// <param name="angle">The rotation angle in radians.</param>
@@ -500,37 +473,31 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Builds a Quaternion from the given euler angles in radians
-    /// The rotations will get applied in following order:
-    /// 1. pitch (X axis), 2. yaw (Y axis), 3. roll (Z axis).
+    ///     Builds a Quaternion from the given euler angles in radians
+    ///     The rotations will get applied in following order:
+    ///     1. pitch (X axis), 2. yaw (Y axis), 3. roll (Z axis).
     /// </summary>
     /// <param name="pitch">The pitch (attitude), counterclockwise rotation around X axis.</param>
     /// <param name="yaw">The yaw (heading), counterclockwise rotation around Y axis.</param>
     /// <param name="roll">The roll (bank), counterclockwise rotation around Z axis.</param>
     /// <returns>The quaternion.</returns>
     [Pure]
-    public static Quaternion FromEulerAngles(float pitch, float yaw, float roll)
-    {
-        return new Quaternion(pitch, yaw, roll);
-    }
+    public static Quaternion FromEulerAngles(float pitch, float yaw, float roll) => new(pitch, yaw, roll);
 
     /// <summary>
-    /// Builds a Quaternion from the given euler angles in radians.
-    /// The rotations will get applied in following order:
-    /// 1. X axis, 2. Y axis, 3. Z axis.
+    ///     Builds a Quaternion from the given euler angles in radians.
+    ///     The rotations will get applied in following order:
+    ///     1. X axis, 2. Y axis, 3. Z axis.
     /// </summary>
     /// <param name="eulerAngles">The counterclockwise euler angles as a vector.</param>
     /// <returns>The equivalent Quaternion.</returns>
     [Pure]
-    public static Quaternion FromEulerAngles(Vector3 eulerAngles)
-    {
-        return new Quaternion(eulerAngles);
-    }
+    public static Quaternion FromEulerAngles(Vector3 eulerAngles) => new(eulerAngles);
 
     /// <summary>
-    /// Builds a Quaternion from the given euler angles in radians.
-    /// The rotations will get applied in following order:
-    /// 1. Around X, 2. Around Y, 3. Around Z.
+    ///     Builds a Quaternion from the given euler angles in radians.
+    ///     The rotations will get applied in following order:
+    ///     1. Around X, 2. Around Y, 3. Around Z.
     /// </summary>
     /// <param name="eulerAngles">The counterclockwise euler angles a vector.</param>
     /// <param name="result">The equivalent Quaternion.</param>
@@ -550,17 +517,14 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Converts a quaternion to it's euler angle representation.
+    ///     Converts a quaternion to it's euler angle representation.
     /// </summary>
     /// <param name="q">The Quaternion.</param>
     /// <param name="result">The resulting euler angles in radians.</param>
-    public static void ToEulerAngles(in Quaternion q, out Vector3 result)
-    {
-        q.ToEulerAngles(out result);
-    }
+    public static void ToEulerAngles(in Quaternion q, out Vector3 result) => q.ToEulerAngles(out result);
 
     /// <summary>
-    /// Builds a quaternion from the given rotation matrix.
+    ///     Builds a quaternion from the given rotation matrix.
     /// </summary>
     /// <param name="matrix">A rotation matrix.</param>
     /// <returns>The equivalent quaternion.</returns>
@@ -572,7 +536,7 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Builds a quaternion from the given rotation matrix.
+    ///     Builds a quaternion from the given rotation matrix.
     /// </summary>
     /// <param name="matrix">A rotation matrix.</param>
     /// <param name="result">The equivalent quaternion.</param>
@@ -628,7 +592,7 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Do Spherical linear interpolation between two quaternions.
+    ///     Do Spherical linear interpolation between two quaternions.
     /// </summary>
     /// <param name="q1">The first quaternion.</param>
     /// <param name="q2">The second quaternion.</param>
@@ -656,6 +620,7 @@ public struct Quaternion : IEquatable<Quaternion>
         var cosHalfAngle = q1.W * q2.W + Vector3.Dot(q1.Xyz, q2.Xyz);
 
         if (cosHalfAngle >= 1.0f || cosHalfAngle <= -1.0f)
+
             // angle = 0.0f, so just return one input.
         {
             return q1;
@@ -696,7 +661,7 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Adds two instances.
+    ///     Adds two instances.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
@@ -710,7 +675,7 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Subtracts two instances.
+    ///     Subtracts two instances.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
@@ -724,7 +689,7 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Multiplies two instances.
+    ///     Multiplies two instances.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
@@ -737,7 +702,7 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Multiplies an instance by a scalar.
+    ///     Multiplies an instance by a scalar.
     /// </summary>
     /// <param name="quaternion">The instance.</param>
     /// <param name="scale">The scalar.</param>
@@ -750,60 +715,42 @@ public struct Quaternion : IEquatable<Quaternion>
     }
 
     /// <summary>
-    /// Multiplies an instance by a scalar.
+    ///     Multiplies an instance by a scalar.
     /// </summary>
     /// <param name="quaternion">The instance.</param>
     /// <param name="scale">The scalar.</param>
     /// <returns>A new instance containing the result of the calculation.</returns>
     [Pure]
-    public static Quaternion operator *(float scale, Quaternion quaternion)
-    {
-        return new Quaternion
-        (
+    public static Quaternion operator *(float scale, Quaternion quaternion) =>
+        new(
             quaternion.X * scale,
             quaternion.Y * scale,
             quaternion.Z * scale,
             quaternion.W * scale
         );
-    }
 
     /// <summary>
-    /// Compares two instances for equality.
+    ///     Compares two instances for equality.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
     /// <returns>True, if left equals right; false otherwise.</returns>
-    public static bool operator ==(Quaternion left, Quaternion right)
-    {
-        return left.Equals(right);
-    }
+    public static bool operator ==(Quaternion left, Quaternion right) => left.Equals(right);
 
     /// <summary>
-    /// Compares two instances for inequality.
+    ///     Compares two instances for inequality.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
     /// <returns>True, if left does not equal right; false otherwise.</returns>
-    public static bool operator !=(Quaternion left, Quaternion right)
-    {
-        return !(left == right);
-    }
+    public static bool operator !=(Quaternion left, Quaternion right) => !(left == right);
 
     /// <inheritdoc />
-    public override bool Equals(object? obj)
-    {
-        return obj is Quaternion quaternion && Equals(quaternion);
-    }
+    public override bool Equals(object? obj) => obj is Quaternion quaternion && Equals(quaternion);
 
     /// <inheritdoc />
-    public bool Equals(Quaternion other)
-    {
-        return Xyz.Equals(other.Xyz) && W == other.W;
-    }
+    public bool Equals(Quaternion other) => Xyz.Equals(other.Xyz) && W == other.W;
 
     /// <inheritdoc />
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Xyz, W);
-    }
+    public override int GetHashCode() => HashCode.Combine(Xyz, W);
 }

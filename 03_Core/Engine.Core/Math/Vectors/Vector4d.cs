@@ -8,84 +8,91 @@ using Engine.Core.Math.Quaternions;
 namespace Engine.Core.Math.Vectors;
 
 /// <summary>
-/// Represents a 4D vector using four double-precision floating-point numbers.
+///     Represents a 4D vector using four double-precision floating-point numbers.
 /// </summary>
 /// <remarks>
-/// The Vector4 structure is suitable for interoperation with unmanaged code requiring four consecutive doubles.
+///     The Vector4 structure is suitable for interoperation with unmanaged code requiring four consecutive doubles.
 /// </remarks>
-[Serializable]
-[StructLayout(LayoutKind.Sequential)]
+[Serializable, StructLayout(LayoutKind.Sequential)]
 public struct Vector4d : IEquatable<Vector4d>
 {
     /// <summary>
-    /// The X component of the Vector4d.
+    ///     The X component of the Vector4d.
     /// </summary>
     public double X;
 
     /// <summary>
-    /// The Y component of the Vector4d.
+    ///     The Y component of the Vector4d.
     /// </summary>
     public double Y;
 
     /// <summary>
-    /// The Z component of the Vector4d.
+    ///     The Z component of the Vector4d.
     /// </summary>
     public double Z;
 
     /// <summary>
-    /// The W component of the Vector4d.
+    ///     The W component of the Vector4d.
     /// </summary>
     public double W;
 
     /// <summary>
-    /// Defines a unit-length Vector4d that points towards the X-axis.
+    ///     Defines a unit-length Vector4d that points towards the X-axis.
     /// </summary>
-    public static readonly Vector4d UnitX = new Vector4d(1, 0, 0, 0);
+    public static readonly Vector4d UnitX = new(1, 0, 0, 0);
 
     /// <summary>
-    /// Defines a unit-length Vector4d that points towards the Y-axis.
+    ///     Defines a unit-length Vector4d that points towards the Y-axis.
     /// </summary>
-    public static readonly Vector4d UnitY = new Vector4d(0, 1, 0, 0);
+    public static readonly Vector4d UnitY = new(0, 1, 0, 0);
 
     /// <summary>
-    /// Defines a unit-length Vector4d that points towards the Z-axis.
+    ///     Defines a unit-length Vector4d that points towards the Z-axis.
     /// </summary>
-    public static readonly Vector4d UnitZ = new Vector4d(0, 0, 1, 0);
+    public static readonly Vector4d UnitZ = new(0, 0, 1, 0);
 
     /// <summary>
-    /// Defines a unit-length Vector4d that points towards the W-axis.
+    ///     Defines a unit-length Vector4d that points towards the W-axis.
     /// </summary>
-    public static readonly Vector4d UnitW = new Vector4d(0, 0, 0, 1);
+    public static readonly Vector4d UnitW = new(0, 0, 0, 1);
 
     /// <summary>
-    /// Defines an instance with all components set to 0.
+    ///     Defines an instance with all components set to 0.
     /// </summary>
-    public static readonly Vector4d Zero = new Vector4d(0, 0, 0, 0);
+    public static readonly Vector4d Zero = new(0, 0, 0, 0);
 
     /// <summary>
-    /// Defines an instance with all components set to 1.
+    ///     Defines an instance with all components set to 1.
     /// </summary>
-    public static readonly Vector4d One = new Vector4d(1, 1, 1, 1);
+    public static readonly Vector4d One = new(1, 1, 1, 1);
 
     /// <summary>
-    /// Defines an instance with all components set to positive infinity.
+    ///     Defines an instance with all components set to positive infinity.
     /// </summary>
-    public static readonly Vector4d PositiveInfinity = new Vector4d(double.PositiveInfinity, double.PositiveInfinity,
-        double.PositiveInfinity, double.PositiveInfinity);
+    public static readonly Vector4d PositiveInfinity = new(
+        double.PositiveInfinity,
+        double.PositiveInfinity,
+        double.PositiveInfinity,
+        double.PositiveInfinity
+    );
 
     /// <summary>
-    /// Defines an instance with all components set to negative infinity.
+    ///     Defines an instance with all components set to negative infinity.
     /// </summary>
-    public static readonly Vector4d NegativeInfinity = new Vector4d(double.NegativeInfinity, double.NegativeInfinity,
-        double.NegativeInfinity, double.NegativeInfinity);
+    public static readonly Vector4d NegativeInfinity = new(
+        double.NegativeInfinity,
+        double.NegativeInfinity,
+        double.NegativeInfinity,
+        double.NegativeInfinity
+    );
 
     /// <summary>
-    /// Defines the size of the Vector4d struct in bytes.
+    ///     Defines the size of the Vector4d struct in bytes.
     /// </summary>
     public static readonly int SizeInBytes = Unsafe.SizeOf<Vector4d>();
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4d" /> struct.
+    ///     Initializes a new instance of the <see cref="Vector4d" /> struct.
     /// </summary>
     /// <param name="value">The value that will initialize this instance.</param>
     public Vector4d(double value)
@@ -97,13 +104,18 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4d" /> struct.
+    ///     Initializes a new instance of the <see cref="Vector4d" /> struct.
     /// </summary>
     /// <param name="x">The x component of the Vector4d.</param>
     /// <param name="y">The y component of the Vector4d.</param>
     /// <param name="z">The z component of the Vector4d.</param>
     /// <param name="w">The w component of the Vector4d.</param>
-    public Vector4d(double x, double y, double z, double w)
+    public Vector4d(
+        double x,
+        double y,
+        double z,
+        double w
+    )
     {
         X = x;
         Y = y;
@@ -112,7 +124,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4d" /> struct.
+    ///     Initializes a new instance of the <see cref="Vector4d" /> struct.
     /// </summary>
     /// <param name="v">The Vector2d to copy components from.</param>
     public Vector4d(Vector2d v)
@@ -124,11 +136,11 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4d" /> struct.
+    ///     Initializes a new instance of the <see cref="Vector4d" /> struct.
     /// </summary>
     /// <param name="v">The Vector3d to copy components from.</param>
     /// <remarks>
-    /// <seealso cref="Vector4d(Vector3d, double)" />.
+    ///     <seealso cref="Vector4d(Vector3d, double)" />.
     /// </remarks>
     public Vector4d(Vector3d v)
     {
@@ -139,7 +151,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4d" /> struct.
+    ///     Initializes a new instance of the <see cref="Vector4d" /> struct.
     /// </summary>
     /// <param name="v">The Vector3d to copy components from.</param>
     /// <param name="w">The w component of the new Vector4.</param>
@@ -152,7 +164,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4d" /> struct.
+    ///     Initializes a new instance of the <see cref="Vector4d" /> struct.
     /// </summary>
     /// <param name="v">The Vector4d to copy components from.</param>
     public Vector4d(Vector4d v)
@@ -164,7 +176,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets the value at the index of the Vector.
+    ///     Gets or sets the value at the index of the Vector.
     /// </summary>
     /// <param name="index">The index of the component from the Vector.</param>
     /// <exception cref="IndexOutOfRangeException">Thrown if the index is less than 0 or greater than 3.</exception>
@@ -221,44 +233,35 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets the length (magnitude) of the vector.
+    ///     Gets the length (magnitude) of the vector.
     /// </summary>
     /// <see cref="LengthFast" />
     /// <seealso cref="LengthSquared" />
-    public double Length
-    {
-        get { return System.Math.Sqrt(X * X + Y * Y + Z * Z + W * W); }
-    }
+    public double Length => System.Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
 
     /// <summary>
-    /// Gets an approximation of the vector length (magnitude).
+    ///     Gets an approximation of the vector length (magnitude).
     /// </summary>
     /// <remarks>
-    /// This property uses an approximation of the square root function to calculate vector magnitude, with
-    /// an upper error bound of 0.001.
+    ///     This property uses an approximation of the square root function to calculate vector magnitude, with
+    ///     an upper error bound of 0.001.
     /// </remarks>
     /// <see cref="Length" />
     /// <seealso cref="LengthSquared" />
-    public double LengthFast
-    {
-        get { return 1.0 / Mathf.InverseSqrtFast(X * X + Y * Y + Z * Z + W * W); }
-    }
+    public double LengthFast => 1.0 / Mathf.InverseSqrtFast(X * X + Y * Y + Z * Z + W * W);
 
     /// <summary>
-    /// Gets the square of the vector length (magnitude).
+    ///     Gets the square of the vector length (magnitude).
     /// </summary>
     /// <remarks>
-    /// This property avoids the costly square root operation required by the Length property. This makes it more suitable
-    /// for comparisons.
+    ///     This property avoids the costly square root operation required by the Length property. This makes it more suitable
+    ///     for comparisons.
     /// </remarks>
     /// <see cref="Length" />
-    public double LengthSquared
-    {
-        get { return X * X + Y * Y + Z * Z + W * W; }
-    }
+    public double LengthSquared => X * X + Y * Y + Z * Z + W * W;
 
     /// <summary>
-    /// Returns a copy of the Vector4d scaled to unit length.
+    ///     Returns a copy of the Vector4d scaled to unit length.
     /// </summary>
     /// <returns>The normalized copy.</returns>
     public Vector4d Normalized()
@@ -269,7 +272,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Scales the Vector4d to unit length.
+    ///     Scales the Vector4d to unit length.
     /// </summary>
     public void Normalize()
     {
@@ -281,7 +284,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Scales the Vector4d to approximately unit length.
+    ///     Scales the Vector4d to approximately unit length.
     /// </summary>
     public void NormalizeFast()
     {
@@ -293,7 +296,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Adds two vectors.
+    ///     Adds two vectors.
     /// </summary>
     /// <param name="a">Left operand.</param>
     /// <param name="b">Right operand.</param>
@@ -306,7 +309,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Adds two vectors.
+    ///     Adds two vectors.
     /// </summary>
     /// <param name="a">Left operand.</param>
     /// <param name="b">Right operand.</param>
@@ -320,7 +323,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Subtract one Vector from another.
+    ///     Subtract one Vector from another.
     /// </summary>
     /// <param name="a">First operand.</param>
     /// <param name="b">Second operand.</param>
@@ -333,7 +336,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Subtract one Vector from another.
+    ///     Subtract one Vector from another.
     /// </summary>
     /// <param name="a">First operand.</param>
     /// <param name="b">Second operand.</param>
@@ -347,7 +350,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Multiplies a vector by a scalar.
+    ///     Multiplies a vector by a scalar.
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -360,7 +363,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Multiplies a vector by a scalar.
+    ///     Multiplies a vector by a scalar.
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -374,7 +377,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Multiplies a vector by the components a vector (scale).
+    ///     Multiplies a vector by the components a vector (scale).
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -387,7 +390,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Multiplies a vector by the components of a vector (scale).
+    ///     Multiplies a vector by the components of a vector (scale).
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -401,7 +404,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Divides a vector by a scalar.
+    ///     Divides a vector by a scalar.
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -414,7 +417,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Divides a vector by a scalar.
+    ///     Divides a vector by a scalar.
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -428,7 +431,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Divides a vector by the components of a vector (scale).
+    ///     Divides a vector by the components of a vector (scale).
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -441,7 +444,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Divide a vector by the components of a vector (scale).
+    ///     Divide a vector by the components of a vector (scale).
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -455,7 +458,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+    ///     Returns a vector created from the smallest of the corresponding components of the given vectors.
     /// </summary>
     /// <param name="a">First operand.</param>
     /// <param name="b">Second operand.</param>
@@ -463,29 +466,45 @@ public struct Vector4d : IEquatable<Vector4d>
     [Pure]
     public static Vector4d ComponentMin(Vector4d a, Vector4d b)
     {
-        a.X = a.X < b.X ? a.X : b.X;
-        a.Y = a.Y < b.Y ? a.Y : b.Y;
-        a.Z = a.Z < b.Z ? a.Z : b.Z;
-        a.W = a.W < b.W ? a.W : b.W;
+        a.X = a.X < b.X
+            ? a.X
+            : b.X;
+        a.Y = a.Y < b.Y
+            ? a.Y
+            : b.Y;
+        a.Z = a.Z < b.Z
+            ? a.Z
+            : b.Z;
+        a.W = a.W < b.W
+            ? a.W
+            : b.W;
         return a;
     }
 
     /// <summary>
-    /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+    ///     Returns a vector created from the smallest of the corresponding components of the given vectors.
     /// </summary>
     /// <param name="a">First operand.</param>
     /// <param name="b">Second operand.</param>
     /// <param name="result">The component-wise minimum.</param>
     public static void ComponentMin(in Vector4d a, in Vector4d b, out Vector4d result)
     {
-        result.X = a.X < b.X ? a.X : b.X;
-        result.Y = a.Y < b.Y ? a.Y : b.Y;
-        result.Z = a.Z < b.Z ? a.Z : b.Z;
-        result.W = a.W < b.W ? a.W : b.W;
+        result.X = a.X < b.X
+            ? a.X
+            : b.X;
+        result.Y = a.Y < b.Y
+            ? a.Y
+            : b.Y;
+        result.Z = a.Z < b.Z
+            ? a.Z
+            : b.Z;
+        result.W = a.W < b.W
+            ? a.W
+            : b.W;
     }
 
     /// <summary>
-    /// Returns a vector created from the largest of the corresponding components of the given vectors.
+    ///     Returns a vector created from the largest of the corresponding components of the given vectors.
     /// </summary>
     /// <param name="a">First operand.</param>
     /// <param name="b">Second operand.</param>
@@ -493,75 +512,91 @@ public struct Vector4d : IEquatable<Vector4d>
     [Pure]
     public static Vector4d ComponentMax(Vector4d a, Vector4d b)
     {
-        a.X = a.X > b.X ? a.X : b.X;
-        a.Y = a.Y > b.Y ? a.Y : b.Y;
-        a.Z = a.Z > b.Z ? a.Z : b.Z;
-        a.W = a.W > b.W ? a.W : b.W;
+        a.X = a.X > b.X
+            ? a.X
+            : b.X;
+        a.Y = a.Y > b.Y
+            ? a.Y
+            : b.Y;
+        a.Z = a.Z > b.Z
+            ? a.Z
+            : b.Z;
+        a.W = a.W > b.W
+            ? a.W
+            : b.W;
         return a;
     }
 
     /// <summary>
-    /// Returns a vector created from the largest of the corresponding components of the given vectors.
+    ///     Returns a vector created from the largest of the corresponding components of the given vectors.
     /// </summary>
     /// <param name="a">First operand.</param>
     /// <param name="b">Second operand.</param>
     /// <param name="result">The component-wise maximum.</param>
     public static void ComponentMax(in Vector4d a, in Vector4d b, out Vector4d result)
     {
-        result.X = a.X > b.X ? a.X : b.X;
-        result.Y = a.Y > b.Y ? a.Y : b.Y;
-        result.Z = a.Z > b.Z ? a.Z : b.Z;
-        result.W = a.W > b.W ? a.W : b.W;
+        result.X = a.X > b.X
+            ? a.X
+            : b.X;
+        result.Y = a.Y > b.Y
+            ? a.Y
+            : b.Y;
+        result.Z = a.Z > b.Z
+            ? a.Z
+            : b.Z;
+        result.W = a.W > b.W
+            ? a.W
+            : b.W;
     }
 
     /// <summary>
-    /// Returns the Vector4d with the minimum magnitude.
+    ///     Returns the Vector4d with the minimum magnitude.
     /// </summary>
     /// <param name="left">Left operand.</param>
     /// <param name="right">Right operand.</param>
     /// <returns>The minimum Vector4d.</returns>
     [Pure]
-    public static Vector4d MagnitudeMin(Vector4d left, Vector4d right)
-    {
-        return left.LengthSquared < right.LengthSquared ? left : right;
-    }
+    public static Vector4d MagnitudeMin(Vector4d left, Vector4d right) =>
+        left.LengthSquared < right.LengthSquared
+            ? left
+            : right;
 
     /// <summary>
-    /// Returns the Vector4d with the minimum magnitude.
+    ///     Returns the Vector4d with the minimum magnitude.
     /// </summary>
     /// <param name="left">Left operand.</param>
     /// <param name="right">Right operand.</param>
     /// <param name="result">The magnitude-wise minimum.</param>
-    public static void MagnitudeMin(in Vector4d left, in Vector4d right, out Vector4d result)
-    {
-        result = left.LengthSquared < right.LengthSquared ? left : right;
-    }
+    public static void MagnitudeMin(in Vector4d left, in Vector4d right, out Vector4d result) =>
+        result = left.LengthSquared < right.LengthSquared
+            ? left
+            : right;
 
     /// <summary>
-    /// Returns the Vector4d with the minimum magnitude.
+    ///     Returns the Vector4d with the minimum magnitude.
     /// </summary>
     /// <param name="left">Left operand.</param>
     /// <param name="right">Right operand.</param>
     /// <returns>The minimum Vector4d.</returns>
     [Pure]
-    public static Vector4d MagnitudeMax(Vector4d left, Vector4d right)
-    {
-        return left.LengthSquared >= right.LengthSquared ? left : right;
-    }
+    public static Vector4d MagnitudeMax(Vector4d left, Vector4d right) =>
+        left.LengthSquared >= right.LengthSquared
+            ? left
+            : right;
 
     /// <summary>
-    /// Returns the Vector4d with the maximum magnitude.
+    ///     Returns the Vector4d with the maximum magnitude.
     /// </summary>
     /// <param name="left">Left operand.</param>
     /// <param name="right">Right operand.</param>
     /// <param name="result">The magnitude-wise maximum.</param>
-    public static void MagnitudeMax(in Vector4d left, in Vector4d right, out Vector4d result)
-    {
-        result = left.LengthSquared >= right.LengthSquared ? left : right;
-    }
+    public static void MagnitudeMax(in Vector4d left, in Vector4d right, out Vector4d result) =>
+        result = left.LengthSquared >= right.LengthSquared
+            ? left
+            : right;
 
     /// <summary>
-    /// Clamp a vector to the given minimum and maximum vectors.
+    ///     Clamp a vector to the given minimum and maximum vectors.
     /// </summary>
     /// <param name="vec">Input vector.</param>
     /// <param name="min">Minimum vector.</param>
@@ -570,30 +605,67 @@ public struct Vector4d : IEquatable<Vector4d>
     [Pure]
     public static Vector4d Clamp(Vector4d vec, Vector4d min, Vector4d max)
     {
-        vec.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
-        vec.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-        vec.Z = vec.X < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
-        vec.W = vec.Y < min.W ? min.W : vec.W > max.W ? max.W : vec.W;
+        vec.X = vec.X < min.X
+            ? min.X
+            : vec.X > max.X
+                ? max.X
+                : vec.X;
+        vec.Y = vec.Y < min.Y
+            ? min.Y
+            : vec.Y > max.Y
+                ? max.Y
+                : vec.Y;
+        vec.Z = vec.X < min.Z
+            ? min.Z
+            : vec.Z > max.Z
+                ? max.Z
+                : vec.Z;
+        vec.W = vec.Y < min.W
+            ? min.W
+            : vec.W > max.W
+                ? max.W
+                : vec.W;
         return vec;
     }
 
     /// <summary>
-    /// Clamp a vector to the given minimum and maximum vectors.
+    ///     Clamp a vector to the given minimum and maximum vectors.
     /// </summary>
     /// <param name="vec">Input vector.</param>
     /// <param name="min">Minimum vector.</param>
     /// <param name="max">Maximum vector.</param>
     /// <param name="result">The clamped vector.</param>
-    public static void Clamp(in Vector4d vec, in Vector4d min, in Vector4d max, out Vector4d result)
+    public static void Clamp(
+        in Vector4d vec,
+        in Vector4d min,
+        in Vector4d max,
+        out Vector4d result
+    )
     {
-        result.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
-        result.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-        result.Z = vec.X < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
-        result.W = vec.Y < min.W ? min.W : vec.W > max.W ? max.W : vec.W;
+        result.X = vec.X < min.X
+            ? min.X
+            : vec.X > max.X
+                ? max.X
+                : vec.X;
+        result.Y = vec.Y < min.Y
+            ? min.Y
+            : vec.Y > max.Y
+                ? max.Y
+                : vec.Y;
+        result.Z = vec.X < min.Z
+            ? min.Z
+            : vec.Z > max.Z
+                ? max.Z
+                : vec.Z;
+        result.W = vec.Y < min.W
+            ? min.W
+            : vec.W > max.W
+                ? max.W
+                : vec.W;
     }
 
     /// <summary>
-    /// Scale a vector to unit length.
+    ///     Scale a vector to unit length.
     /// </summary>
     /// <param name="vec">The input vector.</param>
     /// <returns>The normalized copy.</returns>
@@ -609,7 +681,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Scale a vector to unit length.
+    ///     Scale a vector to unit length.
     /// </summary>
     /// <param name="vec">The input vector.</param>
     /// <param name="result">The normalized vector.</param>
@@ -623,7 +695,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Scale a vector to approximately unit length.
+    ///     Scale a vector to approximately unit length.
     /// </summary>
     /// <param name="vec">The input vector.</param>
     /// <returns>The normalized copy.</returns>
@@ -639,7 +711,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Scale a vector to approximately unit length.
+    ///     Scale a vector to approximately unit length.
     /// </summary>
     /// <param name="vec">The input vector.</param>
     /// <param name="result">The normalized vector.</param>
@@ -653,30 +725,25 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Calculate the dot product of two vectors.
+    ///     Calculate the dot product of two vectors.
     /// </summary>
     /// <param name="left">First operand.</param>
     /// <param name="right">Second operand.</param>
     /// <returns>The dot product of the two inputs.</returns>
     [Pure]
-    public static double Dot(Vector4d left, Vector4d right)
-    {
-        return left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W;
-    }
+    public static double Dot(Vector4d left, Vector4d right) => left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W;
 
     /// <summary>
-    /// Calculate the dot product of two vectors.
+    ///     Calculate the dot product of two vectors.
     /// </summary>
     /// <param name="left">First operand.</param>
     /// <param name="right">Second operand.</param>
     /// <param name="result">The dot product of the two inputs.</param>
-    public static void Dot(in Vector4d left, in Vector4d right, out double result)
-    {
+    public static void Dot(in Vector4d left, in Vector4d right, out double result) =>
         result = left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W;
-    }
 
     /// <summary>
-    /// Returns a new vector that is the linear blend of the 2 given vectors.
+    ///     Returns a new vector that is the linear blend of the 2 given vectors.
     /// </summary>
     /// <param name="a">First input vector.</param>
     /// <param name="b">Second input vector.</param>
@@ -693,13 +760,18 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Returns a new vector that is the linear blend of the 2 given vectors.
+    ///     Returns a new vector that is the linear blend of the 2 given vectors.
     /// </summary>
     /// <param name="a">First input vector.</param>
     /// <param name="b">Second input vector.</param>
     /// <param name="blend">The blend factor.</param>
     /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise.</param>
-    public static void Lerp(in Vector4d a, in Vector4d b, double blend, out Vector4d result)
+    public static void Lerp(
+        in Vector4d a,
+        in Vector4d b,
+        double blend,
+        out Vector4d result
+    )
     {
         result.X = blend * (b.X - a.X) + a.X;
         result.Y = blend * (b.Y - a.Y) + a.Y;
@@ -708,7 +780,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Returns a new vector that is the component-wise linear blend of the 2 given vectors.
+    ///     Returns a new vector that is the component-wise linear blend of the 2 given vectors.
     /// </summary>
     /// <param name="a">First input vector.</param>
     /// <param name="b">Second input vector.</param>
@@ -725,13 +797,18 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Returns a new vector that is the component-wise linear blend of the 2 given vectors.
+    ///     Returns a new vector that is the component-wise linear blend of the 2 given vectors.
     /// </summary>
     /// <param name="a">First input vector.</param>
     /// <param name="b">Second input vector.</param>
     /// <param name="blend">The blend factor.</param>
     /// <param name="result">a when blend=0, b when blend=1, and a component-wise linear combination otherwise.</param>
-    public static void Lerp(in Vector4d a, in Vector4d b, Vector4d blend, out Vector4d result)
+    public static void Lerp(
+        in Vector4d a,
+        in Vector4d b,
+        Vector4d blend,
+        out Vector4d result
+    )
     {
         result.X = blend.X * (b.X - a.X) + a.X;
         result.Y = blend.Y * (b.Y - a.Y) + a.Y;
@@ -740,7 +817,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Interpolate 3 Vectors using Barycentric coordinates.
+    ///     Interpolate 3 Vectors using Barycentric coordinates.
     /// </summary>
     /// <param name="a">First input Vector.</param>
     /// <param name="b">Second input Vector.</param>
@@ -749,14 +826,27 @@ public struct Vector4d : IEquatable<Vector4d>
     /// <param name="v">Second Barycentric Coordinate.</param>
     /// <returns>a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise.</returns>
     [Pure]
-    public static Vector4d BaryCentric(Vector4d a, Vector4d b, Vector4d c, double u, double v)
+    public static Vector4d BaryCentric(
+        Vector4d a,
+        Vector4d b,
+        Vector4d c,
+        double u,
+        double v
+    )
     {
-        BaryCentric(in a, in b, in c, u, v, out var result);
+        BaryCentric(
+            in a,
+            in b,
+            in c,
+            u,
+            v,
+            out var result
+        );
         return result;
     }
 
     /// <summary>
-    /// Interpolate 3 Vectors using Barycentric coordinates.
+    ///     Interpolate 3 Vectors using Barycentric coordinates.
     /// </summary>
     /// <param name="a">First input Vector.</param>
     /// <param name="b">Second input Vector.</param>
@@ -764,11 +854,10 @@ public struct Vector4d : IEquatable<Vector4d>
     /// <param name="u">First Barycentric Coordinate.</param>
     /// <param name="v">Second Barycentric Coordinate.</param>
     /// <param name="result">
-    /// Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
-    /// otherwise.
+    ///     Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
+    ///     otherwise.
     /// </param>
-    public static void BaryCentric
-    (
+    public static void BaryCentric(
         in Vector4d a,
         in Vector4d b,
         in Vector4d c,
@@ -787,7 +876,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Transform a Vector by the given Matrix using right-handed notation.
+    ///     Transform a Vector by the given Matrix using right-handed notation.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="mat">The desired transformation.</param>
@@ -800,22 +889,21 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Transform a Vector by the given Matrix.
+    ///     Transform a Vector by the given Matrix.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="mat">The desired transformation.</param>
     /// <param name="result">The transformed vector.</param>
-    public static void TransformRow(in Vector4d vec, in Matrix4d mat, out Vector4d result)
-    {
+    public static void TransformRow(in Vector4d vec, in Matrix4d mat, out Vector4d result) =>
         result = new Vector4d(
             vec.X * mat.Row0.X + vec.Y * mat.Row1.X + vec.Z * mat.Row2.X + vec.W * mat.Row3.X,
             vec.X * mat.Row0.Y + vec.Y * mat.Row1.Y + vec.Z * mat.Row2.Y + vec.W * mat.Row3.Y,
             vec.X * mat.Row0.Z + vec.Y * mat.Row1.Z + vec.Z * mat.Row2.Z + vec.W * mat.Row3.Z,
-            vec.X * mat.Row0.W + vec.Y * mat.Row1.W + vec.Z * mat.Row2.W + vec.W * mat.Row3.W);
-    }
+            vec.X * mat.Row0.W + vec.Y * mat.Row1.W + vec.Z * mat.Row2.W + vec.W * mat.Row3.W
+        );
 
     /// <summary>
-    /// Transforms a vector by a quaternion rotation.
+    ///     Transforms a vector by a quaternion rotation.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="quat">The quaternion to rotate the vector by.</param>
@@ -828,7 +916,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Transforms a vector by a quaternion rotation.
+    ///     Transforms a vector by a quaternion rotation.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="quat">The quaternion to rotate the vector by.</param>
@@ -847,7 +935,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Transform a Vector by the given Matrix using right-handed notation.
+    ///     Transform a Vector by the given Matrix using right-handed notation.
     /// </summary>
     /// <param name="mat">The desired transformation.</param>
     /// <param name="vec">The vector to transform.</param>
@@ -860,27 +948,26 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Transform a Vector by the given Matrix using right-handed notation.
+    ///     Transform a Vector by the given Matrix using right-handed notation.
     /// </summary>
     /// <param name="mat">The desired transformation.</param>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="result">The transformed vector.</param>
-    public static void TransformColumn(in Matrix4d mat, in Vector4d vec, out Vector4d result)
-    {
+    public static void TransformColumn(in Matrix4d mat, in Vector4d vec, out Vector4d result) =>
         result = new Vector4d(
             mat.Row0.X * vec.X + mat.Row0.Y * vec.Y + mat.Row0.Z * vec.Z + mat.Row0.W * vec.W,
             mat.Row1.X * vec.X + mat.Row1.Y * vec.Y + mat.Row1.Z * vec.Z + mat.Row1.W * vec.W,
             mat.Row2.X * vec.X + mat.Row2.Y * vec.Y + mat.Row2.Z * vec.Z + mat.Row2.W * vec.W,
-            mat.Row3.X * vec.X + mat.Row3.Y * vec.Y + mat.Row3.Z * vec.Z + mat.Row3.W * vec.W);
-    }
+            mat.Row3.X * vec.X + mat.Row3.Y * vec.Y + mat.Row3.Z * vec.Z + mat.Row3.W * vec.W
+        );
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2d with the X and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector2d with the X and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2d Xy
     {
-        get { return Unsafe.As<Vector4d, Vector2d>(ref this); }
+        get => Unsafe.As<Vector4d, Vector2d>(ref this);
         set
         {
             X = value.X;
@@ -889,12 +976,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2d with the X and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector2d with the X and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2d Xz
     {
-        get { return new Vector2d(X, Z); }
+        get => new(X, Z);
         set
         {
             X = value.X;
@@ -903,12 +990,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2d with the X and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector2d with the X and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2d Xw
     {
-        get { return new Vector2d(X, W); }
+        get => new(X, W);
         set
         {
             X = value.X;
@@ -917,12 +1004,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2d with the Y and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector2d with the Y and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2d Yx
     {
-        get { return new Vector2d(Y, X); }
+        get => new(Y, X);
         set
         {
             Y = value.X;
@@ -931,12 +1018,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2d with the Y and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector2d with the Y and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2d Yz
     {
-        get { return new Vector2d(Y, Z); }
+        get => new(Y, Z);
         set
         {
             Y = value.X;
@@ -945,12 +1032,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2d with the Y and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector2d with the Y and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2d Yw
     {
-        get { return new Vector2d(Y, W); }
+        get => new(Y, W);
         set
         {
             Y = value.X;
@@ -959,12 +1046,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2d with the Z and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector2d with the Z and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2d Zx
     {
-        get { return new Vector2d(Z, X); }
+        get => new(Z, X);
         set
         {
             Z = value.X;
@@ -973,12 +1060,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2d with the Z and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector2d with the Z and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2d Zy
     {
-        get { return new Vector2d(Z, Y); }
+        get => new(Z, Y);
         set
         {
             Z = value.X;
@@ -987,12 +1074,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2d with the Z and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector2d with the Z and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2d Zw
     {
-        get { return new Vector2d(Z, W); }
+        get => new(Z, W);
         set
         {
             Z = value.X;
@@ -1001,12 +1088,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2d with the W and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector2d with the W and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2d Wx
     {
-        get { return new Vector2d(W, X); }
+        get => new(W, X);
         set
         {
             W = value.X;
@@ -1015,12 +1102,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2d with the W and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector2d with the W and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2d Wy
     {
-        get { return new Vector2d(W, Y); }
+        get => new(W, Y);
         set
         {
             W = value.X;
@@ -1029,12 +1116,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2d with the W and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector2d with the W and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2d Wz
     {
-        get { return new Vector2d(W, Z); }
+        get => new(W, Z);
         set
         {
             W = value.X;
@@ -1043,12 +1130,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the X, Y, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the X, Y, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Xyz
     {
-        get { return Unsafe.As<Vector4d, Vector3d>(ref this); }
+        get => Unsafe.As<Vector4d, Vector3d>(ref this);
         set
         {
             X = value.X;
@@ -1058,12 +1145,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the X, Y, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the X, Y, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Xyw
     {
-        get { return new Vector3d(X, Y, W); }
+        get => new(X, Y, W);
         set
         {
             X = value.X;
@@ -1073,12 +1160,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the X, Z, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the X, Z, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Xzy
     {
-        get { return new Vector3d(X, Z, Y); }
+        get => new(X, Z, Y);
         set
         {
             X = value.X;
@@ -1088,12 +1175,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the X, Z, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the X, Z, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Xzw
     {
-        get { return new Vector3d(X, Z, W); }
+        get => new(X, Z, W);
         set
         {
             X = value.X;
@@ -1103,12 +1190,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the X, W, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the X, W, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Xwy
     {
-        get { return new Vector3d(X, W, Y); }
+        get => new(X, W, Y);
         set
         {
             X = value.X;
@@ -1118,12 +1205,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the X, W, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the X, W, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Xwz
     {
-        get { return new Vector3d(X, W, Z); }
+        get => new(X, W, Z);
         set
         {
             X = value.X;
@@ -1133,12 +1220,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the Y, X, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the Y, X, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Yxz
     {
-        get { return new Vector3d(Y, X, Z); }
+        get => new(Y, X, Z);
         set
         {
             Y = value.X;
@@ -1148,12 +1235,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the Y, X, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the Y, X, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Yxw
     {
-        get { return new Vector3d(Y, X, W); }
+        get => new(Y, X, W);
         set
         {
             Y = value.X;
@@ -1163,12 +1250,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the Y, Z, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the Y, Z, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Yzx
     {
-        get { return new Vector3d(Y, Z, X); }
+        get => new(Y, Z, X);
         set
         {
             Y = value.X;
@@ -1178,12 +1265,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the Y, Z, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the Y, Z, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Yzw
     {
-        get { return new Vector3d(Y, Z, W); }
+        get => new(Y, Z, W);
         set
         {
             Y = value.X;
@@ -1193,12 +1280,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the Y, W, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the Y, W, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Ywx
     {
-        get { return new Vector3d(Y, W, X); }
+        get => new(Y, W, X);
         set
         {
             Y = value.X;
@@ -1208,12 +1295,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the Y, W, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the Y, W, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Ywz
     {
-        get { return new Vector3d(Y, W, Z); }
+        get => new(Y, W, Z);
         set
         {
             Y = value.X;
@@ -1223,12 +1310,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the Z, X, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the Z, X, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Zxy
     {
-        get { return new Vector3d(Z, X, Y); }
+        get => new(Z, X, Y);
         set
         {
             Z = value.X;
@@ -1238,12 +1325,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the Z, X, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the Z, X, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Zxw
     {
-        get { return new Vector3d(Z, X, W); }
+        get => new(Z, X, W);
         set
         {
             Z = value.X;
@@ -1253,12 +1340,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the Z, Y, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the Z, Y, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Zyx
     {
-        get { return new Vector3d(Z, Y, X); }
+        get => new(Z, Y, X);
         set
         {
             Z = value.X;
@@ -1268,12 +1355,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the Z, Y, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the Z, Y, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Zyw
     {
-        get { return new Vector3d(Z, Y, W); }
+        get => new(Z, Y, W);
         set
         {
             Z = value.X;
@@ -1283,12 +1370,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the Z, W, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the Z, W, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Zwx
     {
-        get { return new Vector3d(Z, W, X); }
+        get => new(Z, W, X);
         set
         {
             Z = value.X;
@@ -1298,12 +1385,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the Z, W, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the Z, W, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Zwy
     {
-        get { return new Vector3d(Z, W, Y); }
+        get => new(Z, W, Y);
         set
         {
             Z = value.X;
@@ -1313,12 +1400,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the W, X, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the W, X, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Wxy
     {
-        get { return new Vector3d(W, X, Y); }
+        get => new(W, X, Y);
         set
         {
             W = value.X;
@@ -1328,12 +1415,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the W, X, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the W, X, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Wxz
     {
-        get { return new Vector3d(W, X, Z); }
+        get => new(W, X, Z);
         set
         {
             W = value.X;
@@ -1343,12 +1430,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the W, Y, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the W, Y, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Wyx
     {
-        get { return new Vector3d(W, Y, X); }
+        get => new(W, Y, X);
         set
         {
             W = value.X;
@@ -1358,12 +1445,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the W, Y, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the W, Y, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Wyz
     {
-        get { return new Vector3d(W, Y, Z); }
+        get => new(W, Y, Z);
         set
         {
             W = value.X;
@@ -1373,12 +1460,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the W, Z, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the W, Z, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Wzx
     {
-        get { return new Vector3d(W, Z, X); }
+        get => new(W, Z, X);
         set
         {
             W = value.X;
@@ -1388,12 +1475,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the W, Z, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the W, Z, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Wzy
     {
-        get { return new Vector3d(W, Z, Y); }
+        get => new(W, Z, Y);
         set
         {
             W = value.X;
@@ -1403,12 +1490,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the X, Y, W, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the X, Y, W, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Xywz
     {
-        get { return new Vector4d(X, Y, W, Z); }
+        get => new(X, Y, W, Z);
         set
         {
             X = value.X;
@@ -1419,12 +1506,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the X, Z, Y, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the X, Z, Y, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Xzyw
     {
-        get { return new Vector4d(X, Z, Y, W); }
+        get => new(X, Z, Y, W);
         set
         {
             X = value.X;
@@ -1435,12 +1522,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the X, Z, W, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the X, Z, W, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Xzwy
     {
-        get { return new Vector4d(X, Z, W, Y); }
+        get => new(X, Z, W, Y);
         set
         {
             X = value.X;
@@ -1451,12 +1538,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the X, W, Y, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the X, W, Y, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Xwyz
     {
-        get { return new Vector4d(X, W, Y, Z); }
+        get => new(X, W, Y, Z);
         set
         {
             X = value.X;
@@ -1467,12 +1554,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the X, W, Z, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the X, W, Z, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Xwzy
     {
-        get { return new Vector4d(X, W, Z, Y); }
+        get => new(X, W, Z, Y);
         set
         {
             X = value.X;
@@ -1483,12 +1570,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the Y, X, Z, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the Y, X, Z, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Yxzw
     {
-        get { return new Vector4d(Y, X, Z, W); }
+        get => new(Y, X, Z, W);
         set
         {
             Y = value.X;
@@ -1499,12 +1586,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the Y, X, W, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the Y, X, W, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Yxwz
     {
-        get { return new Vector4d(Y, X, W, Z); }
+        get => new(Y, X, W, Z);
         set
         {
             Y = value.X;
@@ -1515,12 +1602,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the Y, Y, Z, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the Y, Y, Z, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Yyzw
     {
-        get { return new Vector4d(Y, Y, Z, W); }
+        get => new(Y, Y, Z, W);
         set
         {
             X = value.X;
@@ -1531,12 +1618,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the Y, Y, W, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the Y, Y, W, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Yywz
     {
-        get { return new Vector4d(Y, Y, W, Z); }
+        get => new(Y, Y, W, Z);
         set
         {
             X = value.X;
@@ -1547,12 +1634,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the Y, Z, X, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the Y, Z, X, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Yzxw
     {
-        get { return new Vector4d(Y, Z, X, W); }
+        get => new(Y, Z, X, W);
         set
         {
             Y = value.X;
@@ -1563,12 +1650,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the Y, Z, W, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the Y, Z, W, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Yzwx
     {
-        get { return new Vector4d(Y, Z, W, X); }
+        get => new(Y, Z, W, X);
         set
         {
             Y = value.X;
@@ -1579,12 +1666,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the Y, W, X, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the Y, W, X, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Ywxz
     {
-        get { return new Vector4d(Y, W, X, Z); }
+        get => new(Y, W, X, Z);
         set
         {
             Y = value.X;
@@ -1595,12 +1682,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the Y, W, Z, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the Y, W, Z, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Ywzx
     {
-        get { return new Vector4d(Y, W, Z, X); }
+        get => new(Y, W, Z, X);
         set
         {
             Y = value.X;
@@ -1611,12 +1698,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the Z, X, Y, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the Z, X, Y, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Zxyw
     {
-        get { return new Vector4d(Z, X, Y, W); }
+        get => new(Z, X, Y, W);
         set
         {
             Z = value.X;
@@ -1627,12 +1714,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the Z, X, W, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the Z, X, W, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Zxwy
     {
-        get { return new Vector4d(Z, X, W, Y); }
+        get => new(Z, X, W, Y);
         set
         {
             Z = value.X;
@@ -1643,12 +1730,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the Z, Y, X, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the Z, Y, X, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Zyxw
     {
-        get { return new Vector4d(Z, Y, X, W); }
+        get => new(Z, Y, X, W);
         set
         {
             Z = value.X;
@@ -1659,12 +1746,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the Z, Y, W, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the Z, Y, W, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Zywx
     {
-        get { return new Vector4d(Z, Y, W, X); }
+        get => new(Z, Y, W, X);
         set
         {
             Z = value.X;
@@ -1675,12 +1762,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the Z, W, X, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the Z, W, X, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Zwxy
     {
-        get { return new Vector4d(Z, W, X, Y); }
+        get => new(Z, W, X, Y);
         set
         {
             Z = value.X;
@@ -1691,12 +1778,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the Z, W, Y, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the Z, W, Y, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Zwyx
     {
-        get { return new Vector4d(Z, W, Y, X); }
+        get => new(Z, W, Y, X);
         set
         {
             Z = value.X;
@@ -1707,12 +1794,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the Z, W, Z, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the Z, W, Z, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Zwzy
     {
-        get { return new Vector4d(Z, W, Z, Y); }
+        get => new(Z, W, Z, Y);
         set
         {
             X = value.X;
@@ -1723,12 +1810,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the W, X, Y, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the W, X, Y, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Wxyz
     {
-        get { return new Vector4d(W, X, Y, Z); }
+        get => new(W, X, Y, Z);
         set
         {
             W = value.X;
@@ -1739,12 +1826,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the W, X, Z, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the W, X, Z, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Wxzy
     {
-        get { return new Vector4d(W, X, Z, Y); }
+        get => new(W, X, Z, Y);
         set
         {
             W = value.X;
@@ -1755,12 +1842,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the W, Y, X, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the W, Y, X, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Wyxz
     {
-        get { return new Vector4d(W, Y, X, Z); }
+        get => new(W, Y, X, Z);
         set
         {
             W = value.X;
@@ -1771,12 +1858,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the W, Y, Z, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the W, Y, Z, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Wyzx
     {
-        get { return new Vector4d(W, Y, Z, X); }
+        get => new(W, Y, Z, X);
         set
         {
             W = value.X;
@@ -1787,12 +1874,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the W, Z, X, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the W, Z, X, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Wzxy
     {
-        get { return new Vector4d(W, Z, X, Y); }
+        get => new(W, Z, X, Y);
         set
         {
             W = value.X;
@@ -1803,12 +1890,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the W, Z, Y, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the W, Z, Y, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Wzyx
     {
-        get { return new Vector4d(W, Z, Y, X); }
+        get => new(W, Z, Y, X);
         set
         {
             W = value.X;
@@ -1819,12 +1906,12 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4d with the W, Z, Y, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector4d with the W, Z, Y, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4d Wzyw
     {
-        get { return new Vector4d(W, Z, Y, W); }
+        get => new(W, Z, Y, W);
         set
         {
             X = value.X;
@@ -1835,7 +1922,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Adds two instances.
+    ///     Adds two instances.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
@@ -1851,7 +1938,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Subtracts two instances.
+    ///     Subtracts two instances.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
@@ -1867,7 +1954,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Negates an instance.
+    ///     Negates an instance.
     /// </summary>
     /// <param name="vec">The instance.</param>
     /// <returns>The result of the calculation.</returns>
@@ -1882,7 +1969,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Multiplies an instance by a scalar.
+    ///     Multiplies an instance by a scalar.
     /// </summary>
     /// <param name="vec">The instance.</param>
     /// <param name="scale">The scalar.</param>
@@ -1898,7 +1985,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Multiplies an instance by a scalar.
+    ///     Multiplies an instance by a scalar.
     /// </summary>
     /// <param name="scale">The scalar.</param>
     /// <param name="vec">The instance.</param>
@@ -1914,7 +2001,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Component-wise multiplication between the specified instance by a scale vector.
+    ///     Component-wise multiplication between the specified instance by a scale vector.
     /// </summary>
     /// <param name="scale">Left operand.</param>
     /// <param name="vec">Right operand.</param>
@@ -1930,7 +2017,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Transform a Vector by the given Matrix.
+    ///     Transform a Vector by the given Matrix.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="mat">The desired transformation.</param>
@@ -1943,7 +2030,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Transform a Vector by the given Matrix using right-handed notation.
+    ///     Transform a Vector by the given Matrix using right-handed notation.
     /// </summary>
     /// <param name="mat">The desired transformation.</param>
     /// <param name="vec">The vector to transform.</param>
@@ -1956,7 +2043,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Transforms a vector by a quaternion rotation.
+    ///     Transforms a vector by a quaternion rotation.
     /// </summary>
     /// <param name="quat">The quaternion to rotate the vector by.</param>
     /// <param name="vec">The vector to transform.</param>
@@ -1969,7 +2056,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Divides an instance by a scalar.
+    ///     Divides an instance by a scalar.
     /// </summary>
     /// <param name="vec">The instance.</param>
     /// <param name="scale">The scalar.</param>
@@ -1985,7 +2072,7 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Component-wise division between the specified instance by a scale vector.
+    ///     Component-wise division between the specified instance by a scale vector.
     /// </summary>
     /// <param name="vec">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -2001,40 +2088,31 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Compares two instances for equality.
+    ///     Compares two instances for equality.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
     /// <returns>True, if left equals right; false otherwise.</returns>
-    public static bool operator ==(Vector4d left, Vector4d right)
-    {
-        return left.Equals(right);
-    }
+    public static bool operator ==(Vector4d left, Vector4d right) => left.Equals(right);
 
     /// <summary>
-    /// Compares two instances for inequality.
+    ///     Compares two instances for inequality.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
     /// <returns>True, if left does not equa lright; false otherwise.</returns>
-    public static bool operator !=(Vector4d left, Vector4d right)
-    {
-        return !(left == right);
-    }
+    public static bool operator !=(Vector4d left, Vector4d right) => !(left == right);
 
     /// <summary>
-    /// Returns a pointer to the first element of the specified instance.
+    ///     Returns a pointer to the first element of the specified instance.
     /// </summary>
     /// <param name="v">The instance.</param>
     /// <returns>A pointer to the first element of v.</returns>
     [Pure]
-    public static unsafe explicit operator double*(Vector4d v)
-    {
-        return &v.X;
-    }
+    public static unsafe explicit operator double*(Vector4d v) => &v.X;
 
     /// <summary>
-    /// Returns a pointer to the first element of the specified instance.
+    ///     Returns a pointer to the first element of the specified instance.
     /// </summary>
     /// <param name="v">The instance.</param>
     /// <returns>A pointer to the first element of v.</returns>
@@ -2048,55 +2126,46 @@ public struct Vector4d : IEquatable<Vector4d>
     }
 
     /// <summary>
-    /// Converts OpenTK.Vector4d to OpenTK.Vector4.
+    ///     Converts OpenTK.Vector4d to OpenTK.Vector4.
     /// </summary>
     /// <param name="vec">The Vector4d to convert.</param>
     /// <returns>The resulting Vector4.</returns>
     [Pure]
-    public static explicit operator Vector4(Vector4d vec)
-    {
-        return new Vector4((float)vec.X, (float)vec.Y, (float)vec.Z, (float)vec.W);
-    }
+    public static explicit operator Vector4(Vector4d vec) => new((float)vec.X, (float)vec.Y, (float)vec.Z, (float)vec.W);
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4d" /> struct using a tuple containing the component
-    /// values.
+    ///     Initializes a new instance of the <see cref="Vector4d" /> struct using a tuple containing the component
+    ///     values.
     /// </summary>
     /// <param name="values">A tuple containing the component values.</param>
     /// <returns>A new instance of the <see cref="Vector4d" /> struct with the given component values.</returns>
     [Pure]
-    public static implicit operator Vector4d((double X, double Y, double Z, double W) values)
-    {
-        return new Vector4d(values.X, values.Y, values.Z, values.W);
-    }
+    public static implicit operator Vector4d((double X, double Y, double Z, double W) values) =>
+        new(values.X, values.Y, values.Z, values.W);
 
     /// <inheritdoc />
-    public override bool Equals(object? obj)
-    {
-        return obj is Vector4d vector4d && Equals(vector4d);
-    }
+    public override bool Equals(object? obj) => obj is Vector4d vector4d && Equals(vector4d);
 
     /// <inheritdoc />
-    public bool Equals(Vector4d other)
-    {
-        return X == other.X && Y == other.Y && Z == other.Z && W == other.W;
-    }
+    public bool Equals(Vector4d other) => X == other.X && Y == other.Y && Z == other.Z && W == other.W;
 
     /// <inheritdoc />
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(X, Y, Z, W);
-    }
+    public override int GetHashCode() => HashCode.Combine(X, Y, Z, W);
 
     /// <summary>
-    /// Deconstructs the vector into it's individual components.
+    ///     Deconstructs the vector into it's individual components.
     /// </summary>
     /// <param name="x">The X component of the vector.</param>
     /// <param name="y">The Y component of the vector.</param>
     /// <param name="z">The Z component of the vector.</param>
     /// <param name="w">The W component of the vector.</param>
     [Pure]
-    public void Deconstruct(out double x, out double y, out double z, out double w)
+    public void Deconstruct(
+        out double x,
+        out double y,
+        out double z,
+        out double w
+    )
     {
         x = X;
         y = Y;

@@ -105,16 +105,13 @@ public static class EasingFunction
     // Easing functions
     //
 
-    public static float Linear(float start, float end, float value)
-    {
-        return Mathf.Lerp(start, end, value);
-    }
+    public static float Linear(float start, float end, float value) => Mathf.Lerp(start, end, value);
 
     public static float Spring(float start, float end, float value)
     {
         value = (float)Mathf.Clamp01(value);
-        value = (Mathf.Sin(value * Mathf.Pi * (0.2f + 2.5f * value * value * value)) *
-            Mathf.Pow(1f - value, 2.2f) + value) * (1f + 1.2f * (1f - value));
+        value = (Mathf.Sin(value * Mathf.Pi * (0.2f + 2.5f * value * value * value)) * Mathf.Pow(1f - value, 2.2f) + value)
+                * (1f + 1.2f * (1f - value));
         return start + (end - start) * value;
     }
 
@@ -459,13 +456,10 @@ public static class EasingFunction
 
         if (value < 1)
         {
-            return -0.5f *
-                   (a * Mathf.Pow(2, 10 * (value -= 1)) * Mathf.Sin((value * d - s) * (2 * Mathf.Pi) / p)) +
-                   start;
+            return -0.5f * (a * Mathf.Pow(2, 10 * (value -= 1)) * Mathf.Sin((value * d - s) * (2 * Mathf.Pi) / p)) + start;
         }
 
-        return a * Mathf.Pow(2, -10 * (value -= 1)) * Mathf.Sin((value * d - s) * (2 * Mathf.Pi) / p) * 0.5f +
-               end + start;
+        return a * Mathf.Pow(2, -10 * (value -= 1)) * Mathf.Sin((value * d - s) * (2 * Mathf.Pi) / p) * 0.5f + end + start;
     }
 
     //
@@ -477,15 +471,9 @@ public static class EasingFunction
     // TODO: These functions have not had the testing they deserve. If there is odd behavior around
     //       dash speeds then this would be the first place I'd look.
 
-    public static float LinearD(float start, float end, float value)
-    {
-        return end - start;
-    }
+    public static float LinearD(float start, float end, float value) => end - start;
 
-    public static float EaseInQuadD(float start, float end, float value)
-    {
-        return 2f * (end - start) * value;
-    }
+    public static float EaseInQuadD(float start, float end, float value) => 2f * (end - start) * value;
 
     public static float EaseOutQuadD(float start, float end, float value)
     {
@@ -508,10 +496,7 @@ public static class EasingFunction
         return end * (1 - value);
     }
 
-    public static float EaseInCubicD(float start, float end, float value)
-    {
-        return 3f * (end - start) * value * value;
-    }
+    public static float EaseInCubicD(float start, float end, float value) => 3f * (end - start) * value * value;
 
     public static float EaseOutCubicD(float start, float end, float value)
     {
@@ -535,10 +520,7 @@ public static class EasingFunction
         return 3f / 2f * end * value * value;
     }
 
-    public static float EaseInQuartD(float start, float end, float value)
-    {
-        return 4f * (end - start) * value * value * value;
-    }
+    public static float EaseInQuartD(float start, float end, float value) => 4f * (end - start) * value * value * value;
 
     public static float EaseOutQuartD(float start, float end, float value)
     {
@@ -562,10 +544,7 @@ public static class EasingFunction
         return -2f * end * value * value * value;
     }
 
-    public static float EaseInQuintD(float start, float end, float value)
-    {
-        return 5f * (end - start) * value * value * value * value;
-    }
+    public static float EaseInQuintD(float start, float end, float value) => 5f * (end - start) * value * value * value * value;
 
     public static float EaseOutQuintD(float start, float end, float value)
     {
@@ -589,10 +568,8 @@ public static class EasingFunction
         return 5f / 2f * end * value * value * value * value;
     }
 
-    public static float EaseInSineD(float start, float end, float value)
-    {
-        return (end - start) * 0.5f * Mathf.Pi * Mathf.Sin(0.5f * Mathf.Pi * value);
-    }
+    public static float EaseInSineD(float start, float end, float value) =>
+        (end - start) * 0.5f * Mathf.Pi * Mathf.Sin(0.5f * Mathf.Pi * value);
 
     public static float EaseOutSineD(float start, float end, float value)
     {
@@ -606,10 +583,8 @@ public static class EasingFunction
         return end * 0.5f * Mathf.Pi * Mathf.Sin(Mathf.Pi * value);
     }
 
-    public static float EaseInExpoD(float start, float end, float value)
-    {
-        return 10f * NaturalLogOf2 * (end - start) * Mathf.Pow(2f, 10f * (value - 1));
-    }
+    public static float EaseInExpoD(float start, float end, float value) =>
+        10f * NaturalLogOf2 * (end - start) * Mathf.Pow(2f, 10f * (value - 1));
 
     public static float EaseOutExpoD(float start, float end, float value)
     {
@@ -631,10 +606,7 @@ public static class EasingFunction
         return 5f * NaturalLogOf2 * end / Mathf.Pow(2f, 10f * value);
     }
 
-    public static float EaseInCircD(float start, float end, float value)
-    {
-        return (end - start) * value / Mathf.Sqrt(1f - value * value);
-    }
+    public static float EaseInCircD(float start, float end, float value) => (end - start) * value / Mathf.Sqrt(1f - value * value);
 
     public static float EaseOutCircD(float start, float end, float value)
     {
@@ -737,10 +709,7 @@ public static class EasingFunction
         return 0.5f * end * ((s + 1) * value * value + 2f * value * ((s + 1f) * value + s));
     }
 
-    public static float EaseInElasticD(float start, float end, float value)
-    {
-        return EaseOutElasticD(start, end, 1f - value);
-    }
+    public static float EaseInElasticD(float start, float end, float value) => EaseOutElasticD(start, end, 1f - value);
 
     public static float EaseOutElasticD(float start, float end, float value)
     {
@@ -761,11 +730,8 @@ public static class EasingFunction
             s = p / (2 * Mathf.Pi) * Mathf.ASin(end / a);
         }
 
-        return a * Mathf.Pi * d * Mathf.Pow(2f, 1f - 10f * value) *
-            Mathf.Cos(2f * Mathf.Pi * (d * value - s) / p) / p - 5f * NaturalLogOf2 * a *
-            Mathf.Pow(2f, 1f - 10f * value) *
-            Mathf.Sin(
-                2f * Mathf.Pi * (d * value - s) / p);
+        return a * Mathf.Pi * d * Mathf.Pow(2f, 1f - 10f * value) * Mathf.Cos(2f * Mathf.Pi * (d * value - s) / p) / p
+               - 5f * NaturalLogOf2 * a * Mathf.Pow(2f, 1f - 10f * value) * Mathf.Sin(2f * Mathf.Pi * (d * value - s) / p);
     }
 
     public static float EaseInOutElasticD(float start, float end, float value)
@@ -791,18 +757,14 @@ public static class EasingFunction
         {
             value -= 1;
 
-            return -5f * NaturalLogOf2 * a * Mathf.Pow(2f, 10f * value) *
-                   Mathf.Sin(2 * Mathf.Pi * (d * value - 2f) / p) -
-                   a * Mathf.Pi * d * Mathf.Pow(2f, 10f * value) *
-                   Mathf.Cos(2 * Mathf.Pi * (d * value - s) / p) / p;
+            return -5f * NaturalLogOf2 * a * Mathf.Pow(2f, 10f * value) * Mathf.Sin(2 * Mathf.Pi * (d * value - 2f) / p)
+                   - a * Mathf.Pi * d * Mathf.Pow(2f, 10f * value) * Mathf.Cos(2 * Mathf.Pi * (d * value - s) / p) / p;
         }
 
         value -= 1;
 
-        return a * Mathf.Pi * d * Mathf.Cos(2f * Mathf.Pi * (d * value - s) / p) /
-               (p * Mathf.Pow(2f, 10f * value)) -
-               5f * NaturalLogOf2 * a * Mathf.Sin(2f * Mathf.Pi * (d * value - s) / p) /
-               Mathf.Pow(2f, 10f * value);
+        return a * Mathf.Pi * d * Mathf.Cos(2f * Mathf.Pi * (d * value - s) / p) / (p * Mathf.Pow(2f, 10f * value))
+               - 5f * NaturalLogOf2 * a * Mathf.Sin(2f * Mathf.Pi * (d * value - s) / p) / Mathf.Pow(2f, 10f * value);
     }
 
     public static float SpringD(float start, float end, float value)
@@ -812,109 +774,107 @@ public static class EasingFunction
 
         // Damn... Thanks http://www.derivative-calculator.net/
         // TODO: And it's a little bit wrong
-        return end * (6f * (1f - value) / 5f + 1f) * (-2.2f * Mathf.Pow(1f - value, 1.2f) *
-                                                      Mathf.Sin(Mathf.Pi * value *
-                                                                (2.5f * value * value * value + 0.2f)) +
-                                                      Mathf.Pow(1f - value, 2.2f) *
-                                                      (Mathf.Pi * (2.5f * value * value * value + 0.2f) +
-                                                       7.5f * Mathf.Pi * value * value * value) *
-                                                      Mathf.Cos(Mathf.Pi * value *
-                                                                (2.5f * value * value * value + 0.2f)) +
-                                                      1f) -
-               6f * end * (Mathf.Pow(1 - value, 2.2f) *
-                   Mathf.Sin(Mathf.Pi * value * (2.5f * value * value * value + 0.2f)) + value
-                   / 5f);
+        return end
+               * (6f * (1f - value) / 5f + 1f)
+               * (-2.2f * Mathf.Pow(1f - value, 1.2f) * Mathf.Sin(Mathf.Pi * value * (2.5f * value * value * value + 0.2f))
+                  + Mathf.Pow(1f - value, 2.2f)
+                  * (Mathf.Pi * (2.5f * value * value * value + 0.2f) + 7.5f * Mathf.Pi * value * value * value)
+                  * Mathf.Cos(Mathf.Pi * value * (2.5f * value * value * value + 0.2f))
+                  + 1f)
+               - 6f
+               * end
+               * (Mathf.Pow(1 - value, 2.2f) * Mathf.Sin(Mathf.Pi * value * (2.5f * value * value * value + 0.2f))
+                  + value
+                  / 5f);
     }
 
     /// <summary>
-    /// Returns the function associated to the easingFunction enum. This value returned should be cached as it allocates memory
-    /// to return.
+    ///     Returns the function associated to the easingFunction enum. This value returned should be cached as it allocates
+    ///     memory
+    ///     to return.
     /// </summary>
     /// <param name="easingFunction">The enum associated with the easing function.</param>
     /// <returns>The easing function</returns>
-    public static Function? GetEasingFunction(Ease easingFunction)
-    {
-        return easingFunction switch
+    public static Function? GetEasingFunction(Ease easingFunction) =>
+        easingFunction switch
         {
-            Ease.EaseInQuad => EaseInQuad,
-            Ease.EaseOutQuad => EaseOutQuad,
-            Ease.EaseInOutQuad => EaseInOutQuad,
-            Ease.EaseInCubic => EaseInCubic,
-            Ease.EaseOutCubic => EaseOutCubic,
-            Ease.EaseInOutCubic => EaseInOutCubic,
-            Ease.EaseInQuart => EaseInQuart,
-            Ease.EaseOutQuart => EaseOutQuart,
-            Ease.EaseInOutQuart => EaseInOutQuart,
-            Ease.EaseInQuint => EaseInQuint,
-            Ease.EaseOutQuint => EaseOutQuint,
-            Ease.EaseInOutQuint => EaseInOutQuint,
-            Ease.EaseInSine => EaseInSine,
-            Ease.EaseOutSine => EaseOutSine,
-            Ease.EaseInOutSine => EaseInOutSine,
-            Ease.EaseInExpo => EaseInExpo,
-            Ease.EaseOutExpo => EaseOutExpo,
-            Ease.EaseInOutExpo => EaseInOutExpo,
-            Ease.EaseInCirc => EaseInCirc,
-            Ease.EaseOutCirc => EaseOutCirc,
-            Ease.EaseInOutCirc => EaseInOutCirc,
-            Ease.Linear => Linear,
-            Ease.Spring => Spring,
-            Ease.EaseInBounce => EaseInBounce,
-            Ease.EaseOutBounce => EaseOutBounce,
-            Ease.EaseInOutBounce => EaseInOutBounce,
-            Ease.EaseInBack => EaseInBack,
-            Ease.EaseOutBack => EaseOutBack,
-            Ease.EaseInOutBack => EaseInOutBack,
-            Ease.EaseInElastic => EaseInElastic,
-            Ease.EaseOutElastic => EaseOutElastic,
+            Ease.EaseInQuad       => EaseInQuad,
+            Ease.EaseOutQuad      => EaseOutQuad,
+            Ease.EaseInOutQuad    => EaseInOutQuad,
+            Ease.EaseInCubic      => EaseInCubic,
+            Ease.EaseOutCubic     => EaseOutCubic,
+            Ease.EaseInOutCubic   => EaseInOutCubic,
+            Ease.EaseInQuart      => EaseInQuart,
+            Ease.EaseOutQuart     => EaseOutQuart,
+            Ease.EaseInOutQuart   => EaseInOutQuart,
+            Ease.EaseInQuint      => EaseInQuint,
+            Ease.EaseOutQuint     => EaseOutQuint,
+            Ease.EaseInOutQuint   => EaseInOutQuint,
+            Ease.EaseInSine       => EaseInSine,
+            Ease.EaseOutSine      => EaseOutSine,
+            Ease.EaseInOutSine    => EaseInOutSine,
+            Ease.EaseInExpo       => EaseInExpo,
+            Ease.EaseOutExpo      => EaseOutExpo,
+            Ease.EaseInOutExpo    => EaseInOutExpo,
+            Ease.EaseInCirc       => EaseInCirc,
+            Ease.EaseOutCirc      => EaseOutCirc,
+            Ease.EaseInOutCirc    => EaseInOutCirc,
+            Ease.Linear           => Linear,
+            Ease.Spring           => Spring,
+            Ease.EaseInBounce     => EaseInBounce,
+            Ease.EaseOutBounce    => EaseOutBounce,
+            Ease.EaseInOutBounce  => EaseInOutBounce,
+            Ease.EaseInBack       => EaseInBack,
+            Ease.EaseOutBack      => EaseOutBack,
+            Ease.EaseInOutBack    => EaseInOutBack,
+            Ease.EaseInElastic    => EaseInElastic,
+            Ease.EaseOutElastic   => EaseOutElastic,
             Ease.EaseInOutElastic => EaseInOutElastic,
-            _ => null
+            _                     => null
         };
-    }
 
     /// <summary>
-    /// Gets the derivative function of the appropriate easing function. If you use an easing function for position then this
-    /// function can get you the speed at a given time (normalized).
+    ///     Gets the derivative function of the appropriate easing function. If you use an easing function for position then
+    ///     this
+    ///     function can get you the speed at a given time (normalized).
     /// </summary>
     /// <param name="easingFunction"></param>
     /// <returns>The derivative function</returns>
-    public static Function? GetEasingFunctionDerivative(Ease easingFunction)
-    {
-        return easingFunction switch
+    public static Function? GetEasingFunctionDerivative(Ease easingFunction) =>
+        easingFunction switch
         {
-            Ease.EaseInQuad => EaseInQuadD,
-            Ease.EaseOutQuad => EaseOutQuadD,
-            Ease.EaseInOutQuad => EaseInOutQuadD,
-            Ease.EaseInCubic => EaseInCubicD,
-            Ease.EaseOutCubic => EaseOutCubicD,
-            Ease.EaseInOutCubic => EaseInOutCubicD,
-            Ease.EaseInQuart => EaseInQuartD,
-            Ease.EaseOutQuart => EaseOutQuartD,
-            Ease.EaseInOutQuart => EaseInOutQuartD,
-            Ease.EaseInQuint => EaseInQuintD,
-            Ease.EaseOutQuint => EaseOutQuintD,
-            Ease.EaseInOutQuint => EaseInOutQuintD,
-            Ease.EaseInSine => EaseInSineD,
-            Ease.EaseOutSine => EaseOutSineD,
-            Ease.EaseInOutSine => EaseInOutSineD,
-            Ease.EaseInExpo => EaseInExpoD,
-            Ease.EaseOutExpo => EaseOutExpoD,
-            Ease.EaseInOutExpo => EaseInOutExpoD,
-            Ease.EaseInCirc => EaseInCircD,
-            Ease.EaseOutCirc => EaseOutCircD,
-            Ease.EaseInOutCirc => EaseInOutCircD,
-            Ease.Linear => LinearD,
-            Ease.Spring => SpringD,
-            Ease.EaseInBounce => EaseInBounceD,
-            Ease.EaseOutBounce => EaseOutBounceD,
-            Ease.EaseInOutBounce => EaseInOutBounceD,
-            Ease.EaseInBack => EaseInBackD,
-            Ease.EaseOutBack => EaseOutBackD,
-            Ease.EaseInOutBack => EaseInOutBackD,
-            Ease.EaseInElastic => EaseInElasticD,
-            Ease.EaseOutElastic => EaseOutElasticD,
+            Ease.EaseInQuad       => EaseInQuadD,
+            Ease.EaseOutQuad      => EaseOutQuadD,
+            Ease.EaseInOutQuad    => EaseInOutQuadD,
+            Ease.EaseInCubic      => EaseInCubicD,
+            Ease.EaseOutCubic     => EaseOutCubicD,
+            Ease.EaseInOutCubic   => EaseInOutCubicD,
+            Ease.EaseInQuart      => EaseInQuartD,
+            Ease.EaseOutQuart     => EaseOutQuartD,
+            Ease.EaseInOutQuart   => EaseInOutQuartD,
+            Ease.EaseInQuint      => EaseInQuintD,
+            Ease.EaseOutQuint     => EaseOutQuintD,
+            Ease.EaseInOutQuint   => EaseInOutQuintD,
+            Ease.EaseInSine       => EaseInSineD,
+            Ease.EaseOutSine      => EaseOutSineD,
+            Ease.EaseInOutSine    => EaseInOutSineD,
+            Ease.EaseInExpo       => EaseInExpoD,
+            Ease.EaseOutExpo      => EaseOutExpoD,
+            Ease.EaseInOutExpo    => EaseInOutExpoD,
+            Ease.EaseInCirc       => EaseInCircD,
+            Ease.EaseOutCirc      => EaseOutCircD,
+            Ease.EaseInOutCirc    => EaseInOutCircD,
+            Ease.Linear           => LinearD,
+            Ease.Spring           => SpringD,
+            Ease.EaseInBounce     => EaseInBounceD,
+            Ease.EaseOutBounce    => EaseOutBounceD,
+            Ease.EaseInOutBounce  => EaseInOutBounceD,
+            Ease.EaseInBack       => EaseInBackD,
+            Ease.EaseOutBack      => EaseOutBackD,
+            Ease.EaseInOutBack    => EaseInOutBackD,
+            Ease.EaseInElastic    => EaseInElasticD,
+            Ease.EaseOutElastic   => EaseOutElasticD,
             Ease.EaseInOutElastic => EaseInOutElasticD,
-            _ => null
+            _                     => null
         };
-    }
 }

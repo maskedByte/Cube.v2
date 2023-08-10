@@ -1,7 +1,7 @@
 namespace Engine.Core.Driver.Input;
 
 /// <summary>
-/// Mouse buttons
+///     Mouse buttons
 /// </summary>
 public enum MouseButtons
 {

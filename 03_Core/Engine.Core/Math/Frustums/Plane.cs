@@ -4,7 +4,7 @@ using Engine.Core.Math.Vectors;
 namespace Engine.Core.Math.Frustums;
 
 /// <summary>
-/// Represents a plane in 3D space
+///     Represents a plane in 3D space
 /// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public readonly struct FrustumPlane

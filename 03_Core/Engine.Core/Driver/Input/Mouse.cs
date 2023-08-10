@@ -5,14 +5,14 @@
 namespace Engine.Core.Driver.Input;
 
 /// <summary>
-/// Static Mouse input class
+///     Static Mouse input class
 /// </summary>
 public static class Mouse
 {
     private static IInput? input;
 
     /// <summary>
-    /// Gets the mouse current x position on screen
+    ///     Gets the mouse current x position on screen
     /// </summary>
     public static int MouseX()
     {
@@ -26,7 +26,7 @@ public static class Mouse
     }
 
     /// <summary>
-    /// Gets the mouse current y position on screen
+    ///     Gets the mouse current y position on screen
     /// </summary>
     public static int MouseY()
     {
@@ -40,7 +40,7 @@ public static class Mouse
     }
 
     /// <summary>
-    /// Gets the mouse scroll wheel delta changes
+    ///     Gets the mouse scroll wheel delta changes
     /// </summary>
     public static int MouseZ()
     {
@@ -54,7 +54,7 @@ public static class Mouse
     }
 
     /// <summary>
-    /// Get the movement delta for the mouse x axis
+    ///     Get the movement delta for the mouse x axis
     /// </summary>
     public static int MouseXDelta()
     {
@@ -68,7 +68,7 @@ public static class Mouse
     }
 
     /// <summary>
-    /// Get the movement delta for the mouse y axis
+    ///     Get the movement delta for the mouse y axis
     /// </summary>
     public static int MouseYDelta()
     {
@@ -82,7 +82,7 @@ public static class Mouse
     }
 
     /// <summary>
-    /// Checks if a mouse button was hit
+    ///     Checks if a mouse button was hit
     /// </summary>
     /// <param name="buttons">
     ///     <see cref="MouseButtonHit" />
@@ -99,9 +99,8 @@ public static class Mouse
         return default;
     }
 
-
     /// <summary>
-    /// Checks if a mouse button was hit
+    ///     Checks if a mouse button was hit
     /// </summary>
     /// <param name="buttons">
     ///     <see cref="MouseButtonDown" />
@@ -119,7 +118,7 @@ public static class Mouse
     }
 
     /// <summary>
-    /// Checks if a mouse button was released
+    ///     Checks if a mouse button was released
     /// </summary>
     /// <param name="buttons">
     ///     <see cref="MouseButtonDown" />
@@ -137,11 +136,8 @@ public static class Mouse
     }
 
     /// <summary>
-    /// Set the active input system
+    ///     Set the active input system
     /// </summary>
     /// <param name="inputHandler">The input system to use</param>
-    public static void SetInput(IInput inputHandler)
-    {
-        input = inputHandler;
-    }
+    public static void SetInput(IInput inputHandler) => input = inputHandler;
 }

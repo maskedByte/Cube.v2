@@ -1,7 +1,7 @@
 namespace Engine.Core.Driver;
 
 /// <summary>
-/// The clear buffer flags
+///     The clear buffer flags
 /// </summary>
 [Flags]
 public enum ClearBufferFlag

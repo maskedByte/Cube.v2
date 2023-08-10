@@ -9,84 +9,91 @@ using Engine.Core.Math.Quaternions;
 namespace Engine.Core.Math.Vectors;
 
 /// <summary>
-/// Represents a 4D vector using four single-precision floating-point numbers.
+///     Represents a 4D vector using four single-precision floating-point numbers.
 /// </summary>
 /// <remarks>
-/// The Vector4 structure is suitable for interoperation with unmanaged code requiring four consecutive floats.
+///     The Vector4 structure is suitable for interoperation with unmanaged code requiring four consecutive floats.
 /// </remarks>
-[Serializable]
-[StructLayout(LayoutKind.Sequential)]
+[Serializable, StructLayout(LayoutKind.Sequential)]
 public struct Vector4 : IEquatable<Vector4>
 {
     /// <summary>
-    /// The X component of the Vector4.
+    ///     The X component of the Vector4.
     /// </summary>
     public float X;
 
     /// <summary>
-    /// The Y component of the Vector4.
+    ///     The Y component of the Vector4.
     /// </summary>
     public float Y;
 
     /// <summary>
-    /// The Z component of the Vector4.
+    ///     The Z component of the Vector4.
     /// </summary>
     public float Z;
 
     /// <summary>
-    /// The W component of the Vector4.
+    ///     The W component of the Vector4.
     /// </summary>
     public float W;
 
     /// <summary>
-    /// Defines a unit-length Vector4 that points towards the X-axis.
+    ///     Defines a unit-length Vector4 that points towards the X-axis.
     /// </summary>
-    public static readonly Vector4 UnitX = new Vector4(1, 0, 0, 0);
+    public static readonly Vector4 UnitX = new(1, 0, 0, 0);
 
     /// <summary>
-    /// Defines a unit-length Vector4 that points towards the Y-axis.
+    ///     Defines a unit-length Vector4 that points towards the Y-axis.
     /// </summary>
-    public static readonly Vector4 UnitY = new Vector4(0, 1, 0, 0);
+    public static readonly Vector4 UnitY = new(0, 1, 0, 0);
 
     /// <summary>
-    /// Defines a unit-length Vector4 that points towards the Z-axis.
+    ///     Defines a unit-length Vector4 that points towards the Z-axis.
     /// </summary>
-    public static readonly Vector4 UnitZ = new Vector4(0, 0, 1, 0);
+    public static readonly Vector4 UnitZ = new(0, 0, 1, 0);
 
     /// <summary>
-    /// Defines a unit-length Vector4 that points towards the W-axis.
+    ///     Defines a unit-length Vector4 that points towards the W-axis.
     /// </summary>
-    public static readonly Vector4 UnitW = new Vector4(0, 0, 0, 1);
+    public static readonly Vector4 UnitW = new(0, 0, 0, 1);
 
     /// <summary>
-    /// Defines an instance with all components set to 0.
+    ///     Defines an instance with all components set to 0.
     /// </summary>
-    public static readonly Vector4 Zero = new Vector4(0, 0, 0, 0);
+    public static readonly Vector4 Zero = new(0, 0, 0, 0);
 
     /// <summary>
-    /// Defines an instance with all components set to 1.
+    ///     Defines an instance with all components set to 1.
     /// </summary>
-    public static readonly Vector4 One = new Vector4(1, 1, 1, 1);
+    public static readonly Vector4 One = new(1, 1, 1, 1);
 
     /// <summary>
-    /// Defines an instance with all components set to positive infinity.
+    ///     Defines an instance with all components set to positive infinity.
     /// </summary>
-    public static readonly Vector4 PositiveInfinity = new Vector4(float.PositiveInfinity, float.PositiveInfinity,
-        float.PositiveInfinity, float.PositiveInfinity);
+    public static readonly Vector4 PositiveInfinity = new(
+        float.PositiveInfinity,
+        float.PositiveInfinity,
+        float.PositiveInfinity,
+        float.PositiveInfinity
+    );
 
     /// <summary>
-    /// Defines an instance with all components set to negative infinity.
+    ///     Defines an instance with all components set to negative infinity.
     /// </summary>
-    public static readonly Vector4 NegativeInfinity = new Vector4(float.NegativeInfinity, float.NegativeInfinity,
-        float.NegativeInfinity, float.NegativeInfinity);
+    public static readonly Vector4 NegativeInfinity = new(
+        float.NegativeInfinity,
+        float.NegativeInfinity,
+        float.NegativeInfinity,
+        float.NegativeInfinity
+    );
 
     /// <summary>
-    /// Defines the size of the Vector4 struct in bytes.
+    ///     Defines the size of the Vector4 struct in bytes.
     /// </summary>
     public static readonly int SizeInBytes = Unsafe.SizeOf<Vector4>();
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4" /> struct.
+    ///     Initializes a new instance of the <see cref="Vector4" /> struct.
     /// </summary>
     /// <param name="value">The value that will initialize this instance.</param>
     public Vector4(float value)
@@ -98,13 +105,18 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4" /> struct.
+    ///     Initializes a new instance of the <see cref="Vector4" /> struct.
     /// </summary>
     /// <param name="x">The x component of the Vector4.</param>
     /// <param name="y">The y component of the Vector4.</param>
     /// <param name="z">The z component of the Vector4.</param>
     /// <param name="w">The w component of the Vector4.</param>
-    public Vector4(float x, float y, float z, float w)
+    public Vector4(
+        float x,
+        float y,
+        float z,
+        float w
+    )
     {
         X = x;
         Y = y;
@@ -113,7 +125,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4" /> struct.
+    ///     Initializes a new instance of the <see cref="Vector4" /> struct.
     /// </summary>
     /// <param name="v">The Vector2 to copy components from.</param>
     public Vector4(Vector2 v)
@@ -125,11 +137,11 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4" /> struct.
+    ///     Initializes a new instance of the <see cref="Vector4" /> struct.
     /// </summary>
     /// <param name="v">The Vector3 to copy components from.</param>
     /// <remarks>
-    /// .<seealso cref="Vector4(Vector3, float)" />
+    ///     .<seealso cref="Vector4(Vector3, float)" />
     /// </remarks>
     public Vector4(Vector3 v)
     {
@@ -140,7 +152,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4" /> struct.
+    ///     Initializes a new instance of the <see cref="Vector4" /> struct.
     /// </summary>
     /// <param name="v">The Vector3 to copy components from.</param>
     /// <param name="w">The w component of the new Vector4.</param>
@@ -153,7 +165,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4" /> struct.
+    ///     Initializes a new instance of the <see cref="Vector4" /> struct.
     /// </summary>
     /// <param name="v">The Vector4 to copy components from.</param>
     public Vector4(Vector4 v)
@@ -165,24 +177,21 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets the value at the index of the Vector.
+    ///     Gets or sets the value at the index of the Vector.
     /// </summary>
     /// <param name="index">The index of the component from the Vector.</param>
     /// <exception cref="IndexOutOfRangeException">Thrown if the index is less than 0 or greater than 3.</exception>
     public float this[int index]
     {
-        get
-        {
-            return index switch
+        get =>
+            index switch
             {
                 0 => X,
                 1 => Y,
                 2 => Z,
                 3 => W,
-                _ => throw new IndexOutOfRangeException(
-                    $"You tried to access this {nameof(Vector4)} at index: " + index)
+                _ => throw new IndexOutOfRangeException($"You tried to access this {nameof(Vector4)} at index: " + index)
             };
-        }
 
         set
         {
@@ -207,45 +216,36 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets the length (magnitude) of the vector.
+    ///     Gets the length (magnitude) of the vector.
     /// </summary>
     /// <see cref="LengthFast" />
     /// <seealso cref="LengthSquared" />
-    public float Length
-    {
-        get { return MathF.Sqrt(X * X + Y * Y + Z * Z + W * W); }
-    }
+    public float Length => MathF.Sqrt(X * X + Y * Y + Z * Z + W * W);
 
     /// <summary>
-    /// Gets an approximation of the vector length (magnitude).
+    ///     Gets an approximation of the vector length (magnitude).
     /// </summary>
     /// <remarks>
-    /// This property uses an approximation of the square root function to calculate vector magnitude, with
-    /// an upper error bound of 0.001.
+    ///     This property uses an approximation of the square root function to calculate vector magnitude, with
+    ///     an upper error bound of 0.001.
     /// </remarks>
     /// <see cref="Length" />
     /// <seealso cref="LengthSquared" />
-    public float LengthFast
-    {
-        get { return 1.0f / Mathf.InverseSqrtFast(X * X + Y * Y + Z * Z + W * W); }
-    }
+    public float LengthFast => 1.0f / Mathf.InverseSqrtFast(X * X + Y * Y + Z * Z + W * W);
 
     /// <summary>
-    /// Gets the square of the vector length (magnitude).
+    ///     Gets the square of the vector length (magnitude).
     /// </summary>
     /// <remarks>
-    /// This property avoids the costly square root operation required by the Length property. This makes it more suitable
-    /// for comparisons.
+    ///     This property avoids the costly square root operation required by the Length property. This makes it more suitable
+    ///     for comparisons.
     /// </remarks>
     /// <see cref="Length" />
     /// <seealso cref="LengthFast" />
-    public float LengthSquared
-    {
-        get { return X * X + Y * Y + Z * Z + W * W; }
-    }
+    public float LengthSquared => X * X + Y * Y + Z * Z + W * W;
 
     /// <summary>
-    /// Returns a copy of the Vector4 scaled to unit length.
+    ///     Returns a copy of the Vector4 scaled to unit length.
     /// </summary>
     /// <returns>The normalized copy.</returns>
     public Vector4 Normalized()
@@ -256,7 +256,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Scales the Vector4 to unit length.
+    ///     Scales the Vector4 to unit length.
     /// </summary>
     public void Normalize()
     {
@@ -268,7 +268,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Scales the Vector4 to approximately unit length.
+    ///     Scales the Vector4 to approximately unit length.
     /// </summary>
     public void NormalizeFast()
     {
@@ -280,7 +280,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Adds two vectors.
+    ///     Adds two vectors.
     /// </summary>
     /// <param name="a">Left operand.</param>
     /// <param name="b">Right operand.</param>
@@ -293,7 +293,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Adds two vectors.
+    ///     Adds two vectors.
     /// </summary>
     /// <param name="a">Left operand.</param>
     /// <param name="b">Right operand.</param>
@@ -307,7 +307,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Subtract one Vector from another.
+    ///     Subtract one Vector from another.
     /// </summary>
     /// <param name="a">First operand.</param>
     /// <param name="b">Second operand.</param>
@@ -320,7 +320,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Subtract one Vector from another.
+    ///     Subtract one Vector from another.
     /// </summary>
     /// <param name="a">First operand.</param>
     /// <param name="b">Second operand.</param>
@@ -334,7 +334,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Multiplies a vector by a scalar.
+    ///     Multiplies a vector by a scalar.
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -347,7 +347,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Multiplies a vector by a scalar.
+    ///     Multiplies a vector by a scalar.
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -361,7 +361,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Multiplies a vector by the components a vector (scale).
+    ///     Multiplies a vector by the components a vector (scale).
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -374,7 +374,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Multiplies a vector by the components of a vector (scale).
+    ///     Multiplies a vector by the components of a vector (scale).
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -388,7 +388,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Divides a vector by a scalar.
+    ///     Divides a vector by a scalar.
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -401,7 +401,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Divides a vector by a scalar.
+    ///     Divides a vector by a scalar.
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -415,7 +415,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Divides a vector by the components of a vector (scale).
+    ///     Divides a vector by the components of a vector (scale).
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -428,7 +428,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Divide a vector by the components of a vector (scale).
+    ///     Divide a vector by the components of a vector (scale).
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -442,7 +442,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+    ///     Returns a vector created from the smallest of the corresponding components of the given vectors.
     /// </summary>
     /// <param name="a">First operand.</param>
     /// <param name="b">Second operand.</param>
@@ -450,29 +450,45 @@ public struct Vector4 : IEquatable<Vector4>
     [Pure]
     public static Vector4 ComponentMin(Vector4 a, Vector4 b)
     {
-        a.X = a.X < b.X ? a.X : b.X;
-        a.Y = a.Y < b.Y ? a.Y : b.Y;
-        a.Z = a.Z < b.Z ? a.Z : b.Z;
-        a.W = a.W < b.W ? a.W : b.W;
+        a.X = a.X < b.X
+            ? a.X
+            : b.X;
+        a.Y = a.Y < b.Y
+            ? a.Y
+            : b.Y;
+        a.Z = a.Z < b.Z
+            ? a.Z
+            : b.Z;
+        a.W = a.W < b.W
+            ? a.W
+            : b.W;
         return a;
     }
 
     /// <summary>
-    /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+    ///     Returns a vector created from the smallest of the corresponding components of the given vectors.
     /// </summary>
     /// <param name="a">First operand.</param>
     /// <param name="b">Second operand.</param>
     /// <param name="result">The component-wise minimum.</param>
     public static void ComponentMin(in Vector4 a, in Vector4 b, out Vector4 result)
     {
-        result.X = a.X < b.X ? a.X : b.X;
-        result.Y = a.Y < b.Y ? a.Y : b.Y;
-        result.Z = a.Z < b.Z ? a.Z : b.Z;
-        result.W = a.W < b.W ? a.W : b.W;
+        result.X = a.X < b.X
+            ? a.X
+            : b.X;
+        result.Y = a.Y < b.Y
+            ? a.Y
+            : b.Y;
+        result.Z = a.Z < b.Z
+            ? a.Z
+            : b.Z;
+        result.W = a.W < b.W
+            ? a.W
+            : b.W;
     }
 
     /// <summary>
-    /// Returns a vector created from the largest of the corresponding components of the given vectors.
+    ///     Returns a vector created from the largest of the corresponding components of the given vectors.
     /// </summary>
     /// <param name="a">First operand.</param>
     /// <param name="b">Second operand.</param>
@@ -480,79 +496,95 @@ public struct Vector4 : IEquatable<Vector4>
     [Pure]
     public static Vector4 ComponentMax(Vector4 a, Vector4 b)
     {
-        a.X = a.X > b.X ? a.X : b.X;
-        a.Y = a.Y > b.Y ? a.Y : b.Y;
-        a.Z = a.Z > b.Z ? a.Z : b.Z;
-        a.W = a.W > b.W ? a.W : b.W;
+        a.X = a.X > b.X
+            ? a.X
+            : b.X;
+        a.Y = a.Y > b.Y
+            ? a.Y
+            : b.Y;
+        a.Z = a.Z > b.Z
+            ? a.Z
+            : b.Z;
+        a.W = a.W > b.W
+            ? a.W
+            : b.W;
         return a;
     }
 
     /// <summary>
-    /// Returns a vector created from the largest of the corresponding components of the given vectors.
+    ///     Returns a vector created from the largest of the corresponding components of the given vectors.
     /// </summary>
     /// <param name="a">First operand.</param>
     /// <param name="b">Second operand.</param>
     /// <param name="result">The component-wise maximum.</param>
     public static void ComponentMax(in Vector4 a, in Vector4 b, out Vector4 result)
     {
-        result.X = a.X > b.X ? a.X : b.X;
-        result.Y = a.Y > b.Y ? a.Y : b.Y;
-        result.Z = a.Z > b.Z ? a.Z : b.Z;
-        result.W = a.W > b.W ? a.W : b.W;
+        result.X = a.X > b.X
+            ? a.X
+            : b.X;
+        result.Y = a.Y > b.Y
+            ? a.Y
+            : b.Y;
+        result.Z = a.Z > b.Z
+            ? a.Z
+            : b.Z;
+        result.W = a.W > b.W
+            ? a.W
+            : b.W;
     }
 
     /// <summary>
-    /// Returns the Vector4 with the minimum magnitude. If the magnitudes are equal, the second vector
-    /// is selected.
+    ///     Returns the Vector4 with the minimum magnitude. If the magnitudes are equal, the second vector
+    ///     is selected.
     /// </summary>
     /// <param name="left">Left operand.</param>
     /// <param name="right">Right operand.</param>
     /// <returns>The minimum Vector4.</returns>
     [Pure]
-    public static Vector4 MagnitudeMin(Vector4 left, Vector4 right)
-    {
-        return left.LengthSquared < right.LengthSquared ? left : right;
-    }
+    public static Vector4 MagnitudeMin(Vector4 left, Vector4 right) =>
+        left.LengthSquared < right.LengthSquared
+            ? left
+            : right;
 
     /// <summary>
-    /// Returns the Vector4 with the minimum magnitude. If the magnitudes are equal, the second vector
-    /// is selected.
+    ///     Returns the Vector4 with the minimum magnitude. If the magnitudes are equal, the second vector
+    ///     is selected.
     /// </summary>
     /// <param name="left">Left operand.</param>
     /// <param name="right">Right operand.</param>
     /// <param name="result">The magnitude-wise minimum.</param>
-    public static void MagnitudeMin(in Vector4 left, in Vector4 right, out Vector4 result)
-    {
-        result = left.LengthSquared < right.LengthSquared ? left : right;
-    }
+    public static void MagnitudeMin(in Vector4 left, in Vector4 right, out Vector4 result) =>
+        result = left.LengthSquared < right.LengthSquared
+            ? left
+            : right;
 
     /// <summary>
-    /// Returns the Vector4 with the maximum magnitude. If the magnitudes are equal, the first vector
-    /// is selected.
+    ///     Returns the Vector4 with the maximum magnitude. If the magnitudes are equal, the first vector
+    ///     is selected.
     /// </summary>
     /// <param name="left">Left operand.</param>
     /// <param name="right">Right operand.</param>
     /// <returns>The maximum Vector4.</returns>
     [Pure]
-    public static Vector4 MagnitudeMax(Vector4 left, Vector4 right)
-    {
-        return left.LengthSquared >= right.LengthSquared ? left : right;
-    }
+    public static Vector4 MagnitudeMax(Vector4 left, Vector4 right) =>
+        left.LengthSquared >= right.LengthSquared
+            ? left
+            : right;
 
     /// <summary>
-    /// Returns the Vector4 with the maximum magnitude. If the magnitudes are equal, the first vector
-    /// is selected.
+    ///     Returns the Vector4 with the maximum magnitude. If the magnitudes are equal, the first vector
+    ///     is selected.
     /// </summary>
     /// <param name="left">Left operand.</param>
     /// <param name="right">Right operand.</param>
     /// <param name="result">The magnitude-wise maximum.</param>
-    public static void MagnitudeMax(in Vector4 left, in Vector4 right, out Vector4 result)
-    {
-        result = left.LengthSquared >= right.LengthSquared ? left : right;
-    }
+    public static void MagnitudeMax(in Vector4 left, in Vector4 right, out Vector4 result) =>
+        result = left.LengthSquared >= right.LengthSquared
+            ? left
+            : right;
 
     /// <summary>
-    /// Clamp a vector to the given minimum and maximum vectors.
+    ///     Clamp a vector to the given minimum and maximum vectors.
     /// </summary>
     /// <param name="vec">Input vector.</param>
     /// <param name="min">Minimum vector.</param>
@@ -561,30 +593,67 @@ public struct Vector4 : IEquatable<Vector4>
     [Pure]
     public static Vector4 Clamp(Vector4 vec, Vector4 min, Vector4 max)
     {
-        vec.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
-        vec.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-        vec.Z = vec.Z < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
-        vec.W = vec.W < min.W ? min.W : vec.W > max.W ? max.W : vec.W;
+        vec.X = vec.X < min.X
+            ? min.X
+            : vec.X > max.X
+                ? max.X
+                : vec.X;
+        vec.Y = vec.Y < min.Y
+            ? min.Y
+            : vec.Y > max.Y
+                ? max.Y
+                : vec.Y;
+        vec.Z = vec.Z < min.Z
+            ? min.Z
+            : vec.Z > max.Z
+                ? max.Z
+                : vec.Z;
+        vec.W = vec.W < min.W
+            ? min.W
+            : vec.W > max.W
+                ? max.W
+                : vec.W;
         return vec;
     }
 
     /// <summary>
-    /// Clamp a vector to the given minimum and maximum vectors.
+    ///     Clamp a vector to the given minimum and maximum vectors.
     /// </summary>
     /// <param name="vec">Input vector.</param>
     /// <param name="min">Minimum vector.</param>
     /// <param name="max">Maximum vector.</param>
     /// <param name="result">The clamped vector.</param>
-    public static void Clamp(in Vector4 vec, in Vector4 min, in Vector4 max, out Vector4 result)
+    public static void Clamp(
+        in Vector4 vec,
+        in Vector4 min,
+        in Vector4 max,
+        out Vector4 result
+    )
     {
-        result.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
-        result.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-        result.Z = vec.Z < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
-        result.W = vec.W < min.W ? min.W : vec.W > max.W ? max.W : vec.W;
+        result.X = vec.X < min.X
+            ? min.X
+            : vec.X > max.X
+                ? max.X
+                : vec.X;
+        result.Y = vec.Y < min.Y
+            ? min.Y
+            : vec.Y > max.Y
+                ? max.Y
+                : vec.Y;
+        result.Z = vec.Z < min.Z
+            ? min.Z
+            : vec.Z > max.Z
+                ? max.Z
+                : vec.Z;
+        result.W = vec.W < min.W
+            ? min.W
+            : vec.W > max.W
+                ? max.W
+                : vec.W;
     }
 
     /// <summary>
-    /// Scale a vector to unit length.
+    ///     Scale a vector to unit length.
     /// </summary>
     /// <param name="vec">The input vector.</param>
     /// <returns>The normalized copy.</returns>
@@ -600,7 +669,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Scale a vector to unit length.
+    ///     Scale a vector to unit length.
     /// </summary>
     /// <param name="vec">The input vector.</param>
     /// <param name="result">The normalized vector.</param>
@@ -614,7 +683,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Scale a vector to approximately unit length.
+    ///     Scale a vector to approximately unit length.
     /// </summary>
     /// <param name="vec">The input vector.</param>
     /// <returns>The normalized copy.</returns>
@@ -630,7 +699,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Scale a vector to approximately unit length.
+    ///     Scale a vector to approximately unit length.
     /// </summary>
     /// <param name="vec">The input vector.</param>
     /// <param name="result">The normalized copy.</param>
@@ -644,30 +713,25 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Calculate the dot product of two vectors.
+    ///     Calculate the dot product of two vectors.
     /// </summary>
     /// <param name="left">First operand.</param>
     /// <param name="right">Second operand.</param>
     /// <returns>The dot product of the two inputs.</returns>
     [Pure]
-    public static float Dot(Vector4 left, Vector4 right)
-    {
-        return left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W;
-    }
+    public static float Dot(Vector4 left, Vector4 right) => left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W;
 
     /// <summary>
-    /// Calculate the dot product of two vectors.
+    ///     Calculate the dot product of two vectors.
     /// </summary>
     /// <param name="left">First operand.</param>
     /// <param name="right">Second operand.</param>
     /// <param name="result">The dot product of the two inputs.</param>
-    public static void Dot(in Vector4 left, in Vector4 right, out float result)
-    {
+    public static void Dot(in Vector4 left, in Vector4 right, out float result) =>
         result = left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W;
-    }
 
     /// <summary>
-    /// Returns a new vector that is the linear blend of the 2 given vectors.
+    ///     Returns a new vector that is the linear blend of the 2 given vectors.
     /// </summary>
     /// <param name="a">First input vector.</param>
     /// <param name="b">Second input vector.</param>
@@ -684,13 +748,18 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Returns a new vector that is the linear blend of the 2 given vectors.
+    ///     Returns a new vector that is the linear blend of the 2 given vectors.
     /// </summary>
     /// <param name="a">First input vector.</param>
     /// <param name="b">Second input vector.</param>
     /// <param name="blend">The blend factor.</param>
     /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise.</param>
-    public static void Lerp(in Vector4 a, in Vector4 b, float blend, out Vector4 result)
+    public static void Lerp(
+        in Vector4 a,
+        in Vector4 b,
+        float blend,
+        out Vector4 result
+    )
     {
         result.X = blend * (b.X - a.X) + a.X;
         result.Y = blend * (b.Y - a.Y) + a.Y;
@@ -699,7 +768,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Returns a new vector that is the component-wise linear blend of the 2 given vectors.
+    ///     Returns a new vector that is the component-wise linear blend of the 2 given vectors.
     /// </summary>
     /// <param name="a">First input vector.</param>
     /// <param name="b">Second input vector.</param>
@@ -716,13 +785,18 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Returns a new vector that is the component-wise linear blend of the 2 given vectors.
+    ///     Returns a new vector that is the component-wise linear blend of the 2 given vectors.
     /// </summary>
     /// <param name="a">First input vector.</param>
     /// <param name="b">Second input vector.</param>
     /// <param name="blend">The blend factor.</param>
     /// <param name="result">a when blend=0, b when blend=1, and a component-wise linear combination otherwise.</param>
-    public static void Lerp(in Vector4 a, in Vector4 b, Vector4 blend, out Vector4 result)
+    public static void Lerp(
+        in Vector4 a,
+        in Vector4 b,
+        Vector4 blend,
+        out Vector4 result
+    )
     {
         result.X = blend.X * (b.X - a.X) + a.X;
         result.Y = blend.Y * (b.Y - a.Y) + a.Y;
@@ -731,7 +805,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Interpolate 3 Vectors using Barycentric coordinates.
+    ///     Interpolate 3 Vectors using Barycentric coordinates.
     /// </summary>
     /// <param name="a">First input Vector.</param>
     /// <param name="b">Second input Vector.</param>
@@ -740,14 +814,27 @@ public struct Vector4 : IEquatable<Vector4>
     /// <param name="v">Second Barycentric Coordinate.</param>
     /// <returns>a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise.</returns>
     [Pure]
-    public static Vector4 BaryCentric(Vector4 a, Vector4 b, Vector4 c, float u, float v)
+    public static Vector4 BaryCentric(
+        Vector4 a,
+        Vector4 b,
+        Vector4 c,
+        float u,
+        float v
+    )
     {
-        BaryCentric(in a, in b, in c, u, v, out var result);
+        BaryCentric(
+            in a,
+            in b,
+            in c,
+            u,
+            v,
+            out var result
+        );
         return result;
     }
 
     /// <summary>
-    /// Interpolate 3 Vectors using Barycentric coordinates.
+    ///     Interpolate 3 Vectors using Barycentric coordinates.
     /// </summary>
     /// <param name="a">First input Vector.</param>
     /// <param name="b">Second input Vector.</param>
@@ -755,11 +842,10 @@ public struct Vector4 : IEquatable<Vector4>
     /// <param name="u">First Barycentric Coordinate.</param>
     /// <param name="v">Second Barycentric Coordinate.</param>
     /// <param name="result">
-    /// Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
-    /// otherwise.
+    ///     Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
+    ///     otherwise.
     /// </param>
-    public static void BaryCentric
-    (
+    public static void BaryCentric(
         in Vector4 a,
         in Vector4 b,
         in Vector4 c,
@@ -778,7 +864,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Transform a Vector by the given Matrix.
+    ///     Transform a Vector by the given Matrix.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="mat">The desired transformation.</param>
@@ -791,22 +877,21 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Transform a Vector by the given Matrix.
+    ///     Transform a Vector by the given Matrix.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="mat">The desired transformation.</param>
     /// <param name="result">The transformed vector.</param>
-    public static void TransformRow(in Vector4 vec, in Matrix4 mat, out Vector4 result)
-    {
+    public static void TransformRow(in Vector4 vec, in Matrix4 mat, out Vector4 result) =>
         result = new Vector4(
             vec.X * mat.Row0.X + vec.Y * mat.Row1.X + vec.Z * mat.Row2.X + vec.W * mat.Row3.X,
             vec.X * mat.Row0.Y + vec.Y * mat.Row1.Y + vec.Z * mat.Row2.Y + vec.W * mat.Row3.Y,
             vec.X * mat.Row0.Z + vec.Y * mat.Row1.Z + vec.Z * mat.Row2.Z + vec.W * mat.Row3.Z,
-            vec.X * mat.Row0.W + vec.Y * mat.Row1.W + vec.Z * mat.Row2.W + vec.W * mat.Row3.W);
-    }
+            vec.X * mat.Row0.W + vec.Y * mat.Row1.W + vec.Z * mat.Row2.W + vec.W * mat.Row3.W
+        );
 
     /// <summary>
-    /// Transforms a vector by a quaternion rotation.
+    ///     Transforms a vector by a quaternion rotation.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="quat">The quaternion to rotate the vector by.</param>
@@ -819,7 +904,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Transforms a vector by a quaternion rotation.
+    ///     Transforms a vector by a quaternion rotation.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="quat">The quaternion to rotate the vector by.</param>
@@ -838,7 +923,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Transform a Vector by the given Matrix using right-handed notation.
+    ///     Transform a Vector by the given Matrix using right-handed notation.
     /// </summary>
     /// <param name="mat">The desired transformation.</param>
     /// <param name="vec">The vector to transform.</param>
@@ -851,27 +936,26 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Transform a Vector by the given Matrix using right-handed notation.
+    ///     Transform a Vector by the given Matrix using right-handed notation.
     /// </summary>
     /// <param name="mat">The desired transformation.</param>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="result">The transformed vector.</param>
-    public static void TransformColumn(in Matrix4 mat, in Vector4 vec, out Vector4 result)
-    {
+    public static void TransformColumn(in Matrix4 mat, in Vector4 vec, out Vector4 result) =>
         result = new Vector4(
             mat.Row0.X * vec.X + mat.Row0.Y * vec.Y + mat.Row0.Z * vec.Z + mat.Row0.W * vec.W,
             mat.Row1.X * vec.X + mat.Row1.Y * vec.Y + mat.Row1.Z * vec.Z + mat.Row1.W * vec.W,
             mat.Row2.X * vec.X + mat.Row2.Y * vec.Y + mat.Row2.Z * vec.Z + mat.Row2.W * vec.W,
-            mat.Row3.X * vec.X + mat.Row3.Y * vec.Y + mat.Row3.Z * vec.Z + mat.Row3.W * vec.W);
-    }
+            mat.Row3.X * vec.X + mat.Row3.Y * vec.Y + mat.Row3.Z * vec.Z + mat.Row3.W * vec.W
+        );
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2 with the X and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector2 with the X and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2 Xy
     {
-        get { return Unsafe.As<Vector4, Vector2>(ref this); }
+        get => Unsafe.As<Vector4, Vector2>(ref this);
         set
         {
             X = value.X;
@@ -880,12 +964,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2 with the X and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector2 with the X and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2 Xz
     {
-        get { return new Vector2(X, Z); }
+        get => new(X, Z);
         set
         {
             X = value.X;
@@ -894,12 +978,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2 with the X and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector2 with the X and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2 Xw
     {
-        get { return new Vector2(X, W); }
+        get => new(X, W);
         set
         {
             X = value.X;
@@ -908,12 +992,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2 with the Y and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector2 with the Y and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2 Yx
     {
-        get { return new Vector2(Y, X); }
+        get => new(Y, X);
         set
         {
             Y = value.X;
@@ -922,12 +1006,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2 with the Y and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector2 with the Y and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2 Yz
     {
-        get { return new Vector2(Y, Z); }
+        get => new(Y, Z);
         set
         {
             Y = value.X;
@@ -936,12 +1020,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2 with the Y and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector2 with the Y and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2 Yw
     {
-        get { return new Vector2(Y, W); }
+        get => new(Y, W);
         set
         {
             Y = value.X;
@@ -950,12 +1034,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2 with the Z and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector2 with the Z and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2 Zx
     {
-        get { return new Vector2(Z, X); }
+        get => new(Z, X);
         set
         {
             Z = value.X;
@@ -964,12 +1048,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2 with the Z and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector2 with the Z and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2 Zy
     {
-        get { return new Vector2(Z, Y); }
+        get => new(Z, Y);
         set
         {
             Z = value.X;
@@ -978,12 +1062,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2 with the Z and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector2 with the Z and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2 Zw
     {
-        get { return new Vector2(Z, W); }
+        get => new(Z, W);
         set
         {
             Z = value.X;
@@ -992,12 +1076,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2 with the W and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector2 with the W and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2 Wx
     {
-        get { return new Vector2(W, X); }
+        get => new(W, X);
         set
         {
             W = value.X;
@@ -1006,12 +1090,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2 with the W and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector2 with the W and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2 Wy
     {
-        get { return new Vector2(W, Y); }
+        get => new(W, Y);
         set
         {
             W = value.X;
@@ -1020,12 +1104,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2 with the W and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector2 with the W and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2 Wz
     {
-        get { return new Vector2(W, Z); }
+        get => new(W, Z);
         set
         {
             W = value.X;
@@ -1034,12 +1118,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the X, Y, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the X, Y, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Xyz
     {
-        get { return Unsafe.As<Vector4, Vector3>(ref this); }
+        get => Unsafe.As<Vector4, Vector3>(ref this);
         set
         {
             X = value.X;
@@ -1049,12 +1133,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the X, Y, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the X, Y, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Xyw
     {
-        get { return new Vector3(X, Y, W); }
+        get => new(X, Y, W);
         set
         {
             X = value.X;
@@ -1064,12 +1148,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the X, Z, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the X, Z, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Xzy
     {
-        get { return new Vector3(X, Z, Y); }
+        get => new(X, Z, Y);
         set
         {
             X = value.X;
@@ -1079,12 +1163,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the X, Z, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the X, Z, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Xzw
     {
-        get { return new Vector3(X, Z, W); }
+        get => new(X, Z, W);
         set
         {
             X = value.X;
@@ -1094,12 +1178,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the X, W, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the X, W, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Xwy
     {
-        get { return new Vector3(X, W, Y); }
+        get => new(X, W, Y);
         set
         {
             X = value.X;
@@ -1109,12 +1193,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the X, W, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the X, W, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Xwz
     {
-        get { return new Vector3(X, W, Z); }
+        get => new(X, W, Z);
         set
         {
             X = value.X;
@@ -1124,12 +1208,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the Y, X, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the Y, X, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Yxz
     {
-        get { return new Vector3(Y, X, Z); }
+        get => new(Y, X, Z);
         set
         {
             Y = value.X;
@@ -1139,12 +1223,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the Y, X, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the Y, X, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Yxw
     {
-        get { return new Vector3(Y, X, W); }
+        get => new(Y, X, W);
         set
         {
             Y = value.X;
@@ -1154,12 +1238,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the Y, Z, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the Y, Z, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Yzx
     {
-        get { return new Vector3(Y, Z, X); }
+        get => new(Y, Z, X);
         set
         {
             Y = value.X;
@@ -1169,12 +1253,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the Y, Z, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the Y, Z, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Yzw
     {
-        get { return new Vector3(Y, Z, W); }
+        get => new(Y, Z, W);
         set
         {
             Y = value.X;
@@ -1184,12 +1268,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the Y, W, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the Y, W, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Ywx
     {
-        get { return new Vector3(Y, W, X); }
+        get => new(Y, W, X);
         set
         {
             Y = value.X;
@@ -1199,12 +1283,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the Y, W, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the Y, W, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Ywz
     {
-        get { return new Vector3(Y, W, Z); }
+        get => new(Y, W, Z);
         set
         {
             Y = value.X;
@@ -1214,12 +1298,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the Z, X, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the Z, X, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Zxy
     {
-        get { return new Vector3(Z, X, Y); }
+        get => new(Z, X, Y);
         set
         {
             Z = value.X;
@@ -1229,12 +1313,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the Z, X, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the Z, X, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Zxw
     {
-        get { return new Vector3(Z, X, W); }
+        get => new(Z, X, W);
         set
         {
             Z = value.X;
@@ -1244,12 +1328,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the Z, Y, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the Z, Y, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Zyx
     {
-        get { return new Vector3(Z, Y, X); }
+        get => new(Z, Y, X);
         set
         {
             Z = value.X;
@@ -1259,12 +1343,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the Z, Y, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the Z, Y, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Zyw
     {
-        get { return new Vector3(Z, Y, W); }
+        get => new(Z, Y, W);
         set
         {
             Z = value.X;
@@ -1274,12 +1358,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the Z, W, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the Z, W, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Zwx
     {
-        get { return new Vector3(Z, W, X); }
+        get => new(Z, W, X);
         set
         {
             Z = value.X;
@@ -1289,12 +1373,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the Z, W, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the Z, W, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Zwy
     {
-        get { return new Vector3(Z, W, Y); }
+        get => new(Z, W, Y);
         set
         {
             Z = value.X;
@@ -1304,12 +1388,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the W, X, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the W, X, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Wxy
     {
-        get { return new Vector3(W, X, Y); }
+        get => new(W, X, Y);
         set
         {
             W = value.X;
@@ -1319,12 +1403,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the W, X, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the W, X, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Wxz
     {
-        get { return new Vector3(W, X, Z); }
+        get => new(W, X, Z);
         set
         {
             W = value.X;
@@ -1334,12 +1418,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the W, Y, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the W, Y, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Wyx
     {
-        get { return new Vector3(W, Y, X); }
+        get => new(W, Y, X);
         set
         {
             W = value.X;
@@ -1349,12 +1433,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the W, Y, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the W, Y, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Wyz
     {
-        get { return new Vector3(W, Y, Z); }
+        get => new(W, Y, Z);
         set
         {
             W = value.X;
@@ -1364,12 +1448,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the W, Z, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the W, Z, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Wzx
     {
-        get { return new Vector3(W, Z, X); }
+        get => new(W, Z, X);
         set
         {
             W = value.X;
@@ -1379,12 +1463,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3 with the W, Z, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector3 with the W, Z, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3 Wzy
     {
-        get { return new Vector3(W, Z, Y); }
+        get => new(W, Z, Y);
         set
         {
             W = value.X;
@@ -1394,12 +1478,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the X, Y, W, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the X, Y, W, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Xywz
     {
-        get { return new Vector4(X, Y, W, Z); }
+        get => new(X, Y, W, Z);
         set
         {
             X = value.X;
@@ -1410,12 +1494,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the X, Z, Y, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the X, Z, Y, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Xzyw
     {
-        get { return new Vector4(X, Z, Y, W); }
+        get => new(X, Z, Y, W);
         set
         {
             X = value.X;
@@ -1426,12 +1510,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the X, Z, W, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the X, Z, W, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Xzwy
     {
-        get { return new Vector4(X, Z, W, Y); }
+        get => new(X, Z, W, Y);
         set
         {
             X = value.X;
@@ -1442,12 +1526,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the X, W, Y, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the X, W, Y, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Xwyz
     {
-        get { return new Vector4(X, W, Y, Z); }
+        get => new(X, W, Y, Z);
         set
         {
             X = value.X;
@@ -1458,12 +1542,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the X, W, Z, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the X, W, Z, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Xwzy
     {
-        get { return new Vector4(X, W, Z, Y); }
+        get => new(X, W, Z, Y);
         set
         {
             X = value.X;
@@ -1474,12 +1558,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the Y, X, Z, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the Y, X, Z, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Yxzw
     {
-        get { return new Vector4(Y, X, Z, W); }
+        get => new(Y, X, Z, W);
         set
         {
             Y = value.X;
@@ -1490,12 +1574,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the Y, X, W, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the Y, X, W, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Yxwz
     {
-        get { return new Vector4(Y, X, W, Z); }
+        get => new(Y, X, W, Z);
         set
         {
             Y = value.X;
@@ -1506,12 +1590,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the Y, Y, Z, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the Y, Y, Z, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Yyzw
     {
-        get { return new Vector4(Y, Y, Z, W); }
+        get => new(Y, Y, Z, W);
         set
         {
             X = value.X;
@@ -1522,12 +1606,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the Y, Y, W, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the Y, Y, W, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Yywz
     {
-        get { return new Vector4(Y, Y, W, Z); }
+        get => new(Y, Y, W, Z);
         set
         {
             X = value.X;
@@ -1538,12 +1622,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the Y, Z, X, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the Y, Z, X, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Yzxw
     {
-        get { return new Vector4(Y, Z, X, W); }
+        get => new(Y, Z, X, W);
         set
         {
             Y = value.X;
@@ -1554,12 +1638,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the Y, Z, W, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the Y, Z, W, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Yzwx
     {
-        get { return new Vector4(Y, Z, W, X); }
+        get => new(Y, Z, W, X);
         set
         {
             Y = value.X;
@@ -1570,12 +1654,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the Y, W, X, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the Y, W, X, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Ywxz
     {
-        get { return new Vector4(Y, W, X, Z); }
+        get => new(Y, W, X, Z);
         set
         {
             Y = value.X;
@@ -1586,12 +1670,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the Y, W, Z, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the Y, W, Z, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Ywzx
     {
-        get { return new Vector4(Y, W, Z, X); }
+        get => new(Y, W, Z, X);
         set
         {
             Y = value.X;
@@ -1602,12 +1686,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the Z, X, Y, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the Z, X, Y, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Zxyw
     {
-        get { return new Vector4(Z, X, Y, W); }
+        get => new(Z, X, Y, W);
         set
         {
             Z = value.X;
@@ -1618,12 +1702,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the Z, X, W, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the Z, X, W, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Zxwy
     {
-        get { return new Vector4(Z, X, W, Y); }
+        get => new(Z, X, W, Y);
         set
         {
             Z = value.X;
@@ -1634,12 +1718,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the Z, Y, X, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the Z, Y, X, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Zyxw
     {
-        get { return new Vector4(Z, Y, X, W); }
+        get => new(Z, Y, X, W);
         set
         {
             Z = value.X;
@@ -1650,12 +1734,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the Z, Y, W, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the Z, Y, W, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Zywx
     {
-        get { return new Vector4(Z, Y, W, X); }
+        get => new(Z, Y, W, X);
         set
         {
             Z = value.X;
@@ -1666,12 +1750,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the Z, W, X, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the Z, W, X, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Zwxy
     {
-        get { return new Vector4(Z, W, X, Y); }
+        get => new(Z, W, X, Y);
         set
         {
             Z = value.X;
@@ -1682,12 +1766,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the Z, W, Y, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the Z, W, Y, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Zwyx
     {
-        get { return new Vector4(Z, W, Y, X); }
+        get => new(Z, W, Y, X);
         set
         {
             Z = value.X;
@@ -1698,12 +1782,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the Z, W, Z, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the Z, W, Z, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Zwzy
     {
-        get { return new Vector4(Z, W, Z, Y); }
+        get => new(Z, W, Z, Y);
         set
         {
             X = value.X;
@@ -1714,12 +1798,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the W, X, Y, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the W, X, Y, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Wxyz
     {
-        get { return new Vector4(W, X, Y, Z); }
+        get => new(W, X, Y, Z);
         set
         {
             W = value.X;
@@ -1730,12 +1814,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the W, X, Z, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the W, X, Z, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Wxzy
     {
-        get { return new Vector4(W, X, Z, Y); }
+        get => new(W, X, Z, Y);
         set
         {
             W = value.X;
@@ -1746,12 +1830,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the W, Y, X, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the W, Y, X, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Wyxz
     {
-        get { return new Vector4(W, Y, X, Z); }
+        get => new(W, Y, X, Z);
         set
         {
             W = value.X;
@@ -1762,12 +1846,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the W, Y, Z, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the W, Y, Z, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Wyzx
     {
-        get { return new Vector4(W, Y, Z, X); }
+        get => new(W, Y, Z, X);
         set
         {
             W = value.X;
@@ -1778,12 +1862,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the W, Z, X, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the W, Z, X, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Wzxy
     {
-        get { return new Vector4(W, Z, X, Y); }
+        get => new(W, Z, X, Y);
         set
         {
             W = value.X;
@@ -1794,12 +1878,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the W, Z, Y, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the W, Z, Y, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Wzyx
     {
-        get { return new Vector4(W, Z, Y, X); }
+        get => new(W, Z, Y, X);
         set
         {
             W = value.X;
@@ -1810,12 +1894,12 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector4 with the W, Z, Y, and W components of this instance.
+    ///     Gets or sets an OpenTK.Vector4 with the W, Z, Y, and W components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector4 Wzyw
     {
-        get { return new Vector4(W, Z, Y, W); }
+        get => new(W, Z, Y, W);
         set
         {
             X = value.X;
@@ -1826,7 +1910,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Adds two instances.
+    ///     Adds two instances.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
@@ -1842,7 +1926,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Subtracts two instances.
+    ///     Subtracts two instances.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
@@ -1858,7 +1942,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Negates an instance.
+    ///     Negates an instance.
     /// </summary>
     /// <param name="vec">The instance.</param>
     /// <returns>The result of the calculation.</returns>
@@ -1873,7 +1957,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Multiplies an instance by a scalar.
+    ///     Multiplies an instance by a scalar.
     /// </summary>
     /// <param name="vec">The instance.</param>
     /// <param name="scale">The scalar.</param>
@@ -1889,7 +1973,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Multiplies an instance by a scalar.
+    ///     Multiplies an instance by a scalar.
     /// </summary>
     /// <param name="scale">The scalar.</param>
     /// <param name="vec">The instance.</param>
@@ -1905,7 +1989,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Component-wise multiplication between the specified instance by a scale vector.
+    ///     Component-wise multiplication between the specified instance by a scale vector.
     /// </summary>
     /// <param name="scale">Left operand.</param>
     /// <param name="vec">Right operand.</param>
@@ -1921,7 +2005,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Transform a Vector by the given Matrix.
+    ///     Transform a Vector by the given Matrix.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="mat">The desired transformation.</param>
@@ -1934,7 +2018,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Transform a Vector by the given Matrix using right-handed notation.
+    ///     Transform a Vector by the given Matrix using right-handed notation.
     /// </summary>
     /// <param name="mat">The desired transformation.</param>
     /// <param name="vec">The vector to transform.</param>
@@ -1947,7 +2031,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Transforms a vector by a quaternion rotation.
+    ///     Transforms a vector by a quaternion rotation.
     /// </summary>
     /// <param name="quat">The quaternion to rotate the vector by.</param>
     /// <param name="vec">The vector to transform.</param>
@@ -1960,7 +2044,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Divides an instance by a scalar.
+    ///     Divides an instance by a scalar.
     /// </summary>
     /// <param name="vec">The instance.</param>
     /// <param name="scale">The scalar.</param>
@@ -1976,7 +2060,7 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Component-wise division between the specified instance by a scale vector.
+    ///     Component-wise division between the specified instance by a scale vector.
     /// </summary>
     /// <param name="vec">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -1992,40 +2076,31 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Compares two instances for equality.
+    ///     Compares two instances for equality.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
     /// <returns>True, if left equals right; false otherwise.</returns>
-    public static bool operator ==(Vector4 left, Vector4 right)
-    {
-        return left.Equals(right);
-    }
+    public static bool operator ==(Vector4 left, Vector4 right) => left.Equals(right);
 
     /// <summary>
-    /// Compares two instances for inequality.
+    ///     Compares two instances for inequality.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
     /// <returns>True, if left does not equa lright; false otherwise.</returns>
-    public static bool operator !=(Vector4 left, Vector4 right)
-    {
-        return !(left == right);
-    }
+    public static bool operator !=(Vector4 left, Vector4 right) => !(left == right);
 
     /// <summary>
-    /// Returns a pointer to the first element of the specified instance.
+    ///     Returns a pointer to the first element of the specified instance.
     /// </summary>
     /// <param name="v">The instance.</param>
     /// <returns>A pointer to the first element of v.</returns>
     [Pure]
-    public static unsafe explicit operator float*(Vector4 v)
-    {
-        return &v.X;
-    }
+    public static unsafe explicit operator float*(Vector4 v) => &v.X;
 
     /// <summary>
-    /// Returns a pointer to the first element of the specified instance.
+    ///     Returns a pointer to the first element of the specified instance.
     /// </summary>
     /// <param name="v">The instance.</param>
     /// <returns>A pointer to the first element of v.</returns>
@@ -2039,70 +2114,53 @@ public struct Vector4 : IEquatable<Vector4>
     }
 
     /// <summary>
-    /// Returns this Vector4 as a Color4. The resulting struct will have RGBA mapped to XYZW, in that order.
+    ///     Returns this Vector4 as a Color4. The resulting struct will have RGBA mapped to XYZW, in that order.
     /// </summary>
     /// <param name="v">The Vector4 to convert.</param>
     /// <returns>The Vector4, converted to a Color4.</returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [Pure]
-    public static explicit operator Color(Vector4 v)
-    {
-        return Unsafe.As<Vector4, Color>(ref v);
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
+    public static explicit operator Color(Vector4 v) => Unsafe.As<Vector4, Color>(ref v);
 
     /// <summary>
-    /// Converts OpenTK.Vector4 to OpenTK.Vector4d.
+    ///     Converts OpenTK.Vector4 to OpenTK.Vector4d.
     /// </summary>
     /// <param name="vec">The Vector4 to convert.</param>
     /// <returns>The resulting Vector4d.</returns>
     [Pure]
-    public static implicit operator Vector4d(Vector4 vec)
-    {
-        return new Vector4d(vec.X, vec.Y, vec.Z, vec.W);
-    }
+    public static implicit operator Vector4d(Vector4 vec) => new(vec.X, vec.Y, vec.Z, vec.W);
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector4" /> struct using a tuple containing the component
-    /// values.
+    ///     Initializes a new instance of the <see cref="Vector4" /> struct using a tuple containing the component
+    ///     values.
     /// </summary>
     /// <param name="values">A tuple containing the component values.</param>
     /// <returns>A new instance of the <see cref="Vector4" /> struct with the given component values.</returns>
     [Pure]
-    public static implicit operator Vector4((float X, float Y, float Z, float W) values)
-    {
-        return new Vector4(values.X, values.Y, values.Z, values.W);
-    }
+    public static implicit operator Vector4((float X, float Y, float Z, float W) values) => new(values.X, values.Y, values.Z, values.W);
 
     /// <inheritdoc />
-    public override bool Equals(object? obj)
-    {
-        return obj is Vector4 vector4 && Equals(vector4);
-    }
+    public override bool Equals(object? obj) => obj is Vector4 vector4 && Equals(vector4);
 
     /// <inheritdoc />
-    public bool Equals(Vector4 other)
-    {
-        return X == other.X &&
-               Y == other.Y &&
-               Z == other.Z &&
-               W == other.W;
-    }
+    public bool Equals(Vector4 other) => X == other.X && Y == other.Y && Z == other.Z && W == other.W;
 
     /// <inheritdoc />
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(X, Y, Z, W);
-    }
+    public override int GetHashCode() => HashCode.Combine(X, Y, Z, W);
 
     /// <summary>
-    /// Deconstructs the vector into it's individual components.
+    ///     Deconstructs the vector into it's individual components.
     /// </summary>
     /// <param name="x">The X component of the vector.</param>
     /// <param name="y">The Y component of the vector.</param>
     /// <param name="z">The Z component of the vector.</param>
     /// <param name="w">The W component of the vector.</param>
     [Pure]
-    public void Deconstruct(out float x, out float y, out float z, out float w)
+    public void Deconstruct(
+        out float x,
+        out float y,
+        out float z,
+        out float w
+    )
     {
         x = X;
         y = Y;

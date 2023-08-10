@@ -16,93 +16,86 @@ internal struct MathfInternal
 public struct Mathf
 {
     /// <summary>
-    /// Defines the value of Pi as a <see cref="float" />.
+    ///     Defines the value of Pi as a <see cref="float" />.
     /// </summary>
     public const float Pi = 3.1415927f;
 
     /// <summary>
-    /// Defines the value of Pi divided by two as a <see cref="float" />.
+    ///     Defines the value of Pi divided by two as a <see cref="float" />.
     /// </summary>
     public const float PiOver2 = Pi / 2;
 
     /// <summary>
-    /// Defines the value of Pi divided by three as a <see cref="float" />.
+    ///     Defines the value of Pi divided by three as a <see cref="float" />.
     /// </summary>
     public const float PiOver3 = Pi / 3;
 
     /// <summary>
-    /// Defines the value of  Pi divided by four as a <see cref="float" />.
+    ///     Defines the value of  Pi divided by four as a <see cref="float" />.
     /// </summary>
     public const float PiOver4 = Pi / 4;
 
     /// <summary>
-    /// Defines the value of Pi divided by six as a <see cref="float" />.
+    ///     Defines the value of Pi divided by six as a <see cref="float" />.
     /// </summary>
     public const float PiOver6 = Pi / 6;
 
     /// <summary>
-    /// Defines the value of Pi multiplied by two as a <see cref="float" />.
+    ///     Defines the value of Pi multiplied by two as a <see cref="float" />.
     /// </summary>
     public const float TwoPi = 2 * Pi;
 
     /// <summary>
-    /// Defines the value of Pi multiplied by 3 and divided by two as a <see cref="float" />.
+    ///     Defines the value of Pi multiplied by 3 and divided by two as a <see cref="float" />.
     /// </summary>
     public const float ThreePiOver2 = 3 * Pi / 2;
 
     /// <summary>
-    /// Defines the value of E as a <see cref="float" />.
+    ///     Defines the value of E as a <see cref="float" />.
     /// </summary>
     public const float E = 2.7182817f;
 
     /// <summary>
-    /// Defines the base-10 logarithm of E.
+    ///     Defines the base-10 logarithm of E.
     /// </summary>
     public const float Log10E = 0.4342945f;
 
     /// <summary>
-    /// Defines the base-2 logarithm of E.
+    ///     Defines the base-2 logarithm of E.
     /// </summary>
     public const float Log2E = 1.442695f;
 
     /// <summary>
-    /// A representation of positive infinity (RO).
+    ///     A representation of positive infinity (RO).
     /// </summary>
     public const float Infinity = float.PositiveInfinity;
 
     /// <summary>
-    /// A representation of negative infinity (RO).
+    ///     A representation of negative infinity (RO).
     /// </summary>
     public const float NegativeInfinity = float.NegativeInfinity;
 
     /// <summary>
-    /// Degrees-to-radians conversion constant (RO).
+    ///     Degrees-to-radians conversion constant (RO).
     /// </summary>
     public const float Deg2Rad = Pi * 2F / 360F;
 
     /// <summary>
-    /// Radians-to-degrees conversion constant (RO).
+    ///     Radians-to-degrees conversion constant (RO).
     /// </summary>
     public const float Rad2Deg = 1F / Deg2Rad;
 
     /// <summary>
-    /// A tiny floating point value (RO).
+    ///     A tiny floating point value (RO).
     /// </summary>
     public static readonly float epsilon =
         MathfInternal.IsFlushToZeroEnabled
             ? MathfInternal.FloatMinNormal
             : MathfInternal.FloatMinDenormal;
 
+    public static float ACos(float x) => (float)System.Math.Acos(x);
 
-    public static float ACos(float x)
-    {
-        return (float)System.Math.Acos(x);
-    }
-
-    public static double ACos(double x)
-    {
-        return System.Math.Acos(x);
-    }
+    public static double ACos(double x) => System.Math.Acos(x);
 
     public static float ACos2(float x)
     {
@@ -114,41 +107,25 @@ public struct Mathf
         return (float)System.Math.Log(x + System.Math.Sqrt(x * x - 1f));
     }
 
-    public static float ASin(float x)
-    {
-        return (float)System.Math.Asin(x);
-    }
+    public static float ASin(float x) => (float)System.Math.Asin(x);
 
-    public static double ASin(double x)
-    {
-        return System.Math.Asin(x);
-    }
+    public static double ASin(double x) => System.Math.Asin(x);
 
-    public static float ASin2(float x)
-    {
-        return (x < 0f ? -1f : x > 0f ? 1f : 0f) *
-               (float)System.Math.Log(System.Math.Abs(x) + System.Math.Sqrt(1f + x * x));
-    }
+    public static float ASin2(float x) =>
+        (x < 0f
+            ? -1f
+            : x > 0f
+                ? 1f
+                : 0f)
+        * (float)System.Math.Log(System.Math.Abs(x) + System.Math.Sqrt(1f + x * x));
 
-    public static float ATan(float y, float x)
-    {
-        return (float)System.Math.Atan2(y, x);
-    }
+    public static float ATan(float y, float x) => (float)System.Math.Atan2(y, x);
 
-    public static double ATan(double y, double x)
-    {
-        return System.Math.Atan2(y, x);
-    }
+    public static double ATan(double y, double x) => System.Math.Atan2(y, x);
 
-    public static float ATan(float yOverX)
-    {
-        return (float)System.Math.Atan(yOverX);
-    }
+    public static float ATan(float yOverX) => (float)System.Math.Atan(yOverX);
 
-    public static double ATan(double yOverX)
-    {
-        return System.Math.Atan(yOverX);
-    }
+    public static double ATan(double yOverX) => System.Math.Atan(yOverX);
 
     public static float ATan2(float x)
     {
@@ -160,127 +137,64 @@ public struct Mathf
         return 0.5f * (float)System.Math.Log((1f + x) / (1f - x));
     }
 
-    public static float Cos(float angle)
-    {
-        return (float)System.Math.Cos(angle);
-    }
+    public static float Cos(float angle) => (float)System.Math.Cos(angle);
 
-    public static double Cos(double angle)
-    {
-        return System.Math.Cos(angle);
-    }
+    public static double Cos(double angle) => System.Math.Cos(angle);
 
-    public static float Cos2(float angle)
-    {
-        return (float)System.Math.Cosh(angle);
-    }
+    public static float Cos2(float angle) => (float)System.Math.Cosh(angle);
 
-    public static double Cos2(double angle)
-    {
-        return System.Math.Cosh(angle);
-    }
+    public static double Cos2(double angle) => System.Math.Cosh(angle);
 
-    public static float Degrees(float radians)
-    {
-        return radians * 57.295779513082320876798154814105f;
-    }
+    public static float Degrees(float radians) => radians * 57.295779513082320876798154814105f;
 
-    public static double Degrees(double radians)
-    {
-        return radians * 57.295779513082320876798154814105d;
-    }
+    public static double Degrees(double radians) => radians * 57.295779513082320876798154814105d;
 
-    public static float Radians(float degrees)
-    {
-        return degrees * 0.01745329251994329576923690768489f;
-    }
+    public static float Radians(float degrees) => degrees * 0.01745329251994329576923690768489f;
 
-    public static double Radians(double degrees)
-    {
-        return degrees * 0.01745329251994329576923690768489d;
-    }
+    public static double Radians(double degrees) => degrees * 0.01745329251994329576923690768489d;
 
-    public static float Sin(float angle)
-    {
-        return (float)System.Math.Sin(angle);
-    }
+    public static float Sin(float angle) => (float)System.Math.Sin(angle);
 
-    public static double Sin(double angle)
-    {
-        return System.Math.Sin(angle);
-    }
+    public static double Sin(double angle) => System.Math.Sin(angle);
 
-    public static float Sin2(float angle)
-    {
-        return (float)System.Math.Sinh(angle);
-    }
+    public static float Sin2(float angle) => (float)System.Math.Sinh(angle);
 
-    public static double Sin2(double angle)
-    {
-        return System.Math.Sinh(angle);
-    }
+    public static double Sin2(double angle) => System.Math.Sinh(angle);
 
-    public static float Tan(float angle)
-    {
-        return (float)System.Math.Tan(angle);
-    }
+    public static float Tan(float angle) => (float)System.Math.Tan(angle);
 
-    public static double Tan(double angle)
-    {
-        return System.Math.Tan(angle);
-    }
+    public static double Tan(double angle) => System.Math.Tan(angle);
 
-    public static float TanH(float angle)
-    {
-        return (float)System.Math.Tanh(angle);
-    }
+    public static float TanH(float angle) => (float)System.Math.Tanh(angle);
 
-    public static double TanH(double angle)
-    {
-        return System.Math.Tanh(angle);
-    }
+    public static double TanH(double angle) => System.Math.Tanh(angle);
 
     [Pure]
-    public static float Sqrt(float f)
-    {
-        return (float)System.Math.Sqrt(f);
-    }
+    public static float Sqrt(float f) => (float)System.Math.Sqrt(f);
 
     [Pure]
-    public static double Sqrt(double f)
-    {
-        return System.Math.Sqrt(f);
-    }
+    public static double Sqrt(double f) => System.Math.Sqrt(f);
 
     [Pure]
-    public static float Abs(float f)
-    {
-        return System.Math.Abs(f);
-    }
+    public static float Abs(float f) => System.Math.Abs(f);
 
     [Pure]
-    public static double Abs(double f)
-    {
-        return System.Math.Abs(f);
-    }
+    public static double Abs(double f) => System.Math.Abs(f);
 
     [Pure]
-    public static int Abs(int value)
-    {
-        return System.Math.Abs(value);
-    }
+    public static int Abs(int value) => System.Math.Abs(value);
 
     [Pure]
-    public static float Min(float a, float b)
-    {
-        return a < b ? a : b;
-    }
+    public static float Min(float a, float b) =>
+        a < b
+            ? a
+            : b;
 
     [Pure]
-    public static double Min(double a, double b)
-    {
-        return a < b ? a : b;
-    }
+    public static double Min(double a, double b) =>
+        a < b
+            ? a
+            : b;
 
     [Pure]
     public static float Min(params float[] values)
@@ -304,10 +218,10 @@ public struct Mathf
     }
 
     [Pure]
-    public static int Min(int a, int b)
-    {
-        return a < b ? a : b;
-    }
+    public static int Min(int a, int b) =>
+        a < b
+            ? a
+            : b;
 
     [Pure]
     public static int Min(params int[] values)
@@ -331,16 +245,16 @@ public struct Mathf
     }
 
     [Pure]
-    public static float Max(float a, float b)
-    {
-        return a > b ? a : b;
-    }
+    public static float Max(float a, float b) =>
+        a > b
+            ? a
+            : b;
 
     [Pure]
-    public static double Max(double a, double b)
-    {
-        return a > b ? a : b;
-    }
+    public static double Max(double a, double b) =>
+        a > b
+            ? a
+            : b;
 
     [Pure]
     public static float Max(params float[] values)
@@ -364,10 +278,10 @@ public struct Mathf
     }
 
     [Pure]
-    public static int Max(int a, int b)
-    {
-        return a > b ? a : b;
-    }
+    public static int Max(int a, int b) =>
+        a > b
+            ? a
+            : b;
 
     [Pure]
     public static int Max(params int[] values)
@@ -391,170 +305,115 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Returns a specified number raised to the specified power.
+    ///     Returns a specified number raised to the specified power.
     /// </summary>
     [Pure]
-    public static float Pow(float f, float p)
-    {
-        return (float)System.Math.Pow(f, p);
-    }
+    public static float Pow(float f, float p) => (float)System.Math.Pow(f, p);
 
     /// <summary>
-    /// Returns a specified number raised to the specified power.
+    ///     Returns a specified number raised to the specified power.
     /// </summary>
     [Pure]
-    public static double Pow(double f, double p)
-    {
-        return System.Math.Pow(f, p);
-    }
+    public static double Pow(double f, double p) => System.Math.Pow(f, p);
 
     [Pure]
-    public static float Exp(float power)
-    {
-        return (float)System.Math.Exp(power);
-    }
+    public static float Exp(float power) => (float)System.Math.Exp(power);
 
     [Pure]
-    public static double Exp(double power)
-    {
-        return System.Math.Exp(power);
-    }
+    public static double Exp(double power) => System.Math.Exp(power);
 
     [Pure]
-    public static float Log(float f, float p)
-    {
-        return (float)System.Math.Log(f, p);
-    }
+    public static float Log(float f, float p) => (float)System.Math.Log(f, p);
 
     [Pure]
-    public static double Log(double f, double p)
-    {
-        return System.Math.Log(f, p);
-    }
+    public static double Log(double f, double p) => System.Math.Log(f, p);
 
     [Pure]
-    public static float Log(float f)
-    {
-        return (float)System.Math.Log(f);
-    }
+    public static float Log(float f) => (float)System.Math.Log(f);
 
     [Pure]
-    public static double Log(double f)
-    {
-        return System.Math.Log(f);
-    }
+    public static double Log(double f) => System.Math.Log(f);
 
     [Pure]
-    public static float Log10(float f)
-    {
-        return (float)System.Math.Log10(f);
-    }
+    public static float Log10(float f) => (float)System.Math.Log10(f);
 
     [Pure]
-    public static double Log10(double f)
-    {
-        return System.Math.Log10(f);
-    }
-
+    public static double Log10(double f) => System.Math.Log10(f);
 
     /// <summary>
-    /// Returns the smallest integral value that is greater than or equal to the specified double-precision floating-point
-    /// number.
+    ///     Returns the smallest integral value that is greater than or equal to the specified double-precision floating-point
+    ///     number.
     /// </summary>
     [Pure]
-    public static float Ceil(float f)
-    {
-        return (float)System.Math.Ceiling(f);
-    }
+    public static float Ceil(float f) => (float)System.Math.Ceiling(f);
 
     /// <summary>
-    /// Returns the smallest integral value that is greater than or equal to the specified double-precision floating-point
-    /// number.
+    ///     Returns the smallest integral value that is greater than or equal to the specified double-precision floating-point
+    ///     number.
     /// </summary>
     [Pure]
-    public static double Ceil(double f)
-    {
-        return System.Math.Ceiling(f);
-    }
+    public static double Ceil(double f) => System.Math.Ceiling(f);
 
     /// <summary>
-    /// Returns the largest integral value less than or equal to the specified double-precision floating-point number.
+    ///     Returns the largest integral value less than or equal to the specified double-precision floating-point number.
     /// </summary>
     [Pure]
-    public static float Floor(float f)
-    {
-        return (float)System.Math.Floor(f);
-    }
+    public static float Floor(float f) => (float)System.Math.Floor(f);
 
     /// <summary>
-    /// Returns the largest integral value less than or equal to the specified double-precision floating-point number.
+    ///     Returns the largest integral value less than or equal to the specified double-precision floating-point number.
     /// </summary>
     [Pure]
-    public static double Floor(double f)
-    {
-        return System.Math.Floor(f);
-    }
+    public static double Floor(double f) => System.Math.Floor(f);
 
     /// <summary>
-    /// Rounds a double-precision floating-point value to the nearest integral value, and rounds midpoint values to the nearest
-    /// even number.
+    ///     Rounds a double-precision floating-point value to the nearest integral value, and rounds midpoint values to the
+    ///     nearest
+    ///     even number.
     /// </summary>
     [Pure]
-    public static float Round(float f)
-    {
-        return (float)System.Math.Round(f);
-    }
+    public static float Round(float f) => (float)System.Math.Round(f);
 
     /// <summary>
-    /// Rounds a double-precision floating-point value to the nearest integral value, and rounds midpoint values to the nearest
-    /// even number.
+    ///     Rounds a double-precision floating-point value to the nearest integral value, and rounds midpoint values to the
+    ///     nearest
+    ///     even number.
     /// </summary>
     [Pure]
-    public static double Round(double f)
-    {
-        return System.Math.Round(f);
-    }
+    public static double Round(double f) => System.Math.Round(f);
 
     /// <summary>
-    /// Returns the smallest integral value that is greater than or equal to the specified double-precision floating-point
-    /// number.
+    ///     Returns the smallest integral value that is greater than or equal to the specified double-precision floating-point
+    ///     number.
     /// </summary>
     [Pure]
-    public static int CeilToInt(float f)
-    {
-        return (int)System.Math.Ceiling(f);
-    }
+    public static int CeilToInt(float f) => (int)System.Math.Ceiling(f);
 
     /// <summary>
-    /// Returns the largest integral value less than or equal to the specified double-precision floating-point number.
+    ///     Returns the largest integral value less than or equal to the specified double-precision floating-point number.
     /// </summary>
     [Pure]
-    public static int FloorToInt(float f)
-    {
-        return (int)System.Math.Floor(f);
-    }
+    public static int FloorToInt(float f) => (int)System.Math.Floor(f);
 
     /// <summary>
-    /// Rounds a double-precision floating-point value to the nearest integral value, and rounds midpoint values to the nearest
-    /// even number.
+    ///     Rounds a double-precision floating-point value to the nearest integral value, and rounds midpoint values to the
+    ///     nearest
+    ///     even number.
     /// </summary>
     [Pure]
-    public static int RoundToInt(float f)
-    {
-        return (int)System.Math.Round(f);
-    }
+    public static int RoundToInt(float f) => (int)System.Math.Round(f);
 
     /// <summary>
-    /// Returns the sign of
-    /// <param name="f"></param>
+    ///     Returns the sign of
+    ///     <param name="f"></param>
     /// </summary>
-    public static float Sign(float f)
-    {
-        return f >= 0F ? 1F : -1F;
-    }
+    public static float Sign(float f) =>
+        f >= 0F
+            ? 1F
+            : -1F;
 
     /// <summary>
-    /// Clamps a value between a minimum float and maximum float value.
+    ///     Clamps a value between a minimum float and maximum float value.
     /// </summary>
     [Pure]
     public static float Clamp(float value, float min, float max)
@@ -572,7 +431,7 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Clamps a value between a minimum double and maximum double value.
+    ///     Clamps a value between a minimum double and maximum double value.
     /// </summary>
     [Pure]
     public static double Clamp(double value, double min, double max)
@@ -605,33 +464,28 @@ public struct Mathf
     }
 
     // Clamps value between 0 and 1 and returns value
-    public static double Clamp01(double value)
-    {
-        return value switch
+    public static double Clamp01(double value) =>
+        value switch
         {
             < 0.0 => 0.0,
             > 1.0 => 1.0,
-            _ => value
+            _     => value
         };
-    }
-
 
     /// <summary>
-    /// Returns the remainder resulting from the division of a specified number by another specified number.
+    ///     Returns the remainder resulting from the division of a specified number by another specified number.
     /// </summary>
     /// <param name="a">A dividend.</param>
     /// <param name="b">A divisor.</param>
     /// <returns>
-    /// A number equal to a - (b Q), where Q is the quotient of a / b rounded to the nearest integer (if a / b falls halfway
-    /// between two integers, the even integer is returned).
-    /// If a - (b Q) is zero, the value +0 is returned if a is positive, or -0 if a is negative.
-    /// If b = 0, NaN is returned.
+    ///     A number equal to a - (b Q), where Q is the quotient of a / b rounded to the nearest integer (if a / b falls
+    ///     halfway
+    ///     between two integers, the even integer is returned).
+    ///     If a - (b Q) is zero, the value +0 is returned if a is positive, or -0 if a is negative.
+    ///     If b = 0, NaN is returned.
     /// </returns>
     [Pure]
-    public static double IeeeRemainder(double a, double b)
-    {
-        return System.Math.IEEERemainder(a, b);
-    }
+    public static double IeeeRemainder(double a, double b) => System.Math.IEEERemainder(a, b);
 
     // Same as ::ref::Lerp but makes sure the values interpolate correctly when they wrap around 360 degrees.
     public static float LerpAngle(float a, float b, float t)
@@ -683,16 +537,20 @@ public struct Mathf
         var abs = Abs(value);
         if (abs > absMax)
         {
-            return negative ? -abs : abs;
+            return negative
+                ? -abs
+                : abs;
         }
 
         var result = Pow(abs / absMax, gamma) * absMax;
-        return negative ? -result : result;
+        return negative
+            ? -result
+            : result;
     }
 
     // Compares two floating point values if they are similar.
-    public static bool Approximately(float a, float b)
-    {
+    public static bool Approximately(float a, float b) =>
+
         // If a or b is zero, compare that the other is less or equal to epsilon.
         // If neither a or b are 0, then find an epsilon that is good for
         // comparing numbers at the maximum magnitude of a and b.
@@ -700,12 +558,17 @@ public struct Mathf
         // 1.000001f can be represented while 1.0000001f is rounded to zero,
         // thus we could use an epsilon of 0.000001f for comparing values close to 1.
         // We multiply this epsilon by the biggest magnitude of a and b.
-        return Abs(b - a) < Max(0.000001f * Max(Abs(a), Abs(b)), epsilon * 8);
-    }
+        Abs(b - a) < Max(0.000001f * Max(Abs(a), Abs(b)), epsilon * 8);
 
     // Gradually changes a value towards a desired goal over time.
-    public static float SmoothDamp(float current, float target, ref float currentVelocity, float smoothTime,
-        float maxSpeed, float deltaTime)
+    public static float SmoothDamp(
+        float current,
+        float target,
+        ref float currentVelocity,
+        float smoothTime,
+        float maxSpeed,
+        float deltaTime
+    )
     {
         // Based on Game Programming Gems 4 Chapter 1.10
         smoothTime = Max(0.0001F, smoothTime);
@@ -738,18 +601,28 @@ public struct Mathf
     }
 
     // Gradually changes an angle given in degrees towards a desired goal angle over time.
-    public static float SmoothDampAngle(float current, float target, ref float currentVelocity, float smoothTime,
-        float maxSpeed, float deltaTime)
+    public static float SmoothDampAngle(
+        float current,
+        float target,
+        ref float currentVelocity,
+        float smoothTime,
+        float maxSpeed,
+        float deltaTime
+    )
     {
         target = current + DeltaAngle(current, target);
-        return SmoothDamp(current, target, ref currentVelocity, smoothTime, maxSpeed, deltaTime);
+        return SmoothDamp(
+            current,
+            target,
+            ref currentVelocity,
+            smoothTime,
+            maxSpeed,
+            deltaTime
+        );
     }
 
     // Loops the value t, so that it is never larger than length and never smaller than 0.
-    public static float Repeat(float t, float length)
-    {
-        return Clamp(t - Floor(t / length) * length, 0.0f, length);
-    }
+    public static float Repeat(float t, float length) => Clamp(t - Floor(t / length) * length, 0.0f, length);
 
     // PingPongs the value t, so that it is never larger than length and never smaller than 0.
     public static float PingPong(float t, float length)
@@ -759,10 +632,10 @@ public struct Mathf
     }
 
     // Calculates the ::ref::Lerp parameter between of two values.
-    public static float InverseLerp(float a, float b, float value)
-    {
-        return (float)(a != b ? Clamp01((value - a) / (b - a)) : 0.0f);
-    }
+    public static float InverseLerp(float a, float b, float value) =>
+        (float)(a != b
+            ? Clamp01((value - a) / (b - a))
+            : 0.0f);
 
     // Calculates the shortest difference between two given angles.
     public static float DeltaAngle(float current, float target)
@@ -784,15 +657,15 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Returns an approximation of the inverse square root of left number.
+    ///     Returns an approximation of the inverse square root of left number.
     /// </summary>
     /// <param name="x">A number.</param>
     /// <returns>An approximation of the inverse square root of the specified number, with an upper error bound of 0.001.</returns>
     /// <remarks>
-    /// This is an improved implementation of the the method known as Carmack's inverse square root
-    /// which is found in the Quake III source code. This implementation comes from
-    /// http://www.codemaestro.com/reviews/review00000105.html. For the history of this method, see
-    /// http://www.beyond3d.com/content/articles/8/.
+    ///     This is an improved implementation of the the method known as Carmack's inverse square root
+    ///     which is found in the Quake III source code. This implementation comes from
+    ///     http://www.codemaestro.com/reviews/review00000105.html. For the history of this method, see
+    ///     http://www.beyond3d.com/content/articles/8/.
     /// </remarks>
     [Pure]
     public static float InverseSqrtFast(float x)
@@ -809,17 +682,17 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Returns an approximation of the inverse square root of left number.
+    ///     Returns an approximation of the inverse square root of left number.
     /// </summary>
     /// <param name="x">A number.</param>
     /// <returns>An approximation of the inverse square root of the specified number, with an upper error bound of 0.001.</returns>
     /// <remarks>
-    /// This is an improved implementation of the the method known as Carmack's inverse square root
-    /// which is found in the Quake III source code. This implementation comes from
-    /// http://www.codemaestro.com/reviews/review00000105.html. For the history of this method, see
-    /// http://www.beyond3d.com/content/articles/8/.
-    /// double magic number from: https://cs.uwaterloo.ca/~m32rober/rsqrt.pdf
-    /// chapter 4.8.
+    ///     This is an improved implementation of the the method known as Carmack's inverse square root
+    ///     which is found in the Quake III source code. This implementation comes from
+    ///     http://www.codemaestro.com/reviews/review00000105.html. For the history of this method, see
+    ///     http://www.beyond3d.com/content/articles/8/.
+    ///     double magic number from: https://cs.uwaterloo.ca/~m32rober/rsqrt.pdf
+    ///     chapter 4.8.
     /// </remarks>
     [Pure]
     public static double InverseSqrtFast(double x)
@@ -836,7 +709,7 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Convert degrees to radians.
+    ///     Convert degrees to radians.
     /// </summary>
     /// <param name="degrees">An angle in degrees.</param>
     /// <returns>The angle expressed in radians.</returns>
@@ -848,7 +721,7 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Convert radians to degrees.
+    ///     Convert radians to degrees.
     /// </summary>
     /// <param name="radians">An angle in radians.</param>
     /// <returns>The angle expressed in degrees.</returns>
@@ -860,7 +733,7 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Convert degrees to radians.
+    ///     Convert degrees to radians.
     /// </summary>
     /// <param name="degrees">An angle in degrees.</param>
     /// <returns>The angle expressed in radians.</returns>
@@ -872,7 +745,7 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Convert radians to degrees.
+    ///     Convert radians to degrees.
     /// </summary>
     /// <param name="radians">An angle in radians.</param>
     /// <returns>The angle expressed in degrees.</returns>
@@ -884,7 +757,7 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Linearly interpolates between a and b by t.
+    ///     Linearly interpolates between a and b by t.
     /// </summary>
     /// <param name="start">Start value.</param>
     /// <param name="end">End value.</param>
@@ -898,7 +771,7 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Linearly interpolates between a and b by t.
+    ///     Linearly interpolates between a and b by t.
     /// </summary>
     /// <param name="start">Start value.</param>
     /// <param name="end">End value.</param>
@@ -912,20 +785,17 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Linearly interpolates between a and b by t.
+    ///     Linearly interpolates between a and b by t.
     /// </summary>
     /// <param name="a">Start value.</param>
     /// <param name="b">End value.</param>
     /// <param name="t">Value of the interpolation between a and b. Clamped to [0, 1].</param>
     /// <returns>The interpolated result between the a and b values.</returns>
     /// [Pure]
-    public static float LerpClamped(float a, float b, float t)
-    {
-        return (float)(a + (b - a) * Clamp01(t));
-    }
+    public static float LerpClamped(float a, float b, float t) => (float)(a + (b - a) * Clamp01(t));
 
     /// <summary>
-    /// Normalizes an angle to the range (-180, 180].
+    ///     Normalizes an angle to the range (-180, 180].
     /// </summary>
     /// <param name="angle">The angle in degrees to normalize.</param>
     /// <returns>The normalized angle in the range (-180, 180].</returns>
@@ -935,6 +805,7 @@ public struct Mathf
         angle = ClampAngle(angle);
 
         if (angle > 180f)
+
             // shift angle to range (-180, 180]
         {
             angle -= 360f;
@@ -944,7 +815,7 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Normalizes an angle to the range (-180, 180].
+    ///     Normalizes an angle to the range (-180, 180].
     /// </summary>
     /// <param name="angle">The angle in degrees to normalize.</param>
     /// <returns>The normalized angle in the range (-180, 180].</returns>
@@ -954,6 +825,7 @@ public struct Mathf
         angle = ClampAngle(angle);
 
         if (angle > 180f)
+
             // shift angle to range (-180, 180]
         {
             angle -= 360f;
@@ -963,7 +835,7 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Normalizes an angle to the range (-π, π].
+    ///     Normalizes an angle to the range (-π, π].
     /// </summary>
     /// <param name="angle">The angle in radians to normalize.</param>
     /// <returns>The normalized angle in the range (-π, π].</returns>
@@ -973,6 +845,7 @@ public struct Mathf
         angle = ClampRadians(angle);
 
         if (angle > Pi)
+
             // shift angle to range (-π, π]
         {
             angle -= 2 * Pi;
@@ -982,7 +855,7 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Normalizes an angle to the range (-π, π].
+    ///     Normalizes an angle to the range (-π, π].
     /// </summary>
     /// <param name="angle">The angle in radians to normalize.</param>
     /// <returns>The normalized angle in the range (-π, π].</returns>
@@ -992,6 +865,7 @@ public struct Mathf
         angle = ClampRadians(angle);
 
         if (angle > Pi)
+
             // shift angle to range (-π, π]
         {
             angle -= 2 * Pi;
@@ -1001,7 +875,7 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Clamps an angle to the range [0, 360).
+    ///     Clamps an angle to the range [0, 360).
     /// </summary>
     /// <param name="angle">The angle to clamp in degrees.</param>
     /// <returns>The clamped angle in the range [0, 360).</returns>
@@ -1011,6 +885,7 @@ public struct Mathf
         angle %= 360f;
 
         if (angle < 0.0f)
+
             // shift angle to the range [0, 360)
         {
             angle += 360f;
@@ -1020,7 +895,7 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Clamps an angle to the range [0, 360).
+    ///     Clamps an angle to the range [0, 360).
     /// </summary>
     /// <param name="angle">The angle to clamp in degrees.</param>
     /// <returns>The clamped angle in the range [0, 360).</returns>
@@ -1030,6 +905,7 @@ public struct Mathf
         angle %= 360d;
 
         if (angle < 0.0d)
+
             // shift angle to the range [0, 360)
         {
             angle += 360d;
@@ -1039,7 +915,7 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Clamps an angle to the range [0, 2π).
+    ///     Clamps an angle to the range [0, 2π).
     /// </summary>
     /// <param name="angle">The angle to clamp in radians.</param>
     /// <returns>The clamped angle in the range [0, 2π).</returns>
@@ -1049,6 +925,7 @@ public struct Mathf
         angle %= TwoPi;
 
         if (angle < 0.0f)
+
             // shift angle to the range [0,2π)
         {
             angle += TwoPi;
@@ -1057,9 +934,8 @@ public struct Mathf
         return angle;
     }
 
-
     /// <summary>
-    /// Clamps an angle to the range [0, 2π).
+    ///     Clamps an angle to the range [0, 2π).
     /// </summary>
     /// <param name="angle">The angle to clamp in radians.</param>
     /// <returns>The clamped angle in the range [0, 2π).</returns>
@@ -1069,6 +945,7 @@ public struct Mathf
         angle %= 2d * System.Math.PI;
 
         if (angle < 0.0d)
+
             // shift angle to the range [0,2π)
         {
             angle += 2d * System.Math.PI;
@@ -1078,10 +955,10 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Approximates floating point equality with a maximum number of different bits.
-    /// This is typically used in place of an epsilon comparison.
-    /// see: https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
-    /// see: https://stackoverflow.com/questions/3874627/floating-point-comparison-functions-for-c-sharp.
+    ///     Approximates floating point equality with a maximum number of different bits.
+    ///     This is typically used in place of an epsilon comparison.
+    ///     see: https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
+    ///     see: https://stackoverflow.com/questions/3874627/floating-point-comparison-functions-for-c-sharp.
     /// </summary>
     /// <param name="a">the first value to compare.</param>
     /// <param name="b">>the second value to compare.</param>
@@ -1108,20 +985,19 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Approximates double-precision floating point equality by an epsilon (maximum error) value.
-    /// This method is designed as a "fits-all" solution and attempts to handle as many cases as possible.
+    ///     Approximates double-precision floating point equality by an epsilon (maximum error) value.
+    ///     This method is designed as a "fits-all" solution and attempts to handle as many cases as possible.
     /// </summary>
     /// <param name="a">The first float.</param>
     /// <param name="b">The second float.</param>
     /// <param name="error">The maximum error between the two.</param>
     /// <returns>
-    /// <value>true</value>
-    /// if the values are approximately equal within the error margin; otherwise,
-    /// <value>false</value>
-    /// .
+    ///     <value>true</value>
+    ///     if the values are approximately equal within the error margin; otherwise,
+    ///     <value>false</value>
+    ///     .
     /// </returns>
-    [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator", Justification = "Used for early bailout.")]
-    [Pure]
+    [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator", Justification = "Used for early bailout."), Pure]
     public static bool ApproximatelyEqualEpsilon(double a, double b, double error)
     {
         const double doubleNormal = (1L << 52) * double.Epsilon;
@@ -1130,12 +1006,14 @@ public struct Mathf
         var diff = System.Math.Abs(a - b);
 
         if (a == b)
+
             // Shortcut, handles infinities
         {
             return true;
         }
 
         if (a == 0.0f || b == 0.0f || diff < doubleNormal)
+
             // a or b is zero, or both are extremely close to it.
             // relative error is less meaningful here
         {
@@ -1147,20 +1025,19 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Approximates single-precision floating point equality by an epsilon (maximum error) value.
-    /// This method is designed as a "fits-all" solution and attempts to handle as many cases as possible.
+    ///     Approximates single-precision floating point equality by an epsilon (maximum error) value.
+    ///     This method is designed as a "fits-all" solution and attempts to handle as many cases as possible.
     /// </summary>
     /// <param name="a">The first float.</param>
     /// <param name="b">The second float.</param>
     /// <param name="error">The maximum error between the two.</param>
     /// <returns>
-    /// <value>true</value>
-    /// if the values are approximately equal within the error margin; otherwise,
-    /// <value>false</value>
-    /// .
+    ///     <value>true</value>
+    ///     if the values are approximately equal within the error margin; otherwise,
+    ///     <value>false</value>
+    ///     .
     /// </returns>
-    [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator", Justification = "Used for early bailout.")]
-    [Pure]
+    [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator", Justification = "Used for early bailout."), Pure]
     public static bool ApproximatelyEqualEpsilon(float a, float b, float error)
     {
         const float floatNormal = (1 << 23) * float.Epsilon;
@@ -1169,12 +1046,14 @@ public struct Mathf
         var diff = System.Math.Abs(a - b);
 
         if (a == b)
+
             // Shortcut, handles infinities
         {
             return true;
         }
 
         if (a == 0.0f || b == 0.0f || diff < floatNormal)
+
             // a or b is zero, or both are extremely close to it.
             // relative error is less meaningful here
         {
@@ -1187,20 +1066,20 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Approximates equivalence between two single-precision floating-point numbers on a direct human scale.
-    /// It is important to note that this does not approximate equality - instead, it merely checks whether or not
-    /// two numbers could be considered equivalent to each other within a certain tolerance. The tolerance is
-    /// inclusive.
+    ///     Approximates equivalence between two single-precision floating-point numbers on a direct human scale.
+    ///     It is important to note that this does not approximate equality - instead, it merely checks whether or not
+    ///     two numbers could be considered equivalent to each other within a certain tolerance. The tolerance is
+    ///     inclusive.
     /// </summary>
     /// <param name="a">The first value to compare.</param>
     /// <param name="b">The second value to compare.</param>
     /// <param name="tolerance">The tolerance within which the two values would be considered equivalent.</param>
     /// <returns>Whether or not the values can be considered equivalent within the tolerance.</returns>
-    [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator", Justification = "Used for early bailout.")]
-    [Pure]
+    [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator", Justification = "Used for early bailout."), Pure]
     public static bool ApproximatelyEquivalent(float a, float b, float tolerance)
     {
         if (a == b)
+
             // Early bailout, handles infinities
         {
             return true;
@@ -1211,20 +1090,20 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Approximates equivalence between two double-precision floating-point numbers on a direct human scale.
-    /// It is important to note that this does not approximate equality - instead, it merely checks whether or not
-    /// two numbers could be considered equivalent to each other within a certain tolerance. The tolerance is
-    /// inclusive.
+    ///     Approximates equivalence between two double-precision floating-point numbers on a direct human scale.
+    ///     It is important to note that this does not approximate equality - instead, it merely checks whether or not
+    ///     two numbers could be considered equivalent to each other within a certain tolerance. The tolerance is
+    ///     inclusive.
     /// </summary>
     /// <param name="a">The first value to compare.</param>
     /// <param name="b">The second value to compare.</param>
     /// <param name="tolerance">The tolerance within which the two values would be considered equivalent.</param>
     /// <returns>Whether or not the values can be considered equivalent within the tolerance.</returns>
-    [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator", Justification = "Used for early bailout.")]
-    [Pure]
+    [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator", Justification = "Used for early bailout."), Pure]
     public static bool ApproximatelyEquivalent(double a, double b, double tolerance)
     {
         if (a == b)
+
             // Early bailout, handles infinities
         {
             return true;
@@ -1235,7 +1114,7 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Calculates the factorial of a given natural number.
+    ///     Calculates the factorial of a given natural number.
     /// </summary>
     /// <param name="n">The number.</param>
     /// <returns>The factorial of <paramref name="n" />.</returns>
@@ -1253,14 +1132,11 @@ public struct Mathf
     }
 
     /// <summary>
-    /// Calculates the binomial coefficient <paramref name="n" /> above <paramref name="k" />.
+    ///     Calculates the binomial coefficient <paramref name="n" /> above <paramref name="k" />.
     /// </summary>
     /// <param name="n">The n.</param>
     /// <param name="k">The k.</param>
     /// <returns>n! / (k! * (n - k)!).</returns>
     [Pure]
-    public static long BinomialCoefficient(int n, int k)
-    {
-        return Factorial(n) / (Factorial(k) * Factorial(n - k));
-    }
+    public static long BinomialCoefficient(int n, int k) => Factorial(n) / (Factorial(k) * Factorial(n - k));
 }

@@ -5,24 +5,21 @@ using Newtonsoft.Json.Linq;
 namespace Engine.Core.Configurations.Loader;
 
 /// <summary>
-/// <see cref="IConfigurationBuilder" /> implementation to load *.json files
+///     <see cref="IConfigurationBuilder" /> implementation to load *.json files
 /// </summary>
 public sealed class JsonBuilder : IConfigurationBuilder
 {
     private readonly string _loadPath;
 
+    /// <inheritdoc />
+    public string Extension => "json";
+
     /// <summary>
-    /// Create new instance of <see cref="IniBuilder" />
+    ///     Create new instance of <see cref="IniBuilder" />
     /// </summary>
     public JsonBuilder()
     {
         _loadPath = $"settings.{Extension}";
-    }
-
-    /// <inheritdoc />
-    public string Extension
-    {
-        get { return "json"; }
     }
 
     /// <inheritdoc />

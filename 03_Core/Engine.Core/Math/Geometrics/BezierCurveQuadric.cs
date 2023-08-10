@@ -4,39 +4,39 @@ using Engine.Core.Math.Vectors;
 namespace Engine.Core.Math.Geometrics;
 
 /// <summary>
-/// Represents a quadratic bezier curve with two anchor and one control point.
+///     Represents a quadratic bezier curve with two anchor and one control point.
 /// </summary>
 [Serializable]
 public struct BezierCurveQuadric
 {
     /// <summary>
-    /// Start anchor point.
+    ///     Start anchor point.
     /// </summary>
     public Vector2 StartAnchor;
 
     /// <summary>
-    /// End anchor point.
+    ///     End anchor point.
     /// </summary>
     public Vector2 EndAnchor;
 
     /// <summary>
-    /// Control point, controls the direction of both endings of the curve.
+    ///     Control point, controls the direction of both endings of the curve.
     /// </summary>
     public Vector2 ControlPoint;
 
     /// <summary>
-    /// The parallel value.
+    ///     The parallel value.
     /// </summary>
     /// <remarks>
-    /// This value defines whether the curve should be calculated as a
-    /// parallel curve to the original bezier curve. A value of 0.0f represents
-    /// the original curve, 5.0f i.e. stands for a curve that has always a distance
-    /// of 5.f to the orignal curve at any point.
+    ///     This value defines whether the curve should be calculated as a
+    ///     parallel curve to the original bezier curve. A value of 0.0f represents
+    ///     the original curve, 5.0f i.e. stands for a curve that has always a distance
+    ///     of 5.f to the orignal curve at any point.
     /// </remarks>
     public float Parallel;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="BezierCurveQuadric" /> struct.
+    ///     Initializes a new instance of the <see cref="BezierCurveQuadric" /> struct.
     /// </summary>
     /// <param name="startAnchor">The start anchor.</param>
     /// <param name="endAnchor">The end anchor.</param>
@@ -50,13 +50,18 @@ public struct BezierCurveQuadric
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="BezierCurveQuadric" /> struct.
+    ///     Initializes a new instance of the <see cref="BezierCurveQuadric" /> struct.
     /// </summary>
     /// <param name="parallel">The parallel value.</param>
     /// <param name="startAnchor">The start anchor.</param>
     /// <param name="endAnchor">The end anchor.</param>
     /// <param name="controlPoint">The control point.</param>
-    public BezierCurveQuadric(float parallel, Vector2 startAnchor, Vector2 endAnchor, Vector2 controlPoint)
+    public BezierCurveQuadric(
+        float parallel,
+        Vector2 startAnchor,
+        Vector2 endAnchor,
+        Vector2 controlPoint
+    )
     {
         Parallel = parallel;
         StartAnchor = startAnchor;
@@ -65,7 +70,7 @@ public struct BezierCurveQuadric
     }
 
     /// <summary>
-    /// Calculates the point with the specified t.
+    ///     Calculates the point with the specified t.
     /// </summary>
     /// <param name="t">The t value, between 0.0f and 1.0f.</param>
     /// <returns>Resulting point.</returns>
@@ -73,8 +78,7 @@ public struct BezierCurveQuadric
     public Vector2 CalculatePoint(float t)
     {
         var c = 1.0f - t;
-        var r = new Vector2
-        (
+        var r = new Vector2(
             c * c * StartAnchor.X + 2 * t * c * ControlPoint.X + t * t * EndAnchor.X,
             c * c * StartAnchor.Y + 2 * t * c * ControlPoint.Y + t * t * EndAnchor.Y
         );
@@ -99,7 +103,7 @@ public struct BezierCurveQuadric
     }
 
     /// <summary>
-    /// Calculates the point with the specified t of the derivative of this function.
+    ///     Calculates the point with the specified t of the derivative of this function.
     /// </summary>
     /// <param name="t">The t, value between 0.0f and 1.0f.</param>
     /// <returns>Resulting point.</returns>
@@ -116,13 +120,13 @@ public struct BezierCurveQuadric
     }
 
     /// <summary>
-    /// Calculates the length of this bezier curve.
+    ///     Calculates the length of this bezier curve.
     /// </summary>
     /// <param name="precision">The precision.</param>
     /// <returns>Length of curve.</returns>
     /// <remarks>
-    /// The precision gets better when the <paramref name="precision" />
-    /// value gets smaller.
+    ///     The precision gets better when the <paramref name="precision" />
+    ///     value gets smaller.
     /// </remarks>
     [Pure]
     public float CalculateLength(float precision)

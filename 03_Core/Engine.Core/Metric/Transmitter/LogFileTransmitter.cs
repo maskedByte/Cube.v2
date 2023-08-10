@@ -3,8 +3,8 @@
 namespace Engine.Core.Metric.Transmitter;
 
 /// <summary>
-/// This class implements the IMetricsTransmitter interface and provides the specific
-/// behavior for transmitting performance metrics to a log file.
+///     This class implements the IMetricsTransmitter interface and provides the specific
+///     behavior for transmitting performance metrics to a log file.
 /// </summary>
 public class LogFileTransmitter : IMetricsTransmitter
 {

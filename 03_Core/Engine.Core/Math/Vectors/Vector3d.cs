@@ -8,29 +8,28 @@ using Engine.Core.Math.Quaternions;
 namespace Engine.Core.Math.Vectors;
 
 /// <summary>
-/// Represents a 3D vector using three double-precision floating-point numbers.
+///     Represents a 3D vector using three double-precision floating-point numbers.
 /// </summary>
-[Serializable]
-[StructLayout(LayoutKind.Sequential)]
+[Serializable, StructLayout(LayoutKind.Sequential)]
 public struct Vector3d : IEquatable<Vector3d>
 {
     /// <summary>
-    /// The X component of the Vector3.
+    ///     The X component of the Vector3.
     /// </summary>
     public double X;
 
     /// <summary>
-    /// The Y component of the Vector3.
+    ///     The Y component of the Vector3.
     /// </summary>
     public double Y;
 
     /// <summary>
-    /// The Z component of the Vector3.
+    ///     The Z component of the Vector3.
     /// </summary>
     public double Z;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector3d" /> struct.
+    ///     Initializes a new instance of the <see cref="Vector3d" /> struct.
     /// </summary>
     /// <param name="value">The value that will initialize this instance.</param>
     public Vector3d(double value)
@@ -41,7 +40,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector3d" /> struct.
+    ///     Initializes a new instance of the <see cref="Vector3d" /> struct.
     /// </summary>
     /// <param name="x">The x component of the Vector3.</param>
     /// <param name="y">The y component of the Vector3.</param>
@@ -54,7 +53,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector3d" /> struct.
+    ///     Initializes a new instance of the <see cref="Vector3d" /> struct.
     /// </summary>
     /// <param name="v">The Vector2d to copy components from.</param>
     public Vector3d(Vector2d v)
@@ -65,7 +64,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector3d" /> struct.
+    ///     Initializes a new instance of the <see cref="Vector3d" /> struct.
     /// </summary>
     /// <param name="v">The Vector3d to copy components from.</param>
     public Vector3d(Vector3d v)
@@ -76,7 +75,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector3d" /> struct.
+    ///     Initializes a new instance of the <see cref="Vector3d" /> struct.
     /// </summary>
     /// <param name="v">The Vector4d to copy components from.</param>
     public Vector3d(Vector4d v)
@@ -87,7 +86,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Gets or sets the value at the index of the Vector.
+    ///     Gets or sets the value at the index of the Vector.
     /// </summary>
     /// <param name="index">The index of the component from the Vector.</param>
     /// <exception cref="IndexOutOfRangeException">Thrown if the index is less than 0 or greater than 2.</exception>
@@ -135,45 +134,36 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Gets the length (magnitude) of the vector.
+    ///     Gets the length (magnitude) of the vector.
     /// </summary>
     /// <see cref="LengthFast" />
     /// <seealso cref="LengthSquared" />
-    public double Length
-    {
-        get { return System.Math.Sqrt(X * X + Y * Y + Z * Z); }
-    }
+    public double Length => System.Math.Sqrt(X * X + Y * Y + Z * Z);
 
     /// <summary>
-    /// Gets an approximation of the vector length (magnitude).
+    ///     Gets an approximation of the vector length (magnitude).
     /// </summary>
     /// <remarks>
-    /// This property uses an approximation of the square root function to calculate vector magnitude, with
-    /// an upper error bound of 0.001.
+    ///     This property uses an approximation of the square root function to calculate vector magnitude, with
+    ///     an upper error bound of 0.001.
     /// </remarks>
     /// <see cref="Length" />
     /// <seealso cref="LengthSquared" />
-    public double LengthFast
-    {
-        get { return 1.0 / Mathf.InverseSqrtFast(X * X + Y * Y + Z * Z); }
-    }
+    public double LengthFast => 1.0 / Mathf.InverseSqrtFast(X * X + Y * Y + Z * Z);
 
     /// <summary>
-    /// Gets the square of the vector length (magnitude).
+    ///     Gets the square of the vector length (magnitude).
     /// </summary>
     /// <remarks>
-    /// This property avoids the costly square root operation required by the Length property. This makes it more suitable
-    /// for comparisons.
+    ///     This property avoids the costly square root operation required by the Length property. This makes it more suitable
+    ///     for comparisons.
     /// </remarks>
     /// <see cref="Length" />
     /// <seealso cref="LengthFast" />
-    public double LengthSquared
-    {
-        get { return X * X + Y * Y + Z * Z; }
-    }
+    public double LengthSquared => X * X + Y * Y + Z * Z;
 
     /// <summary>
-    /// Returns a copy of the Vector3d scaled to unit length.
+    ///     Returns a copy of the Vector3d scaled to unit length.
     /// </summary>
     /// <returns>The normalized copy.</returns>
     public Vector3d Normalized()
@@ -184,7 +174,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Scales the Vector3d to unit length.
+    ///     Scales the Vector3d to unit length.
     /// </summary>
     public void Normalize()
     {
@@ -195,7 +185,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Scales the Vector3d to approximately unit length.
+    ///     Scales the Vector3d to approximately unit length.
     /// </summary>
     public void NormalizeFast()
     {
@@ -206,49 +196,47 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Defines a unit-length Vector3d that points towards the X-axis.
+    ///     Defines a unit-length Vector3d that points towards the X-axis.
     /// </summary>
-    public static readonly Vector3d UnitX = new Vector3d(1, 0, 0);
+    public static readonly Vector3d UnitX = new(1, 0, 0);
 
     /// <summary>
-    /// Defines a unit-length Vector3d that points towards the Y-axis.
+    ///     Defines a unit-length Vector3d that points towards the Y-axis.
     /// </summary>
-    public static readonly Vector3d UnitY = new Vector3d(0, 1, 0);
+    public static readonly Vector3d UnitY = new(0, 1, 0);
 
     /// <summary>
-    /// Defines a unit-length Vector3d that points towards the Z-axis.
+    ///     Defines a unit-length Vector3d that points towards the Z-axis.
     /// </summary>
-    public static readonly Vector3d UnitZ = new Vector3d(0, 0, 1);
+    public static readonly Vector3d UnitZ = new(0, 0, 1);
 
     /// <summary>
-    /// Defines an instance with all components set to 0.
+    ///     Defines an instance with all components set to 0.
     /// </summary>
-    public static readonly Vector3d Zero = new Vector3d(0, 0, 0);
+    public static readonly Vector3d Zero = new(0, 0, 0);
 
     /// <summary>
-    /// Defines an instance with all components set to 1.
+    ///     Defines an instance with all components set to 1.
     /// </summary>
-    public static readonly Vector3d One = new Vector3d(1, 1, 1);
+    public static readonly Vector3d One = new(1, 1, 1);
 
     /// <summary>
-    /// Defines an instance with all components set to positive infinity.
+    ///     Defines an instance with all components set to positive infinity.
     /// </summary>
-    public static readonly Vector3d PositiveInfinity =
-        new Vector3d(double.PositiveInfinity, double.PositiveInfinity, double.PositiveInfinity);
+    public static readonly Vector3d PositiveInfinity = new(double.PositiveInfinity, double.PositiveInfinity, double.PositiveInfinity);
 
     /// <summary>
-    /// Defines an instance with all components set to negative infinity.
+    ///     Defines an instance with all components set to negative infinity.
     /// </summary>
-    public static readonly Vector3d NegativeInfinity =
-        new Vector3d(double.NegativeInfinity, double.NegativeInfinity, double.NegativeInfinity);
+    public static readonly Vector3d NegativeInfinity = new(double.NegativeInfinity, double.NegativeInfinity, double.NegativeInfinity);
 
     /// <summary>
-    /// Defines the size of the Vector3d struct in bytes.
+    ///     Defines the size of the Vector3d struct in bytes.
     /// </summary>
     public static readonly int SizeInBytes = Unsafe.SizeOf<Vector3d>();
 
     /// <summary>
-    /// Adds two vectors.
+    ///     Adds two vectors.
     /// </summary>
     /// <param name="a">Left operand.</param>
     /// <param name="b">Right operand.</param>
@@ -261,7 +249,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Adds two vectors.
+    ///     Adds two vectors.
     /// </summary>
     /// <param name="a">Left operand.</param>
     /// <param name="b">Right operand.</param>
@@ -274,7 +262,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Subtract one Vector from another.
+    ///     Subtract one Vector from another.
     /// </summary>
     /// <param name="a">First operand.</param>
     /// <param name="b">Second operand.</param>
@@ -287,7 +275,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Subtract one Vector from another.
+    ///     Subtract one Vector from another.
     /// </summary>
     /// <param name="a">First operand.</param>
     /// <param name="b">Second operand.</param>
@@ -300,7 +288,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Multiplies a vector by a scalar.
+    ///     Multiplies a vector by a scalar.
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -313,7 +301,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Multiplies a vector by a scalar.
+    ///     Multiplies a vector by a scalar.
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -326,7 +314,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Multiplies a vector by the components a vector (scale).
+    ///     Multiplies a vector by the components a vector (scale).
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -339,7 +327,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Multiplies a vector by the components of a vector (scale).
+    ///     Multiplies a vector by the components of a vector (scale).
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -352,7 +340,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Divides a vector by a scalar.
+    ///     Divides a vector by a scalar.
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -365,7 +353,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Divides a vector by a scalar.
+    ///     Divides a vector by a scalar.
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -378,7 +366,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Divides a vector by the components of a vector (scale).
+    ///     Divides a vector by the components of a vector (scale).
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -391,7 +379,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Divide a vector by the components of a vector (scale).
+    ///     Divide a vector by the components of a vector (scale).
     /// </summary>
     /// <param name="vector">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -404,7 +392,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+    ///     Returns a vector created from the smallest of the corresponding components of the given vectors.
     /// </summary>
     /// <param name="a">First operand.</param>
     /// <param name="b">Second operand.</param>
@@ -412,27 +400,39 @@ public struct Vector3d : IEquatable<Vector3d>
     [Pure]
     public static Vector3d ComponentMin(Vector3d a, Vector3d b)
     {
-        a.X = a.X < b.X ? a.X : b.X;
-        a.Y = a.Y < b.Y ? a.Y : b.Y;
-        a.Z = a.Z < b.Z ? a.Z : b.Z;
+        a.X = a.X < b.X
+            ? a.X
+            : b.X;
+        a.Y = a.Y < b.Y
+            ? a.Y
+            : b.Y;
+        a.Z = a.Z < b.Z
+            ? a.Z
+            : b.Z;
         return a;
     }
 
     /// <summary>
-    /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+    ///     Returns a vector created from the smallest of the corresponding components of the given vectors.
     /// </summary>
     /// <param name="a">First operand.</param>
     /// <param name="b">Second operand.</param>
     /// <param name="result">The component-wise minimum.</param>
     public static void ComponentMin(in Vector3d a, in Vector3d b, out Vector3d result)
     {
-        result.X = a.X < b.X ? a.X : b.X;
-        result.Y = a.Y < b.Y ? a.Y : b.Y;
-        result.Z = a.Z < b.Z ? a.Z : b.Z;
+        result.X = a.X < b.X
+            ? a.X
+            : b.X;
+        result.Y = a.Y < b.Y
+            ? a.Y
+            : b.Y;
+        result.Z = a.Z < b.Z
+            ? a.Z
+            : b.Z;
     }
 
     /// <summary>
-    /// Returns a vector created from the largest of the corresponding components of the given vectors.
+    ///     Returns a vector created from the largest of the corresponding components of the given vectors.
     /// </summary>
     /// <param name="a">First operand.</param>
     /// <param name="b">Second operand.</param>
@@ -440,73 +440,85 @@ public struct Vector3d : IEquatable<Vector3d>
     [Pure]
     public static Vector3d ComponentMax(Vector3d a, Vector3d b)
     {
-        a.X = a.X > b.X ? a.X : b.X;
-        a.Y = a.Y > b.Y ? a.Y : b.Y;
-        a.Z = a.Z > b.Z ? a.Z : b.Z;
+        a.X = a.X > b.X
+            ? a.X
+            : b.X;
+        a.Y = a.Y > b.Y
+            ? a.Y
+            : b.Y;
+        a.Z = a.Z > b.Z
+            ? a.Z
+            : b.Z;
         return a;
     }
 
     /// <summary>
-    /// Returns a vector created from the largest of the corresponding components of the given vectors.
+    ///     Returns a vector created from the largest of the corresponding components of the given vectors.
     /// </summary>
     /// <param name="a">First operand.</param>
     /// <param name="b">Second operand.</param>
     /// <param name="result">The component-wise maximum.</param>
     public static void ComponentMax(in Vector3d a, in Vector3d b, out Vector3d result)
     {
-        result.X = a.X > b.X ? a.X : b.X;
-        result.Y = a.Y > b.Y ? a.Y : b.Y;
-        result.Z = a.Z > b.Z ? a.Z : b.Z;
+        result.X = a.X > b.X
+            ? a.X
+            : b.X;
+        result.Y = a.Y > b.Y
+            ? a.Y
+            : b.Y;
+        result.Z = a.Z > b.Z
+            ? a.Z
+            : b.Z;
     }
 
     /// <summary>
-    /// Returns the Vector3d with the minimum magnitude.
+    ///     Returns the Vector3d with the minimum magnitude.
     /// </summary>
     /// <param name="left">Left operand.</param>
     /// <param name="right">Right operand.</param>
     /// <returns>The minimum Vector3d.</returns>
     [Pure]
-    public static Vector3d MagnitudeMin(Vector3d left, Vector3d right)
-    {
-        return left.LengthSquared < right.LengthSquared ? left : right;
-    }
+    public static Vector3d MagnitudeMin(Vector3d left, Vector3d right) =>
+        left.LengthSquared < right.LengthSquared
+            ? left
+            : right;
 
     /// <summary>
-    /// Returns the Vector3d with the minimum magnitude.
+    ///     Returns the Vector3d with the minimum magnitude.
     /// </summary>
     /// <param name="left">Left operand.</param>
     /// <param name="right">Right operand.</param>
     /// <param name="result">The magnitude-wise minimum.</param>
-    public static void MagnitudeMin(in Vector3d left, in Vector3d right, out Vector3d result)
-    {
-        result = left.LengthSquared < right.LengthSquared ? left : right;
-    }
+    public static void MagnitudeMin(in Vector3d left, in Vector3d right, out Vector3d result) =>
+        result = left.LengthSquared < right.LengthSquared
+            ? left
+            : right;
 
     /// <summary>
-    /// Returns the Vector3d with the minimum magnitude.
+    ///     Returns the Vector3d with the minimum magnitude.
     /// </summary>
     /// <param name="left">Left operand.</param>
     /// <param name="right">Right operand.</param>
     /// <returns>The minimum Vector3d.</returns>
     [Pure]
-    public static Vector3d MagnitudeMax(Vector3d left, Vector3d right)
-    {
-        return left.LengthSquared >= right.LengthSquared ? left : right;
-    }
+    public static Vector3d MagnitudeMax(Vector3d left, Vector3d right) =>
+        left.LengthSquared >= right.LengthSquared
+            ? left
+            : right;
 
     /// <summary>
-    /// Returns the Vector3d with the maximum magnitude.
+    ///     Returns the Vector3d with the maximum magnitude.
     /// </summary>
     /// <param name="left">Left operand.</param>
     /// <param name="right">Right operand.</param>
     /// <param name="result">The magnitude-wise maximum.</param>
-    public static void MagnitudeMax(in Vector3d left, in Vector3d right, out Vector3d result)
-    {
-        result = left.LengthSquared >= right.LengthSquared ? left : right;
-    }
+    public static void MagnitudeMax(in Vector3d left, in Vector3d right, out Vector3d result) =>
+        result = left.LengthSquared >= right.LengthSquared
+            ? left
+            : right;
 
     /// <summary>
-    /// Clamp a vector to the given minimum and maximum vectors.
+    ///     Clamp a vector to the given minimum and maximum vectors.
     /// </summary>
     /// <param name="vec">Input vector.</param>
     /// <param name="min">Minimum vector.</param>
@@ -515,28 +527,57 @@ public struct Vector3d : IEquatable<Vector3d>
     [Pure]
     public static Vector3d Clamp(Vector3d vec, Vector3d min, Vector3d max)
     {
-        vec.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
-        vec.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-        vec.Z = vec.Z < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
+        vec.X = vec.X < min.X
+            ? min.X
+            : vec.X > max.X
+                ? max.X
+                : vec.X;
+        vec.Y = vec.Y < min.Y
+            ? min.Y
+            : vec.Y > max.Y
+                ? max.Y
+                : vec.Y;
+        vec.Z = vec.Z < min.Z
+            ? min.Z
+            : vec.Z > max.Z
+                ? max.Z
+                : vec.Z;
         return vec;
     }
 
     /// <summary>
-    /// Clamp a vector to the given minimum and maximum vectors.
+    ///     Clamp a vector to the given minimum and maximum vectors.
     /// </summary>
     /// <param name="vec">Input vector.</param>
     /// <param name="min">Minimum vector.</param>
     /// <param name="max">Maximum vector.</param>
     /// <param name="result">The clamped vector.</param>
-    public static void Clamp(in Vector3d vec, in Vector3d min, in Vector3d max, out Vector3d result)
+    public static void Clamp(
+        in Vector3d vec,
+        in Vector3d min,
+        in Vector3d max,
+        out Vector3d result
+    )
     {
-        result.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
-        result.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-        result.Z = vec.Z < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
+        result.X = vec.X < min.X
+            ? min.X
+            : vec.X > max.X
+                ? max.X
+                : vec.X;
+        result.Y = vec.Y < min.Y
+            ? min.Y
+            : vec.Y > max.Y
+                ? max.Y
+                : vec.Y;
+        result.Z = vec.Z < min.Z
+            ? min.Z
+            : vec.Z > max.Z
+                ? max.Z
+                : vec.Z;
     }
 
     /// <summary>
-    /// Compute the euclidean distance between two vectors.
+    ///     Compute the euclidean distance between two vectors.
     /// </summary>
     /// <param name="vec1">The first vector.</param>
     /// <param name="vec2">The second vector.</param>
@@ -549,19 +590,18 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Compute the euclidean distance between two vectors.
+    ///     Compute the euclidean distance between two vectors.
     /// </summary>
     /// <param name="vec1">The first vector.</param>
     /// <param name="vec2">The second vector.</param>
     /// <param name="result">The distance.</param>
-    public static void Distance(in Vector3d vec1, in Vector3d vec2, out double result)
-    {
-        result = System.Math.Sqrt((vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y) +
-                                  (vec2.Z - vec1.Z) * (vec2.Z - vec1.Z));
-    }
+    public static void Distance(in Vector3d vec1, in Vector3d vec2, out double result) =>
+        result = System.Math.Sqrt(
+            (vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y) + (vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)
+        );
 
     /// <summary>
-    /// Compute the squared euclidean distance between two vectors.
+    ///     Compute the squared euclidean distance between two vectors.
     /// </summary>
     /// <param name="vec1">The first vector.</param>
     /// <param name="vec2">The second vector.</param>
@@ -574,19 +614,16 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Compute the squared euclidean distance between two vectors.
+    ///     Compute the squared euclidean distance between two vectors.
     /// </summary>
     /// <param name="vec1">The first vector.</param>
     /// <param name="vec2">The second vector.</param>
     /// <param name="result">The squared distance.</param>
-    public static void DistanceSquared(in Vector3d vec1, in Vector3d vec2, out double result)
-    {
-        result = (vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y) +
-                 (vec2.Z - vec1.Z) * (vec2.Z - vec1.Z);
-    }
+    public static void DistanceSquared(in Vector3d vec1, in Vector3d vec2, out double result) =>
+        result = (vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y) + (vec2.Z - vec1.Z) * (vec2.Z - vec1.Z);
 
     /// <summary>
-    /// Scale a vector to unit length.
+    ///     Scale a vector to unit length.
     /// </summary>
     /// <param name="vec">The input vector.</param>
     /// <returns>The normalized copy.</returns>
@@ -601,7 +638,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Scale a vector to unit length.
+    ///     Scale a vector to unit length.
     /// </summary>
     /// <param name="vec">The input vector.</param>
     /// <param name="result">The normalized vector.</param>
@@ -614,7 +651,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Scale a vector to approximately unit length.
+    ///     Scale a vector to approximately unit length.
     /// </summary>
     /// <param name="vec">The input vector.</param>
     /// <returns>The normalized copy.</returns>
@@ -629,7 +666,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Scale a vector to approximately unit length.
+    ///     Scale a vector to approximately unit length.
     /// </summary>
     /// <param name="vec">The input vector.</param>
     /// <param name="result">The normalized vector.</param>
@@ -642,30 +679,25 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Calculate the dot (scalar) product of two vectors.
+    ///     Calculate the dot (scalar) product of two vectors.
     /// </summary>
     /// <param name="left">First operand.</param>
     /// <param name="right">Second operand.</param>
     /// <returns>The dot product of the two inputs.</returns>
     [Pure]
-    public static double Dot(Vector3d left, Vector3d right)
-    {
-        return left.X * right.X + left.Y * right.Y + left.Z * right.Z;
-    }
+    public static double Dot(Vector3d left, Vector3d right) => left.X * right.X + left.Y * right.Y + left.Z * right.Z;
 
     /// <summary>
-    /// Calculate the dot (scalar) product of two vectors.
+    ///     Calculate the dot (scalar) product of two vectors.
     /// </summary>
     /// <param name="left">First operand.</param>
     /// <param name="right">Second operand.</param>
     /// <param name="result">The dot product of the two inputs.</param>
-    public static void Dot(in Vector3d left, in Vector3d right, out double result)
-    {
+    public static void Dot(in Vector3d left, in Vector3d right, out double result) =>
         result = left.X * right.X + left.Y * right.Y + left.Z * right.Z;
-    }
 
     /// <summary>
-    /// Caclulate the cross (vector) product of two vectors.
+    ///     Caclulate the cross (vector) product of two vectors.
     /// </summary>
     /// <param name="left">First operand.</param>
     /// <param name="right">Second operand.</param>
@@ -678,7 +710,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Caclulate the cross (vector) product of two vectors.
+    ///     Caclulate the cross (vector) product of two vectors.
     /// </summary>
     /// <param name="left">First operand.</param>
     /// <param name="right">Second operand.</param>
@@ -691,7 +723,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Returns a new vector that is the linear blend of the 2 given vectors.
+    ///     Returns a new vector that is the linear blend of the 2 given vectors.
     /// </summary>
     /// <param name="a">First input vector.</param>
     /// <param name="b">Second input vector.</param>
@@ -707,13 +739,18 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Returns a new vector that is the linear blend of the 2 given vectors.
+    ///     Returns a new vector that is the linear blend of the 2 given vectors.
     /// </summary>
     /// <param name="a">First input vector.</param>
     /// <param name="b">Second input vector.</param>
     /// <param name="blend">The blend factor.</param>
     /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise.</param>
-    public static void Lerp(in Vector3d a, in Vector3d b, double blend, out Vector3d result)
+    public static void Lerp(
+        in Vector3d a,
+        in Vector3d b,
+        double blend,
+        out Vector3d result
+    )
     {
         result.X = blend * (b.X - a.X) + a.X;
         result.Y = blend * (b.Y - a.Y) + a.Y;
@@ -721,7 +758,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Returns a new vector that is the component-wise linear blend of the 2 given vectors.
+    ///     Returns a new vector that is the component-wise linear blend of the 2 given vectors.
     /// </summary>
     /// <param name="a">First input vector.</param>
     /// <param name="b">Second input vector.</param>
@@ -737,13 +774,18 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Returns a new vector that is the component-wise linear blend of the 2 given vectors.
+    ///     Returns a new vector that is the component-wise linear blend of the 2 given vectors.
     /// </summary>
     /// <param name="a">First input vector.</param>
     /// <param name="b">Second input vector.</param>
     /// <param name="blend">The blend factor.</param>
     /// <param name="result">a when blend=0, b when blend=1, and a component-wise linear combination otherwise.</param>
-    public static void Lerp(in Vector3d a, in Vector3d b, Vector3d blend, out Vector3d result)
+    public static void Lerp(
+        in Vector3d a,
+        in Vector3d b,
+        Vector3d blend,
+        out Vector3d result
+    )
     {
         result.X = blend.X * (b.X - a.X) + a.X;
         result.Y = blend.Y * (b.Y - a.Y) + a.Y;
@@ -751,7 +793,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Interpolate 3 Vectors using Barycentric coordinates.
+    ///     Interpolate 3 Vectors using Barycentric coordinates.
     /// </summary>
     /// <param name="a">First input Vector.</param>
     /// <param name="b">Second input Vector.</param>
@@ -760,14 +802,27 @@ public struct Vector3d : IEquatable<Vector3d>
     /// <param name="v">Second Barycentric Coordinate.</param>
     /// <returns>a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise.</returns>
     [Pure]
-    public static Vector3d BaryCentric(Vector3d a, Vector3d b, Vector3d c, double u, double v)
+    public static Vector3d BaryCentric(
+        Vector3d a,
+        Vector3d b,
+        Vector3d c,
+        double u,
+        double v
+    )
     {
-        BaryCentric(in a, in b, in c, u, v, out var result);
+        BaryCentric(
+            in a,
+            in b,
+            in c,
+            u,
+            v,
+            out var result
+        );
         return result;
     }
 
     /// <summary>
-    /// Interpolate 3 Vectors using Barycentric coordinates.
+    ///     Interpolate 3 Vectors using Barycentric coordinates.
     /// </summary>
     /// <param name="a">First input Vector.</param>
     /// <param name="b">Second input Vector.</param>
@@ -775,12 +830,11 @@ public struct Vector3d : IEquatable<Vector3d>
     /// <param name="u">First Barycentric Coordinate.</param>
     /// <param name="v">Second Barycentric Coordinate.</param>
     /// <param name="result">
-    /// Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
-    /// otherwise.
+    ///     Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
+    ///     otherwise.
     /// </param>
     [Pure]
-    public static void BaryCentric
-    (
+    public static void BaryCentric(
         in Vector3d a,
         in Vector3d b,
         in Vector3d c,
@@ -799,8 +853,8 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Transform a direction vector by the given Matrix.
-    /// Assumes the matrix has a bottom row of (0,0,0,1), that is the translation part is ignored.
+    ///     Transform a direction vector by the given Matrix.
+    ///     Assumes the matrix has a bottom row of (0,0,0,1), that is the translation part is ignored.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="mat">The desired transformation.</param>
@@ -813,33 +867,27 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Transform a direction vector by the given Matrix.
-    /// Assumes the matrix has a bottom row of (0,0,0,1), that is the translation part is ignored.
+    ///     Transform a direction vector by the given Matrix.
+    ///     Assumes the matrix has a bottom row of (0,0,0,1), that is the translation part is ignored.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="mat">The desired transformation.</param>
     /// <param name="result">The transformed vector.</param>
     public static void TransformVector(in Vector3d vec, in Matrix4d mat, out Vector3d result)
     {
-        result.X = vec.X * mat.Row0.X +
-                   vec.Y * mat.Row1.X +
-                   vec.Z * mat.Row2.X;
+        result.X = vec.X * mat.Row0.X + vec.Y * mat.Row1.X + vec.Z * mat.Row2.X;
 
-        result.Y = vec.X * mat.Row0.Y +
-                   vec.Y * mat.Row1.Y +
-                   vec.Z * mat.Row2.Y;
+        result.Y = vec.X * mat.Row0.Y + vec.Y * mat.Row1.Y + vec.Z * mat.Row2.Y;
 
-        result.Z = vec.X * mat.Row0.Z +
-                   vec.Y * mat.Row1.Z +
-                   vec.Z * mat.Row2.Z;
+        result.Z = vec.X * mat.Row0.Z + vec.Y * mat.Row1.Z + vec.Z * mat.Row2.Z;
     }
 
     /// <summary>
-    /// Transform a Normal by the given Matrix.
+    ///     Transform a Normal by the given Matrix.
     /// </summary>
     /// <remarks>
-    /// This calculates the inverse of the given matrix, use TransformNormalInverse if you
-    /// already have the inverse to avoid this extra calculation.
+    ///     This calculates the inverse of the given matrix, use TransformNormalInverse if you
+    ///     already have the inverse to avoid this extra calculation.
     /// </remarks>
     /// <param name="norm">The normal to transform.</param>
     /// <param name="mat">The desired transformation.</param>
@@ -852,11 +900,11 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Transform a Normal by the given Matrix.
+    ///     Transform a Normal by the given Matrix.
     /// </summary>
     /// <remarks>
-    /// This calculates the inverse of the given matrix, use TransformNormalInverse if you
-    /// already have the inverse to avoid this extra calculation.
+    ///     This calculates the inverse of the given matrix, use TransformNormalInverse if you
+    ///     already have the inverse to avoid this extra calculation.
     /// </remarks>
     /// <param name="norm">The normal to transform.</param>
     /// <param name="mat">The desired transformation.</param>
@@ -868,11 +916,11 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Transform a Normal by the (transpose of the) given Matrix.
+    ///     Transform a Normal by the (transpose of the) given Matrix.
     /// </summary>
     /// <remarks>
-    /// This version doesn't calculate the inverse matrix.
-    /// Use this version if you already have the inverse of the desired transform to hand.
+    ///     This version doesn't calculate the inverse matrix.
+    ///     Use this version if you already have the inverse of the desired transform to hand.
     /// </remarks>
     /// <param name="norm">The normal to transform.</param>
     /// <param name="invMat">The inverse of the desired transformation.</param>
@@ -885,32 +933,26 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Transform a Normal by the (transpose of the) given Matrix.
+    ///     Transform a Normal by the (transpose of the) given Matrix.
     /// </summary>
     /// <remarks>
-    /// This version doesn't calculate the inverse matrix.
-    /// Use this version if you already have the inverse of the desired transform to hand.
+    ///     This version doesn't calculate the inverse matrix.
+    ///     Use this version if you already have the inverse of the desired transform to hand.
     /// </remarks>
     /// <param name="norm">The normal to transform.</param>
     /// <param name="invMat">The inverse of the desired transformation.</param>
     /// <param name="result">The transformed normal.</param>
     public static void TransformNormalInverse(in Vector3d norm, in Matrix4d invMat, out Vector3d result)
     {
-        result.X = norm.X * invMat.Row0.X +
-                   norm.Y * invMat.Row0.Y +
-                   norm.Z * invMat.Row0.Z;
+        result.X = norm.X * invMat.Row0.X + norm.Y * invMat.Row0.Y + norm.Z * invMat.Row0.Z;
 
-        result.Y = norm.X * invMat.Row1.X +
-                   norm.Y * invMat.Row1.Y +
-                   norm.Z * invMat.Row1.Z;
+        result.Y = norm.X * invMat.Row1.X + norm.Y * invMat.Row1.Y + norm.Z * invMat.Row1.Z;
 
-        result.Z = norm.X * invMat.Row2.X +
-                   norm.Y * invMat.Row2.Y +
-                   norm.Z * invMat.Row2.Z;
+        result.Z = norm.X * invMat.Row2.X + norm.Y * invMat.Row2.Y + norm.Z * invMat.Row2.Z;
     }
 
     /// <summary>
-    /// Transform a Position by the given Matrix.
+    ///     Transform a Position by the given Matrix.
     /// </summary>
     /// <param name="pos">The position to transform.</param>
     /// <param name="mat">The desired transformation.</param>
@@ -923,31 +965,22 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Transform a Position by the given Matrix.
+    ///     Transform a Position by the given Matrix.
     /// </summary>
     /// <param name="pos">The position to transform.</param>
     /// <param name="mat">The desired transformation.</param>
     /// <param name="result">The transformed position.</param>
     public static void TransformPosition(in Vector3d pos, in Matrix4d mat, out Vector3d result)
     {
-        result.X = pos.X * mat.Row0.X +
-                   pos.Y * mat.Row1.X +
-                   pos.Z * mat.Row2.X +
-                   mat.Row3.X;
+        result.X = pos.X * mat.Row0.X + pos.Y * mat.Row1.X + pos.Z * mat.Row2.X + mat.Row3.X;
 
-        result.Y = pos.X * mat.Row0.Y +
-                   pos.Y * mat.Row1.Y +
-                   pos.Z * mat.Row2.Y +
-                   mat.Row3.Y;
+        result.Y = pos.X * mat.Row0.Y + pos.Y * mat.Row1.Y + pos.Z * mat.Row2.Y + mat.Row3.Y;
 
-        result.Z = pos.X * mat.Row0.Z +
-                   pos.Y * mat.Row1.Z +
-                   pos.Z * mat.Row2.Z +
-                   mat.Row3.Z;
+        result.Z = pos.X * mat.Row0.Z + pos.Y * mat.Row1.Z + pos.Z * mat.Row2.Z + mat.Row3.Z;
     }
 
     /// <summary>
-    /// Transform a Vector by the given Matrix.
+    ///     Transform a Vector by the given Matrix.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="mat">The desired transformation.</param>
@@ -960,7 +993,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Transform a Vector by the given Matrix.
+    ///     Transform a Vector by the given Matrix.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="mat">The desired transformation.</param>
@@ -973,7 +1006,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Transforms a vector by a quaternion rotation.
+    ///     Transforms a vector by a quaternion rotation.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="quat">The quaternion to rotate the vector by.</param>
@@ -986,7 +1019,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Transforms a vector by a quaternion rotation.
+    ///     Transforms a vector by a quaternion rotation.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="quat">The quaternion to rotate the vector by.</param>
@@ -1005,7 +1038,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Transform a Vector by the given Matrix using right-handed notation.
+    ///     Transform a Vector by the given Matrix using right-handed notation.
     /// </summary>
     /// <param name="mat">The desired transformation.</param>
     /// <param name="vec">The vector to transform.</param>
@@ -1018,7 +1051,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Transform a Vector by the given Matrix using right-handed notation.
+    ///     Transform a Vector by the given Matrix using right-handed notation.
     /// </summary>
     /// <param name="mat">The desired transformation.</param>
     /// <param name="vec">The vector to transform.</param>
@@ -1031,7 +1064,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Transform a Vector3d by the given Matrix, and project the resulting Vector4 back to a Vector3.
+    ///     Transform a Vector3d by the given Matrix, and project the resulting Vector4 back to a Vector3.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="mat">The desired transformation.</param>
@@ -1044,7 +1077,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Transform a Vector3d by the given Matrix, and project the resulting Vector4d back to a Vector3d.
+    ///     Transform a Vector3d by the given Matrix, and project the resulting Vector4d back to a Vector3d.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="mat">The desired transformation.</param>
@@ -1059,7 +1092,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Calculates the angle (in radians) between two vectors.
+    ///     Calculates the angle (in radians) between two vectors.
     /// </summary>
     /// <param name="first">The first vector.</param>
     /// <param name="second">The second vector.</param>
@@ -1073,7 +1106,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Calculates the angle (in radians) between two vectors.
+    ///     Calculates the angle (in radians) between two vectors.
     /// </summary>
     /// <param name="first">The first vector.</param>
     /// <param name="second">The second vector.</param>
@@ -1086,12 +1119,12 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2d with the X and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector2d with the X and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2d Xy
     {
-        get { return Unsafe.As<Vector3d, Vector2d>(ref this); }
+        get => Unsafe.As<Vector3d, Vector2d>(ref this);
         set
         {
             X = value.X;
@@ -1100,12 +1133,12 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2d with the X and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector2d with the X and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2d Xz
     {
-        get { return new Vector2d(X, Z); }
+        get => new(X, Z);
         set
         {
             X = value.X;
@@ -1114,12 +1147,12 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2d with the Y and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector2d with the Y and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2d Yx
     {
-        get { return new Vector2d(Y, X); }
+        get => new(Y, X);
         set
         {
             Y = value.X;
@@ -1128,12 +1161,12 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2d with the Y and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector2d with the Y and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2d Yz
     {
-        get { return new Vector2d(Y, Z); }
+        get => new(Y, Z);
         set
         {
             Y = value.X;
@@ -1142,12 +1175,12 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2d with the Z and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector2d with the Z and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2d Zx
     {
-        get { return new Vector2d(Z, X); }
+        get => new(Z, X);
         set
         {
             Z = value.X;
@@ -1156,12 +1189,12 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector2d with the Z and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector2d with the Z and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector2d Zy
     {
-        get { return new Vector2d(Z, Y); }
+        get => new(Z, Y);
         set
         {
             Z = value.X;
@@ -1170,12 +1203,12 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the X, Z, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the X, Z, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Xzy
     {
-        get { return new Vector3d(X, Z, Y); }
+        get => new(X, Z, Y);
         set
         {
             X = value.X;
@@ -1185,12 +1218,12 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the Y, X, and Z components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the Y, X, and Z components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Yxz
     {
-        get { return new Vector3d(Y, X, Z); }
+        get => new(Y, X, Z);
         set
         {
             Y = value.X;
@@ -1200,12 +1233,12 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the Y, Z, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the Y, Z, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Yzx
     {
-        get { return new Vector3d(Y, Z, X); }
+        get => new(Y, Z, X);
         set
         {
             Y = value.X;
@@ -1215,12 +1248,12 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the Z, X, and Y components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the Z, X, and Y components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Zxy
     {
-        get { return new Vector3d(Z, X, Y); }
+        get => new(Z, X, Y);
         set
         {
             Z = value.X;
@@ -1230,12 +1263,12 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Gets or sets an OpenTK.Vector3d with the Z, Y, and X components of this instance.
+    ///     Gets or sets an OpenTK.Vector3d with the Z, Y, and X components of this instance.
     /// </summary>
     [XmlIgnore]
     public Vector3d Zyx
     {
-        get { return new Vector3d(Z, Y, X); }
+        get => new(Z, Y, X);
         set
         {
             Z = value.X;
@@ -1245,7 +1278,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Adds two instances.
+    ///     Adds two instances.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
@@ -1260,7 +1293,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Subtracts two instances.
+    ///     Subtracts two instances.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
@@ -1275,7 +1308,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Negates an instance.
+    ///     Negates an instance.
     /// </summary>
     /// <param name="vec">The instance.</param>
     /// <returns>The result of the calculation.</returns>
@@ -1289,7 +1322,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Multiplies an instance by a scalar.
+    ///     Multiplies an instance by a scalar.
     /// </summary>
     /// <param name="vec">The instance.</param>
     /// <param name="scale">The scalar.</param>
@@ -1304,7 +1337,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Multiplies an instance by a scalar.
+    ///     Multiplies an instance by a scalar.
     /// </summary>
     /// <param name="scale">The scalar.</param>
     /// <param name="vec">The instance.</param>
@@ -1319,7 +1352,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Component-wise multiplication between the specified instance by a scale vector.
+    ///     Component-wise multiplication between the specified instance by a scale vector.
     /// </summary>
     /// <param name="scale">Left operand.</param>
     /// <param name="vec">Right operand.</param>
@@ -1334,7 +1367,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Transform a Vector by the given Matrix.
+    ///     Transform a Vector by the given Matrix.
     /// </summary>
     /// <param name="vec">The vector to transform.</param>
     /// <param name="mat">The desired transformation.</param>
@@ -1347,7 +1380,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Transform a Vector by the given Matrix using right-handed notation.
+    ///     Transform a Vector by the given Matrix using right-handed notation.
     /// </summary>
     /// <param name="mat">The desired transformation.</param>
     /// <param name="vec">The vector to transform.</param>
@@ -1360,7 +1393,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Transforms a vector by a quaternion rotation.
+    ///     Transforms a vector by a quaternion rotation.
     /// </summary>
     /// <param name="quat">The quaternion to rotate the vector by.</param>
     /// <param name="vec">The vector to transform.</param>
@@ -1373,7 +1406,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Divides an instance by a scalar.
+    ///     Divides an instance by a scalar.
     /// </summary>
     /// <param name="vec">The instance.</param>
     /// <param name="scale">The scalar.</param>
@@ -1388,7 +1421,7 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Component-wise division between the specified instance by a scale vector.
+    ///     Component-wise division between the specified instance by a scale vector.
     /// </summary>
     /// <param name="vec">Left operand.</param>
     /// <param name="scale">Right operand.</param>
@@ -1403,70 +1436,49 @@ public struct Vector3d : IEquatable<Vector3d>
     }
 
     /// <summary>
-    /// Compares two instances for equality.
+    ///     Compares two instances for equality.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
     /// <returns>True, if left equals right; false otherwise.</returns>
-    public static bool operator ==(Vector3d left, Vector3d right)
-    {
-        return left.Equals(right);
-    }
+    public static bool operator ==(Vector3d left, Vector3d right) => left.Equals(right);
 
     /// <summary>
-    /// Compares two instances for inequality.
+    ///     Compares two instances for inequality.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
     /// <returns>True, if left does not equa lright; false otherwise.</returns>
-    public static bool operator !=(Vector3d left, Vector3d right)
-    {
-        return !(left == right);
-    }
+    public static bool operator !=(Vector3d left, Vector3d right) => !(left == right);
 
     /// <summary>
-    /// Converts OpenTK.Vector3d to OpenTK.Vector3.
+    ///     Converts OpenTK.Vector3d to OpenTK.Vector3.
     /// </summary>
     /// <param name="vec">The Vector3d to convert.</param>
     /// <returns>The resulting Vector3.</returns>
     [Pure]
-    public static explicit operator Vector3(Vector3d vec)
-    {
-        return new Vector3((float)vec.X, (float)vec.Y, (float)vec.Z);
-    }
+    public static explicit operator Vector3(Vector3d vec) => new((float)vec.X, (float)vec.Y, (float)vec.Z);
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Vector3d" /> struct using a tuple containing the component
-    /// values.
+    ///     Initializes a new instance of the <see cref="Vector3d" /> struct using a tuple containing the component
+    ///     values.
     /// </summary>
     /// <param name="values">A tuple containing the component values.</param>
     /// <returns>A new instance of the <see cref="Vector3d" /> struct with the given component values.</returns>
     [Pure]
-    public static implicit operator Vector3d((double X, double Y, double Z) values)
-    {
-        return new Vector3d(values.X, values.Y, values.Z);
-    }
+    public static implicit operator Vector3d((double X, double Y, double Z) values) => new(values.X, values.Y, values.Z);
 
     /// <inheritdoc />
-    public override bool Equals(object? obj)
-    {
-        return obj is Vector3d vector3d && Equals(vector3d);
-    }
+    public override bool Equals(object? obj) => obj is Vector3d vector3d && Equals(vector3d);
 
     /// <inheritdoc />
-    public bool Equals(Vector3d other)
-    {
-        return X == other.X && Y == other.Y && Z == other.Z;
-    }
+    public bool Equals(Vector3d other) => X == other.X && Y == other.Y && Z == other.Z;
 
     /// <inheritdoc />
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(X, Y, Z);
-    }
+    public override int GetHashCode() => HashCode.Combine(X, Y, Z);
 
     /// <summary>
-    /// Deconstructs the vector into it's individual components.
+    ///     Deconstructs the vector into it's individual components.
     /// </summary>
     /// <param name="x">The X component of the vector.</param>
     /// <param name="y">The Y component of the vector.</param>

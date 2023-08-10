@@ -3,7 +3,7 @@
 namespace Engine.Core.Math.Base;
 
 /// <summary>
-/// Represents a <see cref="Color" /> as HSL value
+///     Represents a <see cref="Color" /> as HSL value
 /// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public sealed class HslColor
@@ -15,20 +15,20 @@ public sealed class HslColor
 
     public double Hue
     {
-        get { return _hue * Scale; }
-        init { _hue = Mathf.Clamp01(value / Scale); }
+        get => _hue * Scale;
+        init => _hue = Mathf.Clamp01(value / Scale);
     }
 
     public double Saturation
     {
-        get { return _saturation * Scale; }
-        init { _saturation = Mathf.Clamp01(value / Scale); }
+        get => _saturation * Scale;
+        init => _saturation = Mathf.Clamp01(value / Scale);
     }
 
     public double Luminosity
     {
-        get { return _luminosity * Scale; }
-        init { _luminosity = Mathf.Clamp01(value / Scale); }
+        get => _luminosity * Scale;
+        init => _luminosity = Mathf.Clamp01(value / Scale);
     }
 
     public HslColor()
@@ -80,38 +80,29 @@ public sealed class HslColor
         return new Color((int)(255 * r), (int)(255 * g), (int)(255 * b));
     }
 
-    public static implicit operator HslColor(Color color)
-    {
-        return new HslColor
+    public static implicit operator HslColor(Color color) =>
+        new()
         {
             _hue = color.GetHue() / 360.0, // we store hue as 0-1 as opposed to 0-360
             _luminosity = color.GetBrightness(),
             _saturation = color.GetSaturation()
         };
-    }
 
-    public static HslColor operator /(HslColor color1, HslColor color2)
-    {
-        return new HslColor(
+    public static HslColor operator /(HslColor color1, HslColor color2) =>
+        new(
             color1.Hue / color2.Hue,
             color1.Saturation / color2.Saturation,
             color1.Luminosity / color2.Luminosity
         );
-    }
 
-    public static HslColor operator *(HslColor color1, HslColor color2)
-    {
-        return new HslColor(
+    public static HslColor operator *(HslColor color1, HslColor color2) =>
+        new(
             color1.Hue * color2.Hue,
             color1.Saturation * color2.Saturation,
             color1.Luminosity * color2.Luminosity
         );
-    }
 
-    public override string ToString()
-    {
-        return $"H: {Hue:#0.##} S: {Saturation:#0.##} L: {Luminosity:#0.##}";
-    }
+    public override string ToString() => $"H: {Hue:#0.##} S: {Saturation:#0.##} L: {Luminosity:#0.##}";
 
     public string ToRgbString()
     {
@@ -133,9 +124,9 @@ public sealed class HslColor
         return temp3 switch
         {
             < 1.0 / 6.0 => temp1 + (temp2 - temp1) * 6.0 * temp3,
-            < 0.5 => temp2,
+            < 0.5       => temp2,
             < 2.0 / 3.0 => temp1 + (temp2 - temp1) * (2.0 / 3.0 - temp3) * 6.0,
-            _ => temp1
+            _           => temp1
         };
     }
 

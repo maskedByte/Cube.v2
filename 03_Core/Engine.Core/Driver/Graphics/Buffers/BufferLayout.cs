@@ -1,7 +1,7 @@
 namespace Engine.Core.Driver.Graphics.Buffers;
 
 /// <summary>
-/// Implementation of <see cref="IBufferLayout" />
+///     Implementation of <see cref="IBufferLayout" />
 /// </summary>
 public sealed class BufferLayout : IBufferLayout
 {
@@ -9,7 +9,7 @@ public sealed class BufferLayout : IBufferLayout
     private int _stride;
 
     /// <summary>
-    /// Default parameterless constructor
+    ///     Default parameterless constructor
     /// </summary>
     public BufferLayout()
     {
@@ -18,7 +18,7 @@ public sealed class BufferLayout : IBufferLayout
     }
 
     /// <summary>
-    /// Create new instance of <see cref="BufferLayout" />
+    ///     Create new instance of <see cref="BufferLayout" />
     /// </summary>
     public BufferLayout(IEnumerable<BufferElement> elements)
         : this()
@@ -28,10 +28,7 @@ public sealed class BufferLayout : IBufferLayout
     }
 
     /// <inheritdoc />
-    public BufferElement this[string name]
-    {
-        get { return _elements[name]; }
-    }
+    public BufferElement this[string name] => _elements[name];
 
     /// <inheritdoc />
     public void SetLayout(BufferElement[] elements)
@@ -41,10 +38,7 @@ public sealed class BufferLayout : IBufferLayout
     }
 
     /// <inheritdoc />
-    public void AddElement(BufferElement element)
-    {
-        _elements.Add(element.Name, element);
-    }
+    public void AddElement(BufferElement element) => _elements.Add(element.Name, element);
 
     /// <inheritdoc />
     public int GetStride()

@@ -6,24 +6,21 @@ using Engine.Core.Exceptions;
 namespace Engine.Core.Configurations.Loader;
 
 /// <summary>
-/// <see cref="IConfigurationBuilder" /> implementation to load *.xml files
+///     <see cref="IConfigurationBuilder" /> implementation to load *.xml files
 /// </summary>
 public sealed class XmlBuilder : IConfigurationBuilder
 {
     private readonly string _loadPath;
 
+    /// <inheritdoc />
+    public string Extension => "xml";
+
     /// <summary>
-    /// Create new instance of <see cref="IniBuilder" />
+    ///     Create new instance of <see cref="IniBuilder" />
     /// </summary>
     public XmlBuilder()
     {
         _loadPath = $"settings.{Extension}";
-    }
-
-    /// <inheritdoc />
-    public string Extension
-    {
-        get { return "xml"; }
     }
 
     /// <inheritdoc />

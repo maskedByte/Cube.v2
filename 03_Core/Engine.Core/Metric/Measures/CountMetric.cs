@@ -3,12 +3,12 @@
 namespace Engine.Core.Metric.Measures;
 
 /// <summary>
-/// <see cref="CountMetric" /> implementation to measure the count of something
+///     <see cref="CountMetric" /> implementation to measure the count of something
 /// </summary>
 public sealed class CountMetric : PerformanceMetric<int>
 {
     /// <summary>
-    /// Initialize a new <see cref="CountMetric" />
+    ///     Initialize a new <see cref="CountMetric" />
     /// </summary>
     public CountMetric(string name, int initial = default)
         : base(name, initial)
@@ -16,18 +16,12 @@ public sealed class CountMetric : PerformanceMetric<int>
     }
 
     /// <summary>
-    /// Increment the internal counter
+    ///     Increment the internal counter
     /// </summary>
-    public void Inc()
-    {
-        Value++;
-    }
+    public void Inc() => Value++;
 
     /// <summary>
-    /// Decrement the internal counter
+    ///     Decrement the internal counter
     /// </summary>
-    public void Dec()
-    {
-        Value--;
-    }
+    public void Dec() => Value--;
 }

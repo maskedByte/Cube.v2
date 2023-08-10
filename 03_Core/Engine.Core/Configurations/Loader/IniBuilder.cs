@@ -4,24 +4,21 @@ using Engine.Core.Configurations.Interface;
 namespace Engine.Core.Configurations.Loader;
 
 /// <summary>
-/// <see cref="IConfigurationBuilder" /> implementation to load *.ini files
+///     <see cref="IConfigurationBuilder" /> implementation to load *.ini files
 /// </summary>
 public sealed class IniBuilder : IConfigurationBuilder
 {
     private string _loadPath;
 
+    /// <inheritdoc />
+    public string Extension => "ini";
+
     /// <summary>
-    /// Create new instance of <see cref="IniBuilder" />
+    ///     Create new instance of <see cref="IniBuilder" />
     /// </summary>
     public IniBuilder()
     {
         _loadPath = $"settings.{Extension}";
-    }
-
-    /// <inheritdoc />
-    public string Extension
-    {
-        get { return "ini"; }
     }
 
     /// <inheritdoc />
@@ -38,8 +35,7 @@ public sealed class IniBuilder : IConfigurationBuilder
 
             if (!string.IsNullOrEmpty(currentLine))
             {
-                if (currentLine.StartsWith('[') &&
-                    currentLine.EndsWith(']'))
+                if (currentLine.StartsWith('[') && currentLine.EndsWith(']'))
                 {
                     actualGroup = currentLine[1..^1].Trim();
                 }

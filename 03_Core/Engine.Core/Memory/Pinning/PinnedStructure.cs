@@ -4,7 +4,7 @@ using Engine.Core.Exceptions;
 namespace Engine.Core.Memory.Pinning;
 
 /// <summary>
-/// A class that stores the type of a structure and the pinned address of the structure.
+///     A class that stores the type of a structure and the pinned address of the structure.
 /// </summary>
 /// <typeparam name="T">The type of the structure.</typeparam>
 public sealed class PinnedStructure<T> : IPinnedStructure<T>, IDisposable
@@ -13,12 +13,29 @@ public sealed class PinnedStructure<T> : IPinnedStructure<T>, IDisposable
     private bool _disposed;
 
     /// <summary>
-    /// The type of the stored structure.
+    ///     The type of the stored structure.
     /// </summary>
     public Type StructureType { get; }
 
     /// <summary>
-    /// Constructs a new instance of the PinnedStructure class.
+    ///     The pinned address of the structure.
+    /// </summary>
+    public IntPtr Address
+    {
+        get
+        {
+            if (_disposed)
+            {
+                throw new MemoryNotAccessibleException();
+            }
+
+            return _address;
+        }
+        private init => _address = value;
+    }
+
+    /// <summary>
+    ///     Constructs a new instance of the PinnedStructure class.
     /// </summary>
     public PinnedStructure()
     {
@@ -39,24 +56,7 @@ public sealed class PinnedStructure<T> : IPinnedStructure<T>, IDisposable
     }
 
     /// <summary>
-    /// The pinned address of the structure.
-    /// </summary>
-    public IntPtr Address
-    {
-        get
-        {
-            if (_disposed)
-            {
-                throw new MemoryNotAccessibleException();
-            }
-
-            return _address;
-        }
-        private init { _address = value; }
-    }
-
-    /// <summary>
-    /// Retrieves the structure from the pinned memory.
+    ///     Retrieves the structure from the pinned memory.
     /// </summary>
     /// <returns>The retrieved structure.</returns>
     public T? Get()
@@ -70,7 +70,7 @@ public sealed class PinnedStructure<T> : IPinnedStructure<T>, IDisposable
     }
 
     /// <summary>
-    /// Sets the structure in the pinned memory.
+    ///     Sets the structure in the pinned memory.
     /// </summary>
     /// <param name="value">The structure to set.</param>
     public void Set(T value)
@@ -89,7 +89,7 @@ public sealed class PinnedStructure<T> : IPinnedStructure<T>, IDisposable
     }
 
     /// <summary>
-    /// Frees the pinned memory.
+    ///     Frees the pinned memory.
     /// </summary>
     public void Free()
     {

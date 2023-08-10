@@ -1,7 +1,7 @@
 ﻿namespace Engine.Core.Memory.Pinning;
 
 /// <summary>
-/// Base interface for pinned structures
+///     Base interface for pinned structures
 /// </summary>
 public interface IPinnedStructure
 {
@@ -9,7 +9,7 @@ public interface IPinnedStructure
 }
 
 /// <summary>
-/// Interface for pinned structures
+///     Interface for pinned structures
 /// </summary>
 /// <typeparam name="T">The type of the structure.</typeparam>
 public interface IPinnedStructure<T> : IPinnedStructure

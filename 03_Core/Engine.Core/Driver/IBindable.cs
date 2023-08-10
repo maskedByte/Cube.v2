@@ -1,17 +1,17 @@
 namespace Engine.Core.Driver;
 
 /// <summary>
-/// Bindable interface
+///     Bindable interface
 /// </summary>
 public interface IBindable
 {
     /// <summary>
-    /// Bind specific to stack
+    ///     Bind specific to stack
     /// </summary>
     public void Bind();
 
     /// <summary>
-    /// Unbind specific from stack
+    ///     Unbind specific from stack
     /// </summary>
     public void Unbind();
 }

@@ -12,8 +12,8 @@ using Engine.Core.Math.Vectors;
 namespace Engine.Core.Configurations;
 
 /// <summary>
-/// Implementation for <see cref="IConfiguration" /> to provide application wide configurations
-/// <remarks>it can load *.ini, *.json, *.xml, *.yml</remarks>
+///     Implementation for <see cref="IConfiguration" /> to provide application wide configurations
+///     <remarks>it can load *.ini, *.json, *.xml, *.yml</remarks>
 /// </summary>
 public sealed class Configuration : IConfiguration
 {
@@ -21,9 +21,9 @@ public sealed class Configuration : IConfiguration
     private readonly Dictionary<string, string> _configurations;
 
     /// <summary>
-    /// Singleton instance of <see cref="Configuration" />
+    ///     Singleton instance of <see cref="Configuration" />
     /// </summary>
-    public static Configuration Instance { get; } = new Configuration();
+    public static Configuration Instance { get; } = new();
 
     static Configuration()
     {
@@ -34,7 +34,10 @@ public sealed class Configuration : IConfiguration
         _configurations = new Dictionary<string, string>();
         _builder = new List<IConfigurationBuilder>
         {
-            new IniBuilder(), new XmlBuilder(), new JsonBuilder(), new YamlBuilder()
+            new IniBuilder(),
+            new XmlBuilder(),
+            new JsonBuilder(),
+            new YamlBuilder()
         };
     }
 
@@ -82,10 +85,7 @@ public sealed class Configuration : IConfiguration
         return result;
     }
 
-    public IConfigurationBuilder? GetBuilder(Type builderType)
-    {
-        return _builder.FirstOrDefault(builder => builderType == builder.GetType());
-    }
+    public IConfigurationBuilder? GetBuilder(Type builderType) => _builder.FirstOrDefault(builder => builderType == builder.GetType());
 
     #region Getter
 

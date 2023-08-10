@@ -6,35 +6,34 @@ namespace Engine.Core.Math.Base;
 public struct Viewport : IEquatable<Viewport>
 {
     /// <summary>
-    /// X position of the Viewport
+    ///     X position of the Viewport
     /// </summary>
     public float X;
 
     /// <summary>
-    /// Y position of the Viewport
+    ///     Y position of the Viewport
     /// </summary>
     public float Y;
 
     /// <summary>
-    /// Width of the Viewport
+    ///     Width of the Viewport
     /// </summary>
     public float Width;
 
     /// <summary>
-    /// Height of the Viewport
+    ///     Height of the Viewport
     /// </summary>
     public float Height;
 
     /// <summary>
-    /// Access properties by index
+    ///     Access properties by index
     /// </summary>
     /// <param name="index">index of the parameter</param>
     /// <returns></returns>
     public float this[int index]
     {
-        get
-        {
-            return index switch
+        get =>
+            index switch
             {
                 0 => X,
                 1 => Y,
@@ -42,7 +41,6 @@ public struct Viewport : IEquatable<Viewport>
                 3 => Height,
                 _ => throw new Exception("Index out of range.")
             };
-        }
         set
         {
             switch (index)
@@ -65,21 +63,13 @@ public struct Viewport : IEquatable<Viewport>
         }
     }
 
-    public bool Equals(Viewport other)
-    {
-        return X.Equals(other.X)
-               && Y.Equals(other.Y)
-               && Width.Equals(other.Width)
-               && Height.Equals(other.Height);
-    }
+    public bool Equals(Viewport other) =>
+        X.Equals(other.X)
+        && Y.Equals(other.Y)
+        && Width.Equals(other.Width)
+        && Height.Equals(other.Height);
 
-    public override bool Equals(object? obj)
-    {
-        return obj is Viewport other && Equals(other);
-    }
+    public override bool Equals(object? obj) => obj is Viewport other && Equals(other);
 
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(X, Y, Width, Height);
-    }
+    public override int GetHashCode() => HashCode.Combine(X, Y, Width, Height);
 }

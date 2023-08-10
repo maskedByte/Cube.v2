@@ -6,34 +6,33 @@ using Engine.Core.Math.Vectors;
 namespace Engine.Core.Math.Matrices;
 
 /// <summary>
-/// Represents a 2x2 matrix.
+///     Represents a 2x2 matrix.
 /// </summary>
-[Serializable]
-[StructLayout(LayoutKind.Sequential)]
+[Serializable, StructLayout(LayoutKind.Sequential)]
 public struct Matrix2 : IEquatable<Matrix2>
 {
     /// <summary>
-    /// Top row of the matrix.
+    ///     Top row of the matrix.
     /// </summary>
     public Vector2 Row0;
 
     /// <summary>
-    /// Bottom row of the matrix.
+    ///     Bottom row of the matrix.
     /// </summary>
     public Vector2 Row1;
 
     /// <summary>
-    /// The identity matrix.
+    ///     The identity matrix.
     /// </summary>
-    public static readonly Matrix2 Identity = new Matrix2(Vector2.UnitX, Vector2.UnitY);
+    public static readonly Matrix2 Identity = new(Vector2.UnitX, Vector2.UnitY);
 
     /// <summary>
-    /// The zero matrix.
+    ///     The zero matrix.
     /// </summary>
-    public static readonly Matrix2 Zero = new Matrix2(Vector2.Zero, Vector2.Zero);
+    public static readonly Matrix2 Zero = new(Vector2.Zero, Vector2.Zero);
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Matrix2" /> struct.
+    ///     Initializes a new instance of the <see cref="Matrix2" /> struct.
     /// </summary>
     /// <param name="row0">Top row of the matrix.</param>
     /// <param name="row1">Bottom row of the matrix.</param>
@@ -44,17 +43,18 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Matrix2" /> struct.
+    ///     Initializes a new instance of the <see cref="Matrix2" /> struct.
     /// </summary>
     /// <param name="m00">First item of the first row of the matrix.</param>
     /// <param name="m01">Second item of the first row of the matrix.</param>
     /// <param name="m10">First item of the second row of the matrix.</param>
     /// <param name="m11">Second item of the second row of the matrix.</param>
     [SuppressMessage("ReSharper", "SA1117", Justification = "For better readability of Matrix struct.")]
-    public Matrix2
-    (
-        float m00, float m01,
-        float m10, float m11
+    public Matrix2(
+        float m00,
+        float m01,
+        float m10,
+        float m11
     )
     {
         Row0 = new Vector2(m00, m01);
@@ -62,7 +62,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Gets the determinant of this matrix.
+    ///     Gets the determinant of this matrix.
     /// </summary>
     public float Determinant
     {
@@ -78,11 +78,11 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Gets or sets the first column of this matrix.
+    ///     Gets or sets the first column of this matrix.
     /// </summary>
     public Vector2 Column0
     {
-        get { return new Vector2(Row0.X, Row1.X); }
+        get => new(Row0.X, Row1.X);
         set
         {
             Row0.X = value.X;
@@ -91,11 +91,11 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Gets or sets the second column of this matrix.
+    ///     Gets or sets the second column of this matrix.
     /// </summary>
     public Vector2 Column1
     {
-        get { return new Vector2(Row0.Y, Row1.Y); }
+        get => new(Row0.Y, Row1.Y);
         set
         {
             Row0.Y = value.X;
@@ -104,47 +104,47 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Gets or sets the value at row 1, column 1 of this instance.
+    ///     Gets or sets the value at row 1, column 1 of this instance.
     /// </summary>
     public float M11
     {
-        get { return Row0.X; }
-        set { Row0.X = value; }
+        get => Row0.X;
+        set => Row0.X = value;
     }
 
     /// <summary>
-    /// Gets or sets the value at row 1, column 2 of this instance.
+    ///     Gets or sets the value at row 1, column 2 of this instance.
     /// </summary>
     public float M12
     {
-        get { return Row0.Y; }
-        set { Row0.Y = value; }
+        get => Row0.Y;
+        set => Row0.Y = value;
     }
 
     /// <summary>
-    /// Gets or sets the value at row 2, column 1 of this instance.
+    ///     Gets or sets the value at row 2, column 1 of this instance.
     /// </summary>
     public float M21
     {
-        get { return Row1.X; }
-        set { Row1.X = value; }
+        get => Row1.X;
+        set => Row1.X = value;
     }
 
     /// <summary>
-    /// Gets or sets the value at row 2, column 2 of this instance.
+    ///     Gets or sets the value at row 2, column 2 of this instance.
     /// </summary>
     public float M22
     {
-        get { return Row1.Y; }
-        set { Row1.Y = value; }
+        get => Row1.Y;
+        set => Row1.Y = value;
     }
 
     /// <summary>
-    /// Gets or sets the values along the main diagonal of the matrix.
+    ///     Gets or sets the values along the main diagonal of the matrix.
     /// </summary>
     public Vector2 Diagonal
     {
-        get { return new Vector2(Row0.X, Row1.Y); }
+        get => new(Row0.X, Row1.Y);
         set
         {
             Row0.X = value.X;
@@ -153,15 +153,12 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Gets the trace of the matrix, the sum of the values along the diagonal.
+    ///     Gets the trace of the matrix, the sum of the values along the diagonal.
     /// </summary>
-    public float Trace
-    {
-        get { return Row0.X + Row1.Y; }
-    }
+    public float Trace => Row0.X + Row1.Y;
 
     /// <summary>
-    /// Gets or sets the value at a specified row and column.
+    ///     Gets or sets the value at a specified row and column.
     /// </summary>
     /// <param name="rowIndex">The index of the row.</param>
     /// <param name="columnIndex">The index of the column.</param>
@@ -180,8 +177,7 @@ public struct Matrix2 : IEquatable<Matrix2>
                 return Row1[columnIndex];
             }
 
-            throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
-                                               columnIndex + ")");
+            throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
         }
 
         set
@@ -196,30 +192,23 @@ public struct Matrix2 : IEquatable<Matrix2>
             }
             else
             {
-                throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " +
-                                                   columnIndex + ")");
+                throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
             }
         }
     }
 
     /// <summary>
-    /// Converts this instance to it's transpose.
+    ///     Converts this instance to it's transpose.
     /// </summary>
-    public void Transpose()
-    {
-        this = Transpose(this);
-    }
+    public void Transpose() => this = Transpose(this);
 
     /// <summary>
-    /// Converts this instance into its inverse.
+    ///     Converts this instance into its inverse.
     /// </summary>
-    public void Invert()
-    {
-        this = Invert(this);
-    }
+    public void Invert() => this = Invert(this);
 
     /// <summary>
-    /// Builds a rotation matrix.
+    ///     Builds a rotation matrix.
     /// </summary>
     /// <param name="angle">The counter-clockwise angle in radians.</param>
     /// <param name="result">The resulting Matrix2 instance.</param>
@@ -235,7 +224,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Builds a rotation matrix.
+    ///     Builds a rotation matrix.
     /// </summary>
     /// <param name="angle">The counter-clockwise angle in radians.</param>
     /// <returns>The resulting Matrix2 instance.</returns>
@@ -247,7 +236,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Creates a scale matrix.
+    ///     Creates a scale matrix.
     /// </summary>
     /// <param name="scale">Single scale factor for the x, y, and z axes.</param>
     /// <param name="result">A scale matrix.</param>
@@ -260,7 +249,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Creates a scale matrix.
+    ///     Creates a scale matrix.
     /// </summary>
     /// <param name="scale">Single scale factor for the x and y axes.</param>
     /// <returns>A scale matrix.</returns>
@@ -272,7 +261,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Creates a scale matrix.
+    ///     Creates a scale matrix.
     /// </summary>
     /// <param name="scale">Scale factors for the x and y axes.</param>
     /// <param name="result">A scale matrix.</param>
@@ -285,7 +274,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Creates a scale matrix.
+    ///     Creates a scale matrix.
     /// </summary>
     /// <param name="scale">Scale factors for the x and y axes.</param>
     /// <returns>A scale matrix.</returns>
@@ -297,7 +286,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Creates a scale matrix.
+    ///     Creates a scale matrix.
     /// </summary>
     /// <param name="x">Scale factor for the x axis.</param>
     /// <param name="y">Scale factor for the y axis.</param>
@@ -311,7 +300,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Creates a scale matrix.
+    ///     Creates a scale matrix.
     /// </summary>
     /// <param name="x">Scale factor for the x axis.</param>
     /// <param name="y">Scale factor for the y axis.</param>
@@ -324,7 +313,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Multiplies and instance by a scalar.
+    ///     Multiplies and instance by a scalar.
     /// </summary>
     /// <param name="left">The left operand of the multiplication.</param>
     /// <param name="right">The right operand of the multiplication.</param>
@@ -338,7 +327,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Multiplies and instance by a scalar.
+    ///     Multiplies and instance by a scalar.
     /// </summary>
     /// <param name="left">The left operand of the multiplication.</param>
     /// <param name="right">The right operand of the multiplication.</param>
@@ -351,7 +340,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Multiplies two instances.
+    ///     Multiplies two instances.
     /// </summary>
     /// <param name="left">The left operand of the multiplication.</param>
     /// <param name="right">The right operand of the multiplication.</param>
@@ -374,7 +363,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Multiplies two instances.
+    ///     Multiplies two instances.
     /// </summary>
     /// <param name="left">The left operand of the multiplication.</param>
     /// <param name="right">The right operand of the multiplication.</param>
@@ -386,9 +375,8 @@ public struct Matrix2 : IEquatable<Matrix2>
         return result;
     }
 
-
     /// <summary>
-    /// Adds two instances.
+    ///     Adds two instances.
     /// </summary>
     /// <param name="left">The left operand of the addition.</param>
     /// <param name="right">The right operand of the addition.</param>
@@ -402,7 +390,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Adds two instances.
+    ///     Adds two instances.
     /// </summary>
     /// <param name="left">The left operand of the addition.</param>
     /// <param name="right">The right operand of the addition.</param>
@@ -415,7 +403,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Subtracts two instances.
+    ///     Subtracts two instances.
     /// </summary>
     /// <param name="left">The left operand of the subtraction.</param>
     /// <param name="right">The right operand of the subtraction.</param>
@@ -429,7 +417,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Subtracts two instances.
+    ///     Subtracts two instances.
     /// </summary>
     /// <param name="left">The left operand of the subtraction.</param>
     /// <param name="right">The right operand of the subtraction.</param>
@@ -442,7 +430,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Calculate the inverse of the given matrix.
+    ///     Calculate the inverse of the given matrix.
     /// </summary>
     /// <param name="mat">The matrix to invert.</param>
     /// <param name="result">The inverse of the given matrix.</param>
@@ -470,7 +458,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Calculate the inverse of the given matrix.
+    ///     Calculate the inverse of the given matrix.
     /// </summary>
     /// <param name="mat">The matrix to invert.</param>
     /// <returns>The inverse of the given matrix.</returns>
@@ -484,7 +472,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Calculate the transpose of the given matrix.
+    ///     Calculate the transpose of the given matrix.
     /// </summary>
     /// <param name="mat">The matrix to transpose.</param>
     /// <param name="result">The transpose of the given matrix.</param>
@@ -497,7 +485,7 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Calculate the transpose of the given matrix.
+    ///     Calculate the transpose of the given matrix.
     /// </summary>
     /// <param name="mat">The matrix to transpose.</param>
     /// <returns>The transpose of the given matrix.</returns>
@@ -509,117 +497,87 @@ public struct Matrix2 : IEquatable<Matrix2>
     }
 
     /// <summary>
-    /// Scalar multiplication.
+    ///     Scalar multiplication.
     /// </summary>
     /// <param name="left">left-hand operand.</param>
     /// <param name="right">right-hand operand.</param>
     /// <returns>A new Matrix2 which holds the result of the multiplication.</returns>
     [Pure]
-    public static Matrix2 operator *(float left, Matrix2 right)
-    {
-        return Mult(right, left);
-    }
+    public static Matrix2 operator *(float left, Matrix2 right) => Mult(right, left);
 
     /// <summary>
-    /// Scalar multiplication.
+    ///     Scalar multiplication.
     /// </summary>
     /// <param name="left">left-hand operand.</param>
     /// <param name="right">right-hand operand.</param>
     /// <returns>A new Matrix2 which holds the result of the multiplication.</returns>
     [Pure]
-    public static Matrix2 operator *(Matrix2 left, float right)
-    {
-        return Mult(left, right);
-    }
+    public static Matrix2 operator *(Matrix2 left, float right) => Mult(left, right);
 
     /// <summary>
-    /// Matrix multiplication.
+    ///     Matrix multiplication.
     /// </summary>
     /// <param name="left">left-hand operand.</param>
     /// <param name="right">right-hand operand.</param>
     /// <returns>A new Matrix2 which holds the result of the multiplication.</returns>
     [Pure]
-    public static Matrix2 operator *(Matrix2 left, Matrix2 right)
-    {
-        return Mult(left, right);
-    }
+    public static Matrix2 operator *(Matrix2 left, Matrix2 right) => Mult(left, right);
 
     /// <summary>
-    /// Matrix addition.
+    ///     Matrix addition.
     /// </summary>
     /// <param name="left">left-hand operand.</param>
     /// <param name="right">right-hand operand.</param>
     /// <returns>A new Matrix2 which holds the result of the addition.</returns>
     [Pure]
-    public static Matrix2 operator +(Matrix2 left, Matrix2 right)
-    {
-        return Add(left, right);
-    }
+    public static Matrix2 operator +(Matrix2 left, Matrix2 right) => Add(left, right);
 
     /// <summary>
-    /// Matrix subtraction.
+    ///     Matrix subtraction.
     /// </summary>
     /// <param name="left">left-hand operand.</param>
     /// <param name="right">right-hand operand.</param>
     /// <returns>A new Matrix2 which holds the result of the subtraction.</returns>
     [Pure]
-    public static Matrix2 operator -(Matrix2 left, Matrix2 right)
-    {
-        return Subtract(left, right);
-    }
+    public static Matrix2 operator -(Matrix2 left, Matrix2 right) => Subtract(left, right);
 
     /// <summary>
-    /// Compares two instances for equality.
+    ///     Compares two instances for equality.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
     /// <returns>True, if left equals right; false otherwise.</returns>
     [Pure]
-    public static bool operator ==(Matrix2 left, Matrix2 right)
-    {
-        return left.Equals(right);
-    }
+    public static bool operator ==(Matrix2 left, Matrix2 right) => left.Equals(right);
 
     /// <summary>
-    /// Compares two instances for inequality.
+    ///     Compares two instances for inequality.
     /// </summary>
     /// <param name="left">The first instance.</param>
     /// <param name="right">The second instance.</param>
     /// <returns>True, if left does not equal right; false otherwise.</returns>
     [Pure]
-    public static bool operator !=(Matrix2 left, Matrix2 right)
-    {
-        return !left.Equals(right);
-    }
+    public static bool operator !=(Matrix2 left, Matrix2 right) => !left.Equals(right);
 
     /// <summary>
-    /// Returns the hashcode for this instance.
+    ///     Returns the hashcode for this instance.
     /// </summary>
     /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Row0, Row1);
-    }
+    public override int GetHashCode() => HashCode.Combine(Row0, Row1);
 
     /// <summary>
-    /// Indicates whether this instance and a specified object are equal.
+    ///     Indicates whether this instance and a specified object are equal.
     /// </summary>
     /// <param name="obj">The object to compare to.</param>
     /// <returns>True if the instances are equal; false otherwise.</returns>
     [Pure]
-    public override bool Equals(object? obj)
-    {
-        return obj is Matrix2 matrix2 && Equals(matrix2);
-    }
+    public override bool Equals(object? obj) => obj is Matrix2 matrix2 && Equals(matrix2);
 
     /// <summary>
-    /// Indicates whether the current matrix is equal to another matrix.
+    ///     Indicates whether the current matrix is equal to another matrix.
     /// </summary>
     /// <param name="other">An matrix to compare with this matrix.</param>
     /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
     [Pure]
-    public bool Equals(Matrix2 other)
-    {
-        return Row0 == other.Row0 && Row1 == other.Row1;
-    }
+    public bool Equals(Matrix2 other) => Row0 == other.Row0 && Row1 == other.Row1;
 }

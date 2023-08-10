@@ -5,14 +5,14 @@ using Engine.Core.Logging;
 namespace Engine.Core.Driver.Input;
 
 /// <summary>
-/// Static Keyboard input class
+///     Static Keyboard input class
 /// </summary>
 public static class Keyboard
 {
     private static IInput? input;
 
     /// <summary>
-    /// Check if a key was pressed once
+    ///     Check if a key was pressed once
     /// </summary>
     /// <param name="keyCode">
     ///     <see cref="KeyCode" />
@@ -30,7 +30,7 @@ public static class Keyboard
     }
 
     /// <summary>
-    /// Check if a <see cref="keyCode" /> is pressed and hold down.
+    ///     Check if a <see cref="keyCode" /> is pressed and hold down.
     /// </summary>
     /// <param name="keyCode">
     ///     <see cref="KeyCode" />
@@ -48,7 +48,7 @@ public static class Keyboard
     }
 
     /// <summary>
-    /// Check if a key was released.
+    ///     Check if a key was released.
     /// </summary>
     /// <param name="keyCode">
     ///     <see cref="KeyCode" />
@@ -66,11 +66,8 @@ public static class Keyboard
     }
 
     /// <summary>
-    /// Set the active input system
+    ///     Set the active input system
     /// </summary>
     /// <param name="inputHandler">The input system to use</param>
-    public static void SetInput(IInput inputHandler)
-    {
-        input = inputHandler;
-    }
+    public static void SetInput(IInput inputHandler) => input = inputHandler;
 }

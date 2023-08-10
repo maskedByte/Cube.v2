@@ -3,7 +3,7 @@
 namespace Engine.Core.Logging.Targets;
 
 /// <summary>
-/// Log target for logging to a file
+///     Log target for logging to a file
 /// </summary>
 public sealed class FileLogTarget : ILogTarget
 {
