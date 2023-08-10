@@ -9,7 +9,7 @@ using Engine.OpenGL.Vendor.OpenGL.Core;
 namespace Engine.OpenGL.Driver.GraphicsApi.Buffers;
 
 /// <summary>
-/// Create a new <see cref="IUniformBuffer" />
+///     Create a new <see cref="IUniformBuffer" />
 /// </summary>
 internal sealed class GlUniformBuffer : IUniformBuffer
 {
@@ -22,12 +22,12 @@ internal sealed class GlUniformBuffer : IUniformBuffer
     private readonly PinnedStructures _pinnedStructures;
 
     /// <summary>
-    /// Create new <see cref="GlUniformBuffer" />
+    ///     Create new <see cref="GlUniformBuffer" />
     /// </summary>
     /// <param name="name">Set a unique identifier for this <see cref="GlUniformBuffer" /></param>
     /// <param name="bufferLayout">
-    /// The <see cref="BufferLayout" /> are used for calculate the size and to set the structure of
-    /// the buffer.
+    ///     The <see cref="BufferLayout" /> are used for calculate the size and to set the structure of
+    ///     the buffer.
     /// </param>
     /// <param name="blockBindingId"></param>
     /// <exception cref="ArgumentNullException">If name was not set</exception>
@@ -54,26 +54,27 @@ internal sealed class GlUniformBuffer : IUniformBuffer
         Gl.BufferData(
             BufferTarget.UniformBuffer,
             _bufferLayout.GetStride(),
-            (nint)null, BufferUsageHint.DynamicDraw);
+            (nint)null,
+            BufferUsageHint.DynamicDraw
+        );
         Gl.CheckError($"{nameof(GlUniformBuffer)}#Gl.BufferData");
         Unbind();
 
-        Gl.BindBufferRange(BufferTarget.UniformBuffer, blockBindingId, _bufferId, nint.Zero,
-            _bufferLayout.GetStride());
+        Gl.BindBufferRange(
+            BufferTarget.UniformBuffer,
+            blockBindingId,
+            _bufferId,
+            nint.Zero,
+            _bufferLayout.GetStride()
+        );
         Gl.CheckError($"{nameof(GlUniformBuffer)}#Gl.BindBufferRange");
     }
 
     /// <inheritdoc />
-    public void Bind()
-    {
-        GlStateWatch.BindBuffer(BufferTarget.UniformBuffer, _bufferId);
-    }
+    public void Bind() => GlStateWatch.BindBuffer(BufferTarget.UniformBuffer, _bufferId);
 
     /// <inheritdoc />
-    public void Unbind()
-    {
-        GlStateWatch.UnbindBuffer(BufferTarget.UniformBuffer);
-    }
+    public void Unbind() => GlStateWatch.UnbindBuffer(BufferTarget.UniformBuffer);
 
     /// <inheritdoc />
     public void Attach(IShaderProgram shaderProgram)
@@ -133,10 +134,7 @@ internal sealed class GlUniformBuffer : IUniformBuffer
     }
 
     /// <inheritdoc />
-    public void SetUniformData(string name, Color value)
-    {
-        SetUniformData(name, value.ToVector4());
-    }
+    public void SetUniformData(string name, Color value) => SetUniformData(name, value.ToVector4());
 
     /// <inheritdoc />
     public void SetUniformData(string name, Matrix2 value)

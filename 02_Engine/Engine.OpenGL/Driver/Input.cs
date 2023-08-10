@@ -1,47 +1,34 @@
 using Engine.Core.Driver.Input;
 using Engine.Core.Math.Vectors;
 using Engine.OpenGL.Vendor.SFML.Window;
-using Keyboard = SFML.Window.Keyboard;
 
 namespace Engine.OpenGL.Driver;
 
 /// <summary>
-/// Implementation of <see cref="IInput" /> for OpenGL
+///     Implementation of <see cref="IInput" /> for OpenGL
 /// </summary>
 public sealed class Input : IInput
 {
-    private readonly bool[] _keyStates = new bool[(int)KeyCode.KeyCount];
     private readonly bool[] _keyDownStates = new bool[(int)KeyCode.KeyCount];
+    private readonly bool[] _keyStates = new bool[(int)KeyCode.KeyCount];
     private readonly bool[] _keyUpStates = new bool[(int)KeyCode.KeyCount];
-    private readonly bool[] _mouseButtonStates = new bool[(int)MouseButtons.ButtonCount];
     private readonly bool[] _mouseButtonDownStates = new bool[(int)MouseButtons.ButtonCount];
+    private readonly bool[] _mouseButtonStates = new bool[(int)MouseButtons.ButtonCount];
     private readonly bool[] _mouseButtonUpStates = new bool[(int)MouseButtons.ButtonCount];
-    private Vector3 _mouseLocation = Vector3.Zero;
     private Vector2 _mouseDelta = Vector2.Zero;
+    private Vector3 _mouseLocation = Vector3.Zero;
 
     /// <inheritdoc />
-    public Vector3 MouseLocation
-    {
-        get { return _mouseLocation; }
-    }
+    public Vector3 MouseLocation => _mouseLocation;
 
     /// <inheritdoc />
-    public Vector2 MouseDelta
-    {
-        get { return _mouseDelta; }
-    }
+    public Vector2 MouseDelta => _mouseDelta;
 
     /// <inheritdoc />
-    public bool GetKey(KeyCode keyCode)
-    {
-        return _keyStates[(int)keyCode];
-    }
+    public bool GetKey(KeyCode keyCode) => _keyStates[(int)keyCode];
 
     /// <inheritdoc />
-    public bool GetKeyDown(KeyCode keyCode)
-    {
-        return _keyDownStates[(int)keyCode];
-    }
+    public bool GetKeyDown(KeyCode keyCode) => _keyDownStates[(int)keyCode];
 
     /// <inheritdoc />
     public bool GetKeyUp(KeyCode keyCode)
@@ -53,16 +40,10 @@ public sealed class Input : IInput
     }
 
     /// <inheritdoc />
-    public bool GetMouseButton(MouseButtons buttons)
-    {
-        return _mouseButtonStates[(int)buttons];
-    }
+    public bool GetMouseButton(MouseButtons buttons) => _mouseButtonStates[(int)buttons];
 
     /// <inheritdoc />
-    public bool GetMouseButtonDown(MouseButtons buttons)
-    {
-        return _mouseButtonDownStates[(int)buttons];
-    }
+    public bool GetMouseButtonDown(MouseButtons buttons) => _mouseButtonDownStates[(int)buttons];
 
     /// <inheritdoc />
     public bool GetMouseButtonUp(MouseButtons buttons)
@@ -195,6 +176,7 @@ public sealed class Input : IInput
             case EventType.MouseWheelScrolled:
                 _mouseLocation.Z = e.MouseWheelScroll.Delta;
                 break;
+
             //case EventType.MouseEntered:
             //    if (MouseEntered != null)
             //    {

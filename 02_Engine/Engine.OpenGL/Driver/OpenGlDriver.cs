@@ -14,8 +14,8 @@ using Engine.OpenGL.Vendor.OpenGL.Core;
 namespace Engine.OpenGL.Driver;
 
 /// <summary>
-/// OpenGL driver.
-/// Implements <see cref="IDriver" /> to use OpenGL 4.5+ as graphics driver.
+///     OpenGL driver.
+///     Implements <see cref="IDriver" /> to use OpenGL 4.5+ as graphics driver.
 /// </summary>
 public sealed class OpenGlDriver : IDriver
 {
@@ -32,17 +32,18 @@ public sealed class OpenGlDriver : IDriver
         { DrawMode.Polygon, BeginMode.Triangles } // Adjust as needed
     };
 
-    private bool _isInitialized;
     private readonly Input _input;
     private IGraphicsApi? _graphicsApi;
 
+    private bool _isInitialized;
+
     /// <summary>
-    /// Gets the current window.
+    ///     Gets the current window.
     /// </summary>
     public IWindow? CurrentWindow { get; private set; }
 
     /// <summary>
-    /// Default parameterless constructor.
+    ///     Default parameterless constructor.
     /// </summary>
     public OpenGlDriver()
     {

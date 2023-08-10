@@ -8,15 +8,15 @@ using Engine.OpenGL.Vendor.OpenGL.Core;
 namespace Engine.OpenGL.Driver.GraphicsApi.Buffers;
 
 /// <summary>
-/// Implementation of <see cref="GlBufferArray" />
+///     Implementation of <see cref="GlBufferArray" />
 /// </summary>
 internal sealed class GlBufferArray : IBufferArray
 {
-    private readonly uint _vertexArrayObjectId;
     private readonly Dictionary<BufferType, IBufferObject?> _bufferObjects;
+    private readonly uint _vertexArrayObjectId;
 
     /// <summary>
-    /// Create new instance of <see cref="IBufferArray" />
+    ///     Create new instance of <see cref="IBufferArray" />
     /// </summary>
     public GlBufferArray()
     {

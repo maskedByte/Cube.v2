@@ -9,44 +9,12 @@ using Engine.OpenGL.Vendor.OpenGL.Core;
 namespace Engine.OpenGL.Driver.GraphicsApi.Shaders;
 
 /// <summary>
-/// Shader parameter class
+///     Shader parameter class
 /// </summary>
 internal sealed class GlShaderParameter : IShaderParameter
 {
     private readonly float[] _uniformMatrix3;
     private readonly float[] _uniformMatrix4;
-
-    /// <summary>
-    /// Creates a program parameter with a given type and name.
-    /// The location must be found after the program is compiled
-    /// by using the GetLocation(ShaderProgram Program) method.
-    /// </summary>
-    /// <param name="type">Specifies the C# equivalent of the GLSL data type.</param>
-    /// <param name="paramType">Specifies the parameter type (either attribute or uniform).</param>
-    /// <param name="name">Specifies the case-sensitive name of the parameter.</param>
-    public GlShaderParameter(Type type, ParameterType paramType, string name)
-    {
-        Type = type;
-        ParamType = paramType;
-        Name = name;
-        _uniformMatrix3 = new float[9];
-        _uniformMatrix4 = new float[16];
-    }
-
-    /// <summary>
-    /// Creates a program parameter with a type, name, program and location.
-    /// </summary>
-    /// <param name="type">Specifies the C# equivalent of the GLSL data type.</param>
-    /// <param name="paramType">Specifies the parameter type (either attribute or uniform).</param>
-    /// <param name="name">Specifies the case-sensitive name of the parameter.</param>
-    /// <param name="program">Specifies the OpenGL program ID.</param>
-    /// <param name="location">Specifies the location of the parameter.</param>
-    public GlShaderParameter(Type type, ParameterType paramType, string name, uint program, int location)
-        : this(type, paramType, name)
-    {
-        Program = program;
-        Location = location;
-    }
 
     /// <inheritdoc />
     public Type Type { get; }
@@ -62,6 +30,44 @@ internal sealed class GlShaderParameter : IShaderParameter
 
     /// <inheritdoc />
     public string Name { get; }
+
+    /// <summary>
+    ///     Creates a program parameter with a given type and name.
+    ///     The location must be found after the program is compiled
+    ///     by using the GetLocation(ShaderProgram Program) method.
+    /// </summary>
+    /// <param name="type">Specifies the C# equivalent of the GLSL data type.</param>
+    /// <param name="paramType">Specifies the parameter type (either attribute or uniform).</param>
+    /// <param name="name">Specifies the case-sensitive name of the parameter.</param>
+    public GlShaderParameter(Type type, ParameterType paramType, string name)
+    {
+        Type = type;
+        ParamType = paramType;
+        Name = name;
+        _uniformMatrix3 = new float[9];
+        _uniformMatrix4 = new float[16];
+    }
+
+    /// <summary>
+    ///     Creates a program parameter with a type, name, program and location.
+    /// </summary>
+    /// <param name="type">Specifies the C# equivalent of the GLSL data type.</param>
+    /// <param name="paramType">Specifies the parameter type (either attribute or uniform).</param>
+    /// <param name="name">Specifies the case-sensitive name of the parameter.</param>
+    /// <param name="program">Specifies the OpenGL program ID.</param>
+    /// <param name="location">Specifies the location of the parameter.</param>
+    public GlShaderParameter(
+        Type type,
+        ParameterType paramType,
+        string name,
+        uint program,
+        int location
+    )
+        : this(type, paramType, name)
+    {
+        Program = program;
+        Location = location;
+    }
 
     /// <inheritdoc />
     public void GetLocation(IShaderProgram shaderProgram)
@@ -79,7 +85,7 @@ internal sealed class GlShaderParameter : IShaderParameter
     }
 
     /// <summary>
-    /// Set a uniform mat3 in the shaderProgram.
+    ///     Set a uniform mat3 in the shaderProgram.
     /// </summary>
     private void UniformMatrix3fv(int location, Matrix3 param)
     {
@@ -99,7 +105,7 @@ internal sealed class GlShaderParameter : IShaderParameter
     }
 
     /// <summary>
-    /// Set a uniform mat4 in the shaderProgram.
+    ///     Set a uniform mat4 in the shaderProgram.
     /// </summary>
     private void UniformMatrix4fv(int location, Matrix4 param)
     {
@@ -129,58 +135,37 @@ internal sealed class GlShaderParameter : IShaderParameter
     #region SetValue Overrides
 
     /// <inheritdoc />
-    public void SetValue(bool param)
-    {
-        Gl.Uniform1i(Location, param ? 1 : 0);
-    }
+    public void SetValue(bool param) =>
+        Gl.Uniform1i(
+            Location,
+            param
+                ? 1
+                : 0
+        );
 
     /// <inheritdoc />
-    public void SetValue(int param)
-    {
-        Gl.Uniform1i(Location, param);
-    }
+    public void SetValue(int param) => Gl.Uniform1i(Location, param);
 
     /// <inheritdoc />
-    public void SetValue(float param)
-    {
-        Gl.Uniform1f(Location, param);
-    }
+    public void SetValue(float param) => Gl.Uniform1f(Location, param);
 
     /// <inheritdoc />
-    public void SetValue(Vector2 param)
-    {
-        Gl.Uniform2f(Location, param.X, param.Y);
-    }
+    public void SetValue(Vector2 param) => Gl.Uniform2f(Location, param.X, param.Y);
 
     /// <inheritdoc />
-    public void SetValue(Vector3 param)
-    {
-        Gl.Uniform3f(Location, param.X, param.Y, param.Z);
-    }
+    public void SetValue(Vector3 param) => Gl.Uniform3f(Location, param.X, param.Y, param.Z);
 
     /// <inheritdoc />
-    public void SetValue(Vector4 param)
-    {
-        Gl.Uniform4f(Location, param.X, param.Y, param.Z, param.W);
-    }
+    public void SetValue(Vector4 param) => Gl.Uniform4f(Location, param.X, param.Y, param.Z, param.W);
 
     /// <inheritdoc />
-    public void SetValue(Color param)
-    {
-        Gl.Uniform4f(Location, param.R / 255f, param.G / 255f, param.B / 255f, param.A / 255f);
-    }
+    public void SetValue(Color param) => Gl.Uniform4f(Location, param.R / 255f, param.G / 255f, param.B / 255f, param.A / 255f);
 
     /// <inheritdoc />
-    public void SetValue(Matrix3 param)
-    {
-        UniformMatrix3fv(Location, param);
-    }
+    public void SetValue(Matrix3 param) => UniformMatrix3fv(Location, param);
 
     /// <inheritdoc />
-    public void SetValue(Matrix4 param)
-    {
-        UniformMatrix4fv(Location, param);
-    }
+    public void SetValue(Matrix4 param) => UniformMatrix4fv(Location, param);
 
     /// <inheritdoc />
     public void SetValue(float[] param)

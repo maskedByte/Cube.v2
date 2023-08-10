@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using Engine.Core.Driver.Graphics.Shaders;
-using Engine.Core.Extensions;
 using Engine.Core.Logging;
 using Engine.OpenGL.Vendor.OpenGL.Core;
 

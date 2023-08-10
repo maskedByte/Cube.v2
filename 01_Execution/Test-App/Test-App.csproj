@@ -10,8 +10,8 @@
 
 
     <ItemGroup>
-        <ProjectReference Include="..\..\02_Engine\Engine.Core\Engine.Core.csproj"/>
         <ProjectReference Include="..\..\02_Engine\Engine.OpenGL\Engine.OpenGL.csproj"/>
+        <ProjectReference Include="..\..\03_Core\Engine.Core\Engine.Core.csproj" />
     </ItemGroup>
 
 

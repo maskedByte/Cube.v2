@@ -3,14 +3,13 @@
 namespace Engine.OpenGL.Driver.GraphicsApi;
 
 /// <summary>
-/// Watches the current state of different OpenGl buffers
+///     Watches the current state of different OpenGl buffers
 /// </summary>
 internal static class GlStateWatch
 {
-    private static readonly Dictionary<BufferTarget, uint> BoundBuffers = new Dictionary<BufferTarget, uint>();
+    private static readonly Dictionary<BufferTarget, uint> BoundBuffers = new();
 
-    private static readonly Dictionary<(TextureTarget, uint), uint> BoundTextures =
-        new Dictionary<(TextureTarget, uint), uint>();
+    private static readonly Dictionary<(TextureTarget, uint), uint> BoundTextures = new();
 
     public static void BindBuffer(BufferTarget target, uint bufferId)
     {
@@ -47,10 +46,7 @@ internal static class GlStateWatch
         Gl.BindBuffer(target, 0);
     }
 
-    public static Dictionary<BufferTarget, uint> GetBoundBuffers()
-    {
-        return new Dictionary<BufferTarget, uint>(BoundBuffers.Where(x => x.Value != 0).ToList());
-    }
+    public static Dictionary<BufferTarget, uint> GetBoundBuffers() => new(BoundBuffers.Where(x => x.Value != 0).ToList());
 
     public static void BindTexture(TextureTarget target, uint textureUnit, uint textureId)
     {

@@ -9,7 +9,7 @@ using Engine.OpenGL.Driver.GraphicsApi.Shaders;
 namespace Engine.OpenGL.Driver.GraphicsApi;
 
 /// <summary>
-/// Provides height level access to the OpenGl graphics api
+///     Provides height level access to the OpenGl graphics api
 /// </summary>
 public class OpenGlGraphicsApi : IGraphicsApi
 {
