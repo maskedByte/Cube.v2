@@ -6,7 +6,7 @@ namespace Engine.Assets.AssetData.ImageAsset;
 /// <summary>
 ///     Implementation for <see cref="IAssetConverter" /> to convert texture files
 /// </summary>
-internal sealed class ImageAssetConverter : IAssetConverter
+public sealed class ImageAssetConverter : IAssetConverter
 {
     /// <inheritdoc />
     public string Extensions => "jpg;jpeg;png;tga;bmp;tiff;gif";
@@ -35,7 +35,7 @@ internal sealed class ImageAssetConverter : IAssetConverter
 
             using var assetFile = new FileWriter($"{pathName}\\{fileName}.cda");
 
-            assetFile.WriteHeader(DataAssetType.ImageData);
+            assetFile.WriteHeader(AssetDataType.ImageData);
             assetFile.Write("Width", image.Width);
             assetFile.Write("Height", image.Height);
             assetFile.Write("Data", image.Data);

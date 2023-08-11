@@ -2,6 +2,7 @@ using Engine.Core.Driver.Graphics.Buffers;
 using Engine.Core.Driver.Graphics.Renderings;
 using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Driver.Graphics.Textures;
+using Engine.Core.Memory.Pixmap;
 
 namespace Engine.Core.Driver.Graphics;
 
@@ -29,8 +30,10 @@ public interface IGraphicsApi
     IBufferObject CreateIndexBuffer(IBufferLayout bufferLayout);
 
     /// <summary>
-    ///     Create a new <see cref="IShader" />
+    ///   Create a new <see cref="IShader" />
     /// </summary>
+    /// <param name="shaderSourceType">The shader source type</param>
+    /// <param name="source">The shader source</param>
     /// <returns>Returns the new <see cref="IShader" /></returns>
     IShader CreateShader(ShaderSourceType shaderSourceType, string source);
 
@@ -43,26 +46,10 @@ public interface IGraphicsApi
     /// <summary>
     ///     Create a new 1D texture<see cref="ITexture" />
     /// </summary>
+    /// <param name="textureBufferTarget">The texture buffer target</param>
+    /// <param name="pixmap"> Pixmap data for the texture</param>
     /// <returns>Returns the new <see cref="ITexture" /></returns>
-    ITexture CreateTexture();
-
-    /// <summary>
-    ///     Create a new 2D texture<see cref="ITexture2D" />
-    /// </summary>
-    /// <returns>Returns the new <see cref="ITexture2D" /></returns>
-    ITexture2D CreateTexture2D();
-
-    /// <summary>
-    ///     Create a new Cube texture <see cref="ITextureCube" />
-    /// </summary>
-    /// <returns>Returns the new <see cref="ITextureCube" /></returns>
-    ITextureCube CreateTextureCube();
-
-    /// <summary>
-    ///     Create a new <see cref="ITextureSampler" />
-    /// </summary>
-    /// <returns>Returns the new <see cref="ITextureSampler" /></returns>
-    ITextureSampler CreateTextureSampler();
+    ITexture CreateTexture(TextureBufferTarget textureBufferTarget, IPixmap pixmap);
 
     /// <summary>
     ///     Create a new <see cref="IFrameBuffer" />

@@ -5,9 +5,11 @@ layout (location = 1) in vec4 a_Color;
 layout (location = 2) in vec2 a_TexCoord;
 
 out vec4 v_VertexColorOut;
+out vec2 v_TextureCoordOut;
 
 void main()
 {
   gl_Position = a_Position;
   v_VertexColorOut = a_Color;
+  v_TextureCoordOut = a_TexCoord;
 }

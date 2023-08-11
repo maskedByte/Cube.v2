@@ -1,17 +1,17 @@
 ﻿namespace Engine.Assets.AssetData;
 
 /// <summary>
-///     Instance of <see cref="Compiler" />, provides functionality to convert files to engine format
+///     Instance of <see cref="AssetDataCompiler" />, provides functionality to convert files to engine format
 /// </summary>
-internal sealed class Compiler
+public sealed class AssetDataCompiler
 {
     private readonly Dictionary<string, IAssetConverter> _converters;
     private IEnumerable<string> _assetFiles;
 
     /// <summary>
-    ///     Initialize new instance of <see cref="Compiler" />
+    ///     Initialize new instance of <see cref="AssetDataCompiler" />
     /// </summary>
-    public Compiler()
+    public AssetDataCompiler()
     {
         _assetFiles = null!;
         _converters = new Dictionary<string, IAssetConverter>();

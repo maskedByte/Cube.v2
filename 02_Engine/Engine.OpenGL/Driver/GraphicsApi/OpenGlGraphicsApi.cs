@@ -3,8 +3,10 @@ using Engine.Core.Driver.Graphics.Buffers;
 using Engine.Core.Driver.Graphics.Renderings;
 using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Driver.Graphics.Textures;
+using Engine.Core.Memory.Pixmap;
 using Engine.OpenGL.Driver.GraphicsApi.Buffers;
 using Engine.OpenGL.Driver.GraphicsApi.Shaders;
+using Engine.OpenGL.Driver.GraphicsApi.Texture;
 
 namespace Engine.OpenGL.Driver.GraphicsApi;
 
@@ -29,16 +31,7 @@ public class OpenGlGraphicsApi : IGraphicsApi
     public IShaderProgram CreateShaderProgram() => new GlShaderProgram();
 
     /// <inheritdoc />
-    public ITexture CreateTexture() => throw new NotImplementedException();
-
-    /// <inheritdoc />
-    public ITexture2D CreateTexture2D() => throw new NotImplementedException();
-
-    /// <inheritdoc />
-    public ITextureCube CreateTextureCube() => throw new NotImplementedException();
-
-    /// <inheritdoc />
-    public ITextureSampler CreateTextureSampler() => throw new NotImplementedException();
+    public ITexture CreateTexture(TextureBufferTarget textureBufferTarget, IPixmap pixmap) => new GlTexture(textureBufferTarget, pixmap);
 
     /// <inheritdoc />
     public IFrameBuffer CreateFrameBuffer() => throw new NotImplementedException();

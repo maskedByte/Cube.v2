@@ -34,7 +34,7 @@ public interface IPixmap
     /// </summary>
     /// <param name="area"></param>
     /// <returns></returns>
-    Pixmap GetArea(Rect area);
+    IPixmap GetArea(Rect area);
 
     /// <summary>
     ///     Clear the entire pixmap with the given <paramref name="color" />

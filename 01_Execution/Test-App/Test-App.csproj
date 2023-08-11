@@ -10,8 +10,10 @@
 
 
     <ItemGroup>
+        <ProjectReference Include="..\..\02_Engine\Engine.Assets\Engine.Assets.csproj"/>
         <ProjectReference Include="..\..\02_Engine\Engine.OpenGL\Engine.OpenGL.csproj"/>
-        <ProjectReference Include="..\..\03_Core\Engine.Core\Engine.Core.csproj" />
+        <ProjectReference Include="..\..\02_Engine\Engine.Rendering\Engine.Rendering.csproj"/>
+        <ProjectReference Include="..\..\03_Core\Engine.Core\Engine.Core.csproj"/>
     </ItemGroup>
 
 
@@ -22,6 +24,10 @@
         <None Update="vertex.glsl">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Update="base\Textures\grid_blue.png">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
+
 
 </Project>

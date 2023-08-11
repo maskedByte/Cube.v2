@@ -45,9 +45,9 @@ public sealed class ImageAsset : IAsset<Pixmap>
         using var fileReader = new FileReader(dataStream);
         fileReader.ReadHeader();
 
-        if (fileReader.FileDataAssetType != DataAssetType.ImageData)
+        if (fileReader.FileAssetDataType != AssetDataType.ImageData)
         {
-            throw new InvalidDataException($"Asset expecting {nameof(DataAssetType.ImageData)} but found '{fileReader.FileDataAssetType}'");
+            throw new InvalidDataException($"Asset expecting {nameof(AssetDataType.ImageData)} but found '{fileReader.FileAssetDataType}'");
         }
 
         fileReader.Read("Width", out int width);

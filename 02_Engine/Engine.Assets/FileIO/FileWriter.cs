@@ -41,12 +41,12 @@ public sealed class FileWriter : IDisposable
     /// <summary>
     ///     Write header to AssetFile
     /// </summary>
-    /// <param name="assetType"></param>
-    public void WriteHeader(DataAssetType assetType)
+    /// <param name="type"></param>
+    public void WriteHeader(AssetDataType type)
     {
         _baseStream.Write("CubeAsset");
         _baseStream.Write(FileReader.CurrentVersion);
-        _baseStream.Write((int)assetType);
+        _baseStream.Write((int)type);
     }
 
     /// <summary>

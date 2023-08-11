@@ -3,7 +3,7 @@ namespace Engine.Assets.AssetData;
 /// <summary>
 ///     Type of intern data structure type
 /// </summary>
-public enum DataAssetType
+public enum AssetDataType
 {
     AudioData,
     ImageData,

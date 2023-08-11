@@ -116,7 +116,7 @@ public sealed class Pixmap : IPixmap
     public void SetRaw(byte[] data) => ReadRaw(data, PixelFormat.Rgba);
 
     /// <inheritdoc />
-    public Pixmap GetArea(Rect area)
+    public IPixmap GetArea(Rect area)
     {
         var newPix = new Pixmap(new Size(area.Width, area.Height), new Color[area.Width, area.Height]);
 

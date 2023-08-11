@@ -22,7 +22,7 @@ public sealed class FileReader : IDisposable
     /// <summary>
     ///     Type of this asset file
     /// </summary>
-    public DataAssetType FileDataAssetType { get; private set; }
+    public AssetDataType FileAssetDataType { get; private set; }
 
     /// <summary>
     ///     Version of this asset file
@@ -77,7 +77,7 @@ public sealed class FileReader : IDisposable
             throw new VersionNotFoundException($"Unable to load asset file '{_fileName}' because version ({Version}) is invalid!");
         }
 
-        FileDataAssetType = (DataAssetType)_baseStream.ReadInt32();
+        FileAssetDataType = (AssetDataType)_baseStream.ReadInt32();
     }
 
     /// <summary>
