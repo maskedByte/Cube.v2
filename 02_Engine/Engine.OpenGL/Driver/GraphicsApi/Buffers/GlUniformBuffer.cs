@@ -16,7 +16,7 @@ internal sealed class GlUniformBuffer : IUniformBuffer
     private readonly List<uint> _attachedShader;
     private readonly uint _blockBindingId;
     private readonly uint _bufferId;
-    private readonly BufferLayout _bufferLayout;
+    private readonly IBufferLayout _bufferLayout;
     private readonly string _name;
 
     private readonly PinnedStructures _pinnedStructures;
@@ -31,11 +31,9 @@ internal sealed class GlUniformBuffer : IUniformBuffer
     /// </param>
     /// <param name="blockBindingId"></param>
     /// <exception cref="ArgumentNullException">If name was not set</exception>
-    public GlUniformBuffer(string name, BufferLayout bufferLayout, uint blockBindingId)
+    public GlUniformBuffer(string name, IBufferLayout bufferLayout, uint blockBindingId)
     {
         _name = name ?? throw new ArgumentNullException(nameof(name));
-        _bufferId = Gl.GenBuffer();
-        Gl.CheckError($"{nameof(GlUniformBuffer)}#Gl.GenBuffer");
         _bufferLayout = bufferLayout;
         _blockBindingId = blockBindingId;
         _attachedShader = new List<uint>();
@@ -49,6 +47,9 @@ internal sealed class GlUniformBuffer : IUniformBuffer
         _pinnedStructures.Add<Matrix2>();
         _pinnedStructures.Add<Matrix3>();
         _pinnedStructures.Add<Matrix4>();
+
+        _bufferId = Gl.GenBuffer();
+        Gl.CheckError($"{nameof(GlUniformBuffer)}#Gl.GenBuffer");
 
         Bind();
         Gl.BufferData(
@@ -166,6 +167,9 @@ internal sealed class GlUniformBuffer : IUniformBuffer
         Gl.DeleteBuffer(_bufferId);
         _pinnedStructures.Free();
     }
+
+    /// <inheritdoc />
+    public uint GetId() => _bufferId;
 
     private void SetBufferData<T>(BufferElement element, IPinnedStructure<T> pinnedStructure)
     {

@@ -43,6 +43,11 @@ public class GlTexture : ITexture
 
     public GlTexture(TextureBufferTarget textureBufferTarget, IPixmap data)
     {
+        if (textureBufferTarget != TextureBufferTarget.Texture2D)
+        {
+            throw new NotImplementedException("This texture target is not implemented yet!");
+        }
+
         _textureId = 0;
         Pixmap = data;
         _allocated = false;

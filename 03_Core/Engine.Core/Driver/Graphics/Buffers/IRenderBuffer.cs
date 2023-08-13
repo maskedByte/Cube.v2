@@ -1,5 +1,8 @@
 ﻿namespace Engine.Core.Driver.Graphics.Buffers;
 
-public interface IRenderBuffer
+/// <summary>
+///     interface for a RenderBuffer
+/// </summary>
+public interface IRenderBuffer : IBuffer
 {
 }

@@ -52,6 +52,12 @@ public interface IGraphicsApi
     ITexture CreateTexture(TextureBufferTarget textureBufferTarget, IPixmap pixmap);
 
     /// <summary>
+    ///     Create a new <see cref="IUniformBuffer" />
+    /// </summary>
+    /// <returns>Returns the new <see cref="IUniformBuffer" /></returns>
+    IUniformBuffer CreateUniformBuffer(string name, IBufferLayout bufferLayout, uint bindingSlotId);
+
+    /// <summary>
     ///     Create a new <see cref="IFrameBuffer" />
     /// </summary>
     /// <returns>Returns the new <see cref="IFrameBuffer" /></returns>

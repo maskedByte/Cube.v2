@@ -18,7 +18,7 @@ void main()
     vec4 detailMaskColor = texture(texUnits[9], v_TextureCoordOut);
 
     // Calculate final color of all stages
-    // vec4 resultColor = diffuseColor * metallicColor + normalColor + ...;
+    vec4 resultColor = diffuseColor * detailColor * metallicColor * v_VertexColorOut;
 
     if (diffuseColor.a < 0.001) {
         discard;

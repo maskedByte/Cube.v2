@@ -1,5 +1,8 @@
 ﻿namespace Engine.Core.Driver.Graphics.Buffers;
 
-public interface IFrameBuffer
+/// <summary>
+///     Interface for a FrameBuffer
+/// </summary>
+public interface IFrameBuffer : IBuffer
 {
 }

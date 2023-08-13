@@ -30,7 +30,7 @@ public sealed class AssetDataCompiler
     /// <param name="basePath">Path to asset files</param>
     /// <param name="extensionsToCompile"></param>
     /// <param name="removeSourceAfterCompile">Remove files after compile</param>
-    public void CompileAsync(
+    public void Compile(
         string basePath,
         string[]? extensionsToCompile = null,
         bool removeSourceAfterCompile = false

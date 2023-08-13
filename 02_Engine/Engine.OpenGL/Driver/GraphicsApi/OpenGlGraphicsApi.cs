@@ -34,6 +34,10 @@ public class OpenGlGraphicsApi : IGraphicsApi
     public ITexture CreateTexture(TextureBufferTarget textureBufferTarget, IPixmap pixmap) => new GlTexture(textureBufferTarget, pixmap);
 
     /// <inheritdoc />
+    public IUniformBuffer CreateUniformBuffer(string name, IBufferLayout bufferLayout, uint bindingSlotId) =>
+        new GlUniformBuffer(name, bufferLayout, bindingSlotId);
+
+    /// <inheritdoc />
     public IFrameBuffer CreateFrameBuffer() => throw new NotImplementedException();
 
     /// <inheritdoc />

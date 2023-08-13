@@ -3,14 +3,8 @@
 /// <summary>
 ///     Represents a buffer array
 /// </summary>
-public interface IBufferArray : IBindable, IDisposable
+public interface IBufferArray : IBuffer
 {
-    /// <summary>
-    ///     Return the id of this <see cref="IBufferArray" />
-    /// </summary>
-    /// <returns>Returns an int representing the id of this <see cref="IBufferArray" /></returns>
-    uint GetId();
-
     /// <summary>
     ///     Add a new <see cref="IBufferObject" /> to <see cref="IBufferArray" />
     /// </summary>

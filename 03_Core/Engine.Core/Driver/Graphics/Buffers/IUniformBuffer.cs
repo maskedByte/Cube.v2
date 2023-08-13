@@ -8,7 +8,7 @@ namespace Engine.Core.Driver.Graphics.Buffers;
 /// <summary>
 ///     <see cref="IUniformBuffer" /> interface
 /// </summary>
-public interface IUniformBuffer : IBindable, IDisposable
+public interface IUniformBuffer : IBuffer
 {
     /// <summary>
     ///     Attach the <see cref="IUniformBuffer" /> to an existing <see cref="shaderProgram" />

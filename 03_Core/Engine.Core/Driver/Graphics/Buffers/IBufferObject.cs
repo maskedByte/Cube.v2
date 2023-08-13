@@ -3,14 +3,8 @@ using Engine.Core.Math.Vectors;
 
 namespace Engine.Core.Driver.Graphics.Buffers;
 
-public interface IBufferObject : IBindable, IDisposable
+public interface IBufferObject : IBuffer
 {
-    /// <summary>
-    ///     Returns the internal id of the api buffer
-    /// </summary>
-    /// <returns></returns>
-    uint GetId();
-
     /// <summary>
     ///     Set the <see cref="BufferLayout" /> for the VertexBuffer
     /// </summary>

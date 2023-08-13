@@ -31,7 +31,7 @@ public class TestApp
 
         var assetCompiler = new AssetDataCompiler();
         assetCompiler.RegisterFileConverter(new ImageAssetConverter());
-        assetCompiler.CompileAsync(BasePath, null, true);
+        assetCompiler.Compile(BasePath, null, true);
 
         var image = new ImageAsset();
         image.LoadAsset($"{BasePath}textures/grid_blue.cda");
