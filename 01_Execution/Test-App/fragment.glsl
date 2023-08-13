@@ -5,14 +5,23 @@ in vec2 v_TextureCoordOut;
 
 out vec4 fragColor;
 
-uniform sampler2D texUnit0;
+uniform sampler2D texUnits[10]; // Array von Textureinheiten
 
 void main()
 {
-   vec4 texColor = texture(texUnit0, vec2(v_TextureCoordOut.x, v_TextureCoordOut.y)).rgba * v_VertexColorOut;
+    vec4 diffuseColor = texture(texUnits[0], v_TextureCoordOut);
+    vec4 detailColor = texture(texUnits[1], v_TextureCoordOut);
+    vec4 metallicColor = texture(texUnits[5], v_TextureCoordOut);
+    vec4 normalColor = texture(texUnits[6], v_TextureCoordOut);
+    vec4 heightColor = texture(texUnits[7], v_TextureCoordOut);
+    vec4 emissionColor = texture(texUnits[8], v_TextureCoordOut);
+    vec4 detailMaskColor = texture(texUnits[9], v_TextureCoordOut);
 
-    if (texColor.a < 0.001) {
+    // Calculate final color of all stages
+    // vec4 resultColor = diffuseColor * metallicColor + normalColor + ...;
+
+    if (diffuseColor.a < 0.001) {
         discard;
     }
-    fragColor = texColor;
+    fragColor = diffuseColor;
 }
