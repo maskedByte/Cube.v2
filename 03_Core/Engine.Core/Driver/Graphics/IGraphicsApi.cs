@@ -61,7 +61,7 @@ public interface IGraphicsApi
     ///     Create a new <see cref="IFrameBuffer" />
     /// </summary>
     /// <returns>Returns the new <see cref="IFrameBuffer" /></returns>
-    IFrameBuffer CreateFrameBuffer();
+    IFrameBuffer CreateFrameBuffer(uint width, uint height, ITexture[] renderTargets);
 
     /// <summary>
     ///     Create a new <see cref="IRenderBuffer" />

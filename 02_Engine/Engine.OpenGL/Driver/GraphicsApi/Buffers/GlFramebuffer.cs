@@ -1,7 +1,6 @@
 ﻿using Engine.Core.Driver.Graphics.Buffers;
+using Engine.Core.Driver.Graphics.Textures;
 using Engine.Core.Logging;
-using Engine.Core.Math.Base;
-using Engine.OpenGL.Driver.GraphicsApi.Texture;
 using Engine.OpenGL.Vendor.OpenGL.Core;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
@@ -14,10 +13,9 @@ namespace Engine.OpenGL.Driver.GraphicsApi.Buffers;
 internal class GlFramebuffer : IFrameBuffer
 {
     private readonly uint _bufferId;
-    private readonly GlTexture[] _renderTargets;
+    private readonly ITexture[] _renderTargets;
     private readonly uint _depthStencilTexture;
     private bool _disposed;
-    private readonly Size _fboSize;
 
     /// <summary>
     ///     Create new instance of <see cref="GlFramebuffer" />
@@ -26,10 +24,8 @@ internal class GlFramebuffer : IFrameBuffer
     /// <param name="height">Height of the framebuffer</param>
     /// <param name="renderTargets"></param>
     /// <exception cref="Exception">ArgumentOutOfRangeException if any renderTarget has different size then the viewport</exception>
-    public GlFramebuffer(int width, int height, GlTexture[] renderTargets)
+    public GlFramebuffer(uint width, uint height, ITexture[] renderTargets)
     {
-        _fboSize = new Size(width, height);
-
         _bufferId = Gl.GenFramebuffer();
         Gl.BindFramebuffer(FramebufferTarget.Framebuffer, _bufferId);
 
@@ -63,8 +59,8 @@ internal class GlFramebuffer : IFrameBuffer
             TextureTarget.Texture2D,
             0,
             PixelInternalFormat.Depth24Stencil8,
-            width,
-            height,
+            (int)width,
+            (int)height,
             0,
             PixelFormat.DepthStencil,
             PixelType.UnsignedInt248,
@@ -116,9 +112,7 @@ internal class GlFramebuffer : IFrameBuffer
     /// <inheritdoc />
     public void Unbind() => Gl.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
 
-    /// <summary>
-    ///     Returns the internal ID of the framebuffer
-    /// </summary>
+    /// <inheritdoc />
     public uint GetId() => _bufferId;
 
     /// <inheritdoc />
