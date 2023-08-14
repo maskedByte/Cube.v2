@@ -1,6 +1,6 @@
 ﻿using Engine.OpenGL.Vendor.OpenGL.Core;
 
-namespace Engine.OpenGL.Driver.GraphicsApi;
+namespace Engine.OpenGL.GraphicsApi;
 
 /// <summary>
 ///     Watches the current state of different OpenGl buffers

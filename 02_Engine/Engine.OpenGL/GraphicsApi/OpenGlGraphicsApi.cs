@@ -3,11 +3,11 @@ using Engine.Core.Driver.Graphics.Buffers;
 using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Driver.Graphics.Textures;
 using Engine.Core.Memory.Pixmap;
-using Engine.OpenGL.Driver.GraphicsApi.Buffers;
-using Engine.OpenGL.Driver.GraphicsApi.Shaders;
-using Engine.OpenGL.Driver.GraphicsApi.Texture;
+using Engine.OpenGL.GraphicsApi.Buffers;
+using Engine.OpenGL.GraphicsApi.Shaders;
+using Engine.OpenGL.GraphicsApi.Texture;
 
-namespace Engine.OpenGL.Driver.GraphicsApi;
+namespace Engine.OpenGL.GraphicsApi;
 
 /// <summary>
 ///     Provides height level access to the OpenGl graphics api

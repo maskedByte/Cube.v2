@@ -6,7 +6,7 @@ using Engine.Core.Math.Matrices;
 using Engine.Core.Math.Vectors;
 using Engine.OpenGL.Vendor.OpenGL.Core;
 
-namespace Engine.OpenGL.Driver.GraphicsApi.Shaders;
+namespace Engine.OpenGL.GraphicsApi.Shaders;
 
 /// <summary>
 ///     Shader parameter class

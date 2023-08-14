@@ -6,7 +6,7 @@ using Engine.Core.Math.Vectors;
 using Engine.Core.Memory.Pinning;
 using Engine.OpenGL.Vendor.OpenGL.Core;
 
-namespace Engine.OpenGL.Driver.GraphicsApi.Buffers;
+namespace Engine.OpenGL.GraphicsApi.Buffers;
 
 /// <summary>
 ///     Create a new <see cref="IUniformBuffer" />

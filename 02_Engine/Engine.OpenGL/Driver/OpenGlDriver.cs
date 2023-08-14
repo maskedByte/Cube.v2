@@ -6,7 +6,7 @@ using Engine.Core.Driver.Window;
 using Engine.Core.Exceptions;
 using Engine.Core.Logging;
 using Engine.Core.Math.Base;
-using Engine.OpenGL.Driver.GraphicsApi;
+using Engine.OpenGL.GraphicsApi;
 using Engine.OpenGL.Vendor.OpenGL.Core;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
