@@ -15,10 +15,15 @@ namespace Test_App;
 
 public class TestApp
 {
-    public static string BasePath = "./base/";
+    private const string BasePath = "./base/";
 
     public static void Main()
     {
+        // Asset compilation
+        var assetCompiler = new AssetDataCompiler();
+        assetCompiler.RegisterFileConverter(new ImageAssetConverter());
+        assetCompiler.Compile(BasePath, null, true);
+
         // Create simple OpenGl window
         IDriver driver = new OpenGlDriver();
         var window = driver.CreateWindow(1280, 1024, false);
@@ -28,10 +33,6 @@ public class TestApp
 
         var shaderProgram = LoadShader(api);
         var triangle = CreateTriangle(api);
-
-        var assetCompiler = new AssetDataCompiler();
-        assetCompiler.RegisterFileConverter(new ImageAssetConverter());
-        assetCompiler.Compile(BasePath, null, true);
 
         var image = new ImageAsset();
         image.LoadAsset($"{BasePath}textures/grid_blue.cda");

@@ -66,7 +66,7 @@ public interface IGraphicsApi
     /// <summary>
     ///     Create a new <see cref="IRenderBuffer" />
     /// </summary>
-    /// <returns>Returns the new <see cref="IRenderBuffer" /></returns>
+    /// <returns>Returns the new <see cref="IRenderBuffer" />The new <see cref="IRenderBuffer" /></returns>
     IRenderBuffer CreateRenderBuffer();
 
     /// <summary>
