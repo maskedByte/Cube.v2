@@ -1,5 +1,4 @@
 using Engine.Core.Driver.Graphics.Buffers;
-using Engine.Core.Driver.Graphics.Renderings;
 using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Driver.Graphics.Textures;
 using Engine.Core.Memory.Pixmap;
@@ -68,16 +67,4 @@ public interface IGraphicsApi
     /// </summary>
     /// <returns>Returns the new <see cref="IRenderBuffer" />The new <see cref="IRenderBuffer" /></returns>
     IRenderBuffer CreateRenderBuffer();
-
-    /// <summary>
-    ///     Create a new <see cref="IRenderCommand" />
-    /// </summary>
-    /// <returns></returns>
-    IRenderCommand CreateRenderCommand();
-
-    /// <summary>
-    ///     Create a new <see cref="IRenderCommandQueue" />
-    /// </summary>
-    /// <returns></returns>
-    IRenderCommandQueue CreateRenderCommandQueue();
 }

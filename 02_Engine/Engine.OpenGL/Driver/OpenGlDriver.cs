@@ -19,17 +19,17 @@ namespace Engine.OpenGL.Driver;
 /// </summary>
 public sealed class OpenGlDriver : IDriver
 {
-    private static readonly Dictionary<DrawMode, BeginMode> DrawModeToBeginMode = new()
+    private static readonly Dictionary<PrimitiveType, BeginMode> DrawModeToBeginMode = new()
     {
-        { DrawMode.Points, BeginMode.Points },
-        { DrawMode.Lines, BeginMode.Lines },
-        { DrawMode.LineLoop, BeginMode.LineLoop },
-        { DrawMode.LineStrip, BeginMode.LineStrip },
-        { DrawMode.Triangles, BeginMode.Triangles },
-        { DrawMode.TriangleStrip, BeginMode.TriangleStrip },
-        { DrawMode.TriangleFan, BeginMode.TriangleFan },
-        { DrawMode.Quads, BeginMode.Triangles }, // Adjust as needed
-        { DrawMode.Polygon, BeginMode.Triangles } // Adjust as needed
+        { PrimitiveType.Points, BeginMode.Points },
+        { PrimitiveType.Lines, BeginMode.Lines },
+        { PrimitiveType.LineLoop, BeginMode.LineLoop },
+        { PrimitiveType.LineStrip, BeginMode.LineStrip },
+        { PrimitiveType.Triangles, BeginMode.Triangles },
+        { PrimitiveType.TriangleStrip, BeginMode.TriangleStrip },
+        { PrimitiveType.TriangleFan, BeginMode.TriangleFan },
+        { PrimitiveType.Quads, BeginMode.Triangles }, // Adjust as needed
+        { PrimitiveType.Polygon, BeginMode.Triangles } // Adjust as needed
     };
 
     private readonly Input _input;
@@ -175,10 +175,10 @@ public sealed class OpenGlDriver : IDriver
     public IInput GetInput() => _input;
 
     /// <inheritdoc />
-    public void DrawIndexed(IBufferArray bufferArray, DrawMode drawMode, int indexCount)
+    public void DrawIndexed(IBufferArray bufferArray, PrimitiveType primitiveType, int indexCount)
     {
         bufferArray.Bind();
-        Gl.DrawElements(DrawModeToBeginMode[drawMode], indexCount, DrawElementsType.UnsignedInt, nint.Zero);
+        Gl.DrawElements(DrawModeToBeginMode[primitiveType], indexCount, DrawElementsType.UnsignedInt, nint.Zero);
     }
 
     /// <inheritdoc />

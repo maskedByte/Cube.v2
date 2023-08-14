@@ -3,7 +3,7 @@
 /// <summary>
 ///     Enum for different draw modes
 /// </summary>
-public enum DrawMode
+public enum PrimitiveType
 {
     Points = 0x000100,
     Lines,

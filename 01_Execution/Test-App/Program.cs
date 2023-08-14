@@ -49,9 +49,9 @@ public class TestApp
                 window.Terminate();
             }
 
-            texture.Bind(0);
+            texture.Bind((uint)TextureUnit.DiffuseColor);
             shaderProgram.Bind();
-            driver.DrawIndexed(triangle, DrawMode.Triangles, 6);
+            driver.DrawIndexed(triangle, PrimitiveType.Triangles, 6);
 
             driver.Swap();
         }

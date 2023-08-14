@@ -71,7 +71,7 @@ public interface IDriver
     ///     Render indexed triangles to actual frame buffer
     /// </summary>
     /// <param name="bindable">A <see cref="IBufferArray" /> to render</param>
-    /// <param name="drawMode">Set draw mode, <see cref="DrawMode" /></param>
+    /// <param name="primitiveType">Set draw mode, <see cref="PrimitiveType" /></param>
     /// <param name="indexCount">Set count of indices to render</param>
-    void DrawIndexed(IBufferArray bindable, DrawMode drawMode, int indexCount);
+    void DrawIndexed(IBufferArray bindable, PrimitiveType primitiveType, int indexCount);
 }

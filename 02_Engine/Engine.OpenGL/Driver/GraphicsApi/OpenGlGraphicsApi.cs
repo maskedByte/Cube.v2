@@ -1,6 +1,5 @@
 ﻿using Engine.Core.Driver.Graphics;
 using Engine.Core.Driver.Graphics.Buffers;
-using Engine.Core.Driver.Graphics.Renderings;
 using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Driver.Graphics.Textures;
 using Engine.Core.Memory.Pixmap;
@@ -43,10 +42,4 @@ public class OpenGlGraphicsApi : IGraphicsApi
 
     /// <inheritdoc />
     public IRenderBuffer CreateRenderBuffer() => throw new NotImplementedException();
-
-    /// <inheritdoc />
-    public IRenderCommand CreateRenderCommand() => throw new NotImplementedException();
-
-    /// <inheritdoc />
-    public IRenderCommandQueue CreateRenderCommandQueue() => throw new NotImplementedException();
 }
