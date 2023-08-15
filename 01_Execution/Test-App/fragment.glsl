@@ -1,10 +1,15 @@
 #version 450 core
 
+// Input from Vertex Shader
+in vec4 v_MaterialColorOut;
+in vec4 v_DefaultColorOut;
 in vec4 v_VertexColorOut;
 in vec2 v_TextureCoordOut;
 
+// Output to Framebuffer
 out vec4 fragColor;
 
+// Texture sampler units
 uniform sampler2D texUnits[10]; // Array von Textureinheiten
 
 void main()

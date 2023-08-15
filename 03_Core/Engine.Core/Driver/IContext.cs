@@ -2,6 +2,8 @@ using Engine.Core.Driver.Graphics.Buffers;
 using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Driver.Graphics.Textures;
 using Engine.Core.Math.Base;
+using Engine.Core.Math.Matrices;
+using Engine.Core.Math.Vectors;
 using Engine.Core.Memory.Pixmap;
 
 namespace Engine.Core.Driver;
@@ -122,4 +124,90 @@ public interface IContext : IDisposable
     /// <param name="primitiveType">Set draw mode, <see cref="PrimitiveType" /></param>
     /// <param name="indexCount">Set count of indices to render</param>
     void DrawIndexed(IBufferArray bindable, PrimitiveType primitiveType, int indexCount);
+
+    /// <summary>
+    ///     Bind a shader program
+    /// </summary>
+    void BindShaderProgram(IShaderProgram shaderProgram);
+
+    /// <summary>
+    ///     Bind a texture to a texture unit
+    /// </summary>
+    void BindTexture(ITexture texture, uint textureUnit);
+
+    /// <summary>
+    ///     Bind a buffer array
+    /// </summary>
+    void BindBufferArray(IBufferArray bufferArray);
+
+    /// <summary>
+    ///     Bind a uniform buffer
+    /// </summary>
+    void BindUniformBuffer(IUniformBuffer uniformBuffer);
+
+    /// <summary>
+    ///     Set the primitive type for upcoming draw calls
+    /// </summary>
+    void SetPrimitiveType(PrimitiveType primitiveType);
+
+    /// <summary>
+    ///     Set the index count for upcoming draw calls
+    /// </summary>
+    /// <param name="indexCount"></param>
+    void SetIndexCount(uint indexCount);
+
+    /// <summary>
+    ///     Set a uniform value for a shader
+    /// </summary>
+    void SetShaderUniformB(string name, bool value);
+
+    /// <summary>
+    ///     Set a uniform value for a shader
+    /// </summary>
+    void SetShaderUniformI(string name, int value);
+
+    /// <summary>
+    ///     Set a uniform value for a shader
+    /// </summary>
+    void SetShaderUniformF(string name, float value);
+
+    /// <summary>
+    ///     Set a uniform value for a shader
+    /// </summary>
+    void SetShaderUniformF(string name, float[] value);
+
+    /// <summary>
+    ///     Set a uniform value for a shader
+    /// </summary>
+    void SetShaderUniformVec2(string name, Vector2 value);
+
+    /// <summary>
+    ///     Set a uniform value for a shader
+    /// </summary>
+    void SetShaderUniformVec3(string name, Vector3 value);
+
+    /// <summary>
+    ///     Set a uniform value for a shader
+    /// </summary>
+    void SetShaderUniformVec4(string name, Vector4 value);
+
+    /// <summary>
+    ///     Set a uniform value for a shader
+    /// </summary>
+    void SetShaderUniformMat2(string name, Matrix2 value);
+
+    /// <summary>
+    ///     Set a uniform value for a shader
+    /// </summary>
+    void SetShaderUniformMat3(string name, Matrix3 value);
+
+    /// <summary>
+    ///     Set a uniform value for a shader
+    /// </summary>
+    void SetShaderUniformMat4(string name, Matrix4 value);
+
+    /// <summary>
+    ///     Render a element
+    /// </summary>
+    void RenderElement();
 }

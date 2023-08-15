@@ -1,20 +1,26 @@
+﻿using Engine.Core.Driver;
+
 namespace Engine.Core.Rendering.Commands;
 
-/// <summary>
-///     Interface for all render command handler implementations
-/// </summary>
-public interface ICommandHandler : IDisposable
+public interface ICommandHandler
 {
     /// <summary>
-    ///     Determines if the handler can handle the render command
+    ///     Handles a rendering command.
     /// </summary>
-    /// <param name="command"></param>
-    /// <returns></returns>
-    bool CanHandle(ICommand command);
+    /// <param name="context">The rendering context.</param>
+    /// <param name="command">The rendering command to handle.</param>
+    void HandleCommand(IContext context, ICommand command);
 
     /// <summary>
-    ///     Execute the render command
+    ///     Registers a handler for the specified command type.
     /// </summary>
-    /// <param name="command">Render command to execute</param>
-    Task<ICommandResult> HandleAsync(ICommand command);
+    /// <param name="type">The type of command to register a handler for.</param>
+    /// <param name="handler">The handler to associate with the command type.</param>
+    void RegisterHandler(CommandType type, Action<IContext, ICommand> handler);
+
+    /// <summary>
+    ///     Unregisters a handler for the specified command type.
+    /// </summary>
+    /// <param name="type">The type of command to register a handler for.</param>
+    void UnregisterHandler(CommandType type);
 }

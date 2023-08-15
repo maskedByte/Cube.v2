@@ -5,11 +5,11 @@ namespace Engine.Rendering.Commands.RenderCommands;
 
 public sealed class BindBufferArrayCommand : CommandBase
 {
-    private readonly IBufferArray _bufferArray;
+    public IBufferArray BufferArray { get; }
 
     public BindBufferArrayCommand(IBufferArray bufferArray)
-        : base(CommandType.BindVertexArray)
+        : base(CommandType.BindBufferArray)
     {
-        _bufferArray = bufferArray;
+        BufferArray = bufferArray;
     }
 }

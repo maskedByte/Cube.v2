@@ -13,6 +13,7 @@ namespace Engine.OpenGL.GraphicsApi.Shaders;
 /// </summary>
 internal sealed class GlShaderParameter : IShaderParameter
 {
+    private readonly float[] _uniformMatrix2;
     private readonly float[] _uniformMatrix3;
     private readonly float[] _uniformMatrix4;
 
@@ -44,6 +45,7 @@ internal sealed class GlShaderParameter : IShaderParameter
         Type = type;
         ParamType = paramType;
         Name = name;
+        _uniformMatrix2 = new float[4];
         _uniformMatrix3 = new float[9];
         _uniformMatrix4 = new float[16];
     }
@@ -82,6 +84,20 @@ internal sealed class GlShaderParameter : IShaderParameter
         Location = ParamType == ParameterType.Uniform
             ? shaderProgram.GetUniform(Name)
             : shaderProgram.GetAttribute(Name);
+    }
+
+    /// <summary>
+    ///     Set a uniform mat2 in the shaderProgram.
+    /// </summary>
+    private void UniformMatrix2fv(int location, Matrix2 param)
+    {
+        _uniformMatrix2[0] = param.M11;
+        _uniformMatrix3[1] = param.M12;
+
+        _uniformMatrix3[3] = param.M21;
+        _uniformMatrix3[4] = param.M22;
+
+        Gl.UniformMatrix2fv(location, 1, false, _uniformMatrix2);
     }
 
     /// <summary>
@@ -132,8 +148,6 @@ internal sealed class GlShaderParameter : IShaderParameter
         Gl.UniformMatrix4fv(location, 1, false, _uniformMatrix4);
     }
 
-    #region SetValue Overrides
-
     /// <inheritdoc />
     public void SetValue(bool param) =>
         Gl.Uniform1i(
@@ -160,6 +174,9 @@ internal sealed class GlShaderParameter : IShaderParameter
 
     /// <inheritdoc />
     public void SetValue(Color param) => Gl.Uniform4f(Location, param.R / 255f, param.G / 255f, param.B / 255f, param.A / 255f);
+
+    /// <inheritdoc />
+    public void SetValue(Matrix2 param) => UniformMatrix2fv(Location, param);
 
     /// <inheritdoc />
     public void SetValue(Matrix3 param) => UniformMatrix3fv(Location, param);
@@ -206,6 +223,4 @@ internal sealed class GlShaderParameter : IShaderParameter
                 throw new ArgumentException("param was an unexpected length.", "param");
         }
     }
-
-    #endregion
 }

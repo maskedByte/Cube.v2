@@ -2,12 +2,16 @@ namespace Engine.Core.Rendering.Commands;
 
 public enum CommandType
 {
+    NullCommand,
+
     BindShaderProgram,
-    SetShaderUniform,
     BindTexture,
-    BindVertexArray,
+    BindBufferArray,
     BindUniformBuffer,
+
+    SetShaderUniform,
     SetPrimitiveType,
-    RenderElement,
-    SetIndexCount
+    SetIndexCount,
+
+    RenderElement
 }

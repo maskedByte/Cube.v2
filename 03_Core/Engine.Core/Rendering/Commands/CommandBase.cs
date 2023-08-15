@@ -3,7 +3,7 @@
 /// <summary>
 ///     Base implementation of a command.
 /// </summary>
-public class CommandBase : ICommand
+public abstract class CommandBase : ICommand
 {
     /// <inheritdoc />
     public Guid Id { get; } = new();

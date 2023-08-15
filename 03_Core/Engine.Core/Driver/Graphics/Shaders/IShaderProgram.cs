@@ -10,7 +10,7 @@ public interface IShaderProgram : IBindable, IDisposable
     /// </summary>
     /// <param name="name">Specifies the case-sensitive name of the shader attribute/uniform.</param>
     /// <returns>The requested attribute/uniform, or null on a failure.</returns>
-    IShaderParameter this[string name] { get; }
+    IShaderParameter? this[string name] { get; }
 
     /// <summary>
     ///     Returns the internal id of the api shader

@@ -31,7 +31,10 @@ internal sealed class GlShaderProgram : IShaderProgram
     }
 
     /// <inheritdoc />
-    public IShaderParameter this[string name] => _shaderParams[name];
+    public IShaderParameter? this[string name] =>
+        _shaderParams.TryGetValue(name, out var shaderParam)
+            ? shaderParam
+            : null;
 
     /// <inheritdoc />
     public uint GetId() => _shaderProgramId;

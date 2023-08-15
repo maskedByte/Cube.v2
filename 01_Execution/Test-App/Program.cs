@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using Engine.Assets.AssetData;
 using Engine.Assets.AssetData.ImageAsset;
 using Engine.Core.Driver;
@@ -8,7 +9,13 @@ using Engine.Core.Driver.Graphics.Textures;
 using Engine.Core.Driver.Input;
 using Engine.Core.Math.Geometrics;
 using Engine.Core.Math.Vectors;
+using Engine.Core.Rendering.Commands;
 using Engine.OpenGL.Driver;
+using Engine.Rendering.Commands;
+using Engine.Rendering.Commands.RenderCommands;
+using Engine.Rendering.Commands.ShaderCommands;
+using Engine.Rendering.Commands.TextureCommands;
+using Engine.Rendering.Renderer;
 
 namespace Test_App;
 
@@ -16,6 +23,7 @@ public class TestApp
 {
     private const string BasePath = "./base/";
 
+    [SuppressMessage("ReSharper", "HeapView.BoxingAllocation")]
     public static void Main()
     {
         // Asset compilation
@@ -38,6 +46,23 @@ public class TestApp
 
         var texture = context.CreateTexture(TextureBufferTarget.Texture2D, image.Data);
 
+        CommandGroup cmdGroup = new()
+        {
+            new BindShaderProgramCommand(shaderProgram),
+            new BindTextureCommand(texture, TextureUnit.DiffuseColor),
+            new BindBufferArrayCommand(triangle),
+            new SetPrimitiveTypeCommand(PrimitiveType.Triangles),
+            new SetIndexCountCommand(6),
+            new RenderElementCommand()
+        };
+
+        var commandQueue = new CommandQueue();
+        commandQueue.Enqueue(cmdGroup);
+
+        var commandHandler = new CommandHandler();
+
+        var renderer = new Renderer(context, commandQueue, commandHandler);
+
         while (!window.WindowTerminated())
         {
             driver.Clear();
@@ -48,11 +73,17 @@ public class TestApp
                 window.Terminate();
             }
 
-            texture.Bind((uint)TextureUnit.DiffuseColor);
-            shaderProgram.Bind();
-            context.DrawIndexed(triangle, PrimitiveType.Triangles, 6);
+            renderer.Render();
+
+            // texture.Bind((uint)TextureUnit.DiffuseColor);
+            // shaderProgram.Bind();
+            // context.DrawIndexed(triangle, PrimitiveType.Triangles, 6);
 
             driver.Swap();
+
+            // Prepare next frame
+            cmdGroup.Reset();
+            commandQueue.Enqueue(cmdGroup);
         }
 
         shaderProgram.Dispose();

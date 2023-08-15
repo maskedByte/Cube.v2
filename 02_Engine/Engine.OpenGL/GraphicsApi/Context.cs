@@ -5,6 +5,8 @@ using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Driver.Graphics.Textures;
 using Engine.Core.Driver.Window;
 using Engine.Core.Math.Base;
+using Engine.Core.Math.Matrices;
+using Engine.Core.Math.Vectors;
 using Engine.Core.Memory.Pixmap;
 using Engine.OpenGL.GraphicsApi.Buffers;
 using Engine.OpenGL.GraphicsApi.Shaders;
@@ -35,6 +37,13 @@ internal class Context : IContext
 
     private readonly IDriver _driver;
     private readonly IWindow _window;
+
+    // State ----------------------------------
+    private PrimitiveType PrimitiveType { get; set; } = PrimitiveType.Triangles;
+    private uint IndexCount { get; set; }
+    private IShaderProgram? BoundShaderProgram { get; set; }
+
+    // ----------------------------------------
 
     /// <inheritdoc />
     public bool IsInitialized { get; private set; }
@@ -119,6 +128,62 @@ internal class Context : IContext
         bufferArray.Bind();
         Gl.DrawElements(DrawModeToBeginMode[primitiveType], indexCount, DrawElementsType.UnsignedInt, nint.Zero);
     }
+
+    /// <inheritdoc />
+    public void BindShaderProgram(IShaderProgram shaderProgram)
+    {
+        BoundShaderProgram = shaderProgram;
+        shaderProgram.Bind();
+    }
+
+    /// <inheritdoc />
+    public void BindTexture(ITexture texture, uint textureUnit) => texture.Bind(textureUnit);
+
+    /// <inheritdoc />
+    public void BindBufferArray(IBufferArray bufferArray) => bufferArray.Bind();
+
+    /// <inheritdoc />
+    public void BindUniformBuffer(IUniformBuffer uniformBuffer) => uniformBuffer.Bind();
+
+    /// <inheritdoc />
+    public void SetPrimitiveType(PrimitiveType primitiveType) => PrimitiveType = primitiveType;
+
+    /// <inheritdoc />
+    public void SetIndexCount(uint indexCount) => IndexCount = indexCount;
+
+    /// <inheritdoc />
+    public void SetShaderUniformB(string name, bool value) => BoundShaderProgram?[name]?.SetValue(value);
+
+    /// <inheritdoc />
+    public void SetShaderUniformI(string name, int value) => BoundShaderProgram?[name]?.SetValue(value);
+
+    /// <inheritdoc />
+    public void SetShaderUniformF(string name, float value) => BoundShaderProgram?[name]?.SetValue(value);
+
+    /// <inheritdoc />
+    public void SetShaderUniformF(string name, float[] value) => BoundShaderProgram?[name]?.SetValue(value);
+
+    /// <inheritdoc />
+    public void SetShaderUniformVec2(string name, Vector2 value) => BoundShaderProgram?[name]?.SetValue(value);
+
+    /// <inheritdoc />
+    public void SetShaderUniformVec3(string name, Vector3 value) => BoundShaderProgram?[name]?.SetValue(value);
+
+    /// <inheritdoc />
+    public void SetShaderUniformVec4(string name, Vector4 value) => BoundShaderProgram?[name]?.SetValue(value);
+
+    /// <inheritdoc />
+    public void SetShaderUniformMat2(string name, Matrix2 value) => BoundShaderProgram?[name]?.SetValue(value);
+
+    /// <inheritdoc />
+    public void SetShaderUniformMat3(string name, Matrix3 value) => BoundShaderProgram?[name]?.SetValue(value);
+
+    /// <inheritdoc />
+    public void SetShaderUniformMat4(string name, Matrix4 value) => BoundShaderProgram?[name]?.SetValue(value);
+
+    /// <inheritdoc />
+    public void RenderElement() =>
+        Gl.DrawElements(DrawModeToBeginMode[PrimitiveType], (int)IndexCount, DrawElementsType.UnsignedInt, nint.Zero);
 
     /// <inheritdoc />
     public IBufferArray CreateBufferArray() => new GlBufferArray();

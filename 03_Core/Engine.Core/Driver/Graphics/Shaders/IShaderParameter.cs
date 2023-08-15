@@ -67,6 +67,12 @@ public interface IShaderParameter
     /// <summary>
     ///     Set value for this parameter
     /// </summary>
+    /// <param name="param"><see cref="Matrix2" /> Value to set</param>
+    public void SetValue(Matrix2 param);
+
+    /// <summary>
+    ///     Set value for this parameter
+    /// </summary>
     /// <param name="param"><see cref="Matrix3" /> Value to set</param>
     public void SetValue(Matrix3 param);
 
