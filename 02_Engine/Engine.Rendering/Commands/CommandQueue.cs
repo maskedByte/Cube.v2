@@ -7,44 +7,45 @@ namespace Engine.Rendering.Commands;
 /// </summary>
 public class CommandQueue : ICommandQueue
 {
-    private readonly Queue<CommandGroup> _commandGroups;
+    private readonly SortedList<int, CommandGroup> _commandGroups;
 
     /// <summary>
     ///     Default constructor
     /// </summary>
     public CommandQueue()
     {
-        _commandGroups = new Queue<CommandGroup>();
+        _commandGroups = new SortedList<int, CommandGroup>();
     }
 
     /// <inheritdoc />
-    public void Enqueue(CommandGroup command) => _commandGroups.Enqueue(command);
+    public void Enqueue(CommandGroup command) => _commandGroups.Add(command.Priority, command);
 
     /// <inheritdoc />
     public bool TryDequeue(out CommandGroup? commandGroup)
     {
-        if (_commandGroups.Count == 0)
-        {
-            commandGroup = null;
-            return false;
-        }
-
-        commandGroup = _commandGroups.Dequeue();
-        return true;
+        commandGroup = Dequeue();
+        return commandGroup != null;
     }
 
     /// <inheritdoc />
-    public CommandGroup? Dequeue() =>
-        _commandGroups.Count == 0
-            ? null
-            : _commandGroups.Dequeue();
+    public CommandGroup? Dequeue()
+    {
+        if (_commandGroups.Count <= 0)
+        {
+            return null;
+        }
+
+        var firstCommand = _commandGroups.Values[0];
+        _commandGroups.RemoveAt(0);
+        return firstCommand;
+    }
 
     /// <inheritdoc />
     public void Dispose()
     {
-        foreach (var commGroup in _commandGroups.Where(g => g.Any()))
+        foreach (var (_, group) in _commandGroups.Where(g => g.Value.Any()))
         {
-            commGroup.ReleaseCommands();
+            group.ReleaseCommands();
         }
     }
 }

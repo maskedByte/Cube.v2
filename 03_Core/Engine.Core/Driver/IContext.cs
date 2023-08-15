@@ -19,6 +19,16 @@ public interface IContext : IDisposable
     bool IsInitialized { get; }
 
     /// <summary>
+    ///     Set wireframe mode
+    /// </summary>
+    bool Wireframe { get; set; }
+
+    /// <summary>
+    ///     Set the point size
+    /// </summary>
+    float PointSize { get; set; }
+
+    /// <summary>
     ///     Initialize the graphics context
     /// </summary>
     void Initialize();

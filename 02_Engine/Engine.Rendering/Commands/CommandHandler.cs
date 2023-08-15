@@ -73,10 +73,6 @@ public class CommandHandler : CommandHandlerBase
         {
             context.SetShaderUniformMat4(matrix4Command.UniformName, matrix4Command.Value);
         }
-        else
-        {
-            throw new NotImplementedException();
-        }
     }
 
     private void BindTextureHandler(IContext context, ICommand command)
@@ -95,14 +91,13 @@ public class CommandHandler : CommandHandlerBase
         }
     }
 
-    private void BindUniformBufferHandler(IContext context, ICommand command) =>
-        throw
-
-            // if (command is BindUniformBufferCommand bindCommand)
-            // {
-            //     bindCommand.UniformBuffer.Bind(bindCommand.BindingPoint);
-            // }
-            new NotImplementedException();
+    private void BindUniformBufferHandler(IContext context, ICommand command)
+    {
+        if (command is BindUniformBufferCommand bindCommand)
+        {
+            bindCommand.UniformBuffer.Bind();
+        }
+    }
 
     private void SetPrimitiveTypeHandler(IContext context, ICommand command)
     {

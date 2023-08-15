@@ -106,6 +106,8 @@ public sealed class OpenGlDriver : IDriver
         }
 
         Gl.Clear(clearMask);
+
+        _input.Reset();
     }
 
     /// <inheritdoc />
@@ -116,7 +118,6 @@ public sealed class OpenGlDriver : IDriver
     {
         CurrentWindow?.Display();
         Time.Instance.Update();
-        _input.Reset();
     }
 
     /// <inheritdoc />

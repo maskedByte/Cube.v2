@@ -35,8 +35,9 @@ internal class Context : IContext
         { PrimitiveType.Polygon, BeginMode.Triangles } // Adjust as needed
     };
 
-    private readonly IDriver _driver;
     private readonly IWindow _window;
+    private float _pointSize;
+    private bool _wireframe;
 
     // State ----------------------------------
     private PrimitiveType PrimitiveType { get; set; } = PrimitiveType.Triangles;
@@ -48,6 +49,33 @@ internal class Context : IContext
     /// <inheritdoc />
     public bool IsInitialized { get; private set; }
 
+    /// <inheritdoc />
+    public bool Wireframe
+    {
+        get => _wireframe;
+        set
+        {
+            _wireframe = value;
+            Gl.PolygonMode(
+                MaterialFace.FrontAndBack,
+                Wireframe
+                    ? PolygonMode.Line
+                    : PolygonMode.Fill
+            );
+        }
+    }
+
+    /// <inheritdoc />
+    public float PointSize
+    {
+        get => _pointSize;
+        set
+        {
+            _pointSize = value;
+            Gl.PointSize(_pointSize);
+        }
+    }
+
     /// <summary>
     ///     Constructor for a graphics context
     /// </summary>
@@ -56,9 +84,8 @@ internal class Context : IContext
     public Context(IDriver driver)
     {
         ArgumentNullException.ThrowIfNull(driver);
-        _driver = driver;
 
-        _window = _driver.GetWindow()!;
+        _window = driver.GetWindow()!;
         if (_window == null)
         {
             throw new InvalidOperationException("Window is not initialized.");
@@ -69,14 +96,15 @@ internal class Context : IContext
     public void Initialize()
     {
         Gl.PointSize(2f);
-        Gl.Enable(EnableCap.DepthTest);
 
+        Gl.Enable(EnableCap.DepthTest);
         Gl.Enable(EnableCap.CullFace);
+        Gl.Enable(EnableCap.Blend);
+
         Gl.CullFace(CullFaceMode.Back);
         Gl.FrontFace(FrontFaceDirection.Ccw);
         Gl.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
 
-        Gl.Enable(EnableCap.Blend);
         Gl.DepthFunc(DepthFunction.Less);
         Gl.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
         Gl.Viewport(0, 0, _window.Viewport.Width, _window.Viewport.Height);
