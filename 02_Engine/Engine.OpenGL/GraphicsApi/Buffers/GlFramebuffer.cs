@@ -13,8 +13,8 @@ namespace Engine.OpenGL.GraphicsApi.Buffers;
 internal class GlFramebuffer : IFrameBuffer
 {
     private readonly uint _bufferId;
-    private readonly ITexture[] _renderTargets;
     private readonly uint _depthStencilTexture;
+    private readonly ITexture[] _renderTargets;
     private bool _disposed;
 
     /// <summary>
@@ -99,13 +99,6 @@ internal class GlFramebuffer : IFrameBuffer
         Gl.BindTexture(TextureTarget.Texture2D, 0);
     }
 
-    // Destructor
-    ~GlFramebuffer()
-    {
-        // Dispose the framebuffer
-        Dispose();
-    }
-
     /// <inheritdoc />
     public void Bind() => Gl.BindFramebuffer(FramebufferTarget.Framebuffer, _bufferId);
 
@@ -128,5 +121,12 @@ internal class GlFramebuffer : IFrameBuffer
 
         GC.SuppressFinalize(this);
         _disposed = true;
+    }
+
+    // Destructor
+    ~GlFramebuffer()
+    {
+        // Dispose the framebuffer
+        Dispose();
     }
 }

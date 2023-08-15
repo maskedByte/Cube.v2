@@ -86,68 +86,6 @@ internal sealed class GlShaderParameter : IShaderParameter
             : shaderProgram.GetAttribute(Name);
     }
 
-    /// <summary>
-    ///     Set a uniform mat2 in the shaderProgram.
-    /// </summary>
-    private void UniformMatrix2fv(int location, Matrix2 param)
-    {
-        _uniformMatrix2[0] = param.M11;
-        _uniformMatrix3[1] = param.M12;
-
-        _uniformMatrix3[3] = param.M21;
-        _uniformMatrix3[4] = param.M22;
-
-        Gl.UniformMatrix2fv(location, 1, false, _uniformMatrix2);
-    }
-
-    /// <summary>
-    ///     Set a uniform mat3 in the shaderProgram.
-    /// </summary>
-    private void UniformMatrix3fv(int location, Matrix3 param)
-    {
-        _uniformMatrix3[0] = param.M11;
-        _uniformMatrix3[1] = param.M12;
-        _uniformMatrix3[2] = param.M13;
-
-        _uniformMatrix3[3] = param.M21;
-        _uniformMatrix3[4] = param.M22;
-        _uniformMatrix3[5] = param.M23;
-
-        _uniformMatrix3[6] = param.M31;
-        _uniformMatrix3[7] = param.M32;
-        _uniformMatrix3[8] = param.M33;
-
-        Gl.UniformMatrix3fv(location, 1, false, _uniformMatrix3);
-    }
-
-    /// <summary>
-    ///     Set a uniform mat4 in the shaderProgram.
-    /// </summary>
-    private void UniformMatrix4fv(int location, Matrix4 param)
-    {
-        _uniformMatrix4[0] = param.M11;
-        _uniformMatrix4[1] = param.M12;
-        _uniformMatrix4[2] = param.M13;
-        _uniformMatrix4[3] = param.M14;
-
-        _uniformMatrix4[4] = param.M21;
-        _uniformMatrix4[5] = param.M22;
-        _uniformMatrix4[6] = param.M23;
-        _uniformMatrix4[7] = param.M24;
-
-        _uniformMatrix4[8] = param.M31;
-        _uniformMatrix4[9] = param.M32;
-        _uniformMatrix4[10] = param.M33;
-        _uniformMatrix4[11] = param.M34;
-
-        _uniformMatrix4[12] = param.M41;
-        _uniformMatrix4[13] = param.M42;
-        _uniformMatrix4[14] = param.M43;
-        _uniformMatrix4[15] = param.M44;
-
-        Gl.UniformMatrix4fv(location, 1, false, _uniformMatrix4);
-    }
-
     /// <inheritdoc />
     public void SetValue(bool param) =>
         Gl.Uniform1i(
@@ -222,5 +160,67 @@ internal sealed class GlShaderParameter : IShaderParameter
             default:
                 throw new ArgumentException("param was an unexpected length.", "param");
         }
+    }
+
+    /// <summary>
+    ///     Set a uniform mat2 in the shaderProgram.
+    /// </summary>
+    private void UniformMatrix2fv(int location, Matrix2 param)
+    {
+        _uniformMatrix2[0] = param.M11;
+        _uniformMatrix3[1] = param.M12;
+
+        _uniformMatrix3[3] = param.M21;
+        _uniformMatrix3[4] = param.M22;
+
+        Gl.UniformMatrix2fv(location, 1, false, _uniformMatrix2);
+    }
+
+    /// <summary>
+    ///     Set a uniform mat3 in the shaderProgram.
+    /// </summary>
+    private void UniformMatrix3fv(int location, Matrix3 param)
+    {
+        _uniformMatrix3[0] = param.M11;
+        _uniformMatrix3[1] = param.M12;
+        _uniformMatrix3[2] = param.M13;
+
+        _uniformMatrix3[3] = param.M21;
+        _uniformMatrix3[4] = param.M22;
+        _uniformMatrix3[5] = param.M23;
+
+        _uniformMatrix3[6] = param.M31;
+        _uniformMatrix3[7] = param.M32;
+        _uniformMatrix3[8] = param.M33;
+
+        Gl.UniformMatrix3fv(location, 1, false, _uniformMatrix3);
+    }
+
+    /// <summary>
+    ///     Set a uniform mat4 in the shaderProgram.
+    /// </summary>
+    private void UniformMatrix4fv(int location, Matrix4 param)
+    {
+        _uniformMatrix4[0] = param.M11;
+        _uniformMatrix4[1] = param.M12;
+        _uniformMatrix4[2] = param.M13;
+        _uniformMatrix4[3] = param.M14;
+
+        _uniformMatrix4[4] = param.M21;
+        _uniformMatrix4[5] = param.M22;
+        _uniformMatrix4[6] = param.M23;
+        _uniformMatrix4[7] = param.M24;
+
+        _uniformMatrix4[8] = param.M31;
+        _uniformMatrix4[9] = param.M32;
+        _uniformMatrix4[10] = param.M33;
+        _uniformMatrix4[11] = param.M34;
+
+        _uniformMatrix4[12] = param.M41;
+        _uniformMatrix4[13] = param.M42;
+        _uniformMatrix4[14] = param.M43;
+        _uniformMatrix4[15] = param.M44;
+
+        Gl.UniformMatrix4fv(location, 1, false, _uniformMatrix4);
     }
 }

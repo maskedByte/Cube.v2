@@ -39,6 +39,8 @@ public abstract class RendererBase : IRenderer
         EndRender();
     }
 
+    public void Dispose() => CommandQueue.Dispose();
+
     public virtual void BeginRender()
     {
     }
@@ -46,6 +48,4 @@ public abstract class RendererBase : IRenderer
     public virtual void EndRender()
     {
     }
-
-    public void Dispose() => CommandQueue.Dispose();
 }

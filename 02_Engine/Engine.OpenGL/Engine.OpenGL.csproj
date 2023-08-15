@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\03_Core\Engine.Core\Engine.Core.csproj" />
+        <ProjectReference Include="..\..\03_Core\Engine.Core\Engine.Core.csproj"/>
         <ProjectReference Include="..\Engine.Core\Engine.Core.csproj"/>
     </ItemGroup>
 </Project>

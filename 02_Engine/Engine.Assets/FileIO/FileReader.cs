@@ -12,12 +12,11 @@ namespace Engine.Assets.FileIO;
 /// </summary>
 public sealed class FileReader : IDisposable
 {
+    internal const string CurrentVersion = "1.0.0";
     private readonly BinaryReader _baseStream;
     private readonly BrotliStream _brotliStream;
     private readonly string? _fileName;
     private readonly FileStream? _fileStream;
-
-    internal const string CurrentVersion = "1.0.0";
 
     /// <summary>
     ///     Type of this asset file
