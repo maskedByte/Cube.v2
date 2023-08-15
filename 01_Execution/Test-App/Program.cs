@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using Engine.Assets.AssetData;
 using Engine.Assets.AssetData.ImageAsset;
 using Engine.Core.Driver;
@@ -7,15 +6,16 @@ using Engine.Core.Driver.Graphics.Buffers;
 using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Driver.Graphics.Textures;
 using Engine.Core.Driver.Input;
+using Engine.Core.Math.Base;
 using Engine.Core.Math.Geometrics;
 using Engine.Core.Math.Vectors;
-using Engine.Core.Rendering.Commands;
 using Engine.OpenGL.Driver;
 using Engine.Rendering.Commands;
 using Engine.Rendering.Commands.RenderCommands;
 using Engine.Rendering.Commands.ShaderCommands;
 using Engine.Rendering.Commands.TextureCommands;
-using Engine.Rendering.Renderer;
+using Engine.Rendering.Renderers;
+using SysColor = System.Drawing.Color;
 
 namespace Test_App;
 
@@ -36,22 +36,36 @@ public class TestApp
         var window = driver.CreateWindow(1280, 1024, false);
         var context = driver.GetContext() ?? throw new ArgumentNullException(nameof(IContext));
 
-        context.SetClearColor(Color.Gray);
+        context.SetClearColor(SysColor.Gray);
 
         var shaderProgram = LoadShader(context);
-        var triangle = CreateTriangle(context);
+        var triangle = CreateTriangle(context, Color.White);
 
         var image = new ImageAsset();
         image.LoadAsset($"{BasePath}textures/grid_blue.cda");
 
         var texture = context.CreateTexture(TextureBufferTarget.Texture2D, image.Data);
 
+        var oldSetPrimitiveType = 0;
+        var currentSetPrimitiveType = 0;
+
+        var primitiveTypeCommands = new ICommand[]
+        {
+            new SetPrimitiveTypeCommand(PrimitiveType.Triangles),
+            new SetPrimitiveTypeCommand(PrimitiveType.TriangleStrip),
+            new SetPrimitiveTypeCommand(PrimitiveType.TriangleFan),
+            new SetPrimitiveTypeCommand(PrimitiveType.Lines),
+            new SetPrimitiveTypeCommand(PrimitiveType.LineStrip),
+            new SetPrimitiveTypeCommand(PrimitiveType.LineLoop),
+            new SetPrimitiveTypeCommand(PrimitiveType.Points)
+        };
+
         CommandGroup cmdGroup = new()
         {
             new BindShaderProgramCommand(shaderProgram),
             new BindTextureCommand(texture, TextureUnit.DiffuseColor),
             new BindBufferArrayCommand(triangle),
-            new SetPrimitiveTypeCommand(PrimitiveType.Triangles),
+            primitiveTypeCommands[currentSetPrimitiveType],
             new SetIndexCountCommand(6),
             new RenderElementCommand()
         };
@@ -61,25 +75,32 @@ public class TestApp
 
         var commandHandler = new CommandHandler();
 
-        var renderer = new Renderer(context, commandQueue, commandHandler);
+        // commandHandler.AddRule(command => command is not BindTextureCommand);
+
+        var renderer = new DefaultRenderer(context, commandQueue, commandHandler);
 
         while (!window.WindowTerminated())
         {
+            // Render frame
             driver.Clear();
             driver.HandleEvents();
 
+            renderer.Render();
+            driver.Swap();
+
+            // Keyboard input
             if (Keyboard.GetKey(KeyCode.Escape))
             {
                 window.Terminate();
             }
 
-            renderer.Render();
-
-            // texture.Bind((uint)TextureUnit.DiffuseColor);
-            // shaderProgram.Bind();
-            // context.DrawIndexed(triangle, PrimitiveType.Triangles, 6);
-
-            driver.Swap();
+            if (Keyboard.GetKey(KeyCode.Q))
+            {
+                currentSetPrimitiveType++;
+                currentSetPrimitiveType %= primitiveTypeCommands.Length - 1;
+                cmdGroup.Replace(primitiveTypeCommands[oldSetPrimitiveType], primitiveTypeCommands[currentSetPrimitiveType]);
+                oldSetPrimitiveType = currentSetPrimitiveType;
+            }
 
             // Prepare next frame
             cmdGroup.Reset();
@@ -112,14 +133,14 @@ public class TestApp
         return shaderProgram;
     }
 
-    private static IBufferArray CreateTriangle(IContext context)
+    private static IBufferArray CreateTriangle(IContext context, Color color)
     {
         var vertices = new[]
         {
-            new Vertex(new Vector3(0f, 0f, 0f), Color.White),
-            new Vertex(new Vector3(1f, 0f, 0f), Color.White),
-            new Vertex(new Vector3(1f, 1f, 0f), Color.White),
-            new Vertex(new Vector3(0f, 1f, 0f), Color.White)
+            new Vertex(new Vector3(0f, 0f, 0f), color),
+            new Vertex(new Vector3(1f, 0f, 0f), color),
+            new Vertex(new Vector3(1f, 1f, 0f), color),
+            new Vertex(new Vector3(0f, 1f, 0f), color)
         };
 
         var uvCoordinates = new[]
