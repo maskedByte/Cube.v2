@@ -10,7 +10,7 @@ using TextureBufferTarget = Engine.Core.Driver.Graphics.Textures.TextureBufferTa
 
 namespace Engine.OpenGL.GraphicsApi.Texture;
 
-public class GlTexture : ITexture
+internal class GlTexture : ITexture
 {
     private readonly IDictionary<TextureBufferTarget, TextureTarget> _targetMap = new Dictionary<TextureBufferTarget, TextureTarget>
     {
