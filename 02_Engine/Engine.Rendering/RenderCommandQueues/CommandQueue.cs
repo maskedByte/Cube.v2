@@ -7,22 +7,22 @@ namespace Engine.Rendering.RenderCommandQueues;
 /// </summary>
 public class CommandQueue : ICommandQueue
 {
-    private readonly Queue<ICommand> _commands;
+    private readonly Queue<CommandGroup> _commandGroups;
 
     /// <summary>
     ///     Default constructor
     /// </summary>
     public CommandQueue()
     {
-        _commands = new Queue<ICommand>();
+        _commandGroups = new Queue<CommandGroup>();
     }
 
     /// <inheritdoc />
-    public void Enqueue(ICommand command) => _commands.Enqueue(command);
+    public void Enqueue(CommandGroup command) => _commandGroups.Enqueue(command);
 
     /// <inheritdoc />
-    public ICommand? Dequeue() =>
-        _commands.Count == 0
-            ? null!
-            : _commands.Dequeue();
+    public CommandGroup? Dequeue() =>
+        _commandGroups.Count == 0
+            ? null
+            : _commandGroups.Dequeue();
 }

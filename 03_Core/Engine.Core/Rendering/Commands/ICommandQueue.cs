@@ -6,13 +6,13 @@
 public interface ICommandQueue
 {
     /// <summary>
-    ///     Enqueue a render command
+    ///     Enqueue a render command group
     /// </summary>
-    /// <param name="command">Render command to enqueue</param>
-    void Enqueue(ICommand command);
+    /// <param name="commandGroup">The group of commands to enqueue</param>
+    void Enqueue(CommandGroup commandGroup);
 
     /// <summary>
-    ///     Dequeue a render command
+    ///     Dequeue a render command group
     /// </summary>
-    ICommand? Dequeue();
+    CommandGroup? Dequeue();
 }
