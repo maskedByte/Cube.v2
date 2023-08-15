@@ -1,6 +1,6 @@
-namespace Engine.Rendering.Commands;
+namespace Engine.Core.Rendering.Commands;
 
-public enum RenderCommandContextAction
+public enum CommandContextAction
 {
     SetViewport,
     SetClearColor,

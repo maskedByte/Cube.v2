@@ -1,4 +1,6 @@
-﻿namespace Engine.Core.Driver.Window;
+﻿using Engine.Core.Math.Base;
+
+namespace Engine.Core.Driver.Window;
 
 /// <summary>
 ///     Interface for window.
@@ -14,6 +16,11 @@ public interface IWindow
     ///     Set if the cursor should be grabbed
     /// </summary>
     bool CursorGrabbed { get; set; }
+
+    /// <summary>
+    ///     Get or set the viewport
+    /// </summary>
+    Viewport Viewport { get; set; }
 
     /// <summary>
     ///     Forces the window to close

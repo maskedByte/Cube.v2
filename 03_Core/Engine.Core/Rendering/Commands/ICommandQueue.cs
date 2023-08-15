@@ -1,18 +1,18 @@
-﻿namespace Engine.Rendering.Commands;
+﻿namespace Engine.Core.Rendering.Commands;
 
 /// <summary>
 ///     Interface for a render command queue
 /// </summary>
-public interface IRenderCommandQueue
+public interface ICommandQueue
 {
     /// <summary>
     ///     Enqueue a render command
     /// </summary>
     /// <param name="command">Render command to enqueue</param>
-    void Enqueue(RenderCommand command);
+    void Enqueue(ICommand command);
 
     /// <summary>
     ///     Dequeue a render command
     /// </summary>
-    RenderCommand? Dequeue();
+    ICommand? Dequeue();
 }

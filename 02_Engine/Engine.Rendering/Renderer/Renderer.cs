@@ -1,11 +1,12 @@
-using Engine.Rendering.Commands;
+using Engine.Core.Rendering.Commands;
+using Engine.Core.Rendering.Renderers;
 
 namespace Engine.Rendering.Renderer;
 
 internal class Renderer : IRenderer
 {
-    private IRenderCommandQueue _renderCommandQueue;
-    private Dictionary<RenderCommandType, IRenderCommandHandler> _renderCommandHandlers;
+    private ICommandQueue _commandQueue;
+    private Dictionary<CommandType, ICommandHandler> _renderCommandHandlers;
 
     public void Dispose()
     {

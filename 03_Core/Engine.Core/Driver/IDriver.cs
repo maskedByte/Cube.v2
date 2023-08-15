@@ -1,8 +1,5 @@
-﻿using Engine.Core.Driver.Graphics;
-using Engine.Core.Driver.Graphics.Buffers;
-using Engine.Core.Driver.Input;
+﻿using Engine.Core.Driver.Input;
 using Engine.Core.Driver.Window;
-using Engine.Core.Math.Base;
 
 namespace Engine.Core.Driver;
 
@@ -11,12 +8,6 @@ namespace Engine.Core.Driver;
 /// </summary>
 public interface IDriver
 {
-    /// <summary>
-    ///     The graphics api reference
-    /// </summary>
-    /// <returns>Return the graphics api reference</returns>
-    IGraphicsApi GetApi();
-
     /// <summary>
     ///     Create a new window
     /// </summary>
@@ -34,12 +25,6 @@ public interface IDriver
         bool resizeAble = false,
         bool showStats = false
     );
-
-    /// <summary>
-    ///     Sets the clear color
-    /// </summary>
-    /// <param name="color">The color to set, <see cref="Color" /></param>
-    void SetClearColor(Color color);
 
     /// <summary>
     ///     Close graphics context & Window
@@ -68,10 +53,14 @@ public interface IDriver
     IInput GetInput();
 
     /// <summary>
-    ///     Render indexed triangles to actual frame buffer
+    ///     Return the current window
     /// </summary>
-    /// <param name="bindable">A <see cref="IBufferArray" /> to render</param>
-    /// <param name="primitiveType">Set draw mode, <see cref="PrimitiveType" /></param>
-    /// <param name="indexCount">Set count of indices to render</param>
-    void DrawIndexed(IBufferArray bindable, PrimitiveType primitiveType, int indexCount);
+    /// <returns>Returns an instance of <see cref="IWindow" /></returns>
+    IWindow? GetWindow();
+
+    /// <summary>
+    ///     Get the current context
+    /// </summary>
+    /// <returns>Returns an instance of <see cref="IContext" /></returns>
+    IContext? GetContext();
 }

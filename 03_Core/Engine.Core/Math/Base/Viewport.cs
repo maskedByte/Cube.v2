@@ -8,29 +8,29 @@ public struct Viewport : IEquatable<Viewport>
     /// <summary>
     ///     X position of the Viewport
     /// </summary>
-    public float X;
+    public int X;
 
     /// <summary>
     ///     Y position of the Viewport
     /// </summary>
-    public float Y;
+    public int Y;
 
     /// <summary>
     ///     Width of the Viewport
     /// </summary>
-    public float Width;
+    public int Width;
 
     /// <summary>
     ///     Height of the Viewport
     /// </summary>
-    public float Height;
+    public int Height;
 
     /// <summary>
     ///     Access properties by index
     /// </summary>
     /// <param name="index">index of the parameter</param>
     /// <returns></returns>
-    public float this[int index]
+    public int this[int index]
     {
         get =>
             index switch
@@ -61,6 +61,22 @@ public struct Viewport : IEquatable<Viewport>
                     throw new Exception("Index out of range.");
             }
         }
+    }
+
+    public Viewport(float x, float y, float width, float height)
+    {
+        X = (int)x;
+        Y = (int)y;
+        Width = (int)width;
+        Height = (int)height;
+    }
+
+    public Viewport(int x, int y, int width, int height)
+    {
+        X = x;
+        Y = y;
+        Width = width;
+        Height = height;
     }
 
     public bool Equals(Viewport other) =>

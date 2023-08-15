@@ -1,11 +1,11 @@
-namespace Engine.Rendering.Commands;
+namespace Engine.Core.Rendering.Commands;
 
 /// <summary>
 ///     Specifies the type of render command
 /// </summary>
-public enum RenderCommandType
+public enum CommandType
 {
     NullRenderCommand = 0,
     DefaultRenderCommand,
-    WireframeRenderCommand
+    DebugRenderCommand
 }

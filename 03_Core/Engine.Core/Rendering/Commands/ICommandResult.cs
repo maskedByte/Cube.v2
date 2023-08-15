@@ -1,6 +1,6 @@
 using Engine.Core.Driver.Graphics.Textures;
 
-namespace Engine.Rendering.Commands;
+namespace Engine.Core.Rendering.Commands;
 
 /// <summary>
 ///     Result of a render command

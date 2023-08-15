@@ -1,11 +1,7 @@
 ﻿using Engine.Core.Driver;
-using Engine.Core.Driver.Graphics;
-using Engine.Core.Driver.Graphics.Buffers;
 using Engine.Core.Driver.Input;
 using Engine.Core.Driver.Window;
-using Engine.Core.Exceptions;
 using Engine.Core.Logging;
-using Engine.Core.Math.Base;
 using Engine.OpenGL.GraphicsApi;
 using Engine.OpenGL.Vendor.OpenGL.Core;
 
@@ -19,23 +15,8 @@ namespace Engine.OpenGL.Driver;
 /// </summary>
 public sealed class OpenGlDriver : IDriver
 {
-    private static readonly Dictionary<PrimitiveType, BeginMode> DrawModeToBeginMode = new()
-    {
-        { PrimitiveType.Points, BeginMode.Points },
-        { PrimitiveType.Lines, BeginMode.Lines },
-        { PrimitiveType.LineLoop, BeginMode.LineLoop },
-        { PrimitiveType.LineStrip, BeginMode.LineStrip },
-        { PrimitiveType.Triangles, BeginMode.Triangles },
-        { PrimitiveType.TriangleStrip, BeginMode.TriangleStrip },
-        { PrimitiveType.TriangleFan, BeginMode.TriangleFan },
-        { PrimitiveType.Quads, BeginMode.Triangles }, // Adjust as needed
-        { PrimitiveType.Polygon, BeginMode.Triangles } // Adjust as needed
-    };
-
     private readonly Input _input;
-    private IGraphicsApi? _graphicsApi;
-
-    private bool _isInitialized;
+    private IContext? _context;
 
     /// <summary>
     ///     Gets the current window.
@@ -47,8 +28,7 @@ public sealed class OpenGlDriver : IDriver
     /// </summary>
     public OpenGlDriver()
     {
-        _graphicsApi = null;
-        _isInitialized = false;
+        _context = null;
         CurrentWindow = null;
         _input = new Input() ?? throw new NullReferenceException(nameof(_input));
     }
@@ -76,27 +56,8 @@ public sealed class OpenGlDriver : IDriver
             throw new NullReferenceException(nameof(CurrentWindow));
         }
 
-        // Init openGl context
-        Gl.PointSize(2f);
-        Gl.Enable(EnableCap.DepthTest);
-
-        Gl.Enable(EnableCap.CullFace);
-        Gl.CullFace(CullFaceMode.Back);
-        Gl.FrontFace(FrontFaceDirection.Ccw);
-        Gl.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
-
-        Gl.Enable(EnableCap.Blend);
-        Gl.DepthFunc(DepthFunction.Less);
-        Gl.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-        Gl.Viewport(0, 0, width, height);
-
-        _isInitialized = true;
-        _graphicsApi = new OpenGlGraphicsApi();
-
-        if (_graphicsApi == null)
-        {
-            throw new NullReferenceException(nameof(_graphicsApi));
-        }
+        _context = new Context(this);
+        _context.Initialize();
 
         if (showStats)
         {
@@ -108,19 +69,6 @@ public sealed class OpenGlDriver : IDriver
         Mouse.SetInput(_input);
 
         return CurrentWindow;
-    }
-
-    /// <inheritdoc />
-    public void SetClearColor(Color color)
-    {
-        if (!_isInitialized)
-        {
-            Log.LogMessageAsync("Graphics context not initialized.", LogLevel.Critical, this);
-            throw new ContextNotInitializedException($"{nameof(OpenGlDriver)} context not initialized.");
-        }
-
-        var clearColor = color.ToVector4();
-        Gl.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
     }
 
     /// <inheritdoc />
@@ -175,59 +123,27 @@ public sealed class OpenGlDriver : IDriver
     public IInput GetInput() => _input;
 
     /// <inheritdoc />
-    public void DrawIndexed(IBufferArray bufferArray, PrimitiveType primitiveType, int indexCount)
-    {
-        bufferArray.Bind();
-        Gl.DrawElements(DrawModeToBeginMode[primitiveType], indexCount, DrawElementsType.UnsignedInt, nint.Zero);
-    }
+    public IWindow? GetWindow() => CurrentWindow;
 
     /// <inheritdoc />
-    public IGraphicsApi GetApi()
+    public IContext? GetContext() => _context;
+
+    private void ShowOpenGlExtensions()
     {
-        if (_isInitialized)
+        if (_context == null || !_context.IsInitialized)
         {
-            return _graphicsApi!;
+            return;
         }
 
-        Log.LogMessageAsync("Graphics context not initialized.", LogLevel.Critical, this);
-        throw new ContextNotInitializedException($"{nameof(OpenGlDriver)} context not initialized.");
-    }
-
-    private static void ShowOpenGlExtensions()
-    {
-        // Get GL infos
-        Console.WriteLine($"OpenGL: {Gl.Version()}.{Gl.VersionMinor()}");
-        Console.WriteLine($"GLSL: {Gl.GetString(StringName.ShadingLanguageVersion)}");
-        Console.WriteLine($"GPU: {Gl.GetString(StringName.Renderer)}");
+        Console.WriteLine(_context.GetVersion());
+        Console.WriteLine(_context.GetVendor());
+        Console.WriteLine(_context.GetRenderer());
+        Console.WriteLine(_context.GetShadingLanguageVersion());
         Console.WriteLine("Extensions:");
 
-        var defaultColor = Console.ForegroundColor;
-        var extensionsOrdered = new Dictionary<string, bool>();
-
-        foreach (var ext in Gl.GetExtensions())
+        foreach (var extension in _context.GetSupportedExtension())
         {
-            var supported = Gl.IsExtensionSupported(Enum.Parse<Extension>(ext));
-            extensionsOrdered.Add(ext, supported);
-        }
-
-        foreach (var kvp in extensionsOrdered.OrderByDescending(e => e.Value))
-        {
-            Console.ForegroundColor = defaultColor;
-            Console.Write($"\t{kvp.Key} - ");
-
-            string text;
-            if (kvp.Value)
-            {
-                text = "Supported";
-                Console.ForegroundColor = ConsoleColor.Green;
-            }
-            else
-            {
-                text = "Not-Supported";
-                Console.ForegroundColor = ConsoleColor.Red;
-            }
-
-            Console.Write($"{text}\n");
+            Console.WriteLine($"\t{extension}");
         }
     }
 }

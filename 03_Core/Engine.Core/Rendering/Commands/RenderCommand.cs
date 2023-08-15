@@ -3,12 +3,12 @@ using Engine.Core.Driver.Graphics.Buffers;
 using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Driver.Graphics.Textures;
 
-namespace Engine.Rendering.Commands;
+namespace Engine.Core.Rendering.Commands;
 
 /// <summary>
 ///     Structure representing a render command
 /// </summary>
-public class RenderCommand
+public class RenderCommand : ICommand
 {
     /// <summary>
     ///     The unique id of the render command
@@ -23,7 +23,7 @@ public class RenderCommand
     /// <summary>
     ///     Gets or sets the type of the render command.
     /// </summary>
-    public required RenderCommandType Type { get; init; }
+    public required CommandType Type { get; init; }
 
     /// <summary>
     ///     Gets or sets the number of vertices in the render command.
@@ -60,6 +60,8 @@ public class RenderCommand
     /// </summary>
     public required IShader Shader { get; init; }
 
+    public ITexture[] Input { get; init; }
+
     /// <summary>
     ///     Gets or sets the base index offset for indexed rendering.
     /// </summary>
@@ -76,11 +78,12 @@ public class RenderCommand
     public RenderCommand()
     {
         Priority = 0;
-        Type = RenderCommandType.NullRenderCommand;
+        Type = CommandType.NullRenderCommand;
         VertexCount = 0;
         IndexCount = 0;
         UniformBuffers = Array.Empty<IUniformBuffer>();
         Textures = Array.Empty<ITexture>();
         PrimitiveType = PrimitiveType.Triangles;
+        Input = Array.Empty<ITexture>();
     }
 }

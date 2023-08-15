@@ -41,6 +41,27 @@ public sealed class Window : IWindow
         }
     }
 
+    /// <inheritdoc />
+    public Viewport Viewport
+    {
+        get
+        {
+            var position = _internalWindow.Position;
+            var size = _internalWindow.Size;
+            return new Viewport(position.X, position.Y, size.X, size.Y);
+        }
+        set => SetSize(value.Width, value.Height);
+    }
+
+    /// <summary>
+    ///     Default constructor
+    /// </summary>
+    /// <param name="width">width of the window</param>
+    /// <param name="height">Height of the window</param>
+    /// <param name="vSync">VSync enabled</param>
+    /// <param name="fullscreen">Fullscreen enabled</param>
+    /// <param name="resizeAble">Set if the window is resizeable</param>
+    /// <exception cref="Exception">Throws exception if window creation failed</exception>
     public Window(
         int width,
         int height,
@@ -130,6 +151,8 @@ public sealed class Window : IWindow
             Width = width,
             Height = height
         };
+
+        EventBus.Dispatch("Window.ViewportChangedEvent", _viewport);
     }
 
     /// <inheritdoc />

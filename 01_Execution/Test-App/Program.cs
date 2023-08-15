@@ -2,7 +2,6 @@
 using Engine.Assets.AssetData;
 using Engine.Assets.AssetData.ImageAsset;
 using Engine.Core.Driver;
-using Engine.Core.Driver.Graphics;
 using Engine.Core.Driver.Graphics.Buffers;
 using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Driver.Graphics.Textures;
@@ -27,17 +26,17 @@ public class TestApp
         // Create simple OpenGl window
         IDriver driver = new OpenGlDriver();
         var window = driver.CreateWindow(1280, 1024, false);
-        var api = driver.GetApi();
+        var context = driver.GetContext() ?? throw new ArgumentNullException(nameof(IContext));
 
-        driver.SetClearColor(Color.Gray);
+        context.SetClearColor(Color.Gray);
 
-        var shaderProgram = LoadShader(api);
-        var triangle = CreateTriangle(api);
+        var shaderProgram = LoadShader(context);
+        var triangle = CreateTriangle(context);
 
         var image = new ImageAsset();
         image.LoadAsset($"{BasePath}textures/grid_blue.cda");
 
-        var texture = api.CreateTexture(TextureBufferTarget.Texture2D, image.Data);
+        var texture = context.CreateTexture(TextureBufferTarget.Texture2D, image.Data);
 
         while (!window.WindowTerminated())
         {
@@ -51,7 +50,7 @@ public class TestApp
 
             texture.Bind((uint)TextureUnit.DiffuseColor);
             shaderProgram.Bind();
-            driver.DrawIndexed(triangle, PrimitiveType.Triangles, 6);
+            context.DrawIndexed(triangle, PrimitiveType.Triangles, 6);
 
             driver.Swap();
         }
@@ -62,19 +61,19 @@ public class TestApp
         driver.Close();
     }
 
-    private static IShaderProgram LoadShader(IGraphicsApi api)
+    private static IShaderProgram LoadShader(IContext context)
     {
-        var vShader = api.CreateShader(
+        var vShader = context.CreateShader(
             ShaderSourceType.Vertex,
             File.ReadAllText("vertex.glsl")
         );
 
-        var fShader = api.CreateShader(
+        var fShader = context.CreateShader(
             ShaderSourceType.Fragment,
             File.ReadAllText("fragment.glsl")
         );
 
-        var shaderProgram = api.CreateShaderProgram();
+        var shaderProgram = context.CreateShaderProgram();
         shaderProgram.AddShader(vShader);
         shaderProgram.AddShader(fShader);
         shaderProgram.Compile();
@@ -82,7 +81,7 @@ public class TestApp
         return shaderProgram;
     }
 
-    private static IBufferArray CreateTriangle(IGraphicsApi api)
+    private static IBufferArray CreateTriangle(IContext context)
     {
         var vertices = new[]
         {
@@ -110,14 +109,14 @@ public class TestApp
             3
         };
 
-        var bufferArrayObject = api.CreateBufferArray();
+        var bufferArrayObject = context.CreateBufferArray();
 
         // Vertex buffer data
         var bufferLayout = new BufferLayout();
         bufferLayout.AddElement(new BufferElement(0, "a_Position", ShaderDataType.Vector4));
         bufferLayout.AddElement(new BufferElement(1, "a_Color", ShaderDataType.Vector4));
 
-        var vbo = api.CreateBuffer(bufferLayout);
+        var vbo = context.CreateBuffer(bufferLayout);
         vbo.SetData(vertices);
 
         bufferArrayObject.AddBuffer(vbo, BufferType.Vertex);
@@ -126,7 +125,7 @@ public class TestApp
         bufferLayout = new BufferLayout();
         bufferLayout.AddElement(new BufferElement(2, "a_TexCoord", ShaderDataType.Vector2));
 
-        var uvBuffer = api.CreateBuffer(bufferLayout);
+        var uvBuffer = context.CreateBuffer(bufferLayout);
         uvBuffer.SetData(uvCoordinates);
 
         bufferArrayObject.AddBuffer(uvBuffer, BufferType.Uv);
@@ -135,7 +134,7 @@ public class TestApp
         bufferLayout = new BufferLayout();
         bufferLayout.AddElement(new BufferElement(3, "a_indices", ShaderDataType.Int));
 
-        var ibo = api.CreateIndexBuffer(bufferLayout);
+        var ibo = context.CreateIndexBuffer(bufferLayout);
         ibo.SetData(indices);
 
         bufferArrayObject.AddBuffer(ibo, BufferType.Index);

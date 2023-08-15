@@ -1,4 +1,4 @@
-﻿namespace Engine.Rendering.Renderer;
+﻿namespace Engine.Core.Rendering.Renderers;
 
 /// <summary>
 ///     Interface for all renderer implementations
