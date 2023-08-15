@@ -1,6 +1,6 @@
 ﻿using Engine.Core.Driver;
 
-namespace Engine.Core.Rendering.Commands;
+namespace Engine.Rendering.Commands;
 
 public interface ICommandHandler
 {
@@ -23,4 +23,10 @@ public interface ICommandHandler
     /// </summary>
     /// <param name="type">The type of command to register a handler for.</param>
     void UnregisterHandler(CommandType type);
+
+    /// <summary>
+    ///     Adds a rule to the command handler.
+    /// </summary>
+    /// <param name="rule">A rule to preprocess commands.</param>
+    void AddRule(Func<ICommand, bool> rule);
 }

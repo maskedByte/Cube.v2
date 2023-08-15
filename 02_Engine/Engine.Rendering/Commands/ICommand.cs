@@ -1,4 +1,4 @@
-namespace Engine.Core.Rendering.Commands;
+namespace Engine.Rendering.Commands;
 
 /// <summary>
 ///     Base interface for all commands

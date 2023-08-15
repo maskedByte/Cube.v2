@@ -3,7 +3,7 @@ using Engine.Core.Logging;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
-namespace Engine.Core.Rendering.Commands;
+namespace Engine.Rendering.Commands;
 
 /// <summary>
 ///     A group of commands that are executed in order of addition (FIFO).

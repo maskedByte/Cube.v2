@@ -1,6 +1,4 @@
-﻿using Engine.Core.Rendering.Commands;
-
-namespace Engine.Rendering.Commands.ShaderCommands;
+﻿namespace Engine.Rendering.Commands.ShaderCommands;
 
 /// <summary>
 ///     Maybe this should be replaced with an explicit command for each type of uniform, because of the type safety and

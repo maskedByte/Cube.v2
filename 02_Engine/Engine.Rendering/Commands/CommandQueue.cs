@@ -1,6 +1,4 @@
-﻿using Engine.Core.Rendering.Commands;
-
-namespace Engine.Rendering.Commands;
+﻿namespace Engine.Rendering.Commands;
 
 /// <summary>
 ///     Implementation of <see cref="ICommandQueue" />
