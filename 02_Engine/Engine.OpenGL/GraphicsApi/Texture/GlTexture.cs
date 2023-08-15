@@ -199,5 +199,7 @@ public class GlTexture : ITexture
 
         _allocated = true;
         pinned.Free();
+        Unbind();
+        Gl.BindTexture(_textureTarget, 0);
     }
 }
