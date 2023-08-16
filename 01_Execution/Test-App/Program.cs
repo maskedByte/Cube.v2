@@ -3,13 +3,10 @@ using Engine.Assets.AssetData;
 using Engine.Assets.Assets.Images;
 using Engine.Assets.Assets.Shaders;
 using Engine.Core.Driver;
-using Engine.Core.Driver.Graphics.Buffers;
 using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Driver.Graphics.Textures;
 using Engine.Core.Driver.Input;
-using Engine.Core.Math.Base;
-using Engine.Core.Math.Geometrics;
-using Engine.Core.Math.Vectors;
+using Engine.Framework.Rendering.Shapes;
 using Engine.OpenGL.Driver;
 using Engine.Rendering.Commands;
 using Engine.Rendering.Commands.RenderCommands;
@@ -41,7 +38,7 @@ public class TestApp
         context.SetClearColor(SysColor.Gray);
 
         var shaderProgram = LoadShader(context);
-        var triangle = CreateTriangle(context, Color.White);
+        var triangle = new CircleMesh(context);
 
         var image = new ImageAsset();
         image.LoadAsset($"{BasePath}textures/grid_blue.cda");
@@ -66,9 +63,9 @@ public class TestApp
         {
             new BindShaderProgramCommand(shaderProgram),
             new BindTextureCommand(texture, TextureUnit.DiffuseColor),
-            new BindBufferArrayCommand(triangle),
+            new BindBufferArrayCommand(triangle.BufferArray),
             primitiveTypeCommands[currentSetPrimitiveType],
-            new SetIndexCountCommand(6),
+            new SetIndexCountCommand(triangle.Indices.Length),
             new RenderElementCommand()
         };
 
@@ -110,7 +107,7 @@ public class TestApp
         }
 
         shaderProgram.Dispose();
-        triangle.Dispose();
+        triangle.BufferArray.Dispose();
 
         driver.Close();
     }
@@ -136,67 +133,5 @@ public class TestApp
         shaderProgram.Compile();
 
         return shaderProgram;
-    }
-
-    private static IBufferArray CreateTriangle(IContext context, Color color)
-    {
-        var vertices = new[]
-        {
-            new Vertex(new Vector3(0f, 0f, 0f), color),
-            new Vertex(new Vector3(1f, 0f, 0f), color),
-            new Vertex(new Vector3(1f, 1f, 0f), color),
-            new Vertex(new Vector3(0f, 1f, 0f), color)
-        };
-
-        var uvCoordinates = new[]
-        {
-            new Vector2(0f, 1f),
-            new Vector2(1f, 1f),
-            new Vector2(1f, 0f),
-            new Vector2(0f, 0f)
-        };
-
-        var indices = new[]
-        {
-            0,
-            1,
-            2,
-            0,
-            2,
-            3
-        };
-
-        var bufferArrayObject = context.CreateBufferArray();
-
-        // Vertex buffer data
-        var bufferLayout = new BufferLayout();
-        bufferLayout.AddElement(new BufferElement(0, "a_Position", ShaderDataType.Vector4));
-        bufferLayout.AddElement(new BufferElement(1, "a_Color", ShaderDataType.Vector4));
-
-        var vbo = context.CreateBuffer(bufferLayout);
-        vbo.SetData(vertices);
-
-        bufferArrayObject.AddBuffer(vbo, BufferType.Vertex);
-
-        // UV Buffer - 2
-        bufferLayout = new BufferLayout();
-        bufferLayout.AddElement(new BufferElement(2, "a_TexCoord", ShaderDataType.Vector2));
-
-        var uvBuffer = context.CreateBuffer(bufferLayout);
-        uvBuffer.SetData(uvCoordinates);
-
-        bufferArrayObject.AddBuffer(uvBuffer, BufferType.Uv);
-
-        // Index Buffer
-        bufferLayout = new BufferLayout();
-        bufferLayout.AddElement(new BufferElement(4, "a_indices", ShaderDataType.Int));
-
-        var ibo = context.CreateIndexBuffer(bufferLayout);
-        ibo.SetData(indices);
-
-        bufferArrayObject.AddBuffer(ibo, BufferType.Index);
-
-        bufferArrayObject.Build();
-        return bufferArrayObject;
     }
 }

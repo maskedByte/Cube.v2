@@ -6,7 +6,7 @@ namespace Engine.Rendering.Shapes;
 /// <summary>
 ///     Interface for an 3d object containing vertices, indices, uv coordinates and normals.
 /// </summary>
-public interface IMesh : IPrimitive
+public interface IMesh : IPrimitive, IEquatable<IMesh>
 {
     /// <summary>
     ///     The unique id of this mesh
