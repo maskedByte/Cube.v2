@@ -8,7 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02_Engine", "02_Engine", "{CFDC25C8-B312-4D38-9204-23502D7E0477}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02_Service", "02_Service", "{CFDC25C8-B312-4D38-9204-23502D7E0477}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test-App", "01_Execution\Test-App\Test-App.csproj", "{8F29B86E-2496-490D-BE98-3EF5F7CF5D60}"
 EndProject
