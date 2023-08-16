@@ -10,89 +10,71 @@ public sealed class CubeMesh : Mesh
     public CubeMesh(IContext context)
         : base(context)
     {
-        Vertices = new[]
+        var vertices = new List<Vertex>();
+        var indices = new List<int>();
+
+        var halfSize = 0.5f;
+
+        // Vertices
+        var cornerVertices = new[]
         {
-            new Vertex(new Vector3(0, 0, 0), Color.White), // 0 Front Side
-            new Vertex(new Vector3(0, 1, 0), Color.White), // 1 Front Side
-            new Vertex(new Vector3(1, 1, 0), Color.White), // 2 Front Side
-            new Vertex(new Vector3(1, 0, 0), Color.White), // 3 Front Side
-
-            new Vertex(new Vector3(1, 0, 0), Color.White), // 4 Right Side
-            new Vertex(new Vector3(1, 1, 0), Color.White), // 5 Right Side
-            new Vertex(new Vector3(1, 1, 1), Color.White), // 6 Right Side
-            new Vertex(new Vector3(1, 0, 1), Color.White), // 7 Right Side
-
-            new Vertex(new Vector3(0, 0, 1), Color.White), // 8 Left Side
-            new Vertex(new Vector3(0, 1, 1), Color.White), // 9 Left Side
-            new Vertex(new Vector3(0, 1, 0), Color.White), // 10 Left Side
-            new Vertex(new Vector3(0, 0, 0), Color.White), // 11 Left Side
-
-            new Vertex(new Vector3(1, 0, 1), Color.White), // 12 Back Side
-            new Vertex(new Vector3(1, 1, 1), Color.White), // 13 Back Side
-            new Vertex(new Vector3(0, 1, 1), Color.White), // 14 Back Side
-            new Vertex(new Vector3(0, 0, 1), Color.White), // 15 Back Side
-
-            new Vertex(new Vector3(0, 1, 0), Color.White), // 16 Up Side
-            new Vertex(new Vector3(0, 1, 1), Color.White), // 17 Up Side
-            new Vertex(new Vector3(1, 1, 1), Color.White), // 18 Up Side
-            new Vertex(new Vector3(1, 1, 0), Color.White), // 19 Up Side
-
-            new Vertex(new Vector3(0, 0, 1), Color.White), // 20 Down Side
-            new Vertex(new Vector3(0, 0, 0), Color.White), // 21 Down Side
-            new Vertex(new Vector3(1, 0, 0), Color.White), // 22 Down Side
-            new Vertex(new Vector3(1, 0, 1), Color.White) // 23 Down Side
+            new Vertex(new Vector3(-halfSize, -halfSize, -halfSize), Color.White),
+            new Vertex(new Vector3(-halfSize, halfSize, -halfSize), Color.White),
+            new Vertex(new Vector3(halfSize, halfSize, -halfSize), Color.White),
+            new Vertex(new Vector3(halfSize, -halfSize, -halfSize), Color.White),
+            new Vertex(new Vector3(-halfSize, -halfSize, halfSize), Color.White),
+            new Vertex(new Vector3(-halfSize, halfSize, halfSize), Color.White),
+            new Vertex(new Vector3(halfSize, halfSize, halfSize), Color.White),
+            new Vertex(new Vector3(halfSize, -halfSize, halfSize), Color.White)
         };
 
-        Indices = new[]
+        var faceVertices = new[]
         {
-            // Front
-            1,
-            2,
-            0,
-            2,
-            3,
-            0,
+            cornerVertices[0],
+            cornerVertices[1],
+            cornerVertices[2],
+            cornerVertices[3], // Front
 
-            // Right
-            4,
-            5,
-            6,
-            6,
-            7,
-            4,
+            cornerVertices[7],
+            cornerVertices[6],
+            cornerVertices[5],
+            cornerVertices[4], // Back
 
-            // Left
-            8,
-            9,
-            10,
-            10,
-            11,
-            8,
+            cornerVertices[1],
+            cornerVertices[0],
+            cornerVertices[4],
+            cornerVertices[5], // Left
 
-            // Back
-            12,
-            13,
-            14,
-            14,
-            15,
-            12,
+            cornerVertices[2],
+            cornerVertices[1],
+            cornerVertices[5],
+            cornerVertices[6], // Right
 
-            // Top
-            16,
-            17,
-            18,
-            18,
-            19,
-            16,
+            cornerVertices[3],
+            cornerVertices[2],
+            cornerVertices[6],
+            cornerVertices[7], // Top
 
-            // Bottom
-            20,
-            21,
-            22,
-            22,
-            23,
-            20
+            cornerVertices[0],
+            cornerVertices[3],
+            cornerVertices[7],
+            cornerVertices[4] // Bottom
         };
+
+        vertices.AddRange(faceVertices.Reverse()); // Reversed for CCW order
+        Vertices = vertices.ToArray();
+
+        for (var i = 0; i < faceVertices.Length; i += 4)
+        {
+            indices.Add(i);
+            indices.Add(i + 2);
+            indices.Add(i + 1);
+            indices.Add(i + 2);
+            indices.Add(i);
+            indices.Add(i + 3);
+        }
+
+        Indices = indices.ToArray();
 
         UvCoordinates = new[]
         {
