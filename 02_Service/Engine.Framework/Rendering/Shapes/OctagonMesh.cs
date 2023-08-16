@@ -10,7 +10,21 @@ public sealed class OctagonMesh : Mesh
     public OctagonMesh(IContext context)
         : base(context)
     {
+        const float offset = 0.5f;
+
         // Set UV if null
+        Vertices = new[]
+        {
+            new Vertex(new Vector3(0.25f - offset, 1.0f - offset, 0), Color.White),
+            new Vertex(new Vector3(0.0f - offset, 0.75f - offset, 0), Color.White),
+            new Vertex(new Vector3(0.0f - offset, 0.25f - offset, 0), Color.White),
+            new Vertex(new Vector3(0.25f - offset, 0.0f - offset, 0), Color.White),
+            new Vertex(new Vector3(0.75f - offset, 0.0f - offset, 0), Color.White),
+            new Vertex(new Vector3(1.0f - offset, 0.25f - offset, 0), Color.White),
+            new Vertex(new Vector3(1.0f - offset, 0.75f - offset, 0), Color.White),
+            new Vertex(new Vector3(0.75f - offset, 1.0f - offset, 0), Color.White)
+        };
+
         UvCoordinates = new[]
         {
             new Vector2(0.25f, 1.0f),
@@ -21,18 +35,6 @@ public sealed class OctagonMesh : Mesh
             new Vector2(1.0f, 0.25f),
             new Vector2(1.0f, 0.75f),
             new Vector2(0.75f, 1.0f)
-        };
-
-        Vertices = new[]
-        {
-            new Vertex(new Vector3(0.25f, 1.0f, 0), Color.White),
-            new Vertex(new Vector3(0.0f, 0.75f, 0), Color.White),
-            new Vertex(new Vector3(0.0f, 0.25f, 0), Color.White),
-            new Vertex(new Vector3(0.25f, 0.0f, 0), Color.White),
-            new Vertex(new Vector3(0.75f, 0.0f, 0), Color.White),
-            new Vertex(new Vector3(1.0f, 0.25f, 0), Color.White),
-            new Vertex(new Vector3(1.0f, 0.75f, 0), Color.White),
-            new Vertex(new Vector3(0.75f, 1.0f, 0), Color.White)
         };
 
         Indices = new[]
