@@ -24,6 +24,9 @@ public abstract class Mesh : IMesh
     public int[] Indices { get; set; } = Array.Empty<int>();
 
     /// <inheritdoc />
+    public uint IndexCount => (uint)Indices.Length;
+
+    /// <inheritdoc />
     public Vector2[] UvCoordinates { get; set; } = Array.Empty<Vector2>();
 
     /// <inheritdoc />

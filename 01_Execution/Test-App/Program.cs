@@ -38,7 +38,7 @@ public class TestApp
         context.SetClearColor(SysColor.Gray);
 
         var shaderProgram = LoadShader(context);
-        var triangle = new CircleMesh(context);
+        var triangle = new TriangleMesh(context);
 
         var image = new ImageAsset();
         image.LoadAsset($"{BasePath}textures/grid_blue.cda");
@@ -65,7 +65,7 @@ public class TestApp
             new BindTextureCommand(texture, TextureUnit.DiffuseColor),
             new BindBufferArrayCommand(triangle.BufferArray),
             primitiveTypeCommands[currentSetPrimitiveType],
-            new SetIndexCountCommand(triangle.Indices.Length),
+            new SetIndexCountCommand(triangle.IndexCount),
             new RenderElementCommand()
         };
 

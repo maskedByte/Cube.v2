@@ -24,6 +24,11 @@ public interface IMesh : IPrimitive, IEquatable<IMesh>
     int[] Indices { get; set; }
 
     /// <summary>
+    ///     Returns the number of indices
+    /// </summary>
+    uint IndexCount { get; }
+
+    /// <summary>
     ///     Define the uv coordinates for this mesh
     /// </summary>
     Vector2[] UvCoordinates { get; set; }
