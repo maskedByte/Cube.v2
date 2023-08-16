@@ -16,52 +16,33 @@ public sealed class CircleMesh : Mesh
     public CircleMesh(IContext context, int segments)
         : base(context)
     {
-        // Calculate positions
         const float radius = 0.5f;
-        var positionsList = new List<Vector3>
-        {
-            new(radius - 0.5f, radius - 0.5f, 0)
-        };
+        var positions = new Vector3[segments + 1];
 
         for (var i = 0; i < segments; i++)
         {
             var theta = 2f * (Mathf.Pi * i) / segments;
             var x = radius + radius * Mathf.Cos(theta);
             var y = radius + radius * Mathf.Sin(theta);
-            positionsList.Add(new Vector3(x - 0.5f, y - 0.5f, 0f));
+            positions[i] = new Vector3(x - 0.5f, y - 0.5f, 0f);
         }
 
-        // Set UV if null
-        segments++;
-        var positions = positionsList.ToArray();
+        positions[segments] = new Vector3(radius - 0.5f, radius - 0.5f, 0);
 
-        var uvData = new Vector3[segments + 1];
-        Array.Copy(positions, uvData, positions.Length);
+        var vertices = positions.Select(position => new Vertex(position, Color.White)).ToArray();
 
-        var vertices = new Vertex[segments + 1];
+        var triangles = new int[segments * 3];
         for (var i = 0; i < segments; i++)
         {
-            vertices[i] = new Vertex(positions[i], Color.White);
+            triangles[i * 3] = segments;
+            triangles[i * 3 + 1] = i;
+            triangles[i * 3 + 2] = (i + 1) % segments;
         }
-
-        var triangles = new List<int>();
-        int triCount;
-        for (triCount = 0; triCount < segments - 2; triCount++)
-        {
-            triangles.Add(0);
-            triangles.Add(triCount + 1);
-            triangles.Add(triCount + 2);
-        }
-
-        // Add triangle to connect last and first indices
-        triangles.Add(0);
-        triangles.Add(segments - 1);
-        triangles.Add(1);
 
         Vertices = vertices;
-        Indices = triangles.ToArray();
+        Indices = triangles;
 
-        UvCoordinates = uvData.Select(x => new Vector2(x.X + .5f, x.Y + .5f)).ToArray();
+        UvCoordinates = positions.Select(x => new Vector2(x.X + .5f, x.Y + .5f)).ToArray();
 
         Build();
     }
