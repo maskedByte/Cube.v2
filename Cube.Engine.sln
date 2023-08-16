@@ -24,7 +24,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine.OpenGL", "08_Domain\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine.Rendering", "08_Domain\Engine.Rendering\Engine.Rendering.csproj", "{8092DB9C-0A0D-4DFA-A5B9-A345A09D5AF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "02_Service\Framework\Framework.csproj", "{9E2E38C8-4F85-49BA-BFF3-A6642BD479BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine.Framework", "02_Service\Engine.Framework\Engine.Framework.csproj", "{9E2E38C8-4F85-49BA-BFF3-A6642BD479BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
