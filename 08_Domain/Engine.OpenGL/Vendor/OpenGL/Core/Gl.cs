@@ -1,6 +1,8 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
+#pragma warning disable CS8601 // Possible null reference assignment.
+
 namespace Engine.OpenGL.Vendor.OpenGL.Core;
 
 // Automatically generated from GlCore.cs using BuildGl

@@ -2,6 +2,8 @@ using System.Runtime.InteropServices;
 using System.Security;
 using SFML.System;
 
+#pragma warning disable CS8601 // Possible null reference assignment.
+
 namespace Engine.OpenGL.Vendor.SFML.Window;
 
 ////////////////////////////////////////////////////////////
@@ -59,10 +61,7 @@ internal static class Joystick
     /// <param name="joystick">Index of the joystick to check</param>
     /// <returns>True if the joystick is connected, false otherwise</returns>
     ////////////////////////////////////////////////////////////
-    public static bool IsConnected(uint joystick)
-    {
-        return sfJoystick_isConnected(joystick);
-    }
+    public static bool IsConnected(uint joystick) => sfJoystick_isConnected(joystick);
 
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -72,10 +71,7 @@ internal static class Joystick
     /// <param name="joystick">Index of the joystick</param>
     /// <returns>Number of buttons supported by the joystick</returns>
     ////////////////////////////////////////////////////////////
-    public static uint GetButtonCount(uint joystick)
-    {
-        return sfJoystick_getButtonCount(joystick);
-    }
+    public static uint GetButtonCount(uint joystick) => sfJoystick_getButtonCount(joystick);
 
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -86,10 +82,7 @@ internal static class Joystick
     /// <param name="axis">Axis to check</param>
     /// <returns>True if the joystick supports the axis, false otherwise</returns>
     ////////////////////////////////////////////////////////////
-    public static bool HasAxis(uint joystick, Axis axis)
-    {
-        return sfJoystick_hasAxis(joystick, axis);
-    }
+    public static bool HasAxis(uint joystick, Axis axis) => sfJoystick_hasAxis(joystick, axis);
 
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -100,10 +93,7 @@ internal static class Joystick
     /// <param name="button">Button to check</param>
     /// <returns>True if the button is pressed, false otherwise</returns>
     ////////////////////////////////////////////////////////////
-    public static bool IsButtonPressed(uint joystick, uint button)
-    {
-        return sfJoystick_isButtonPressed(joystick, button);
-    }
+    public static bool IsButtonPressed(uint joystick, uint button) => sfJoystick_isButtonPressed(joystick, button);
 
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -114,10 +104,7 @@ internal static class Joystick
     /// <param name="axis">Axis to check</param>
     /// <returns>Current position of the axis, in range [-100 .. 100]</returns>
     ////////////////////////////////////////////////////////////
-    public static float GetAxisPosition(uint joystick, Axis axis)
-    {
-        return sfJoystick_getAxisPosition(joystick, axis);
-    }
+    public static float GetAxisPosition(uint joystick, Axis axis) => sfJoystick_getAxisPosition(joystick, axis);
 
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -128,10 +115,7 @@ internal static class Joystick
     /// call it if you have no window yet (or no window at all):
     /// in this case the joysticks states are not updated automatically.
     ////////////////////////////////////////////////////////////
-    public static void Update()
-    {
-        sfJoystick_update();
-    }
+    public static void Update() => sfJoystick_update();
 
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -186,32 +170,25 @@ internal static class Joystick
 
     #region Imports
 
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
-    [SuppressUnmanagedCodeSecurity]
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
     private static extern bool sfJoystick_isConnected(uint joystick);
 
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
-    [SuppressUnmanagedCodeSecurity]
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
     private static extern uint sfJoystick_getButtonCount(uint joystick);
 
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
-    [SuppressUnmanagedCodeSecurity]
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
     private static extern bool sfJoystick_hasAxis(uint joystick, Axis axis);
 
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
-    [SuppressUnmanagedCodeSecurity]
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
     private static extern bool sfJoystick_isButtonPressed(uint joystick, uint button);
 
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
-    [SuppressUnmanagedCodeSecurity]
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
     private static extern float sfJoystick_getAxisPosition(uint joystick, Axis axis);
 
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
-    [SuppressUnmanagedCodeSecurity]
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
     private static extern void sfJoystick_update();
 
-    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl)]
-    [SuppressUnmanagedCodeSecurity]
+    [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
     private static extern IdentificationMarshalData sfJoystick_getIdentification(uint joystick);
 
     #endregion
