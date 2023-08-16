@@ -9,4 +9,10 @@ public class SetIndexCountCommand : CommandBase
     {
         IndexCount = indexCount;
     }
+
+    public SetIndexCountCommand(int indexCount)
+        : base(CommandType.SetIndexCount)
+    {
+        IndexCount = (uint)indexCount;
+    }
 }

@@ -29,6 +29,7 @@ public sealed class ImageAssetConverter : IAssetConverter
             srcStream.CopyTo(memoryStream);
             srcStream.Close();
 
+            Stbi.SetFlipVerticallyOnLoad(true);
             var image = Stbi.LoadFromMemory(memoryStream, 4);
 
             var fileName = Path.GetFileNameWithoutExtension(file);
