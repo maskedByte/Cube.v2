@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Engine.Assets.AssetData;
-using Engine.Assets.AssetData.ImageAsset;
+using Engine.Assets.Assets.Images;
+using Engine.Assets.Assets.Shaders;
 using Engine.Core.Driver;
 using Engine.Core.Driver.Graphics.Buffers;
 using Engine.Core.Driver.Graphics.Shaders;
@@ -29,6 +30,7 @@ public class TestApp
         // Asset compilation
         var assetCompiler = new AssetDataCompiler();
         assetCompiler.RegisterFileConverter(new ImageAssetConverter());
+        assetCompiler.RegisterFileConverter(new ShaderAssetConverter());
         assetCompiler.Compile(BasePath, null, true);
 
         // Create simple OpenGl window
@@ -115,14 +117,17 @@ public class TestApp
 
     private static IShaderProgram LoadShader(IContext context)
     {
+        var shaderAsset = new ShaderAsset();
+        shaderAsset.LoadAsset($"{BasePath}shader/default.cda");
+
         var vShader = context.CreateShader(
             ShaderSourceType.Vertex,
-            File.ReadAllText("vertex.glsl")
+            shaderAsset.Data[ShaderAssetType.Vertex]
         );
 
         var fShader = context.CreateShader(
             ShaderSourceType.Fragment,
-            File.ReadAllText("fragment.glsl")
+            shaderAsset.Data[ShaderAssetType.Fragment]
         );
 
         var shaderProgram = context.CreateShaderProgram();
@@ -184,7 +189,7 @@ public class TestApp
 
         // Index Buffer
         bufferLayout = new BufferLayout();
-        bufferLayout.AddElement(new BufferElement(3, "a_indices", ShaderDataType.Int));
+        bufferLayout.AddElement(new BufferElement(4, "a_indices", ShaderDataType.Int));
 
         var ibo = context.CreateIndexBuffer(bufferLayout);
         ibo.SetData(indices);

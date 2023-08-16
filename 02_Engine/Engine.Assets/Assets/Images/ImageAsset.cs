@@ -1,8 +1,9 @@
+using Engine.Assets.AssetData;
 using Engine.Assets.FileIO;
 using Engine.Core.Math.Base;
 using Engine.Core.Memory.Pixmap;
 
-namespace Engine.Assets.AssetData.ImageAsset;
+namespace Engine.Assets.Assets.Images;
 
 /// <summary>
 ///     Implementation of <see cref="IAsset{T}" />
@@ -19,7 +20,7 @@ public sealed class ImageAsset : IAsset<Pixmap>
     public Pixmap Data { get; private set; }
 
     /// <summary>
-    ///     Create new instance of <see cref="IAsset" />
+    ///     Create new instance of <see cref="IAsset{T}" />
     /// </summary>
     public ImageAsset()
     {

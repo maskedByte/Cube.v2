@@ -1,7 +1,8 @@
-﻿using Engine.Assets.FileIO;
+﻿using Engine.Assets.AssetData;
+using Engine.Assets.FileIO;
 using StbiSharp;
 
-namespace Engine.Assets.AssetData.ImageAsset;
+namespace Engine.Assets.Assets.Images;
 
 /// <summary>
 ///     Implementation for <see cref="IAssetConverter" /> to convert texture files
