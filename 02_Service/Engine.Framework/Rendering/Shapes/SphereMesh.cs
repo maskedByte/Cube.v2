@@ -13,9 +13,9 @@ public sealed class SphereMesh : Mesh
     public SphereMesh(IContext context, int latitudeBands = 15, int longitudeBands = 15)
         : base(context)
     {
-        // Create the vertex data for the sphere
         var vertices = new List<Vertex>();
         var uvs = new List<Vector2>();
+
         for (var lat = 0; lat <= latitudeBands; lat++)
         {
             var theta = lat * Mathf.Pi / latitudeBands;
@@ -24,17 +24,16 @@ public sealed class SphereMesh : Mesh
 
             for (var lon = 0; lon <= longitudeBands; lon++)
             {
-                var phi = (float)lon * 2 * Mathf.Pi / longitudeBands;
+                var phi = lon * 2f * Mathf.Pi / longitudeBands;
                 var sinPhi = Mathf.Sin(phi);
                 var cosPhi = Mathf.Cos(phi);
 
-                var normal = new Vector3(.5f * cosPhi * sinTheta, .5f * cosTheta, .5f * sinPhi * sinTheta);
-                vertices.Add(new Vertex(normal, Color.White));
-                uvs.Add(new Vector2((float)lon / longitudeBands, 1f - (float)lat / latitudeBands));
+                var normal = new Vector4(cosPhi * sinTheta, cosTheta, sinPhi * sinTheta, 1.0f);
+                vertices.Add(new Vertex(normal.Xyz * 0.5f, Color.White));
+                uvs.Add(new Vector2(lon / (float)longitudeBands, 1f - lat / (float)latitudeBands));
             }
         }
 
-        // Create the index data for the sphere
         var indices = new List<int>();
         for (var lat = 0; lat < latitudeBands; lat++)
         {
@@ -53,12 +52,10 @@ public sealed class SphereMesh : Mesh
             }
         }
 
-        // Set the properties of the Mesh object
         Vertices = vertices.ToArray();
         Indices = indices.ToArray();
         UvCoordinates = uvs.ToArray();
 
-        // this.Normals = vertices.Select<>(v => v.Normal).ToArray();
         Center = CalculateLeastSquaresCenter();
 
         Build();
@@ -66,18 +63,22 @@ public sealed class SphereMesh : Mesh
 
     private Vector4 CalculateAverage()
     {
-        var average = new Vector4(0);
-        average = Vertices.Aggregate(average, (current, vertex) => current + vertex.Position);
-        return average / Vertices.Length;
+        var sum = Vector4.Zero;
+        foreach (var vertex in Vertices)
+        {
+            sum += vertex.Position;
+        }
+
+        return sum / Vertices.Length;
     }
 
-    private double CalculateSquaredDistance(Vector4 vertex, Vector4 averageCenter) =>
-        Mathf.Pow(vertex.X - averageCenter.X, 2) + Mathf.Pow(vertex.Y - averageCenter.Y, 2) + Mathf.Pow(vertex.Z - averageCenter.Z, 2);
+    private float CalculateSquaredDistance(Vector4 vertex, Vector4 averageCenter) =>
+        Vector4.Dot(vertex - averageCenter, vertex - averageCenter);
 
     private Vector4 CalculateAverageOfClosestVertices(Vector4 currentCenter)
     {
-        var minSquaredDistance = double.MaxValue;
-        var closestVertex = new Vector4();
+        var minSquaredDistance = float.MaxValue;
+        var closestVertex = Vector4.Zero;
 
         foreach (var vertex in Vertices)
         {
@@ -95,7 +96,7 @@ public sealed class SphereMesh : Mesh
     private Vector3 CalculateLeastSquaresCenter()
     {
         var currentCenter = CalculateAverage();
-        var previousCenter = new Vector4(0);
+        var previousCenter = Vector4.Zero;
 
         while (currentCenter != previousCenter)
         {
@@ -105,4 +106,5 @@ public sealed class SphereMesh : Mesh
 
         return currentCenter.Xyz;
     }
+
 }
