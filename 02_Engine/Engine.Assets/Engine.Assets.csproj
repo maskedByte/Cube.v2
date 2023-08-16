@@ -8,7 +8,7 @@
 
 
     <ItemGroup>
-        <ProjectReference Include="..\..\03_Core\Engine.Core\Engine.Core.csproj"/>
+        <ProjectReference Include="..\..\09_Core\Engine.Core\Engine.Core.csproj"/>
     </ItemGroup>
 
 

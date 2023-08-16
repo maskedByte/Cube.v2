@@ -35,12 +35,12 @@ public sealed class JsonBuilder : IConfigurationBuilder
             {
                 foreach (var (subKey, subValue) in jObject)
                 {
-                    result.Add($"{key}.{subKey}", subValue.ToString());
+                    result.Add($"{key}.{subKey}", subValue?.ToString() ?? string.Empty);
                 }
             }
             else
             {
-                result.Add(key, value.ToString());
+                result.Add(key, value?.ToString() ?? string.Empty);
             }
         }
 
