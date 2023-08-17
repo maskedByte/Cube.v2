@@ -103,9 +103,37 @@ public sealed class CommandGroup : IEnumerable<ICommand>
     }
 
     /// <summary>
-    ///     Resets the current index of this group.
+    ///     Inserts a command at the specified index.
     /// </summary>
-    public void Reset() => _currentIndex = 0;
+    /// <param name="index">Index to insert at.</param>
+    /// <param name="command">The command to insert.</param>
+    public void Insert(int index, ICommand command) => _commands.Insert(index, command);
+
+    /// <summary>
+    ///     Inserts a command before another command in this group.
+    /// </summary>
+    /// <param name="command">The command to insert before.</param>
+    /// <param name="newCommand">The command to insert.</param>
+    public void InsertBefore(ICommand command, ICommand newCommand)
+    {
+        var index = _commands.IndexOf(command);
+        if (index == -1)
+        {
+            Log.LogMessageAsync($"Failed to insert command {newCommand.Id} before {command.Id} in group {Id}.", LogLevel.Error, this);
+            return;
+        }
+
+        _commands.Insert(index, newCommand);
+    }
+
+    /// <summary>
+    ///     Resets the group to its initial state and sorts the commands by priority.
+    /// </summary>
+    public void Reset()
+    {
+        _currentIndex = 0;
+        _commands.Sort((a, b) => a.Priority.CompareTo(b.Priority));
+    }
 
     /// <summary>
     ///     Releases all commands in this group.
