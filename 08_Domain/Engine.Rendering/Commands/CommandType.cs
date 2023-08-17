@@ -3,6 +3,7 @@ namespace Engine.Rendering.Commands;
 public enum CommandType
 {
     NullCommand,
+    ProcessCommand,
 
     BindShaderProgram,
     BindTexture,

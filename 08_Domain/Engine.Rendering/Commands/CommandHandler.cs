@@ -3,6 +3,7 @@ using Engine.Core.Logging;
 using Engine.Core.Math.Base;
 using Engine.Core.Math.Matrices;
 using Engine.Core.Math.Vectors;
+using Engine.Rendering.Commands.ProcessCommands;
 using Engine.Rendering.Commands.RenderCommands;
 using Engine.Rendering.Commands.ShaderCommands;
 using Engine.Rendering.Commands.TextureCommands;
@@ -15,6 +16,7 @@ public class CommandHandler : CommandHandlerBase
 {
     public CommandHandler()
     {
+        RegisterHandler(CommandType.ProcessCommand, ProcessCommandHandler);
         RegisterHandler(CommandType.BindShaderProgram, BindShaderProgramHandler);
         RegisterHandler(CommandType.BindTexture, BindTextureHandler);
         RegisterHandler(CommandType.BindBufferArray, BindBufferArrayHandler);
@@ -24,6 +26,20 @@ public class CommandHandler : CommandHandlerBase
         RegisterHandler(CommandType.SetIndexCount, SetIndexCountHandler);
         RegisterHandler(CommandType.SetShaderUniform, SetShaderUniformHandler);
         RegisterHandler(CommandType.SetUniformBufferValue, SetUniformBufferValueHandler);
+    }
+
+    private void ProcessCommandHandler(IContext context, ICommand command)
+    {
+        if (command is not ProcessCommand bindCommand)
+        {
+            return;
+        }
+
+        var resultCommand = bindCommand.CommandFunc(context);
+        if (resultCommand != null)
+        {
+            HandleCommand(context, resultCommand);
+        }
     }
 
     private void SetUniformBufferValueHandler(IContext context, ICommand command)
