@@ -10,6 +10,23 @@
     layout (location = 2) in vec2 a_TexCoord;
     layout (location = 3) in vec2 a_Normal;
 
+    layout (std140) uniform Matrices
+    {
+        mat4 m_ViewMatrix;
+        mat4 m_ProjectionMatrix;
+    };
+
+    layout (std140, binding = 1) uniform Model
+    {
+        mat4 m_ModelMatrix;
+//        vec4 v_DefaultColor;
+//        vec4 v_MaterialColor;
+    };
+
+//    layout (std140, binding = 2) uniform UVOffsets
+//    {
+//        vec2 v_UVOffset;
+//    };
 
     // Output to Fragment Shader
     out vec4 v_MaterialColorOut;
@@ -20,7 +37,7 @@
     // Main shader function
     void main()
     {
-        gl_Position =  a_Position;
+        gl_Position = m_ProjectionMatrix * m_ViewMatrix * m_ModelMatrix * a_Position;
 
         v_VertexColorOut = a_Color;
         v_TextureCoordOut = a_TexCoord;

@@ -1,4 +1,5 @@
-﻿using Engine.OpenGL.Vendor.OpenGL.Core;
+﻿using Engine.Core.Driver.Graphics.Buffers;
+using Engine.OpenGL.Vendor.OpenGL.Core;
 
 namespace Engine.OpenGL.GraphicsApi;
 
@@ -10,6 +11,8 @@ internal static class GlStateWatch
     private static readonly Dictionary<BufferTarget, uint> BoundBuffers = new();
 
     private static readonly Dictionary<(TextureTarget, uint), uint> BoundTextures = new();
+
+    private static IBufferArray? boundBufferArray;
 
     public static void BindBuffer(BufferTarget target, uint bufferId)
     {
@@ -44,6 +47,28 @@ internal static class GlStateWatch
 
         BoundBuffers[target] = 0;
         Gl.BindBuffer(target, 0);
+    }
+
+    public static void BindBufferArray(IBufferArray bufferArray)
+    {
+        if (boundBufferArray != null && boundBufferArray.GetId() == bufferArray.GetId())
+        {
+            return;
+        }
+
+        Gl.BindVertexArray(bufferArray.GetId());
+        boundBufferArray = bufferArray;
+    }
+
+    public static void UnbindBufferArray()
+    {
+        if (boundBufferArray == null)
+        {
+            return;
+        }
+
+        Gl.BindVertexArray(0);
+        boundBufferArray = null;
     }
 
     public static Dictionary<BufferTarget, uint> GetBoundBuffers() => new(BoundBuffers.Where(x => x.Value != 0).ToList());

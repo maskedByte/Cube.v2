@@ -140,7 +140,7 @@ public sealed class Transform
         LocalPosition = Vector3.Zero;
         LocalRotation = Quaternion.Identity;
         Scale = Vector3.One;
-        Origin = Scale * 0.5f;
+        Origin = Vector3.Zero;
 
         _modelMatrix = Matrix4.Identity;
 
@@ -169,7 +169,7 @@ public sealed class Transform
         : this(position)
     {
         Scale = scale;
-        Origin = scale * 0.5f;
+        Origin = Vector3.Zero;
         CalculateMatrix();
     }
 
@@ -183,7 +183,7 @@ public sealed class Transform
         : this(position, scale)
     {
         Rotation = rotation;
-        Origin = scale * 0.5f;
+        Origin = Vector3.Zero;
         CalculateMatrix();
     }
 
@@ -242,9 +242,8 @@ public sealed class Transform
 
         _modelMatrix = Matrix4.Identity;
 
+        // World transformation
         if (Parent != null)
-
-            // World transformation
         {
             _modelMatrix *= Parent.Transformation;
         }

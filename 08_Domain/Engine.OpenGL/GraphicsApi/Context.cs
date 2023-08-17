@@ -43,6 +43,7 @@ internal class Context : IContext
     private PrimitiveType PrimitiveType { get; set; } = PrimitiveType.Triangles;
     private uint IndexCount { get; set; }
     private IShaderProgram? BoundShaderProgram { get; set; }
+    private IUniformBuffer? ActiveUniformBuffer { get; set; }
 
     // ----------------------------------------
 
@@ -171,7 +172,7 @@ internal class Context : IContext
     public void BindBufferArray(IBufferArray bufferArray) => bufferArray.Bind();
 
     /// <inheritdoc />
-    public void BindUniformBuffer(IUniformBuffer uniformBuffer) => uniformBuffer.Bind();
+    public void BindUniformBuffer(IUniformBuffer uniformBuffer) => ActiveUniformBuffer = uniformBuffer;
 
     /// <inheritdoc />
     public void SetPrimitiveType(PrimitiveType primitiveType) => PrimitiveType = primitiveType;
@@ -212,6 +213,9 @@ internal class Context : IContext
     /// <inheritdoc />
     public void RenderElement() =>
         Gl.DrawElements(DrawModeToBeginMode[PrimitiveType], (int)IndexCount, DrawElementsType.UnsignedInt, nint.Zero);
+
+    /// <inheritdoc />
+    public IUniformBuffer? GetActiveUniformBuffer() => ActiveUniformBuffer;
 
     /// <inheritdoc />
     public IBufferArray CreateBufferArray() => new GlBufferArray();

@@ -9,6 +9,7 @@ public enum CommandType
     BindBufferArray,
     BindUniformBuffer,
 
+    SetUniformBufferValue,
     SetShaderUniform,
     SetPrimitiveType,
     SetIndexCount,

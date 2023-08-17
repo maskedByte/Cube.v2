@@ -33,10 +33,10 @@ internal sealed class GlBufferArray : IBufferArray
     public void AddBuffer(IBufferObject buffer, BufferType bufferType) => _bufferObjects.Add(bufferType, buffer);
 
     /// <inheritdoc />
-    public void Bind() => Gl.BindVertexArray(_vertexArrayObjectId);
+    public void Bind() => GlStateWatch.BindBufferArray(this);
 
     /// <inheritdoc />
-    public void Unbind() => Gl.BindVertexArray(0);
+    public void Unbind() => GlStateWatch.UnbindBufferArray();
 
     /// <inheritdoc />
     public void Build()

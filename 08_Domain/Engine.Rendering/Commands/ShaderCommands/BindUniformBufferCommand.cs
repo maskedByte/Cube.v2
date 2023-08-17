@@ -1,6 +1,6 @@
 ﻿using Engine.Core.Driver.Graphics.Buffers;
 
-namespace Engine.Rendering.Commands.RenderCommands;
+namespace Engine.Rendering.Commands.ShaderCommands;
 
 public sealed class BindUniformBufferCommand : CommandBase
 {

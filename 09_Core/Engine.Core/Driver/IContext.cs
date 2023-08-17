@@ -220,4 +220,10 @@ public interface IContext : IDisposable
     ///     Render a element
     /// </summary>
     void RenderElement();
+
+    /// <summary>
+    ///     Returns the active uniform buffer
+    /// </summary>
+    /// <returns>The active uniform buffer</returns>
+    IUniformBuffer? GetActiveUniformBuffer();
 }

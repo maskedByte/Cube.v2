@@ -1,9 +1,13 @@
 ﻿using Engine.Core.Driver;
+using Engine.Core.Logging;
+using Engine.Core.Math.Base;
 using Engine.Core.Math.Matrices;
 using Engine.Core.Math.Vectors;
 using Engine.Rendering.Commands.RenderCommands;
 using Engine.Rendering.Commands.ShaderCommands;
 using Engine.Rendering.Commands.TextureCommands;
+
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
 namespace Engine.Rendering.Commands;
 
@@ -19,58 +23,115 @@ public class CommandHandler : CommandHandlerBase
         RegisterHandler(CommandType.RenderElement, RenderElementHandler);
         RegisterHandler(CommandType.SetIndexCount, SetIndexCountHandler);
         RegisterHandler(CommandType.SetShaderUniform, SetShaderUniformHandler);
+        RegisterHandler(CommandType.SetUniformBufferValue, SetUniformBufferValueHandler);
+    }
+
+    private void SetUniformBufferValueHandler(IContext context, ICommand command)
+    {
+        if (command is not SetUniformBufferValueCommandBase bindCommand)
+        {
+            return;
+        }
+
+        var activeUniformBuffer = context.GetActiveUniformBuffer();
+        if (activeUniformBuffer == null)
+        {
+            Log.LogMessageAsync("No active uniform buffer bound.", LogLevel.Warning, this);
+            return;
+        }
+
+        if (bindCommand.ValueType == typeof(Vector2) && command is SetUniformBufferValueCommand<Vector2> vector2Command)
+        {
+            activeUniformBuffer.SetUniformData(vector2Command.UniformName, vector2Command.Value);
+        }
+        else if (bindCommand.ValueType == typeof(Vector3) && command is SetUniformBufferValueCommand<Vector3> vector3Command)
+        {
+            activeUniformBuffer.SetUniformData(vector3Command.UniformName, vector3Command.Value);
+        }
+        else if (bindCommand.ValueType == typeof(Vector4) && command is SetUniformBufferValueCommand<Vector4> vector4Command)
+        {
+            activeUniformBuffer.SetUniformData(vector4Command.UniformName, vector4Command.Value);
+        }
+        else if (bindCommand.ValueType == typeof(Matrix4) && command is SetUniformBufferValueCommand<Matrix4> matrix4Command)
+        {
+            activeUniformBuffer.SetUniformData(matrix4Command.UniformName, matrix4Command.Value);
+        }
+        else if (bindCommand.ValueType == typeof(int) && command is SetUniformBufferValueCommand<int> intCommand)
+        {
+            activeUniformBuffer.SetUniformData(intCommand.UniformName, intCommand.Value);
+        }
+        else if (bindCommand.ValueType == typeof(float) && command is SetUniformBufferValueCommand<float> floatCommand)
+        {
+            activeUniformBuffer.SetUniformData(floatCommand.UniformName, floatCommand.Value);
+        }
+        else if (bindCommand.ValueType == typeof(Matrix2) && command is SetUniformBufferValueCommand<Matrix2> matrix2Command)
+        {
+            activeUniformBuffer.SetUniformData(matrix2Command.UniformName, matrix2Command.Value);
+        }
+        else if (bindCommand.ValueType == typeof(Matrix3) && command is SetUniformBufferValueCommand<Matrix3> matrix3Command)
+        {
+            activeUniformBuffer.SetUniformData(matrix3Command.UniformName, matrix3Command.Value);
+        }
+        else if (bindCommand.ValueType == typeof(Color) && command is SetUniformBufferValueCommand<Color> colorCommand)
+        {
+            activeUniformBuffer.SetUniformData(colorCommand.UniformName, colorCommand.Value);
+        }
     }
 
     private void BindShaderProgramHandler(IContext context, ICommand command)
     {
         if (command is BindShaderProgramCommand bindCommand)
         {
-            bindCommand.ShaderProgram.Bind();
+            context.BindShaderProgram(bindCommand.ShaderProgram);
         }
     }
 
     private void SetShaderUniformHandler(IContext context, ICommand command)
     {
-        if (command is not SetShaderUniformCommandBase bindCommand)
+        if (command is not SetUniformValueCommandBase bindCommand)
         {
             return;
         }
 
-        if (bindCommand.ValueType == typeof(int) && command is SetShaderUniformCommand<int> intCommand)
-        {
-            context.SetShaderUniformI(intCommand.UniformName, intCommand.Value);
-        }
-        else if (bindCommand.ValueType == typeof(float) && command is SetShaderUniformCommand<float> floatCommand)
-        {
-            context.SetShaderUniformF(floatCommand.UniformName, floatCommand.Value);
-        }
-        else if (bindCommand.ValueType == typeof(float[]) && command is SetShaderUniformCommand<float[]> floatArrayCommand)
-        {
-            context.SetShaderUniformF(floatArrayCommand.UniformName, floatArrayCommand.Value);
-        }
-        else if (bindCommand.ValueType == typeof(Vector2) && command is SetShaderUniformCommand<Vector2> vector2Command)
+        if (bindCommand.ValueType == typeof(Vector2) && command is SetUniformValueCommand<Vector2> vector2Command)
         {
             context.SetShaderUniformVec2(vector2Command.UniformName, vector2Command.Value);
         }
-        else if (bindCommand.ValueType == typeof(Vector3) && command is SetShaderUniformCommand<Vector3> vector3Command)
+        else if (bindCommand.ValueType == typeof(Vector3) && command is SetUniformValueCommand<Vector3> vector3Command)
         {
             context.SetShaderUniformVec3(vector3Command.UniformName, vector3Command.Value);
         }
-        else if (bindCommand.ValueType == typeof(Vector4) && command is SetShaderUniformCommand<Vector4> vector4Command)
+        else if (bindCommand.ValueType == typeof(Vector4) && command is SetUniformValueCommand<Vector4> vector4Command)
         {
             context.SetShaderUniformVec4(vector4Command.UniformName, vector4Command.Value);
         }
-        else if (bindCommand.ValueType == typeof(Matrix2) && command is SetShaderUniformCommand<Matrix2> matrix2Command)
+        else if (bindCommand.ValueType == typeof(Matrix4) && command is SetUniformValueCommand<Matrix4> matrix4Command)
+        {
+            context.SetShaderUniformMat4(matrix4Command.UniformName, matrix4Command.Value);
+        }
+        else if (bindCommand.ValueType == typeof(int) && command is SetUniformValueCommand<int> intCommand)
+        {
+            context.SetShaderUniformI(intCommand.UniformName, intCommand.Value);
+        }
+        else if (bindCommand.ValueType == typeof(float) && command is SetUniformValueCommand<float> floatCommand)
+        {
+            context.SetShaderUniformF(floatCommand.UniformName, floatCommand.Value);
+        }
+        else if (bindCommand.ValueType == typeof(float[]) && command is SetUniformValueCommand<float[]> floatArrayCommand)
+        {
+            context.SetShaderUniformF(floatArrayCommand.UniformName, floatArrayCommand.Value);
+        }
+        else if (bindCommand.ValueType == typeof(Matrix2) && command is SetUniformValueCommand<Matrix2> matrix2Command)
         {
             context.SetShaderUniformMat2(matrix2Command.UniformName, matrix2Command.Value);
         }
-        else if (bindCommand.ValueType == typeof(Matrix3) && command is SetShaderUniformCommand<Matrix3> matrix3Command)
+        else if (bindCommand.ValueType == typeof(Matrix3) && command is SetUniformValueCommand<Matrix3> matrix3Command)
         {
             context.SetShaderUniformMat3(matrix3Command.UniformName, matrix3Command.Value);
         }
-        else if (bindCommand.ValueType == typeof(Matrix4) && command is SetShaderUniformCommand<Matrix4> matrix4Command)
+        else if (bindCommand.ValueType == typeof(Color) && command is SetUniformBufferValueCommand<Color> colorCommand)
         {
-            context.SetShaderUniformMat4(matrix4Command.UniformName, matrix4Command.Value);
+            context.SetShaderUniformVec4(colorCommand.UniformName, colorCommand.Value.ToVector4());
         }
     }
 
@@ -78,7 +139,7 @@ public class CommandHandler : CommandHandlerBase
     {
         if (command is BindTextureCommand bindCommand)
         {
-            bindCommand.Texture.Bind(bindCommand.TextureUnit);
+            context.BindTexture(bindCommand.Texture, bindCommand.TextureUnit);
         }
     }
 
@@ -86,7 +147,7 @@ public class CommandHandler : CommandHandlerBase
     {
         if (command is BindBufferArrayCommand bindCommand)
         {
-            bindCommand.BufferArray.Bind();
+            context.BindBufferArray(bindCommand.BufferArray);
         }
     }
 
@@ -94,7 +155,7 @@ public class CommandHandler : CommandHandlerBase
     {
         if (command is BindUniformBufferCommand bindCommand)
         {
-            bindCommand.UniformBuffer.Bind();
+            context.BindUniformBuffer(bindCommand.UniformBuffer);
         }
     }
 
