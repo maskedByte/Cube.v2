@@ -119,11 +119,8 @@ public class TestApp
 
         var commandHandler = new CommandHandler();
 
-        // commandHandler.AddRule(command => command is not BindTextureCommand);
-
         var renderer = new DefaultRenderer(context, commandQueue, commandHandler);
 
-        var firstFrame = false;
         while (!window.WindowTerminated())
         {
             // Prepare frame
