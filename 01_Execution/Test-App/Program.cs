@@ -13,6 +13,7 @@ using Engine.Framework.Rendering.Shapes;
 using Engine.Framework.Systems.Cameras;
 using Engine.OpenGL.Driver;
 using Engine.Rendering.Commands;
+using Engine.Rendering.Commands.ProcessCommands;
 using Engine.Rendering.Commands.RenderCommands;
 using Engine.Rendering.Commands.ShaderCommands;
 using Engine.Rendering.Commands.TextureCommands;
@@ -100,7 +101,7 @@ public class TestApp
         {
             new BindShaderProgramCommand(shaderProgram),
             new BindUniformBufferCommand(modelUniformBuffer),
-            new SetUniformBufferValueCommand<Matrix4>("m_ModelMatrix", triangleTransform.Transformation),
+            new ProcessCommand(_ => new SetUniformBufferValueCommand<Matrix4>("m_ModelMatrix", triangleTransform.Transformation)),
             new BindTextureCommand(texture, TextureUnit.DiffuseColor),
             new BindBufferArrayCommand(triangle.BufferArray),
             primitiveTypeCommands[currentSetPrimitiveType],
@@ -120,7 +121,8 @@ public class TestApp
         var commandHandler = new CommandHandler();
 
         var renderer = new DefaultRenderer(context, commandQueue, commandHandler);
-
+        var acceleration = Vector3.Zero;
+        var speed = 50f;
         while (!window.WindowTerminated())
         {
             // Prepare frame
@@ -146,6 +148,26 @@ public class TestApp
                 currentSetPrimitiveType %= primitiveTypeCommands.Length - 1;
                 triangleCommands.Replace(primitiveTypeCommands[oldSetPrimitiveType], primitiveTypeCommands[currentSetPrimitiveType]);
                 oldSetPrimitiveType = currentSetPrimitiveType;
+            }
+
+            if (Keyboard.GetKeyDown(KeyCode.Left))
+            {
+                triangleTransform.Translate(new Vector3(-speed * Time.Instance.DeltaTime, 0, 0), CoordinateSpace.Local);
+            }
+
+            if (Keyboard.GetKeyDown(KeyCode.Right))
+            {
+                triangleTransform.Translate(new Vector3(speed * Time.Instance.DeltaTime, 0, 0), CoordinateSpace.Local);
+            }
+
+            if (Keyboard.GetKeyDown(KeyCode.Up))
+            {
+                triangleTransform.Translate(new Vector3(0, speed * Time.Instance.DeltaTime, 0), CoordinateSpace.Local);
+            }
+
+            if (Keyboard.GetKeyDown(KeyCode.Down))
+            {
+                triangleTransform.Translate(new Vector3(0, -speed * Time.Instance.DeltaTime, 0), CoordinateSpace.Local);
             }
 
             // Prepare next frame
