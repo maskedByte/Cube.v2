@@ -157,7 +157,7 @@ public struct Quaternion : IEquatable<Quaternion>
             // This occurs when the angle is zero.
             // Not a problem: just set an arbitrary normalized axis.
         {
-            result.Xyz = Vector3.UnitX;
+            result.Xyz = Vector3.Right;
         }
 
         return result;

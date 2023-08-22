@@ -40,17 +40,17 @@ public struct Vector4 : IEquatable<Vector4>
     /// <summary>
     ///     Defines a unit-length Vector4 that points towards the X-axis.
     /// </summary>
-    public static readonly Vector4 UnitX = new(1, 0, 0, 0);
+    public static readonly Vector4 Right = new(1, 0, 0, 0);
 
     /// <summary>
     ///     Defines a unit-length Vector4 that points towards the Y-axis.
     /// </summary>
-    public static readonly Vector4 UnitY = new(0, 1, 0, 0);
+    public static readonly Vector4 Up = new(0, 1, 0, 0);
 
     /// <summary>
     ///     Defines a unit-length Vector4 that points towards the Z-axis.
     /// </summary>
-    public static readonly Vector4 UnitZ = new(0, 0, 1, 0);
+    public static readonly Vector4 Forward = new(0, 0, 1, 0);
 
     /// <summary>
     ///     Defines a unit-length Vector4 that points towards the W-axis.

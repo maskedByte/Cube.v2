@@ -39,7 +39,7 @@ public struct Matrix4 : IEquatable<Matrix4>
     /// <summary>
     ///     The identity matrix.
     /// </summary>
-    public static readonly Matrix4 Identity = new(Vector4.UnitX, Vector4.UnitY, Vector4.UnitZ, Vector4.UnitW);
+    public static readonly Matrix4 Identity = new(Vector4.Right, Vector4.Up, Vector4.Forward, Vector4.UnitW);
 
     /// <summary>
     ///     The zero matrix.

@@ -30,7 +30,7 @@ public struct Matrix3 : IEquatable<Matrix3>
     /// <summary>
     ///     The identity matrix.
     /// </summary>
-    public static readonly Matrix3 Identity = new(Vector3.UnitX, Vector3.UnitY, Vector3.UnitZ);
+    public static readonly Matrix3 Identity = new(Vector3.Right, Vector3.Up, Vector3.Forward);
 
     /// <summary>
     ///     The zero matrix.
