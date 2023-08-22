@@ -1,5 +1,4 @@
 // ReSharper disable NonReadonlyMemberInGetHashCode
-using Engine.Assets.AssetData;
 using Engine.Assets.FileIO;
 
 namespace Engine.Assets.Assets.Shaders;
@@ -43,6 +42,12 @@ public sealed class ShaderAsset : IAsset<Dictionary<ShaderAssetType, string>>
         LoadData(assetFile);
     }
 
+    /// <inheritdoc />
+    public void Dispose()
+    {
+        // Not needed here, because no unmanaged resources
+    }
+
     /// <summary>
     ///     Returns shader of type <see cref="ShaderAssetType" />
     /// </summary>
@@ -56,12 +61,6 @@ public sealed class ShaderAsset : IAsset<Dictionary<ShaderAssetType, string>>
     /// <param name="type">Shader type to check</param>
     /// <returns>True if a shader of <paramref name="type" /> was loaded</returns>
     public bool HasShader(ShaderAssetType type) => !string.IsNullOrEmpty(Data[type]);
-
-    /// <inheritdoc />
-    public void Dispose()
-    {
-        // Not needed here, because no unmanaged resources
-    }
 
     /// <inheritdoc />
     public override int GetHashCode() => HashCode.Combine(Data, _config.GetHashCode().ToString());

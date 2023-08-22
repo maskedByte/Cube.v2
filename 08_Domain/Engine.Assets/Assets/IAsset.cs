@@ -4,7 +4,18 @@ namespace Engine.Assets.Assets;
 ///     Provides a interface for assets data
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public interface IAsset<out T> : IDisposable, IEquatable<object>
+public interface IAsset<out T> : IAsset
+{
+    /// <summary>
+    ///     Get the data of this asset
+    /// </summary>
+    T Data { get; }
+}
+
+/// <summary>
+///     Provides a base interface for assets data
+/// </summary>
+public interface IAsset : IDisposable, IEquatable<object>
 {
     /// <summary>
     ///     Return id of this Asset
@@ -15,11 +26,6 @@ public interface IAsset<out T> : IDisposable, IEquatable<object>
     ///     Get the source asset file path
     /// </summary>
     string SourcePath { get; }
-
-    /// <summary>
-    ///     Get the data of this asset
-    /// </summary>
-    T Data { get; }
 
     /// <summary>
     ///     Load the asset from file by passing <paramref name="path" /> as parameter

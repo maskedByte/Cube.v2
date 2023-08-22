@@ -1,4 +1,3 @@
-using Engine.Assets.AssetData;
 using Engine.Assets.FileIO;
 using Engine.Core.Math.Base;
 using Engine.Core.Memory.Pixmap;

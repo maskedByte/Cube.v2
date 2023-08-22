@@ -1,17 +1,19 @@
-﻿namespace Engine.Assets.AssetData;
+﻿using Engine.Assets.Assets;
+
+namespace Engine.Assets.AssetHandling;
 
 /// <summary>
-///     Instance of <see cref="AssetDataCompiler" />, provides functionality to convert files to engine format
+///     Instance of <see cref="AssetCompiler" />, provides functionality to convert files to engine format
 /// </summary>
-public sealed class AssetDataCompiler
+public sealed class AssetCompiler
 {
     private readonly Dictionary<string, IAssetConverter> _converters;
     private IEnumerable<string> _assetFiles;
 
     /// <summary>
-    ///     Initialize new instance of <see cref="AssetDataCompiler" />
+    ///     Initialize new instance of <see cref="AssetCompiler" />
     /// </summary>
-    public AssetDataCompiler()
+    public AssetCompiler()
     {
         _assetFiles = null!;
         _converters = new Dictionary<string, IAssetConverter>();
@@ -74,6 +76,6 @@ public sealed class AssetDataCompiler
     private static IEnumerable<string> GetFilesForExtensions(string extensions, IEnumerable<string> files)
     {
         var extensionSplit = extensions.Trim().Split(';');
-        return files.Where(x => extensionSplit.Any(y => x.EndsWith(y)));
+        return files.Where(x => extensionSplit.Any(x.EndsWith));
     }
 }

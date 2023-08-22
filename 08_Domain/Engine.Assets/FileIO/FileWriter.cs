@@ -1,5 +1,5 @@
 using System.IO.Compression;
-using Engine.Assets.AssetData;
+using Engine.Assets.Assets;
 using Engine.Core.Math.Base;
 using Engine.Core.Math.Matrices;
 using Engine.Core.Math.Vectors;

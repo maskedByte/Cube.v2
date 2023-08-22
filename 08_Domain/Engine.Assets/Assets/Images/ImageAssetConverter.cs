@@ -1,5 +1,4 @@
-﻿using Engine.Assets.AssetData;
-using Engine.Assets.FileIO;
+﻿using Engine.Assets.FileIO;
 using StbiSharp;
 
 namespace Engine.Assets.Assets.Images;

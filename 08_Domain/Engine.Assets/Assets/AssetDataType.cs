@@ -1,4 +1,4 @@
-namespace Engine.Assets.AssetData;
+namespace Engine.Assets.Assets;
 
 /// <summary>
 ///     Type of intern data structure type

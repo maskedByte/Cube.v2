@@ -1,9 +1,9 @@
 using System.Data;
 using System.IO.Compression;
-using System.Numerics;
-using Engine.Assets.AssetData;
+using Engine.Assets.Assets;
 using Engine.Core.Math.Base;
 using Engine.Core.Math.Matrices;
+using Engine.Core.Math.Vectors;
 
 namespace Engine.Assets.FileIO;
 
