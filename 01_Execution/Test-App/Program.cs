@@ -44,7 +44,7 @@ public class TestApp
         var triangleTransform = new Transform();
 
         //triangleTransform.Scale = new Vector3(512, 512, 1);
-        triangleTransform.Position = new Vector3(0, 0, 5);
+        triangleTransform.Position = new Vector3(0, 0, -5);
 
         var image = new ImageAsset();
         image.LoadAsset($"{BasePath}textures/grid_blue.cda");
@@ -53,6 +53,7 @@ public class TestApp
 
         var camera = new Camera(driver);
         camera.SetClipPlane(0.001f, 1000);
+        camera.ClearColor = SysColor.Gray;
 
         var cameraUniformBuffer = context.CreateUniformBuffer(
             "Matrices",
