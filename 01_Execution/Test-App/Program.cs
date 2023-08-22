@@ -42,17 +42,18 @@ public class TestApp
         context.SetClearColor(SysColor.Gray);
 
         var shaderProgram = LoadShader(context);
-        var triangle = new QuadMesh(context);
+        var triangle = new CubeMesh(context);
         var triangleTransform = new Transform();
-        triangleTransform.Scale = new Vector3(512, 512, 1);
-        triangleTransform.Position = new Vector3(0, 0, 0);
+
+        //triangleTransform.Scale = new Vector3(512, 512, 1);
+        triangleTransform.Position = new Vector3(0, 0, 5);
 
         var image = new ImageAsset();
         image.LoadAsset($"{BasePath}textures/grid_blue.cda");
 
         var texture = context.CreateTexture(TextureBufferTarget.Texture2D, image.Data);
 
-        var camera = new Camera(driver.GetWindow());
+        var camera = new Camera(driver.GetWindow()!);
         camera.SetClipPlane(0.001f, 1000);
 
         var cameraUniformBuffer = context.CreateUniformBuffer(
@@ -111,7 +112,7 @@ public class TestApp
 
         var perspectiveUpdateCommands = new CommandGroup
         {
-            new SetUniformValueCommand<Matrix4>("m_ViewMatrix", camera.ViewMatrix),
+            new SetUniformValueCommand<Matrix4>("m_ViewMatrix", camera.ViewMatrix), // For Perspective
             new SetUniformValueCommand<Matrix4>("m_ProjectionMatrix", camera.GetProjection(ProjectionMode.Perspective))
         };
 
@@ -121,13 +122,13 @@ public class TestApp
         var commandHandler = new CommandHandler();
 
         var renderer = new DefaultRenderer(context, commandQueue, commandHandler);
-        var acceleration = Vector3.Zero;
-        var speed = 50f;
+        const float speed = 5f;
         while (!window.WindowTerminated())
         {
             // Prepare frame
-            cameraUniformBuffer.SetUniformData("m_ViewMatrix", camera.Transform.Transformation);
-            cameraUniformBuffer.SetUniformData("m_ProjectionMatrix", camera.GetProjection(ProjectionMode.Orthographic));
+            //cameraUniformBuffer.SetUniformData("m_ViewMatrix", camera.Transform.Transformation); // For Orthographic
+            cameraUniformBuffer.SetUniformData("m_ViewMatrix", camera.ViewMatrix);
+            cameraUniformBuffer.SetUniformData("m_ProjectionMatrix", camera.GetProjection(ProjectionMode.Perspective));
 
             // Render frame
             driver.Clear();
@@ -142,7 +143,7 @@ public class TestApp
                 window.Terminate();
             }
 
-            if (Keyboard.GetKey(KeyCode.Q))
+            if (Keyboard.GetKey(KeyCode.W))
             {
                 currentSetPrimitiveType++;
                 currentSetPrimitiveType %= primitiveTypeCommands.Length - 1;
@@ -152,22 +153,32 @@ public class TestApp
 
             if (Keyboard.GetKeyDown(KeyCode.Left))
             {
-                triangleTransform.Translate(new Vector3(-speed * Time.Instance.DeltaTime, 0, 0), CoordinateSpace.Local);
+                triangleTransform.Translate(-Vector3.Right * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
             }
 
             if (Keyboard.GetKeyDown(KeyCode.Right))
             {
-                triangleTransform.Translate(new Vector3(speed * Time.Instance.DeltaTime, 0, 0), CoordinateSpace.Local);
+                triangleTransform.Translate(Vector3.Right * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
             }
 
             if (Keyboard.GetKeyDown(KeyCode.Up))
             {
-                triangleTransform.Translate(new Vector3(0, speed * Time.Instance.DeltaTime, 0), CoordinateSpace.Local);
+                triangleTransform.Translate(Vector3.Up * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
             }
 
             if (Keyboard.GetKeyDown(KeyCode.Down))
             {
-                triangleTransform.Translate(new Vector3(0, -speed * Time.Instance.DeltaTime, 0), CoordinateSpace.Local);
+                triangleTransform.Translate(-Vector3.Up * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
+            }
+
+            if (Keyboard.GetKeyDown(KeyCode.Q))
+            {
+                triangleTransform.Translate(Vector3.Forward * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
+            }
+
+            if (Keyboard.GetKeyDown(KeyCode.E))
+            {
+                triangleTransform.Translate(-Vector3.Forward * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
             }
 
             // Prepare next frame
@@ -175,6 +186,8 @@ public class TestApp
             commandQueue.Enqueue(triangleCommands);
         }
 
+        modelUniformBuffer.Dispose();
+        cameraUniformBuffer.Dispose();
         shaderProgram.Dispose();
         triangle.BufferArray.Dispose();
 
