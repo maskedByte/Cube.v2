@@ -1,21 +1,25 @@
-﻿using Engine.Core.Driver.Window;
+﻿using Engine.Core.Driver;
 using Engine.Core.Events;
+using Engine.Core.Logging;
 using Engine.Core.Math;
 using Engine.Core.Math.Base;
 using Engine.Core.Math.Matrices;
 using Engine.Core.Math.Vectors;
 
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+
 namespace Engine.Framework.Systems.Cameras;
 
 public class Camera : ICamera
 {
-    private float _aspectRatio;
+    private readonly IDriver _driver;
     private Viewport _currentViewport;
-    private Matrix4 _orthoProjMat;
-    private Matrix4 _perspectiveProjMat;
+    private Matrix4 _orthographicProjectionMatrix;
+    private Matrix4 _perspectiveProjectionMatrix;
 
     private bool _recalculateProjection;
     private Matrix4 _viewMatrix;
+    private Color _clearColor;
 
     /// <inheritdoc />
     public Matrix4 ViewMatrix
@@ -28,16 +32,38 @@ public class Camera : ICamera
     }
 
     /// <inheritdoc />
+    public Matrix4 PerspectiveMatrix
+    {
+        get
+        {
+            CalculateProjections();
+            return _perspectiveProjectionMatrix;
+        }
+    }
+
+    /// <inheritdoc />
+    public Matrix4 OrthographicMatrix
+    {
+        get
+        {
+            CalculateProjections();
+            return _orthographicProjectionMatrix;
+        }
+    }
+
+    /// <inheritdoc />
+    public Color ClearColor
+    {
+        get => _clearColor;
+        set
+        {
+            _clearColor = value;
+            _driver.GetContext()?.SetClearColor(_clearColor);
+        }
+    }
+
+    /// <inheritdoc />
     public Transform Transform { get; set; }
-
-    /// <inheritdoc />
-    public Vector3 Up { get; set; }
-
-    /// <inheritdoc />
-    public Vector3 Right { get; set; }
-
-    /// <inheritdoc />
-    public Vector3 Forward { get; set; }
 
     /// <inheritdoc />
     public float NearClip { get; private set; }
@@ -48,32 +74,38 @@ public class Camera : ICamera
     /// <summary>
     ///     Initialize a new Camera
     /// </summary>
-    public Camera(IWindow window)
+    public Camera(IDriver driver)
     {
+        ArgumentNullException.ThrowIfNull(driver);
+        _driver = driver;
+
+        if (_driver.GetContext() == null)
+        {
+            Log.LogMessageAsync("Context was not found, cannot create camera!", LogLevel.Critical, this);
+            throw new Exception();
+        }
+
+        if (_driver.GetWindow() == null)
+        {
+            Log.LogMessageAsync("No window found, cannot create camera!", LogLevel.Critical, this);
+            throw new Exception();
+        }
+
         EventBus.Subscribe("ViewportChangedEvent", this);
-        _currentViewport = window.Viewport;
+        _currentViewport = _driver.GetWindow()!.Viewport;
 
         _recalculateProjection = true;
-        _aspectRatio = 1f;
-        _orthoProjMat = Matrix4.Identity;
-        _perspectiveProjMat = Matrix4.Identity;
+        _orthographicProjectionMatrix = Matrix4.Identity;
+        _perspectiveProjectionMatrix = Matrix4.Identity;
         NearClip = 0.001f;
         FarClip = 1000f;
+        _clearColor = Color.Black;
+        ClearColor = Color.Black;
 
-        Forward = Vector3.UnitZ;
-        Right = Vector3.UnitX;
-        Up = Vector3.UnitY;
-
-        Transform = new Transform();
-        Transform.AutoRecalculate = false;
-
-        _viewMatrix = Matrix4.LookAt(
-            Transform.Position,
-            Transform.Position + Forward,
-            Up
-        );
-
-        CalculateProjections();
+        Transform = new Transform
+        {
+            AutoRecalculate = false
+        };
     }
 
     /// <inheritdoc />
@@ -84,13 +116,17 @@ public class Camera : ICamera
     }
 
     /// <inheritdoc />
-    public Matrix4 GetProjection(ProjectionMode projectionMode) =>
-        projectionMode switch
+    public Matrix4 GetProjection(ProjectionMode projectionMode)
+    {
+        CalculateProjections();
+
+        return projectionMode switch
         {
-            ProjectionMode.Orthographic => _orthoProjMat,
-            ProjectionMode.Perspective  => _perspectiveProjMat,
+            ProjectionMode.Orthographic => OrthographicMatrix,
+            ProjectionMode.Perspective  => PerspectiveMatrix,
             _                           => throw new ArgumentOutOfRangeException(nameof(projectionMode), projectionMode, null)
         };
+    }
 
     /// <inheritdoc />
     public void ReceiveEvent<T>(T data)
@@ -113,37 +149,46 @@ public class Camera : ICamera
             return;
         }
 
-        _aspectRatio = _currentViewport.Width / _currentViewport.Height;
-
         // Rotate the projection matrix to invert the Y axis
-        var reflectionMatrix = Matrix4.Identity;
-        reflectionMatrix.M22 = -1f;
+        _orthographicProjectionMatrix = Matrix4.CreateOrthographic(
+            0f,
+            _currentViewport.Width,
+            _currentViewport.Height,
+            0f,
+            -int.MaxValue,
+            int.MaxValue
+        );
+        _orthographicProjectionMatrix.M22 *= -1f;
 
-        _orthoProjMat = reflectionMatrix
-                        * Matrix4.CreateOrthographic(
-                            0f,
-                            _currentViewport.Width,
-                            _currentViewport.Height,
-                            0f,
-                            -int.MaxValue,
-                            int.MaxValue
-                        );
-
-        _perspectiveProjMat = Matrix4.CreatePerspectiveFieldOfView(
+        // ReSharper disable once PossibleLossOfFraction
+        _perspectiveProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(
             Mathf.DegreesToRadians(50.0f),
-            _aspectRatio,
+            _currentViewport.Width / _currentViewport.Height,
             NearClip,
             FarClip
         );
-        _perspectiveProjMat.M11 *= -1;
+
+        //_perspectiveProjectionMatrix.M11 *= -1;
 
         _recalculateProjection = false;
     }
 
-    private void CalculateViewMatrix() =>
-        _viewMatrix = Matrix4.LookAt(
-            Transform.Position,
-            Transform.Position + Forward,
-            Up
-        );
+    private void CalculateViewMatrix()
+    {
+        // Ensure the Transform matrix is up to date
+        _ = Transform.Transformation;
+
+        // Extract position and rotation from the Transform
+        var position = Transform.Position;
+        var rotation = Transform.Rotation;
+
+        // Calculate the "forward" direction of the camera using its rotation
+        var forward = Vector3.Transform(-Vector3.Forward, rotation);
+
+        // Calculate the "up" direction of the camera using its rotation
+        var up = Vector3.Transform(Vector3.Up, rotation);
+
+        // Create the view matrix using LookAt
+        _viewMatrix = Matrix4.LookAt(position, position + forward, up);
+    }
 }

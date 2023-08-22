@@ -39,8 +39,6 @@ public class TestApp
         var window = driver.CreateWindow(1280, 1024, false);
         var context = driver.GetContext() ?? throw new ArgumentNullException(nameof(IContext));
 
-        context.SetClearColor(SysColor.Gray);
-
         var shaderProgram = LoadShader(context);
         var triangle = new CubeMesh(context);
         var triangleTransform = new Transform();
@@ -53,7 +51,7 @@ public class TestApp
 
         var texture = context.CreateTexture(TextureBufferTarget.Texture2D, image.Data);
 
-        var camera = new Camera(driver.GetWindow()!);
+        var camera = new Camera(driver);
         camera.SetClipPlane(0.001f, 1000);
 
         var cameraUniformBuffer = context.CreateUniformBuffer(
@@ -153,32 +151,32 @@ public class TestApp
 
             if (Keyboard.GetKeyDown(KeyCode.Left))
             {
-                triangleTransform.Translate(-Vector3.Right * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
+                camera.Transform.Translate(-Vector3.Right * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
             }
 
             if (Keyboard.GetKeyDown(KeyCode.Right))
             {
-                triangleTransform.Translate(Vector3.Right * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
+                camera.Transform.Translate(Vector3.Right * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
             }
 
             if (Keyboard.GetKeyDown(KeyCode.Up))
             {
-                triangleTransform.Translate(Vector3.Up * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
+                camera.Transform.Translate(Vector3.Up * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
             }
 
             if (Keyboard.GetKeyDown(KeyCode.Down))
             {
-                triangleTransform.Translate(-Vector3.Up * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
+                camera.Transform.Translate(-Vector3.Up * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
             }
 
             if (Keyboard.GetKeyDown(KeyCode.Q))
             {
-                triangleTransform.Translate(Vector3.Forward * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
+                camera.Transform.Translate(-Vector3.Forward * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
             }
 
             if (Keyboard.GetKeyDown(KeyCode.E))
             {
-                triangleTransform.Translate(-Vector3.Forward * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
+                camera.Transform.Translate(Vector3.Forward * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
             }
 
             // Prepare next frame

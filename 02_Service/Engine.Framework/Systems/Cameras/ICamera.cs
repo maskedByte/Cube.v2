@@ -1,7 +1,6 @@
 using Engine.Core.Events;
 using Engine.Core.Math.Base;
 using Engine.Core.Math.Matrices;
-using Engine.Core.Math.Vectors;
 
 namespace Engine.Framework.Systems.Cameras;
 
@@ -21,21 +20,6 @@ public interface ICamera : IEventSubscriber
     Transform Transform { get; set; }
 
     /// <summary>
-    ///     Set or get camera Up vector
-    /// </summary>
-    Vector3 Up { get; set; }
-
-    /// <summary>
-    ///     Set or get camera Right vector
-    /// </summary>
-    Vector3 Right { get; set; }
-
-    /// <summary>
-    ///     Set or get camera Forward vector
-    /// </summary>
-    Vector3 Forward { get; set; }
-
-    /// <summary>
     ///     Get the actual near clip plane, for 3D camera only
     /// </summary>
     float NearClip { get; }
@@ -44,6 +28,21 @@ public interface ICamera : IEventSubscriber
     ///     Get the actual far clip plane, for 3D camera only
     /// </summary>
     float FarClip { get; }
+
+    /// <summary>
+    /// Get the perspective projection matrix
+    /// </summary>
+    public Matrix4 PerspectiveMatrix { get; }
+
+    /// <summary>
+    /// Get the orthographic projection matrix
+    /// </summary>
+    public Matrix4 OrthographicMatrix { get; }
+
+    /// <summary>
+    /// Get or set the clear color
+    /// </summary>
+    public Color ClearColor { get; set; }
 
     /// <summary>
     ///     Set the near and far clip planes
