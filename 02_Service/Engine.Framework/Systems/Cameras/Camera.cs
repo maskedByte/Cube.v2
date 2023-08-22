@@ -178,17 +178,12 @@ public class Camera : ICamera
         // Ensure the Transform matrix is up to date
         _ = Transform.Transformation;
 
-        // Extract position and rotation from the Transform
         var position = Transform.Position;
         var rotation = Transform.Rotation;
 
-        // Calculate the "forward" direction of the camera using its rotation
         var forward = Vector3.Transform(-Vector3.Forward, rotation);
-
-        // Calculate the "up" direction of the camera using its rotation
         var up = Vector3.Transform(Vector3.Up, rotation);
 
-        // Create the view matrix using LookAt
         _viewMatrix = Matrix4.LookAt(position, position + forward, up);
     }
 }
