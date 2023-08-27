@@ -14,7 +14,7 @@ public interface IComponentOwner
     ///     Adds a component of the specified type to the owner.
     /// </summary>
     /// <typeparam name="T">Type of the component.</typeparam>
-    void AddComponent<T>() where T : IComponent;
+    IComponent AddComponent<T>() where T : IComponent;
 
     /// <summary>
     ///     Removes a component of the specified type from the owner.

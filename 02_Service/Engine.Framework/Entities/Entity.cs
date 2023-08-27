@@ -68,7 +68,6 @@ public class Entity : IEntity
 
         Parent = parent;
         Parent?.Children.Add(this);
-
     }
 
     /// <inheritdoc />
@@ -87,16 +86,17 @@ public class Entity : IEntity
     }
 
     /// <inheritdoc />
-    public void AddComponent<T>() where T : IComponent
+    public IComponent AddComponent<T>() where T : IComponent
     {
-        if (Components.ContainsKey(typeof(T)))
+        if (Components.TryGetValue(typeof(T), out var value))
         {
-            return;
+            return value;
         }
 
         var component = Activator.CreateInstance<T>();
         Components.Add(typeof(T), component);
         component.Owner = this;
+        return component;
     }
 
     /// <inheritdoc />

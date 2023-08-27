@@ -20,7 +20,7 @@ public sealed class CameraComponent : IComponent
     public ProjectionMode ProjectionMode { get; set; }
 
     /// <summary>
-    ///     Set or gets the near clip plane.
+    ///     Gets or sets the near clip plane.
     /// </summary>
     public float NearClip
     {
@@ -33,7 +33,7 @@ public sealed class CameraComponent : IComponent
     }
 
     /// <summary>
-    ///     Set or gets the far clip plane.
+    ///     Gets or sets the far clip plane.
     /// </summary>
     public float FarClip
     {
@@ -46,12 +46,21 @@ public sealed class CameraComponent : IComponent
     }
 
     /// <summary>
-    ///     Set or gets the clear color.
+    ///     Gets or sets the clear color.
     /// </summary>
     public Color ClearColor
     {
         get => Camera!.ClearColor;
         set => Camera!.ClearColor = value;
+    }
+
+    /// <summary>
+    ///     Gets or sets the field of view.
+    /// </summary>
+    public float FieldOfView
+    {
+        get => Camera!.FieldOfView;
+        set => Camera!.FieldOfView = value;
     }
 
     public IEntity Owner
