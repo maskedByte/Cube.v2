@@ -10,7 +10,7 @@ using Engine.Core.Math.Vectors;
 
 namespace Engine.Framework.Rendering.Cameras;
 
-public class Camera : ICamera
+internal class Camera : ICamera
 {
     private readonly IDriver _driver;
     private Color _clearColor;
@@ -61,6 +61,8 @@ public class Camera : ICamera
             _driver.GetContext()?.SetClearColor(_clearColor);
         }
     }
+
+    public float FieldOfView { get; set; }
 
     /// <inheritdoc />
     public Transform Transform { get; set; }
@@ -149,7 +151,6 @@ public class Camera : ICamera
             return;
         }
 
-        // Rotate the projection matrix to invert the Y axis
         _orthographicProjectionMatrix = Matrix4.CreateOrthographic(
             0f,
             _currentViewport.Width,
@@ -162,17 +163,19 @@ public class Camera : ICamera
 
         // ReSharper disable once PossibleLossOfFraction
         _perspectiveProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(
-            Mathf.DegreesToRadians(50.0f),
+            Mathf.DegreesToRadians(FieldOfView),
             _currentViewport.Width / _currentViewport.Height,
             NearClip,
             FarClip
         );
 
-        //_perspectiveProjectionMatrix.M11 *= -1;
-
         _recalculateProjection = false;
     }
 
+    /// <summary>
+    ///     Calculates the view matrix for the camera based on the current position and rotation by calculating the forward and
+    ///     up vectors.
+    /// </summary>
     private void CalculateViewMatrix()
     {
         // Ensure the Transform matrix is up to date

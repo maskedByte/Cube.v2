@@ -44,6 +44,7 @@ internal class Context : IContext
     private uint IndexCount { get; set; }
     private IShaderProgram? BoundShaderProgram { get; set; }
     private IUniformBuffer? ActiveUniformBuffer { get; set; }
+    private IList<IUniformBuffer> UniformBuffers { get; } = new List<IUniformBuffer>();
 
     // ----------------------------------------
 
@@ -172,7 +173,16 @@ internal class Context : IContext
     public void BindBufferArray(IBufferArray bufferArray) => bufferArray.Bind();
 
     /// <inheritdoc />
-    public void BindUniformBuffer(IUniformBuffer uniformBuffer) => ActiveUniformBuffer = uniformBuffer;
+    public void BindUniformBuffer(IUniformBuffer uniformBuffer)
+    {
+        if (BoundShaderProgram == null)
+        {
+            throw new InvalidOperationException("No shader program bound.");
+        }
+
+        uniformBuffer.Attach(BoundShaderProgram);
+        ActiveUniformBuffer = uniformBuffer;
+    }
 
     /// <inheritdoc />
     public void SetPrimitiveType(PrimitiveType primitiveType) => PrimitiveType = primitiveType;
@@ -215,6 +225,9 @@ internal class Context : IContext
         Gl.DrawElements(DrawModeToBeginMode[PrimitiveType], (int)IndexCount, DrawElementsType.UnsignedInt, nint.Zero);
 
     /// <inheritdoc />
+    public void RegisterUniformBuffer(IUniformBuffer uniformBuffer) => UniformBuffers.Add(uniformBuffer);
+
+    /// <inheritdoc />
     public IUniformBuffer? GetActiveUniformBuffer() => ActiveUniformBuffer;
 
     /// <inheritdoc />
@@ -254,5 +267,7 @@ internal class Context : IContext
         // Release state
         BoundShaderProgram?.Dispose();
         ActiveUniformBuffer?.Dispose();
+
+        GC.SuppressFinalize(this);
     }
 }

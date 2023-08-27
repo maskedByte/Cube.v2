@@ -16,16 +16,16 @@ public class CommandHandler : CommandHandlerBase
 {
     public CommandHandler()
     {
-        RegisterHandler(CommandType.ProcessCommand, ProcessCommandHandler);
-        RegisterHandler(CommandType.BindShaderProgram, BindShaderProgramHandler);
-        RegisterHandler(CommandType.BindTexture, BindTextureHandler);
-        RegisterHandler(CommandType.BindBufferArray, BindBufferArrayHandler);
-        RegisterHandler(CommandType.BindUniformBuffer, BindUniformBufferHandler);
-        RegisterHandler(CommandType.SetPrimitiveType, SetPrimitiveTypeHandler);
-        RegisterHandler(CommandType.RenderElement, RenderElementHandler);
-        RegisterHandler(CommandType.SetIndexCount, SetIndexCountHandler);
-        RegisterHandler(CommandType.SetShaderUniform, SetShaderUniformHandler);
-        RegisterHandler(CommandType.SetUniformBufferValue, SetUniformBufferValueHandler);
+        RegisterCommandTypeHandler(CommandType.ProcessCommand, ProcessCommandHandler);
+        RegisterCommandTypeHandler(CommandType.BindShaderProgram, BindShaderProgramHandler);
+        RegisterCommandTypeHandler(CommandType.BindTexture, BindTextureHandler);
+        RegisterCommandTypeHandler(CommandType.BindBufferArray, BindBufferArrayHandler);
+        RegisterCommandTypeHandler(CommandType.BindUniformBuffer, BindUniformBufferHandler);
+        RegisterCommandTypeHandler(CommandType.SetPrimitiveType, SetPrimitiveTypeHandler);
+        RegisterCommandTypeHandler(CommandType.RenderElement, RenderElementHandler);
+        RegisterCommandTypeHandler(CommandType.SetIndexCount, SetIndexCountHandler);
+        RegisterCommandTypeHandler(CommandType.SetShaderUniform, SetShaderUniformHandler);
+        RegisterCommandTypeHandler(CommandType.SetUniformBufferValue, SetUniformBufferValueHandler);
     }
 
     private void ProcessCommandHandler(IContext context, ICommand command)
@@ -38,7 +38,7 @@ public class CommandHandler : CommandHandlerBase
         var resultCommand = bindCommand.CommandFunc(context);
         if (resultCommand != null)
         {
-            HandleCommand(context, resultCommand);
+            Handle(context, resultCommand);
         }
     }
 

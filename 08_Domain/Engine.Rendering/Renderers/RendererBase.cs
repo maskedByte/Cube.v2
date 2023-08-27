@@ -21,19 +21,15 @@ public abstract class RendererBase : IRenderer
     /// </summary>
     public void Render()
     {
-        BeginRender();
-
-        while (true)
+        if (!CommandQueue.IsReady)
         {
-            if (!CommandQueue.TryDequeue(out var commandGroup) && commandGroup == null)
-            {
-                break;
-            }
+            return;
+        }
 
-            while (commandGroup!.TryGetNext(out var command, out var commandType))
-            {
-                CommandHandler.HandleCommand(Context, command);
-            }
+        BeginRender();
+        while (CommandQueue.TryDequeue(out var command))
+        {
+            CommandHandler.Handle(Context, command!);
         }
 
         EndRender();

@@ -3,9 +3,9 @@ using Engine.Rendering.Commands;
 
 namespace Engine.Rendering.Renderers;
 
-public class DefaultRenderer : RendererBase
+public class ForwardRenderer : RendererBase
 {
-    public DefaultRenderer(IContext context, ICommandQueue commandQueue, ICommandHandler commandHandler)
+    public ForwardRenderer(IContext context, ICommandQueue commandQueue, ICommandHandler commandHandler)
         : base(context, commandQueue, commandHandler)
     {
     }

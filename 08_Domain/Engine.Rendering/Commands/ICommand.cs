@@ -13,7 +13,7 @@ public interface ICommand
     /// <summary>
     ///     The priority of the command
     /// </summary>
-    int Priority { get; }
+    uint Priority { get; }
 
     /// <summary>
     ///     Gets or sets the type of the render command.

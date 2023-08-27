@@ -1,5 +1,5 @@
 ﻿using Engine.Core.Math.Base;
-using Engine.Framework.Worlds;
+using Engine.Framework.Rendering.Worlds;
 
 namespace Engine.Framework.Entities;
 

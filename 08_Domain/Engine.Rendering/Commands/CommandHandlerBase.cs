@@ -20,7 +20,7 @@ public abstract class CommandHandlerBase : ICommandHandler
     }
 
     /// <inheritdoc />
-    public void HandleCommand(IContext context, ICommand command)
+    public void Handle(IContext context, ICommand command)
     {
         if (_commandHandlers.TryGetValue(command.Type, out var handler))
         {
@@ -39,8 +39,14 @@ public abstract class CommandHandlerBase : ICommandHandler
     public void AddRule(Func<ICommand, bool> rule) => _commandRules.Add(rule);
 
     /// <inheritdoc />
-    public void RegisterHandler(CommandType type, Action<IContext, ICommand> handler) => _commandHandlers[type] = handler;
+    public void RegisterCommandTypeHandler(CommandType type, Action<IContext, ICommand> handler) => _commandHandlers[type] = handler;
 
     /// <inheritdoc />
-    public void UnregisterHandler(CommandType type) => _commandHandlers.Remove(type);
+    public void UnregisterCommandTypeHandler(CommandType type) => _commandHandlers.Remove(type);
+
+    public void Dispose()
+    {
+        _commandHandlers.Clear();
+        _commandRules.Clear();
+    }
 }

@@ -1,23 +1,13 @@
-﻿using Engine.Assets.AssetData;
-using Engine.Assets.Assets.Images;
-using Engine.Assets.Assets.Shaders;
+﻿using Engine.Assets.Assets.Shaders;
 using Engine.Core.Driver;
-using Engine.Core.Driver.Graphics.Buffers;
 using Engine.Core.Driver.Graphics.Shaders;
-using Engine.Core.Driver.Graphics.Textures;
 using Engine.Core.Driver.Input;
 using Engine.Core.Math.Base;
-using Engine.Core.Math.Matrices;
 using Engine.Core.Math.Vectors;
-using Engine.Framework.Rendering.Shapes;
-using Engine.Framework.Systems.Cameras;
-using Engine.OpenGL.Driver;
-using Engine.Rendering.Commands;
-using Engine.Rendering.Commands.ProcessCommands;
-using Engine.Rendering.Commands.RenderCommands;
-using Engine.Rendering.Commands.ShaderCommands;
-using Engine.Rendering.Commands.TextureCommands;
-using Engine.Rendering.Renderers;
+using Engine.Framework.Components;
+using Engine.Framework.Entities;
+using Engine.Framework.Rendering;
+using Engine.Framework.Rendering.Worlds;
 using SysColor = System.Drawing.Color;
 
 namespace Test_App;
@@ -28,169 +18,226 @@ public class TestApp
 
     public static void Main()
     {
-        // Asset compilation
-        var assetCompiler = new AssetDataCompiler();
-        assetCompiler.RegisterFileConverter(new ImageAssetConverter());
-        assetCompiler.RegisterFileConverter(new ShaderAssetConverter());
-        assetCompiler.Compile(BasePath, null, true);
+        // New way to go
+        var core = new EngineCore(BasePath);
+        var driver = core.CreateDriver(DriverType.OpenGl);
+        var window = driver.CreateWindow($"Cube.Engine v2 - Testing - {core.ActiveDriver.GetType().Name}", 1280, 1024, false);
 
-        // Create simple OpenGl window
-        IDriver driver = new OpenGlDriver();
-        var window = driver.CreateWindow(1280, 1024, false);
-        var context = driver.GetContext() ?? throw new ArgumentNullException(nameof(IContext));
+        var world = new World(core);
+        world.AmbientLight = Color.Black;
 
-        var shaderProgram = LoadShader(context);
-        var triangle = new CubeMesh(context);
-        var triangleTransform = new Transform();
+        var mainCamera = new Entity(world);
+        mainCamera.AddComponent<CameraComponent>();
 
-        //triangleTransform.Scale = new Vector3(512, 512, 1);
-        triangleTransform.Position = new Vector3(0, 0, -5);
+        mainCamera.Transform.Position = new Vector3(0, 0, -5);
 
-        var image = new ImageAsset();
-        image.LoadAsset($"{BasePath}textures/grid_blue.cda");
+        // var cube = new Entity(world);
+        // cube.AddComponent<MeshComponent>();
 
-        var texture = context.CreateTexture(TextureBufferTarget.Texture2D, image.Data);
+        // var material = Material.Load("materials/grid_blue_material");
+        // var mesh = new Model<CubeMesh>(world, material);
 
-        var camera = new Camera(driver);
-        camera.SetClipPlane(0.001f, 1000);
-        camera.ClearColor = SysColor.Gray;
-
-        var cameraUniformBuffer = context.CreateUniformBuffer(
-            "Matrices",
-            new BufferLayout(
-                new[]
-                {
-                    new BufferElement(0, "m_ViewMatrix", ShaderDataType.Matrix4),
-                    new BufferElement(1, "m_ProjectionMatrix", ShaderDataType.Matrix4)
-                }
-            ),
-            0
-        );
-        cameraUniformBuffer.Attach(shaderProgram);
-
-        var modelUniformBuffer = context.CreateUniformBuffer(
-            "Model",
-            new BufferLayout(
-                new[]
-                {
-                    new BufferElement(0, "m_ModelMatrix", ShaderDataType.Matrix4)
-
-                    // new BufferElement(1,"v_MaterialColor", ShaderDataType.Vector4),
-                    // new BufferElement(2,"v_DefaultColor", ShaderDataType.Vector4)
-                }
-            ),
-            1
-        );
-        modelUniformBuffer.Attach(shaderProgram);
-
-        var oldSetPrimitiveType = 0;
-        var currentSetPrimitiveType = 0;
-
-        var primitiveTypeCommands = new ICommand[]
+        // Main loop
+        while (!Keyboard.GetKey(KeyCode.Escape) && !window.WindowTerminated())
         {
-            new SetPrimitiveTypeCommand(PrimitiveType.Triangles),
-            new SetPrimitiveTypeCommand(PrimitiveType.TriangleStrip),
-            new SetPrimitiveTypeCommand(PrimitiveType.TriangleFan),
-            new SetPrimitiveTypeCommand(PrimitiveType.Lines),
-            new SetPrimitiveTypeCommand(PrimitiveType.LineStrip),
-            new SetPrimitiveTypeCommand(PrimitiveType.LineLoop),
-            new SetPrimitiveTypeCommand(PrimitiveType.Points)
-        };
-
-        var triangleCommands = new CommandGroup
-        {
-            new BindShaderProgramCommand(shaderProgram),
-            new BindUniformBufferCommand(modelUniformBuffer),
-            new ProcessCommand(_ => new SetUniformBufferValueCommand<Matrix4>("m_ModelMatrix", triangleTransform.Transformation)),
-            new BindTextureCommand(texture, TextureUnit.DiffuseColor),
-            new BindBufferArrayCommand(triangle.BufferArray),
-            primitiveTypeCommands[currentSetPrimitiveType],
-            new SetIndexCountCommand(triangle.IndexCount),
-            new RenderElementCommand()
-        };
-
-        var perspectiveUpdateCommands = new CommandGroup
-        {
-            new SetUniformValueCommand<Matrix4>("m_ViewMatrix", camera.ViewMatrix), // For Perspective
-            new SetUniformValueCommand<Matrix4>("m_ProjectionMatrix", camera.GetProjection(ProjectionMode.Perspective))
-        };
-
-        var commandQueue = new CommandQueue();
-        commandQueue.Enqueue(triangleCommands);
-
-        var commandHandler = new CommandHandler();
-
-        var renderer = new DefaultRenderer(context, commandQueue, commandHandler);
-        const float speed = 5f;
-        while (!window.WindowTerminated())
-        {
-            // Prepare frame
-            //cameraUniformBuffer.SetUniformData("m_ViewMatrix", camera.Transform.Transformation); // For Orthographic
-            cameraUniformBuffer.SetUniformData("m_ViewMatrix", camera.ViewMatrix);
-            cameraUniformBuffer.SetUniformData("m_ProjectionMatrix", camera.GetProjection(ProjectionMode.Perspective));
-
-            // Render frame
-            driver.Clear();
-            driver.HandleEvents();
-
-            renderer.Render();
-            driver.Swap();
-
-            // Keyboard input
-            if (Keyboard.GetKey(KeyCode.Escape))
-            {
-                window.Terminate();
-            }
-
-            if (Keyboard.GetKey(KeyCode.W))
-            {
-                currentSetPrimitiveType++;
-                currentSetPrimitiveType %= primitiveTypeCommands.Length - 1;
-                triangleCommands.Replace(primitiveTypeCommands[oldSetPrimitiveType], primitiveTypeCommands[currentSetPrimitiveType]);
-                oldSetPrimitiveType = currentSetPrimitiveType;
-            }
-
-            if (Keyboard.GetKeyDown(KeyCode.Left))
-            {
-                camera.Transform.Translate(-Vector3.Right * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
-            }
-
-            if (Keyboard.GetKeyDown(KeyCode.Right))
-            {
-                camera.Transform.Translate(Vector3.Right * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
-            }
-
-            if (Keyboard.GetKeyDown(KeyCode.Up))
-            {
-                camera.Transform.Translate(Vector3.Up * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
-            }
-
-            if (Keyboard.GetKeyDown(KeyCode.Down))
-            {
-                camera.Transform.Translate(-Vector3.Up * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
-            }
-
-            if (Keyboard.GetKeyDown(KeyCode.Q))
-            {
-                camera.Transform.Translate(-Vector3.Forward * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
-            }
-
-            if (Keyboard.GetKeyDown(KeyCode.E))
-            {
-                camera.Transform.Translate(Vector3.Forward * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
-            }
-
-            // Prepare next frame
-            triangleCommands.Reset();
-            commandQueue.Enqueue(triangleCommands);
+            world.Update();
+            world.Render();
         }
 
-        modelUniformBuffer.Dispose();
-        cameraUniformBuffer.Dispose();
-        shaderProgram.Dispose();
-        triangle.BufferArray.Dispose();
-
+        window.Close();
         driver.Close();
+        world.Dispose();
+
+        // Current way to go
+        // var assetSystem = new AssetSystem(BasePath);
+        // assetSystem.Compile(
+        //     new AssetCompilerConfiguration
+        //     {
+        //         CompileExtensions = null,
+        //         DeleteCompiledFiles = true
+        //     }
+        // );
+        //
+        // // Load a shader
+        // var shaderAsset = assetSystem.Load<ShaderAsset>("shader/default");
+        // var shader = Shader.FromAsset(shaderAsset);
+        //
+        // // Load a Material
+        // var materialAsset = assetSystem.Load<MaterialAsset>("materials/default");
+        // var material = Material.FromAsset(materialAsset);
+        //
+        // // Create simple OpenGl window
+        // IDriver driver = new OpenGlDriver();
+        // var window = driver.CreateWindow(1280, 1024, false);
+        // var context = driver.GetContext() ?? throw new ArgumentNullException(nameof(IContext));
+        //
+        // var shaderProgram = LoadShader(context);
+        // var triangle = new CubeMesh(context);
+        // var triangleTransform = new Transform();
+        //
+        // //triangleTransform.Scale = new Vector3(512, 512, 1);
+        // triangleTransform.Position = new Vector3(0, 0, -5);
+        //
+        // var image = new ImageAsset();
+        // image.LoadAsset($"{BasePath}textures/grid_blue.cda");
+        //
+        // var texture = context.CreateTexture(TextureBufferTarget.Texture2D, image.Data);
+        //
+        // var camera = new Camera(driver);
+        // camera.SetClipPlane(0.001f, 1000);
+        // camera.ClearColor = SysColor.Gray;
+        //
+        // var cameraUniformBuffer = context.CreateUniformBuffer(
+        //     "Matrices",
+        //     new BufferLayout(
+        //         new[]
+        //         {
+        //             new BufferElement(0, "m_ViewMatrix", ShaderDataType.Matrix4),
+        //             new BufferElement(1, "m_ProjectionMatrix", ShaderDataType.Matrix4)
+        //         }
+        //     ),
+        //     0
+        // );
+        // cameraUniformBuffer.Attach(shaderProgram);
+        //
+        // var modelUniformBuffer = context.CreateUniformBuffer(
+        //     "Model",
+        //     new BufferLayout(
+        //         new[]
+        //         {
+        //             new BufferElement(0, "m_ModelMatrix", ShaderDataType.Matrix4)
+        //
+        //             // new BufferElement(1,"v_MaterialColor", ShaderDataType.Vector4),
+        //             // new BufferElement(2,"v_DefaultColor", ShaderDataType.Vector4)
+        //         }
+        //     ),
+        //     1
+        // );
+        // modelUniformBuffer.Attach(shaderProgram);
+        //
+        // var oldSetPrimitiveType = 0;
+        // var currentSetPrimitiveType = 0;
+        //
+        // var primitiveTypeCommands = new ICommand[]
+        // {
+        //     new SetPrimitiveTypeCommand(PrimitiveType.Triangles),
+        //     new SetPrimitiveTypeCommand(PrimitiveType.TriangleStrip),
+        //     new SetPrimitiveTypeCommand(PrimitiveType.TriangleFan),
+        //     new SetPrimitiveTypeCommand(PrimitiveType.Lines),
+        //     new SetPrimitiveTypeCommand(PrimitiveType.LineStrip),
+        //     new SetPrimitiveTypeCommand(PrimitiveType.LineLoop),
+        //     new SetPrimitiveTypeCommand(PrimitiveType.Points)
+        // };
+        //
+        // // Commands sollten mit einem call von Begin() als aktiv gesetzt werden und erst mit dem call von End() committed werden
+        // // bspw.:
+        // // commandQueue.Begin();
+        //
+        // // Color stage
+        // // commandQueue.Enqueue<BindShaderProgramCommand>(triangleCommands);
+        // // commandQueue.Enqueue<BindUniformBufferCommand>(triangleCommands);
+        // // commandQueue.Enqueue<BindTextureCommand>(triangleCommands);
+        // // commandQueue.Enqueue<BindBufferArrayCommand>(triangle.BufferArray);
+        //
+        // // Depth stage
+        // // ...
+        //
+        // // commandQueue.End();
+        //
+        // var triangleCommands = new CommandGroup
+        // {
+        //     new BindShaderProgramCommand(shaderProgram),
+        //     new BindUniformBufferCommand(modelUniformBuffer),
+        //     new ProcessCommand(_ => new SetUniformBufferValueCommand<Matrix4>("m_ModelMatrix", triangleTransform.Transformation)),
+        //     new BindTextureCommand(texture, TextureUnit.DiffuseColor),
+        //     new BindBufferArrayCommand(triangle.BufferArray),
+        //     primitiveTypeCommands[currentSetPrimitiveType],
+        //     new SetIndexCountCommand(triangle.IndexCount),
+        //     new RenderElementCommand()
+        // };
+        //
+        // var perspectiveUpdateCommands = new CommandGroup
+        // {
+        //     new SetUniformValueCommand<Matrix4>("m_ViewMatrix", camera.ViewMatrix), // For Perspective
+        //     new SetUniformValueCommand<Matrix4>("m_ProjectionMatrix", camera.GetProjection(ProjectionMode.Perspective))
+        // };
+        //
+        // var commandQueue = new CommandQueue();
+        // commandQueue.Enqueue(triangleCommands);
+        //
+        // var commandHandler = new CommandHandler();
+        //
+        // var renderer = new ForwardRenderer(context, commandQueue, commandHandler);
+        // const float speed = 5f;
+        // while (!window.WindowTerminated())
+        // {
+        //     // Prepare frame
+        //     //cameraUniformBuffer.SetUniformData("m_ViewMatrix", camera.Transform.Transformation); // For Orthographic
+        //     cameraUniformBuffer.SetUniformData("m_ViewMatrix", camera.ViewMatrix);
+        //     cameraUniformBuffer.SetUniformData("m_ProjectionMatrix", camera.GetProjection(ProjectionMode.Perspective));
+        //
+        //     // Render frame
+        //     driver.Clear();
+        //     driver.HandleEvents();
+        //
+        //     renderer.Render();
+        //     driver.Swap();
+        //
+        //     // Keyboard input
+        //     if (Keyboard.GetKey(KeyCode.Escape))
+        //     {
+        //         window.Terminate();
+        //     }
+        //
+        //     if (Keyboard.GetKey(KeyCode.W))
+        //     {
+        //         currentSetPrimitiveType++;
+        //         currentSetPrimitiveType %= primitiveTypeCommands.Length - 1;
+        //         triangleCommands.Replace(primitiveTypeCommands[oldSetPrimitiveType], primitiveTypeCommands[currentSetPrimitiveType]);
+        //         oldSetPrimitiveType = currentSetPrimitiveType;
+        //     }
+        //
+        //     if (Keyboard.GetKeyDown(KeyCode.Left))
+        //     {
+        //         camera.Transform.Translate(-Vector3.Right * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
+        //     }
+        //
+        //     if (Keyboard.GetKeyDown(KeyCode.Right))
+        //     {
+        //         camera.Transform.Translate(Vector3.Right * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
+        //     }
+        //
+        //     if (Keyboard.GetKeyDown(KeyCode.Up))
+        //     {
+        //         camera.Transform.Translate(Vector3.Up * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
+        //     }
+        //
+        //     if (Keyboard.GetKeyDown(KeyCode.Down))
+        //     {
+        //         camera.Transform.Translate(-Vector3.Up * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
+        //     }
+        //
+        //     if (Keyboard.GetKeyDown(KeyCode.Q))
+        //     {
+        //         camera.Transform.Translate(-Vector3.Forward * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
+        //     }
+        //
+        //     if (Keyboard.GetKeyDown(KeyCode.E))
+        //     {
+        //         camera.Transform.Translate(Vector3.Forward * speed * Time.Instance.DeltaTime, CoordinateSpace.Local);
+        //     }
+        //
+        //     // Prepare next frame
+        //     triangleCommands.Reset();
+        //     commandQueue.Enqueue(triangleCommands);
+        // }
+        //
+        // modelUniformBuffer.Dispose();
+        // cameraUniformBuffer.Dispose();
+        // shaderProgram.Dispose();
+        // triangle.BufferArray.Dispose();
+        //
+        // driver.Close();
     }
 
     private static IShaderProgram LoadShader(IContext context)

@@ -13,14 +13,3 @@ public class SetUniformBufferValueCommand<T> : SetUniformBufferValueCommandBase
         Value = value;
     }
 }
-
-public abstract class SetUniformBufferValueCommandBase : CommandBase
-{
-    public Type ValueType { get; }
-
-    protected SetUniformBufferValueCommandBase(Type valueType)
-        : base(CommandType.SetUniformBufferValue)
-    {
-        ValueType = valueType;
-    }
-}

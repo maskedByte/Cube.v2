@@ -5,45 +5,74 @@
 /// </summary>
 public class CommandQueue : ICommandQueue
 {
-    private readonly SortedList<int, CommandGroup> _commandGroups;
+    private readonly SortedList<uint, ICommand> _commands;
+    private int _currentIndex;
+    private bool _started;
+
+    public bool IsReady { get; private set; }
 
     /// <summary>
     ///     Default constructor
     /// </summary>
     public CommandQueue()
     {
-        _commandGroups = new SortedList<int, CommandGroup>();
+        _commands = new SortedList<uint, ICommand>();
+        _currentIndex = 0;
+        _started = false;
+        IsReady = false;
+    }
+
+    public void Begin()
+    {
+        if (_started)
+        {
+            return;
+        }
+
+        _currentIndex = 0;
+        _started = true;
+        IsReady = false;
+        _commands.Clear();
     }
 
     /// <inheritdoc />
-    public void Enqueue(CommandGroup command) => _commandGroups.Add(command.Priority, command);
+    public void Enqueue(ICommand command) => _commands.Add(command.Priority, command);
 
     /// <inheritdoc />
-    public bool TryDequeue(out CommandGroup? commandGroup)
+    public bool TryDequeue(out ICommand? command)
     {
-        commandGroup = Dequeue();
-        return commandGroup != null;
+        command = Dequeue();
+        return command != null;
     }
 
     /// <inheritdoc />
-    public CommandGroup? Dequeue()
+    public ICommand? Dequeue()
     {
-        if (_commandGroups.Count <= 0)
+        if (_commands.Count <= 0)
         {
             return null;
         }
 
-        var firstCommand = _commandGroups.Values[0];
-        _commandGroups.RemoveAt(0);
+        var firstCommand = _commands.Values[0];
+        _commands.RemoveAt(0);
+        _currentIndex++;
         return firstCommand;
     }
 
-    /// <inheritdoc />
-    public void Dispose()
+    public void End()
     {
-        foreach (var (_, group) in _commandGroups.Where(g => g.Value.Any()))
+        if (!_started)
         {
-            group.ReleaseCommands();
+            return;
         }
+
+        // Prepare the queue for rendering and hand over to the renderer
+        // TODO: Implement
+
+        _started = false;
+        IsReady = true;
     }
+
+    /// <inheritdoc />
+    public void Dispose() => _commands.Clear();
 }

@@ -1,4 +1,6 @@
-﻿namespace Engine.Rendering.Commands;
+﻿using Engine.Rendering.Commands.TextureCommands;
+
+namespace Engine.Rendering.Commands;
 
 /// <summary>
 ///     Base implementation of a command.
@@ -12,7 +14,7 @@ public abstract class CommandBase : ICommand
     public CommandType Type { get; }
 
     /// <inheritdoc />
-    public int Priority { get; set; }
+    public uint Priority { get; set; }
 
     /// <summary>
     ///     Creates a new base command.
@@ -21,6 +23,6 @@ public abstract class CommandBase : ICommand
     {
         Id = Guid.NewGuid();
         Type = type;
-        Priority = 0;
+        Priority = (uint)CommandPriority.Default;
     }
 }

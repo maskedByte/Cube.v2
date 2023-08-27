@@ -1,5 +1,5 @@
 ﻿using Engine.Framework.Entities;
-using Engine.Rendering.Renderers;
+using Engine.Rendering.Commands;
 
 namespace Engine.Framework.Systems;
 
@@ -9,16 +9,12 @@ namespace Engine.Framework.Systems;
 public interface ISystem
 {
     /// <summary>
-    ///     Updates the system logic.
+    /// Processes the component.
     /// </summary>
+    /// <param name="component">The component to update.</param>
+    /// <param name="commandQueue">The command queue to add commands to.</param>
     /// <param name="deltaTime">Time elapsed since the last update.</param>
-    void Update(float deltaTime);
-
-    /// <summary>
-    ///     Renders the system's visual components.
-    /// </summary>
-    /// <param name="renderContext">Render context to use for rendering.</param>
-    void Render(IRenderer renderContext);
+    void Handle(IComponent component, ICommandQueue commandQueue, float deltaTime);
 
     /// <summary>
     ///     Determines if the system is responsible for handling a specific component type.

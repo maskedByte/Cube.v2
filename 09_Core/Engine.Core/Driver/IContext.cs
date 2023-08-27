@@ -222,6 +222,12 @@ public interface IContext : IDisposable
     void RenderElement();
 
     /// <summary>
+    ///     Register a uniform buffer to the context
+    /// </summary>
+    /// <param name="uniformBuffer">The uniform buffer to register</param>
+    void RegisterUniformBuffer(IUniformBuffer uniformBuffer);
+
+    /// <summary>
     ///     Returns the active uniform buffer
     /// </summary>
     /// <returns>The active uniform buffer</returns>

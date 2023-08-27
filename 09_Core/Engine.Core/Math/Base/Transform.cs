@@ -41,10 +41,7 @@ public sealed class Transform
     /// </summary>
     public Vector3 Position
     {
-        get =>
-            Parent != null
-                ? _localPosition + Parent.Position
-                : _localPosition;
+        get => _modelMatrix.ExtractTranslation();
         set => LocalPosition = value;
     }
 
@@ -67,10 +64,7 @@ public sealed class Transform
     /// </summary>
     public Quaternion Rotation
     {
-        get =>
-            Parent != null
-                ? _localRotation * Parent.Rotation
-                : _localRotation;
+        get => _modelMatrix.ExtractRotation();
         set
         {
             LocalRotation = value;
@@ -97,7 +91,7 @@ public sealed class Transform
     /// </summary>
     public Vector3 Scale
     {
-        get => _scale;
+        get => _modelMatrix.ExtractScale();
         set
         {
             _scale = value;
