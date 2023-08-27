@@ -1,4 +1,4 @@
-﻿namespace Engine.Framework.Frameworks;
+﻿namespace Engine.Framework.Rendering;
 
 /// <summary>
 ///     Defines the type of driver to use.

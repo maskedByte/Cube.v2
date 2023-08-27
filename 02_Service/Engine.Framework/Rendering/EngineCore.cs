@@ -2,7 +2,7 @@
 using Engine.Core.Driver;
 using Engine.OpenGL.Driver;
 
-namespace Engine.Framework.Frameworks;
+namespace Engine.Framework.Rendering;
 
 /// <summary>
 ///     Creates a new instance of the framework which handles most of backend things to

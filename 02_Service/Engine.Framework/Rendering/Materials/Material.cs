@@ -1,6 +1,4 @@
-﻿using Engine.Framework.Frameworks;
-
-namespace Engine.Framework.Rendering.Materials;
+﻿namespace Engine.Framework.Rendering.Materials;
 
 public class Material : IDisposable
 {
