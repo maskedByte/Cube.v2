@@ -249,5 +249,10 @@ internal class Context : IContext
     /// <inheritdoc />
     public void Dispose()
     {
+        GlStateWatch.Dispose();
+
+        // Release state
+        BoundShaderProgram?.Dispose();
+        ActiveUniformBuffer?.Dispose();
     }
 }

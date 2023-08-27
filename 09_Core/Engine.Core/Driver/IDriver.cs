@@ -6,7 +6,7 @@ namespace Engine.Core.Driver;
 /// <summary>
 ///     Base interface for all graphics drivers.
 /// </summary>
-public interface IDriver
+public interface IDriver : IDisposable
 {
     /// <summary>
     ///     Create a new window

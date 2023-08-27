@@ -81,6 +81,8 @@ public sealed class OpenGlDriver : IDriver
         {
             Log.LogMessageAsync("Window not created.", LogLevel.Warning, this);
         }
+
+        CurrentWindow!.Close();
     }
 
     /// <inheritdoc />
@@ -150,4 +152,6 @@ public sealed class OpenGlDriver : IDriver
             Console.WriteLine($"\t{extension}");
         }
     }
+
+    public void Dispose() => _context?.Dispose();
 }

@@ -73,9 +73,9 @@ internal static class GlStateWatch
 
     public static Dictionary<BufferTarget, uint> GetBoundBuffers() => new(BoundBuffers.Where(x => x.Value != 0).ToList());
 
-    public static void BindTexture(TextureTarget target, uint textureUnit, uint textureId)
+    public static void BindTexture(TextureTarget textureTarget, uint textureUnit, uint textureId)
     {
-        if (BoundTextures.TryGetValue((target, textureUnit), out var currentTextureId))
+        if (BoundTextures.TryGetValue((textureTarget, textureUnit), out var currentTextureId))
         {
             if (currentTextureId == textureId)
             {
@@ -83,19 +83,19 @@ internal static class GlStateWatch
             }
 
             Gl.BindTextureUnit(textureUnit, textureId);
-            BoundTextures[(target, textureUnit)] = textureId;
+            BoundTextures[(textureTarget, textureUnit)] = textureId;
         }
         else
         {
-            Gl.BindTexture(target, textureId);
+            Gl.BindTexture(textureTarget, textureId);
             Gl.BindTextureUnit(textureUnit, textureId);
-            BoundTextures.Add((target, textureUnit), textureId);
+            BoundTextures.Add((textureTarget, textureUnit), textureId);
         }
     }
 
-    public static void UnbindTexture(TextureTarget texture2D, uint i)
+    public static void UnbindTexture(TextureTarget textureTarget, uint i)
     {
-        if (!BoundTextures.TryGetValue((texture2D, i), out var currentTextureId))
+        if (!BoundTextures.TryGetValue((textureTarget, i), out var currentTextureId))
         {
             return;
         }
@@ -106,6 +106,28 @@ internal static class GlStateWatch
         }
 
         Gl.BindTextureUnit(i, 0);
-        BoundTextures[(texture2D, i)] = 0;
+        BoundTextures[(textureTarget, i)] = 0;
+    }
+
+    public static void UnbindAll()
+    {
+        foreach (var (target, _) in BoundBuffers)
+        {
+            UnbindBuffer(target);
+        }
+
+        foreach (var (target, textureUnit) in BoundTextures)
+        {
+            UnbindTexture(target.Item1, textureUnit);
+        }
+
+        UnbindBufferArray();
+    }
+
+    public static void Dispose()
+    {
+        UnbindAll();
+        BoundBuffers.Clear();
+        BoundTextures.Clear();
     }
 }
