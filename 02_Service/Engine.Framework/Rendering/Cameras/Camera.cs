@@ -8,18 +8,18 @@ using Engine.Core.Math.Vectors;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
-namespace Engine.Framework.Systems.Cameras;
+namespace Engine.Framework.Rendering.Cameras;
 
 public class Camera : ICamera
 {
     private readonly IDriver _driver;
+    private Color _clearColor;
     private Viewport _currentViewport;
     private Matrix4 _orthographicProjectionMatrix;
     private Matrix4 _perspectiveProjectionMatrix;
 
     private bool _recalculateProjection;
     private Matrix4 _viewMatrix;
-    private Color _clearColor;
 
     /// <inheritdoc />
     public Matrix4 ViewMatrix

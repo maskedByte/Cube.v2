@@ -35,6 +35,7 @@ public sealed class OpenGlDriver : IDriver
 
     /// <inheritdoc />
     public IWindow CreateWindow(
+        string title,
         int width,
         int height,
         bool vSync,
@@ -55,6 +56,8 @@ public sealed class OpenGlDriver : IDriver
         {
             throw new NullReferenceException(nameof(CurrentWindow));
         }
+
+        CurrentWindow.SetTitle(title);
 
         _context = new Context(this);
         _context.Initialize();

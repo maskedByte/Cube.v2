@@ -2,7 +2,7 @@ using Engine.Core.Events;
 using Engine.Core.Math.Base;
 using Engine.Core.Math.Matrices;
 
-namespace Engine.Framework.Systems.Cameras;
+namespace Engine.Framework.Rendering.Cameras;
 
 /// <summary>
 ///     Interface for camera classes
@@ -30,17 +30,17 @@ public interface ICamera : IEventSubscriber
     float FarClip { get; }
 
     /// <summary>
-    /// Get the perspective projection matrix
+    ///     Get the perspective projection matrix
     /// </summary>
     public Matrix4 PerspectiveMatrix { get; }
 
     /// <summary>
-    /// Get the orthographic projection matrix
+    ///     Get the orthographic projection matrix
     /// </summary>
     public Matrix4 OrthographicMatrix { get; }
 
     /// <summary>
-    /// Get or set the clear color
+    ///     Get or set the clear color
     /// </summary>
     public Color ClearColor { get; set; }
 

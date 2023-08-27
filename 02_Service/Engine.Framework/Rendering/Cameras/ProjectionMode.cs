@@ -1,4 +1,4 @@
-namespace Engine.Framework.Systems.Cameras;
+namespace Engine.Framework.Rendering.Cameras;
 
 /// <summary>
 ///     Specifies the type of the projection

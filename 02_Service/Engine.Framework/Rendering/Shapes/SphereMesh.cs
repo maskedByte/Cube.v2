@@ -106,5 +106,4 @@ public sealed class SphereMesh : Mesh
 
         return currentCenter.Xyz;
     }
-
 }

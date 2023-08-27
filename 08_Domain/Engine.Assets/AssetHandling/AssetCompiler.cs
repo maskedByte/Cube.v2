@@ -2,36 +2,14 @@
 
 namespace Engine.Assets.AssetHandling;
 
-/// <summary>
-///     Instance of <see cref="AssetCompiler" />, provides functionality to convert files to engine format
-/// </summary>
-public sealed class AssetCompiler
+internal sealed class AssetCompiler
 {
-    private readonly Dictionary<string, IAssetConverter> _converters;
-    private IEnumerable<string> _assetFiles;
+    private readonly Dictionary<string, IAssetConverter> _converters = new();
+    private IEnumerable<string> _assetFiles = null!;
 
-    /// <summary>
-    ///     Initialize new instance of <see cref="AssetCompiler" />
-    /// </summary>
-    public AssetCompiler()
-    {
-        _assetFiles = null!;
-        _converters = new Dictionary<string, IAssetConverter>();
-    }
-
-    /// <summary>
-    ///     Register new <see cref="IAssetConverter" /> to collection
-    /// </summary>
-    /// <param name="assetFileConverter">Instance of <see cref="IAssetConverter" /> to convert files of specific type</param>
     public void RegisterFileConverter(IAssetConverter assetFileConverter) =>
         _converters.Add(assetFileConverter.Extensions, assetFileConverter);
 
-    /// <summary>
-    ///     Compile files by <paramref name="basePath" />
-    /// </summary>
-    /// <param name="basePath">Path to asset files</param>
-    /// <param name="extensionsToCompile"></param>
-    /// <param name="removeSourceAfterCompile">Remove files after compile</param>
     public void Compile(
         string basePath,
         string[]? extensionsToCompile = null,

@@ -11,6 +11,7 @@ public interface IDriver
     /// <summary>
     ///     Create a new window
     /// </summary>
+    /// <param name="title">The title of the window</param>
     /// <param name="width">The width of the window</param>
     /// <param name="height">The height of the window</param>
     /// <param name="vSync">Sets the vSync</param>
@@ -18,6 +19,7 @@ public interface IDriver
     /// <param name="resizeAble">Sets if the window should be resizeable</param>
     /// <param name="showStats">Sets if stats should be shown</param>
     IWindow CreateWindow(
+        string title,
         int width,
         int height,
         bool vSync,

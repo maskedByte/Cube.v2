@@ -17,4 +17,9 @@
     </ItemGroup>
 
 
+    <ItemGroup>
+        <Compile Remove="AssetHandling\AssetManager.cs"/>
+    </ItemGroup>
+
+
 </Project>
