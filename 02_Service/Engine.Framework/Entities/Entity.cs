@@ -86,11 +86,11 @@ public class Entity : IEntity
     }
 
     /// <inheritdoc />
-    public IComponent AddComponent<T>() where T : IComponent
+    public T AddComponent<T>() where T : IComponent
     {
         if (Components.TryGetValue(typeof(T), out var value))
         {
-            return value;
+            return (T)value;
         }
 
         var component = Activator.CreateInstance<T>();

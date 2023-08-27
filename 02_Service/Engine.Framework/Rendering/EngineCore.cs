@@ -63,4 +63,6 @@ public sealed class EngineCore : IDisposable
         AssetSystem.Dispose();
         ActiveDriver.Dispose();
     }
+
+    public T Load<T>(string assetPath) where T : class => throw new NotImplementedException();
 }

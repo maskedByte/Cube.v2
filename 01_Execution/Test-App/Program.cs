@@ -1,4 +1,5 @@
-﻿using Engine.Assets.Assets.Shaders;
+﻿using Engine.Assets.AssetHandling;
+using Engine.Assets.Assets.Shaders;
 using Engine.Core.Driver;
 using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Driver.Input;
@@ -7,6 +8,8 @@ using Engine.Core.Math.Vectors;
 using Engine.Framework.Components;
 using Engine.Framework.Entities;
 using Engine.Framework.Rendering;
+using Engine.Framework.Rendering.Materials;
+using Engine.Framework.Rendering.Shapes;
 using Engine.Framework.Rendering.Worlds;
 using SysColor = System.Drawing.Color;
 
@@ -18,8 +21,15 @@ public class TestApp
 
     public static void Main()
     {
-        // New way to go
         var core = new EngineCore(BasePath);
+        core.CompileAssets(
+            new AssetCompilerConfiguration
+            {
+                CompileExtensions = null,
+                DeleteCompiledFiles = true
+            }
+        );
+
         var driver = core.CreateDriver(DriverType.OpenGl);
         var window = driver.CreateWindow($"Cube.Engine v2 - Testing - {core.ActiveDriver.GetType().Name}", 1280, 1024, false);
 
@@ -29,13 +39,14 @@ public class TestApp
         var mainCamera = new Entity(world);
         mainCamera.AddComponent<CameraComponent>();
 
-        mainCamera.Transform.Position = new Vector3(0, 0, -5);
+        var cube = new Entity(world);
+        cube.AddComponent<MeshComponent>()
+           .Mesh = new CubeMesh(world.Context);
 
-        // var cube = new Entity(world);
-        // cube.AddComponent<MeshComponent>();
+        cube.AddComponent<MaterialComponent>()
+           .Material = core.Load<Material>("materials/grid_blue_material");
 
-        // var material = Material.Load("materials/grid_blue_material");
-        // var mesh = new Model<CubeMesh>(world, material);
+        cube.Transform.Position = new Vector3(0, 0, -5);
 
         // Main loop
         while (!Keyboard.GetKey(KeyCode.Escape) && !window.WindowTerminated())
