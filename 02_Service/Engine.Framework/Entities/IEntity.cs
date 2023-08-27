@@ -31,7 +31,7 @@ public interface IEntity : IDisposable, IComponentOwner
     /// <summary>
     ///     Gets the parent entity that this entity is a child of.
     /// </summary>
-    IEntity Parent { get; }
+    IEntity? Parent { get; set; }
 
     /// <summary>
     ///     Gets a collection of child entities that belong to this entity.

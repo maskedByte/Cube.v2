@@ -7,7 +7,10 @@ namespace Engine.Framework.Entities;
 /// </summary>
 public class Entity : IEntity
 {
-    private readonly Dictionary<Type, IComponent> _components = new();
+    private IEntity? _parent;
+
+    /// <inheritdoc />
+    public Dictionary<Type, IComponent> Components { get; } = new();
 
     /// <inheritdoc />
     public Guid Id { get; }
@@ -22,7 +25,22 @@ public class Entity : IEntity
     public World World { get; }
 
     /// <inheritdoc />
-    public IEntity? Parent { get; }
+    public IEntity? Parent
+    {
+        get => _parent;
+        set
+        {
+            if (value == this)
+            {
+                throw new InvalidOperationException("Cannot set parent to self.");
+            }
+
+            _parent?.Children.Remove(this);
+            value?.Children.Add(this);
+            _parent = value;
+            Transform.Parent = _parent?.Transform.Parent ?? World.Transform;
+        }
+    }
 
     /// <inheritdoc />
     public List<IEntity> Children { get; }
@@ -41,21 +59,23 @@ public class Entity : IEntity
     public Entity(World world, IEntity? parent = null)
     {
         Id = Guid.NewGuid();
-        World = world;
-        Parent = parent;
-        parent?.Children.Add(this);
-
-        Tag = $"Entity-{Id}";
-        IsActive = true;
         Transform = new Transform();
         Children = new List<IEntity>();
+
+        World = world;
+        Tag = $"Entity-{Id}";
+        IsActive = true;
+
+        Parent = parent;
+        Parent?.Children.Add(this);
+
     }
 
     /// <inheritdoc />
     public void Dispose()
     {
         // Clear of all components.
-        _components.Clear();
+        Components.Clear();
 
         // Dispose of all children.
         foreach (var child in Children)
@@ -69,31 +89,31 @@ public class Entity : IEntity
     /// <inheritdoc />
     public void AddComponent<T>() where T : IComponent
     {
-        if (_components.ContainsKey(typeof(T)))
+        if (Components.ContainsKey(typeof(T)))
         {
             return;
         }
 
         var component = Activator.CreateInstance<T>();
-        _components.Add(typeof(T), component);
+        Components.Add(typeof(T), component);
         component.Owner = this;
     }
 
     /// <inheritdoc />
     public void RemoveComponent<T>() where T : IComponent
     {
-        if (!_components.ContainsKey(typeof(T)))
+        if (!Components.ContainsKey(typeof(T)))
         {
             return;
         }
 
-        _components.Remove(typeof(T));
+        Components.Remove(typeof(T));
     }
 
     /// <inheritdoc />
     public T? GetComponent<T>() where T : IComponent
     {
-        if (_components.TryGetValue(typeof(T), out var component))
+        if (Components.TryGetValue(typeof(T), out var component))
         {
             return (T)component;
         }
@@ -102,5 +122,5 @@ public class Entity : IEntity
     }
 
     /// <inheritdoc />
-    public bool HasComponent<T>() where T : IComponent => _components.ContainsKey(typeof(T));
+    public bool HasComponent<T>() where T : IComponent => Components.ContainsKey(typeof(T));
 }

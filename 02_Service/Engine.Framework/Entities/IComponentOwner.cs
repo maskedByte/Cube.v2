@@ -6,6 +6,11 @@
 public interface IComponentOwner
 {
     /// <summary>
+    ///     Gets a collection of components owned by the owner.
+    /// </summary>
+    Dictionary<Type, IComponent> Components { get; }
+
+    /// <summary>
     ///     Adds a component of the specified type to the owner.
     /// </summary>
     /// <typeparam name="T">Type of the component.</typeparam>

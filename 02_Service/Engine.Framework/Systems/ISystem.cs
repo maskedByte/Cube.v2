@@ -11,17 +11,16 @@ public interface ISystem
     /// <summary>
     /// Processes the component.
     /// </summary>
+    /// <param name="stage">The stage of the system.</param>
     /// <param name="component">The component to update.</param>
     /// <param name="commandQueue">The command queue to add commands to.</param>
     /// <param name="deltaTime">Time elapsed since the last update.</param>
-    void Handle(IComponent component, ICommandQueue commandQueue, float deltaTime);
+    void Handle(SystemStage stage, IComponent component, ICommandQueue commandQueue, float deltaTime);
 
     /// <summary>
-    ///     Determines if the system is responsible for handling a specific component type.
+    ///     Gets the type of component this system can handle.
     /// </summary>
-    /// <typeparam name="T">Type of the component.</typeparam>
-    /// <returns>True if the system handles the component type, otherwise false.</returns>
-    bool HandlesComponent<T>() where T : IComponent;
+    Type GetCanHandle();
 
     /// <summary>
     ///     Cleans up and disposes the system.

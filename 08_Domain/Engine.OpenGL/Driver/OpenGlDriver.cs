@@ -17,6 +17,7 @@ public sealed class OpenGlDriver : IDriver
 {
     private readonly Input _input;
     private IContext? _context;
+    private readonly Time _time;
 
     /// <summary>
     ///     Gets the current window.
@@ -31,6 +32,7 @@ public sealed class OpenGlDriver : IDriver
         _context = null;
         CurrentWindow = null;
         _input = new Input() ?? throw new NullReferenceException(nameof(_input));
+        _time = new Time();
     }
 
     /// <inheritdoc />
@@ -122,7 +124,7 @@ public sealed class OpenGlDriver : IDriver
     public void Swap()
     {
         CurrentWindow?.Display();
-        Time.Instance.Update();
+        _time.Update();
     }
 
     /// <inheritdoc />
@@ -133,6 +135,9 @@ public sealed class OpenGlDriver : IDriver
 
     /// <inheritdoc />
     public IContext? GetContext() => _context;
+
+    /// <inheritdoc />
+    public ITime GetTime() => _time;
 
     private void ShowOpenGlExtensions()
     {

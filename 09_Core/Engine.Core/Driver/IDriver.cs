@@ -65,4 +65,10 @@ public interface IDriver : IDisposable
     /// </summary>
     /// <returns>Returns an instance of <see cref="IContext" /></returns>
     IContext? GetContext();
+
+    /// <summary>
+    ///     Return the current time
+    /// </summary>
+    /// <returns>Returns the current time</returns>
+    ITime GetTime();
 }

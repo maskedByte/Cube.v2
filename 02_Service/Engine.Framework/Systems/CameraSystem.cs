@@ -39,37 +39,47 @@ public class CameraSystem : ISystem
         );
     }
 
-    public void Handle(IComponent component, ICommandQueue commandQueue, float deltaTime)
+    public void Handle(SystemStage stage, IComponent component, ICommandQueue commandQueue, float deltaTime)
     {
-        var cameraComponent = (CameraComponent)component;
-
-        switch (cameraComponent.ProjectionMode)
+        switch (stage)
         {
-            case ProjectionMode.Orthographic:
-                _cameraUniformBuffer.SetUniformData("m_ViewMatrix", cameraComponent.Camera!.Transform.Transformation);
-                _cameraUniformBuffer.SetUniformData(
-                    "m_ProjectionMatrix",
-                    cameraComponent.Camera.GetProjection(ProjectionMode.Orthographic)
-                );
+            case SystemStage.Start:
+            case SystemStage.Update:
+                var cameraComponent = (CameraComponent)component;
+
+                switch (cameraComponent.ProjectionMode)
+                {
+                    case ProjectionMode.Orthographic:
+                        _cameraUniformBuffer.SetUniformData("m_ViewMatrix", cameraComponent.Camera!.Transform.Transformation);
+                        _cameraUniformBuffer.SetUniformData(
+                            "m_ProjectionMatrix",
+                            cameraComponent.Camera.GetProjection(ProjectionMode.Orthographic)
+                        );
+
+                        break;
+                    case ProjectionMode.Perspective:
+                        _cameraUniformBuffer.SetUniformData("m_ViewMatrix", cameraComponent.Camera!.ViewMatrix);
+                        _cameraUniformBuffer.SetUniformData(
+                            "m_ProjectionMatrix",
+                            cameraComponent.Camera.GetProjection(ProjectionMode.Perspective)
+                        );
+
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
 
                 break;
-            case ProjectionMode.Perspective:
-                _cameraUniformBuffer.SetUniformData("m_ViewMatrix", cameraComponent.Camera!.ViewMatrix);
-                _cameraUniformBuffer.SetUniformData(
-                    "m_ProjectionMatrix",
-                    cameraComponent.Camera.GetProjection(ProjectionMode.Perspective)
-                );
-
+            case SystemStage.Render:
+                commandQueue.Enqueue(new BindUniformBufferCommand(_cameraUniformBuffer));
                 break;
-
             default:
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(stage), stage, null);
         }
-
-        commandQueue.Enqueue(new BindUniformBufferCommand(_cameraUniformBuffer));
     }
 
-    public bool HandlesComponent<T>() where T : IComponent => typeof(T) == typeof(CameraComponent);
+    public Type GetCanHandle() => typeof(CameraComponent);
 
     public void Dispose()
     {

@@ -5,13 +5,12 @@ namespace Engine.OpenGL.Driver;
 
 public sealed class Time : ITime
 {
-    private static readonly Clock Clock = new();
-    private static float oldTimeSinceStart;
-    private static int nextFps;
-    private static float fpsTimer;
-    private static int fps;
-
-    public static Time Instance { get; } = new();
+    private readonly Clock _clock;
+    private float _oldTimeSinceStart;
+    private int _nextFps;
+    private float _fpsTimer;
+    private int _fps;
+    private float _millisecs;
 
     /// <summary>
     ///     Return DeltaTime
@@ -21,19 +20,23 @@ public sealed class Time : ITime
     /// <summary>
     ///     Return actual FPS
     /// </summary>
-    public float FramesPerSecond => fps;
+    public float FramesPerSecond => _fps;
 
     /// <summary>
     ///     Return time since start
     /// </summary>
-    public float Millisecs { get; private set; } = Clock.ElapsedTime.AsMilliseconds();
-
-    static Time()
+    public float Millisecs
     {
+        get => _clock.ElapsedTime.AsMilliseconds();
+        private set => _millisecs = value;
     }
 
-    private Time()
+    /// <summary>
+    ///     Default parameterless constructor.
+    /// </summary>
+    public Time()
     {
+        _clock = new Clock();
     }
 
     /// <summary>
@@ -41,16 +44,15 @@ public sealed class Time : ITime
     /// </summary>
     public void Update()
     {
-        Millisecs = Clock.ElapsedTime.AsMilliseconds();
-        DeltaTime = (Millisecs - oldTimeSinceStart) / 1000f;
-        oldTimeSinceStart = Millisecs;
-        nextFps++;
+        DeltaTime = (Millisecs - _oldTimeSinceStart) / 1000f;
+        _oldTimeSinceStart = Millisecs;
+        _nextFps++;
 
-        if (Millisecs - fpsTimer > 1000f)
+        if (Millisecs - _fpsTimer > 1000f)
         {
-            fps = nextFps;
-            fpsTimer = Millisecs;
-            nextFps = 0;
+            _fps = _nextFps;
+            _fpsTimer = Millisecs;
+            _nextFps = 0;
         }
     }
 }
