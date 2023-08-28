@@ -1,6 +1,7 @@
 ﻿using Engine.Core.Driver;
 using Engine.Core.Math.Base;
 using Engine.Framework.Entities;
+using Engine.Framework.Rendering.DataStructures;
 using Engine.Framework.Systems;
 using Engine.Rendering.Commands;
 using Engine.Rendering.Renderers;
@@ -13,6 +14,8 @@ public sealed class World : IDisposable
 {
     private readonly List<IEntity> _entities;
     private readonly Dictionary<Type, ISystem> _systems;
+
+    private Material _defaultMaterial;
 
     public EngineCore Core { get; }
     public IContext Context { get; }
@@ -45,6 +48,9 @@ public sealed class World : IDisposable
 
         // Add default systems.
         AddSystem(new CameraSystem(Context));
+
+        // Defaults
+        _defaultMaterial = new Material();
     }
 
     /// <summary>
@@ -55,17 +61,12 @@ public sealed class World : IDisposable
     /// <returns></returns>
     public IEntity Create(string name = "", IEntity? parent = null)
     {
-        Entity entity = default;
-
-        if (!string.IsNullOrWhiteSpace(name))
+        var entity = new Entity(this, parent)
         {
-            entity = new Entity(this, parent)
-            {
-                Tag = name
-            };
-        }
-
-        entity = new Entity(this, parent);
+            Tag = string.IsNullOrWhiteSpace(name)
+                ? $"Entity_{_entities.Count}"
+                : name
+        };
 
         _entities.Add(entity);
 

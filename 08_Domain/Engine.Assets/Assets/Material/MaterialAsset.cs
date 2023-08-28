@@ -11,7 +11,7 @@ namespace Engine.Assets.Assets.Material;
 public sealed class MaterialAsset : IAsset<MaterialConfiguration>
 {
     /// <inheritdoc />
-    public string Id { get; }
+    public Guid Id { get; }
 
     /// <inheritdoc />
     public string SourcePath { get; private set; }
@@ -26,7 +26,7 @@ public sealed class MaterialAsset : IAsset<MaterialConfiguration>
     /// </summary>
     public MaterialAsset()
     {
-        Id = Guid.NewGuid().ToString();
+        Id = Guid.NewGuid();
         SourcePath = string.Empty;
     }
 

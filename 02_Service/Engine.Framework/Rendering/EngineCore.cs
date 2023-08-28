@@ -1,5 +1,7 @@
 ﻿using Engine.Assets.AssetHandling;
+using Engine.Assets.Assets;
 using Engine.Core.Driver;
+using Engine.Framework.Rendering.DataStructures;
 using Engine.OpenGL.Driver;
 
 namespace Engine.Framework.Rendering;
@@ -37,6 +39,11 @@ public sealed class EngineCore : IDisposable
         BasePath = basePath;
         ActiveDriver = null!;
         AssetSystem = new AssetSystem(basePath);
+
+        // Set the core for the material system.
+        Texture2D.Core = this;
+        Material.Core = this;
+        Shader.Core = this;
     }
 
     /// <summary>
@@ -64,5 +71,11 @@ public sealed class EngineCore : IDisposable
         ActiveDriver.Dispose();
     }
 
-    public T Load<T>(string assetPath) where T : class => throw new NotImplementedException();
+    /// <summary>
+    ///     Load a specific asset
+    /// </summary>
+    /// <param name="assetPath">URI to the asset</param>
+    /// <typeparam name="T">Type of the asset</typeparam>
+    /// <returns>Loaded asset</returns>
+    public T? Load<T>(string assetPath) where T : IAsset => AssetSystem.Load<T>(assetPath);
 }

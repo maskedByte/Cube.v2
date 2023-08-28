@@ -20,7 +20,7 @@ public interface IAsset : IDisposable, IEquatable<object>
     /// <summary>
     ///     Return id of this Asset
     /// </summary>
-    string Id { get; }
+    Guid Id { get; }
 
     /// <summary>
     ///     Get the source asset file path

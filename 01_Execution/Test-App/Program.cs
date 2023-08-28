@@ -8,7 +8,7 @@ using Engine.Core.Math.Vectors;
 using Engine.Framework.Components;
 using Engine.Framework.Entities;
 using Engine.Framework.Rendering;
-using Engine.Framework.Rendering.Materials;
+using Engine.Framework.Rendering.DataStructures;
 using Engine.Framework.Rendering.Shapes;
 using Engine.Framework.Rendering.Worlds;
 using SysColor = System.Drawing.Color;
@@ -44,7 +44,7 @@ public class TestApp
            .Mesh = new CubeMesh(world.Context);
 
         cube.AddComponent<MaterialComponent>()
-           .Material = core.Load<Material>("materials/grid_blue_material");
+           .Material = new Material("materials/grid_blue_material");
 
         cube.Transform.Position = new Vector3(0, 0, -5);
 

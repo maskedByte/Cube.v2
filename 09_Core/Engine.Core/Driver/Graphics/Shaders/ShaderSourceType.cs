@@ -25,13 +25,13 @@ public enum ShaderSourceType
     ///     Tesselation control shader. Responsible for controlling the level of detail of a mesh by
     ///     dividing the surface into smaller sub-triangles.
     /// </summary>
-    TessControl,
+    TessellationControl,
 
     /// <summary>
     ///     Tesselation evaluation shader. Responsible for evaluating the position of the vertices created
     ///     by the tesselation control shader.
     /// </summary>
-    TessEvaluation,
+    TessellationEvaluation,
 
     /// <summary>
     ///     Compute shader. Responsible for performing general purpose calculations on the GPU.

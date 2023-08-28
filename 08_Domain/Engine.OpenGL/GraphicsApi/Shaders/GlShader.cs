@@ -19,8 +19,8 @@ internal sealed class GlShader : IShader
         { ShaderSourceType.Vertex, ShaderType.VertexShader },
         { ShaderSourceType.Fragment, ShaderType.FragmentShader },
         { ShaderSourceType.Geometry, ShaderType.GeometryShader },
-        { ShaderSourceType.TessControl, ShaderType.TessControlShader },
-        { ShaderSourceType.TessEvaluation, ShaderType.TessEvaluationShader },
+        { ShaderSourceType.TessellationControl, ShaderType.TessControlShader },
+        { ShaderSourceType.TessellationEvaluation, ShaderType.TessEvaluationShader },
         { ShaderSourceType.Compute, ShaderType.ComputeShader }
     };
 

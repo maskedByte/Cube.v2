@@ -10,7 +10,7 @@ namespace Engine.Assets.Assets.Images;
 public sealed class ImageAsset : IAsset<Pixmap>
 {
     /// <inheritdoc />
-    public string Id { get; }
+    public Guid Id { get; }
 
     /// <inheritdoc />
     public string SourcePath { get; private set; }
@@ -25,7 +25,7 @@ public sealed class ImageAsset : IAsset<Pixmap>
     {
         Data = null!;
         SourcePath = string.Empty;
-        Id = Guid.NewGuid().ToString();
+        Id = Guid.NewGuid();
     }
 
     /// <inheritdoc />

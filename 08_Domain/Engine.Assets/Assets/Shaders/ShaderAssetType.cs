@@ -5,8 +5,7 @@ public enum ShaderAssetType
     Fragment = 0,
     Vertex,
     Geometry,
-    TessControl,
-    TessEvaluation,
-    Compute,
-    Mesh
+    TessellationControl,
+    TessellationEvaluation,
+    Compute
 }

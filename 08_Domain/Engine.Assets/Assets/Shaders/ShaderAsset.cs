@@ -12,7 +12,7 @@ public sealed class ShaderAsset : IAsset<Dictionary<ShaderAssetType, string>>
     private string _shaderData;
 
     /// <inheritdoc />
-    public string Id { get; }
+    public Guid Id { get; }
 
     /// <inheritdoc />
     public string SourcePath { get; private set; }
@@ -27,7 +27,7 @@ public sealed class ShaderAsset : IAsset<Dictionary<ShaderAssetType, string>>
     {
         Data = new Dictionary<ShaderAssetType, string>();
         SourcePath = string.Empty;
-        Id = Guid.NewGuid().ToString();
+        Id = Guid.NewGuid();
 
         _shaderData = string.Empty;
 
@@ -92,9 +92,8 @@ public sealed class ShaderAsset : IAsset<Dictionary<ShaderAssetType, string>>
         Data.Add(ShaderAssetType.Fragment, GetShaderBlock("Fragment").Trim());
         Data.Add(ShaderAssetType.Geometry, GetShaderBlock("Geometry").Trim());
         Data.Add(ShaderAssetType.Compute, GetShaderBlock("Compute").Trim());
-        Data.Add(ShaderAssetType.TessControl, GetShaderBlock("TessellationControl").Trim());
-        Data.Add(ShaderAssetType.TessEvaluation, GetShaderBlock("TessellationEvaluation").Trim());
-        Data.Add(ShaderAssetType.Mesh, GetShaderBlock("Mesh").Trim());
+        Data.Add(ShaderAssetType.TessellationControl, GetShaderBlock("TessellationControl").Trim());
+        Data.Add(ShaderAssetType.TessellationEvaluation, GetShaderBlock("TessellationEvaluation").Trim());
     }
 
     private void GetConfigBlock()

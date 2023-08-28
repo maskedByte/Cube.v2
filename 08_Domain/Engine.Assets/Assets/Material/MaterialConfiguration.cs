@@ -22,6 +22,7 @@ public struct MaterialConfiguration
     /// <summary>
     ///     Gets or initializes the file path to the shader used for rendering.
     /// </summary>
+    /// <remarks>If the ShaderFile is not set, the default shader will be used. "shader\default"</remarks>
     public string ShaderFile { get; init; } = "shader\\default";
 
     /// <summary>
@@ -32,7 +33,7 @@ public struct MaterialConfiguration
     /// <summary>
     ///     Gets or initializes the file path to the diffuse texture.
     /// </summary>
-    public string DiffuseTexture { get; init; } = "textures\\no_texture";
+    public string DiffuseTexture { get; init; } = string.Empty;
 
     /// <summary>
     ///     Gets or initializes the file path to the detail texture.
