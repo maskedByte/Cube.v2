@@ -17,13 +17,44 @@ public sealed class World : IDisposable
 
     private Material _defaultMaterial;
 
+    /// <summary>
+    ///     Gets the engine core instance.
+    /// </summary>
     public EngineCore Core { get; }
+
+    /// <summary>
+    ///     Gets the graphics device context.
+    /// </summary>
     public IContext Context { get; }
+
+    /// <summary>
+    ///     Gets or sets the world transform.
+    /// </summary>
     public Transform Transform { get; set; }
+
+    /// <summary>
+    ///     Sets or gets the ambient light color.
+    /// </summary>
     public Color AmbientLight { get; set; }
+
+    /// <summary>
+    ///     Gets or sets the renderer.
+    /// </summary>
     public IRenderer Renderer { get; set; }
+
+    /// <summary>
+    ///     Sets or gets the command queue.
+    /// </summary>
     public ICommandQueue CommandQueue { get; set; }
+
+    /// <summary>
+    ///     Sets or gets the command handler.
+    /// </summary>
     public ICommandHandler CommandHandler { get; set; }
+
+    /// <summary>
+    ///     Gets or sets the game timer.
+    /// </summary>
     public ITime Time { get; set; }
 
     /// <summary>
@@ -37,7 +68,7 @@ public sealed class World : IDisposable
         _systems = new Dictionary<Type, ISystem>();
 
         Core = core ?? throw new ArgumentNullException(nameof(core));
-        Context = core.ActiveDriver.GetContext()!;
+        Context = core.ActiveDriver.GetContext() ?? throw new Exception("No context found.");
         Time = core.ActiveDriver.GetTime();
 
         Transform = new Transform();
@@ -88,6 +119,12 @@ public sealed class World : IDisposable
     }
 
     /// <summary>
+    ///     Adds a system to handle a specific component type.
+    /// </summary>
+    /// <param name="system"></param>
+    public void AddSystem(ISystem system) => _systems.Add(system.GetCanHandle(), system);
+
+    /// <summary>
     ///     Updates the world.
     /// </summary>
     public void Update()
@@ -123,8 +160,6 @@ public sealed class World : IDisposable
 
         Core.ActiveDriver.Swap();
     }
-
-    public void AddSystem(ISystem system) => _systems.Add(system.GetCanHandle(), system);
 
     ~World()
     {

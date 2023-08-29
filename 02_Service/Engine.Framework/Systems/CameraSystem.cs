@@ -12,7 +12,7 @@ namespace Engine.Framework.Systems;
 /// <summary>
 ///     System for handling cameras entities.
 /// </summary>
-public class CameraSystem : ISystem
+public sealed class CameraSystem : ISystem
 {
     private readonly IContext _context;
     private readonly IUniformBuffer _cameraUniformBuffer;
