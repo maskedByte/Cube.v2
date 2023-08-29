@@ -1,12 +1,20 @@
-﻿namespace Engine.Core.Logging;
+﻿using Engine.Core.Logging.Targets;
+
+namespace Engine.Core.Logging;
 
 /// <summary>
-///     Log system implementation.
+///     Log system implementation that allows to log messages to multiple targets.
+/// <remarks> Default target is the console. </remarks>
 /// </summary>
 public static class Log
 {
     private static readonly object Lock = new();
     private static readonly List<ILogTarget> Targets = new();
+
+    static Log()
+    {
+        AddTarget(new ConsoleLogTarget());
+    }
 
     /// <summary>
     ///     Adds a new log target
@@ -45,12 +53,6 @@ public static class Log
 
         lock (Lock)
         {
-            if (Targets.Count == 0)
-            {
-                Console.WriteLine(logEntry.GetFormattedLogEntry());
-                return;
-            }
-
             logTasks.AddRange(Targets.Select(target => target.LogMessageAsync(logEntry)));
         }
 
