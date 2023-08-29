@@ -88,7 +88,7 @@ public class Entity : IEntity
     }
 
     /// <inheritdoc />
-    public T AddComponent<T>() where T : IComponent
+    public T AddComponent<T>() where T : class, IComponent
     {
         if (Components.TryGetValue(typeof(T), out var value))
         {
@@ -102,7 +102,7 @@ public class Entity : IEntity
     }
 
     /// <inheritdoc />
-    public void RemoveComponent<T>() where T : IComponent
+    public void RemoveComponent<T>() where T : class, IComponent
     {
         if (!Components.ContainsKey(typeof(T)))
         {
@@ -113,7 +113,7 @@ public class Entity : IEntity
     }
 
     /// <inheritdoc />
-    public T? GetComponent<T>() where T : IComponent
+    public T? GetComponent<T>() where T : class, IComponent
     {
         if (Components.TryGetValue(typeof(T), out var component))
         {
@@ -124,5 +124,5 @@ public class Entity : IEntity
     }
 
     /// <inheritdoc />
-    public bool HasComponent<T>() where T : IComponent => Components.ContainsKey(typeof(T));
+    public bool HasComponent<T>() where T : class, IComponent => Components.ContainsKey(typeof(T));
 }

@@ -5,7 +5,7 @@ namespace Engine.Framework.Components;
 
 public class MeshComponent : IComponent
 {
-    public IEntity? Owner { get; set; }
+    public IEntity Owner { get; set; } = null!;
 
-    public IMesh? Mesh { get; set; }
+    public IMesh Mesh { get; set; } = null!;
 }

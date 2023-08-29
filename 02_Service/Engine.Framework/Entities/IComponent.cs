@@ -8,5 +8,5 @@ public interface IComponent
     /// <summary>
     ///     Gets or sets the owner entity of the component.
     /// </summary>
-    IEntity? Owner { get; set; }
+    IEntity Owner { get; set; }
 }

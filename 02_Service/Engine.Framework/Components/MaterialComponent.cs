@@ -3,9 +3,9 @@ using Engine.Framework.Rendering.DataStructures;
 
 namespace Engine.Framework.Components;
 
-public class MaterialComponent : IComponent
+public sealed class MaterialComponent : IComponent
 {
-    public IEntity? Owner { get; set; }
+    public IEntity Owner { get; set; } = null!;
 
     public Material Material { get; set; }
 }
