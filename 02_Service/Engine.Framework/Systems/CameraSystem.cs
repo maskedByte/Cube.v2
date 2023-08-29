@@ -12,9 +12,8 @@ namespace Engine.Framework.Systems;
 /// <summary>
 ///     System for handling cameras entities.
 /// </summary>
-public sealed class CameraSystem : ISystem
+public sealed class CameraSystem : SystemBase<CameraComponent>
 {
-    private readonly IContext _context;
     private readonly IUniformBuffer _cameraUniformBuffer;
 
     /// <summary>
@@ -23,10 +22,9 @@ public sealed class CameraSystem : ISystem
     /// </summary>
     /// <param name="context">The graphics device context.</param>
     public CameraSystem(IContext context)
+        : base(context)
     {
-        _context = context;
-
-        _cameraUniformBuffer = context.CreateUniformBuffer(
+        _cameraUniformBuffer = Context.CreateUniformBuffer(
             "Matrices",
             new BufferLayout(
                 new[]
@@ -39,7 +37,7 @@ public sealed class CameraSystem : ISystem
         );
     }
 
-    public void Handle(SystemStage stage, IComponent component, ICommandQueue commandQueue, float deltaTime)
+    public override void Handle(SystemStage stage, IComponent component, ICommandQueue commandQueue, float deltaTime)
     {
         switch (stage)
         {
@@ -79,7 +77,5 @@ public sealed class CameraSystem : ISystem
         }
     }
 
-    public Type GetCanHandle() => typeof(CameraComponent);
-
-    public void Dispose() => _cameraUniformBuffer.Dispose();
+    public override void Dispose() => _cameraUniformBuffer.Dispose();
 }

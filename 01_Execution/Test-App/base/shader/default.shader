@@ -19,14 +19,14 @@
     layout (std140, binding = 1) uniform Model
     {
         mat4 m_ModelMatrix;
-//        vec4 v_DefaultColor;
-//        vec4 v_MaterialColor;
     };
 
-//    layout (std140, binding = 2) uniform UVOffsets
-//    {
-//        vec2 v_UVOffset;
-//    };
+    layout (std140, binding = 2) uniform Material
+    {
+        vec4 v_MaterialColor;
+        vec4 v_DefaultColor;
+        vec2 v_Tiling;
+    };
 
     // Output to Fragment Shader
     out vec4 v_MaterialColorOut;
@@ -39,8 +39,10 @@
     {
         gl_Position = m_ProjectionMatrix * m_ViewMatrix * m_ModelMatrix * a_Position;
 
+        v_MaterialColorOut = v_MaterialColor;
+        v_DefaultColorOut = v_DefaultColor;
         v_VertexColorOut = a_Color;
-        v_TextureCoordOut = a_TexCoord;
+        v_TextureCoordOut = a_TexCoord * v_Tiling;
     }
 }
 

@@ -219,7 +219,7 @@ public interface IContext : IDisposable
     /// <summary>
     ///     Render a element
     /// </summary>
-    void RenderElement();
+    void DrawElements();
 
     /// <summary>
     ///     Register a uniform buffer to the context

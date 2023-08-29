@@ -221,7 +221,7 @@ internal class Context : IContext
     public void SetShaderUniformMat4(string name, Matrix4 value) => BoundShaderProgram?[name]?.SetValue(value);
 
     /// <inheritdoc />
-    public void RenderElement() =>
+    public void DrawElements() =>
         Gl.DrawElements(DrawModeToBeginMode[PrimitiveType], (int)IndexCount, DrawElementsType.UnsignedInt, nint.Zero);
 
     /// <inheritdoc />

@@ -5,7 +5,7 @@
 /// </summary>
 public class CommandQueue : ICommandQueue
 {
-    private readonly SortedList<uint, ICommand> _commands;
+    private readonly List<ICommand> _commands;
     private int _currentIndex;
     private bool _started;
 
@@ -16,7 +16,7 @@ public class CommandQueue : ICommandQueue
     /// </summary>
     public CommandQueue()
     {
-        _commands = new SortedList<uint, ICommand>();
+        _commands = new List<ICommand>();
         _currentIndex = 0;
         _started = false;
         IsReady = false;
@@ -36,7 +36,7 @@ public class CommandQueue : ICommandQueue
     }
 
     /// <inheritdoc />
-    public void Enqueue(ICommand command) => _commands.Add(command.Priority, command);
+    public void Enqueue(ICommand command) => _commands.Add(command);
 
     /// <inheritdoc />
     public bool TryDequeue(out ICommand? command)
@@ -53,7 +53,7 @@ public class CommandQueue : ICommandQueue
             return null;
         }
 
-        var firstCommand = _commands.Values[0];
+        var firstCommand = _commands[0];
         _commands.RemoveAt(0);
         _currentIndex++;
         return firstCommand;
@@ -65,9 +65,6 @@ public class CommandQueue : ICommandQueue
         {
             return;
         }
-
-        // Prepare the queue for rendering and hand over to the renderer
-        // TODO: Implement
 
         _started = false;
         IsReady = true;

@@ -79,6 +79,15 @@ public sealed class World : IDisposable
 
         // Add default systems.
         AddSystem(new CameraSystem(Context));
+        AddSystem(new MeshSystem(Context));
+        AddSystem(new MaterialSystem(Context));
+
+        //AddSystem(new LightSystem(Context));
+        //AddSystem(new PhysicsSystem(Context));
+        //AddSystem(new ParticleSystem(Context));
+        //AddSystem(new AnimationSystem(Context));
+        //AddSystem(new AudioSystem(Context));
+        //AddSystem(new ScriptSystem(Context));
 
         // Defaults
         _defaultMaterial = new Material();
@@ -121,8 +130,8 @@ public sealed class World : IDisposable
     /// <summary>
     ///     Adds a system to handle a specific component type.
     /// </summary>
-    /// <param name="system"></param>
-    public void AddSystem(ISystem system) => _systems.Add(system.GetCanHandle(), system);
+    /// <param name="instance">The system instance.</param>
+    public void AddSystem<T>(SystemBase<T> instance) => _systems.Add(instance.GetCanHandle(), instance);
 
     /// <summary>
     ///     Updates the world.

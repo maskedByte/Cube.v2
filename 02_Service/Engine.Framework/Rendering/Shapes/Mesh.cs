@@ -10,6 +10,7 @@ namespace Engine.Framework.Rendering.Shapes;
 public abstract class Mesh : IMesh
 {
     private readonly IContext _context;
+    private bool _builded;
 
     /// <inheritdoc />
     public Guid Id { get; }
@@ -46,6 +47,11 @@ public abstract class Mesh : IMesh
     /// <inheritdoc />
     public void Build()
     {
+        if (_builded)
+        {
+            return;
+        }
+
         BufferArray = _context.CreateBufferArray();
 
         // Vertex Buffer - 0 + 1 for color
@@ -86,6 +92,8 @@ public abstract class Mesh : IMesh
         BufferArray.AddBuffer(ibo, BufferType.Index);
 
         BufferArray.Build();
+
+        _builded = true;
     }
 
     public bool Equals(IMesh? other) => other is not null && Id.Equals(other.Id);

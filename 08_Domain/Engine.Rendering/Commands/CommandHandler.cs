@@ -185,9 +185,9 @@ public class CommandHandler : CommandHandlerBase
 
     private void RenderElementHandler(IContext context, ICommand command)
     {
-        if (command is RenderElementCommand bindCommand)
+        if (command is DrawElementsCommand bindCommand)
         {
-            context.RenderElement();
+            context.DrawElements();
         }
     }
 

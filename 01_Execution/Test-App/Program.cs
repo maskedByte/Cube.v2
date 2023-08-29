@@ -141,7 +141,7 @@ public class TestApp
         //     new BindBufferArrayCommand(triangle.BufferArray),
         //     primitiveTypeCommands[currentSetPrimitiveType],
         //     new SetIndexCountCommand(triangle.IndexCount),
-        //     new RenderElementCommand()
+        //     new DrawElementsCommand()
         // };
         //
         // var perspectiveUpdateCommands = new CommandGroup
