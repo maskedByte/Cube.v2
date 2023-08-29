@@ -17,7 +17,7 @@ namespace Test_App;
 
 public class TestApp
 {
-    private const string BasePath = "./base/";
+    private const string BasePath = ".\\base\\";
 
     public static void Main()
     {
@@ -44,7 +44,7 @@ public class TestApp
            .Mesh = new CubeMesh(world.Context);
 
         cube.AddComponent<MaterialComponent>()
-           .Material = new Material("materials/grid_blue_material");
+           .Material = new Material("materials\\grid_blue_material");
 
         cube.Transform.Position = new Vector3(0, 0, -5);
 
@@ -59,29 +59,6 @@ public class TestApp
         driver.Close();
         world.Dispose();
 
-        // Current way to go
-        // var assetSystem = new AssetSystem(BasePath);
-        // assetSystem.Compile(
-        //     new AssetCompilerConfiguration
-        //     {
-        //         CompileExtensions = null,
-        //         DeleteCompiledFiles = true
-        //     }
-        // );
-        //
-        // // Load a shader
-        // var shaderAsset = assetSystem.Load<ShaderAsset>("shader/default");
-        // var shader = Shader.FromAsset(shaderAsset);
-        //
-        // // Load a Material
-        // var materialAsset = assetSystem.Load<MaterialAsset>("materials/default");
-        // var material = Material.FromAsset(materialAsset);
-        //
-        // // Create simple OpenGl window
-        // IDriver driver = new OpenGlDriver();
-        // var window = driver.CreateWindow(1280, 1024, false);
-        // var context = driver.GetContext() ?? throw new ArgumentNullException(nameof(IContext));
-        //
         // var shaderProgram = LoadShader(context);
         // var triangle = new CubeMesh(context);
         // var triangleTransform = new Transform();
