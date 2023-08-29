@@ -81,7 +81,5 @@ public sealed class CameraSystem : ISystem
 
     public Type GetCanHandle() => typeof(CameraComponent);
 
-    public void Dispose()
-    {
-    }
+    public void Dispose() => _cameraUniformBuffer.Dispose();
 }
