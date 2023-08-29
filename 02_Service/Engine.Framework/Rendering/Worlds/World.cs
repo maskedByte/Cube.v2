@@ -59,7 +59,7 @@ public sealed class World : IDisposable
     /// <param name="name"></param>
     /// <param name="parent"></param>
     /// <returns></returns>
-    public IEntity Create(string name = "", IEntity? parent = null)
+    public IEntity CreateEntity(string name = "", IEntity? parent = null)
     {
         var entity = new Entity(this, parent)
         {
@@ -67,6 +67,20 @@ public sealed class World : IDisposable
                 ? $"Entity_{_entities.Count}"
                 : name
         };
+
+        _entities.Add(entity);
+
+        return entity;
+    }
+
+    /// <summary>
+    ///     Add an entity to the world.
+    /// </summary>
+    /// <param name="entity">The entity to add.</param>
+    /// <returns>The entity that was added.</returns>
+    public IEntity AddEntity(IEntity entity)
+    {
+        ArgumentNullException.ThrowIfNull(entity);
 
         _entities.Add(entity);
 

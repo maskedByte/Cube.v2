@@ -68,6 +68,8 @@ public class Entity : IEntity
 
         Parent = parent;
         Parent?.Children.Add(this);
+
+        World.AddEntity(this);
     }
 
     /// <inheritdoc />

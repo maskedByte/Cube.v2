@@ -103,6 +103,7 @@ internal class Camera : ICamera
         FarClip = 1000f;
         _clearColor = Color.Black;
         ClearColor = Color.Black;
+        FieldOfView = 45f;
 
         Transform = new Transform
         {
