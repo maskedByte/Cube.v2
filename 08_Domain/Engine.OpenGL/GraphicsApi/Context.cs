@@ -164,6 +164,12 @@ internal class Context : IContext
     {
         BoundShaderProgram = shaderProgram;
         shaderProgram.Bind();
+
+        // Bind uniform buffers
+        foreach (var uniformBuffer in UniformBuffers)
+        {
+            uniformBuffer.Attach(shaderProgram);
+        }
     }
 
     /// <inheritdoc />
@@ -175,12 +181,7 @@ internal class Context : IContext
     /// <inheritdoc />
     public void BindUniformBuffer(IUniformBuffer uniformBuffer)
     {
-        if (BoundShaderProgram == null)
-        {
-            throw new InvalidOperationException("No shader program bound.");
-        }
-
-        uniformBuffer.Attach(BoundShaderProgram);
+        UniformBuffers.Add(uniformBuffer);
         ActiveUniformBuffer = uniformBuffer;
     }
 

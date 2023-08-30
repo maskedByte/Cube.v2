@@ -44,11 +44,6 @@ public sealed class World : IDisposable
     public RendererBase Renderer { get; set; }
 
     /// <summary>
-    ///     Sets or gets the command queue.
-    /// </summary>
-    public ICommandQueue CommandQueue { get; set; }
-
-    /// <summary>
     ///     Sets or gets the command handler.
     /// </summary>
     public ICommandHandler CommandHandler { get; set; }
@@ -75,9 +70,8 @@ public sealed class World : IDisposable
 
         Transform = new Transform();
         AmbientLight = Color.White;
-        CommandQueue = new CommandQueue();
         CommandHandler = new CommandHandler();
-        Renderer = new ForwardRenderer(Context, CommandQueue, CommandHandler);
+        Renderer = new ForwardRenderer(Context, null, CommandHandler);
 
         // Add default systems.
         AddSystem(new CameraSystem(Context));
@@ -194,7 +188,6 @@ public sealed class World : IDisposable
     public void Dispose()
     {
         Core.Dispose();
-        CommandQueue.Dispose();
         CommandHandler.Dispose();
         Renderer.Dispose();
 

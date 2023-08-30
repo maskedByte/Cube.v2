@@ -5,7 +5,7 @@ namespace Engine.Rendering.Renderers;
 
 public class ForwardRenderer : RendererBase
 {
-    public ForwardRenderer(IContext context, ICommandQueue commandQueue, ICommandHandler commandHandler)
+    public ForwardRenderer(IContext context, ICommandQueue? commandQueue, ICommandHandler commandHandler)
         : base(context, commandQueue, commandHandler)
     {
     }

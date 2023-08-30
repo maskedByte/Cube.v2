@@ -37,7 +37,8 @@ public class TestApp
         world.AmbientLight = Color.Black;
 
         var mainCamera = new Entity(world);
-        mainCamera.AddComponent<CameraComponent>();
+        mainCamera.AddComponent<CameraComponent>()
+           .ClearColor = SysColor.Gray;
 
         var cube = new Entity(world);
         cube.AddComponent<MeshComponent>()
@@ -45,8 +46,8 @@ public class TestApp
 
         cube.AddComponent<MaterialComponent>()
            .Material = new Material("materials\\grid_blue_material");
-
-        cube.Transform.Position = new Vector3(0, 0, -5);
+        cube.Transform.Scale = new Vector3(2, 2, 2);
+        cube.Transform.Position = Vector3.Forward * 5f;
 
         // Main loop
         while (!Keyboard.GetKey(KeyCode.Escape) && !window.WindowTerminated())

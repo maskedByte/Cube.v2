@@ -6,14 +6,14 @@ namespace Engine.Rendering.Renderers;
 public abstract class RendererBase : IRenderer
 {
     protected IContext Context { get; }
-    protected ICommandQueue CommandQueue { get; }
+    protected ICommandQueue? CommandQueue { get; }
     protected ICommandHandler CommandHandler { get; }
 
-    protected RendererBase(IContext context, ICommandQueue commandQueue, ICommandHandler commandHandler)
+    protected RendererBase(IContext context, ICommandQueue? commandQueue, ICommandHandler commandHandler)
     {
         Context = context ?? throw new ArgumentNullException(nameof(context));
-        CommandQueue = commandQueue ?? throw new ArgumentNullException(nameof(commandQueue));
         CommandHandler = commandHandler ?? throw new ArgumentNullException(nameof(commandHandler));
+        CommandQueue = commandQueue;
     }
 
     /// <summary>
@@ -21,6 +21,11 @@ public abstract class RendererBase : IRenderer
     /// </summary>
     public void Render()
     {
+        if (CommandQueue == null)
+        {
+            return;
+        }
+
         if (!CommandQueue.IsReady)
         {
             return;
@@ -41,7 +46,7 @@ public abstract class RendererBase : IRenderer
     /// <param name="commandQueue">A queue with commands to render.</param>
     public void Render(ICommandQueue commandQueue)
     {
-        if (!CommandQueue.IsReady)
+        if (!commandQueue.IsReady)
         {
             return;
         }
@@ -55,7 +60,7 @@ public abstract class RendererBase : IRenderer
         EndRender();
     }
 
-    public void Dispose() => CommandQueue.Dispose();
+    public void Dispose() => CommandQueue?.Dispose();
 
     public virtual void BeginRender()
     {
