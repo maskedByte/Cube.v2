@@ -35,6 +35,26 @@ public abstract class RendererBase : IRenderer
         EndRender();
     }
 
+    /// <summary>
+    ///     Renders all commands from the given queue.
+    /// </summary>
+    /// <param name="commandQueue">A queue with commands to render.</param>
+    public void Render(ICommandQueue commandQueue)
+    {
+        if (!CommandQueue.IsReady)
+        {
+            return;
+        }
+
+        BeginRender();
+        while (commandQueue.TryDequeue(out var command))
+        {
+            CommandHandler.Handle(Context, command!);
+        }
+
+        EndRender();
+    }
+
     public void Dispose() => CommandQueue.Dispose();
 
     public virtual void BeginRender()

@@ -14,6 +14,7 @@ public sealed class World : IDisposable
 {
     private readonly List<IEntity> _entities;
     private readonly Dictionary<Type, ISystem> _systems;
+    private readonly Dictionary<Guid, ICommandQueue> _entityCommandQueue;
 
     private Material _defaultMaterial;
 
@@ -40,7 +41,7 @@ public sealed class World : IDisposable
     /// <summary>
     ///     Gets or sets the renderer.
     /// </summary>
-    public IRenderer Renderer { get; set; }
+    public RendererBase Renderer { get; set; }
 
     /// <summary>
     ///     Sets or gets the command queue.
@@ -66,6 +67,7 @@ public sealed class World : IDisposable
     {
         _entities = new List<IEntity>();
         _systems = new Dictionary<Type, ISystem>();
+        _entityCommandQueue = new Dictionary<Guid, ICommandQueue>();
 
         Core = core ?? throw new ArgumentNullException(nameof(core));
         Context = core.ActiveDriver.GetContext() ?? throw new Exception("No context found.");
@@ -108,9 +110,7 @@ public sealed class World : IDisposable
                 : name
         };
 
-        _entities.Add(entity);
-
-        return entity;
+        return AddEntity(entity);
     }
 
     /// <summary>
@@ -123,8 +123,21 @@ public sealed class World : IDisposable
         ArgumentNullException.ThrowIfNull(entity);
 
         _entities.Add(entity);
+        _entityCommandQueue.Add(entity.Id, new CommandQueue());
 
         return entity;
+    }
+
+    /// <summary>
+    ///     Removes an entity from the world.
+    /// </summary>
+    /// <param name="entity">The entity to remove.</param>
+    public void RemoveEntity(IEntity entity)
+    {
+        ArgumentNullException.ThrowIfNull(entity);
+
+        _entities.Remove(entity);
+        _entityCommandQueue.Remove(entity.Id);
     }
 
     /// <summary>
@@ -140,13 +153,14 @@ public sealed class World : IDisposable
     {
         Core.ActiveDriver.Clear();
         Core.ActiveDriver.HandleEvents();
-        CommandQueue.Begin();
 
         foreach (var entity in _entities.Where(e => e.IsActive))
         {
+            var entityCommandQueue = _entityCommandQueue[entity.Id];
+            entityCommandQueue.Begin();
             foreach (var component in entity.Components.Where(x => _systems.ContainsKey(x.Key)))
             {
-                _systems[component.Key].Handle(SystemStage.Update, component.Value, CommandQueue, Time.DeltaTime);
+                _systems[component.Key].Handle(SystemStage.Update, component.Value, entityCommandQueue, Time.DeltaTime);
             }
         }
     }
@@ -158,14 +172,16 @@ public sealed class World : IDisposable
     {
         foreach (var entity in _entities.Where(e => e.IsActive))
         {
+            var entityCommandQueue = _entityCommandQueue[entity.Id];
             foreach (var component in entity.Components.Where(x => _systems.ContainsKey(x.Key)))
             {
-                _systems[component.Key].Handle(SystemStage.Render, component.Value, CommandQueue, Time.DeltaTime);
+                _systems[component.Key].Handle(SystemStage.Render, component.Value, entityCommandQueue, Time.DeltaTime);
             }
-        }
 
-        CommandQueue.End();
-        Renderer.Render();
+            entityCommandQueue.End();
+
+            Renderer.Render(entityCommandQueue);
+        }
 
         Core.ActiveDriver.Swap();
     }
