@@ -4,10 +4,12 @@ using Engine.Core.Driver;
 using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Driver.Input;
 using Engine.Core.Math.Base;
+using Engine.Core.Math.Quaternions;
 using Engine.Core.Math.Vectors;
 using Engine.Framework.Components;
 using Engine.Framework.Entities;
 using Engine.Framework.Rendering;
+using Engine.Framework.Rendering.Cameras;
 using Engine.Framework.Rendering.DataStructures;
 using Engine.Framework.Rendering.Shapes;
 using Engine.Framework.Rendering.Worlds;
@@ -37,21 +39,26 @@ public class TestApp
         world.AmbientLight = Color.Black;
 
         var mainCamera = new Entity(world);
-        mainCamera.AddComponent<CameraComponent>()
-           .ClearColor = SysColor.Gray;
+        var camComponent = mainCamera.AddComponent<CameraComponent>();
+        camComponent.ClearColor = SysColor.Gray;
+        camComponent.ProjectionMode = ProjectionMode.Perspective;
+        camComponent.FieldOfView = 50f;
 
         var cube = new Entity(world);
         cube.AddComponent<MeshComponent>()
            .Mesh = new CubeMesh(world.Context);
-
         cube.AddComponent<MaterialComponent>()
            .Material = new Material("materials\\grid_blue_material");
-        cube.Transform.Scale = new Vector3(2, 2, 2);
-        cube.Transform.Position = Vector3.Forward * 5f;
+        cube.Transform.Scale = new Vector3(1, 1, 1);
+        cube.Transform.Position = Vector3.Forward * -5f;
 
         // Main loop
+        var rotation = 0f;
         while (!Keyboard.GetKey(KeyCode.Escape) && !window.WindowTerminated())
         {
+            rotation += 1f * world.Time.DeltaTime;
+            cube.Transform.Rotation = Quaternion.FromEulerAngles(rotation, -rotation, 0);
+
             world.Update();
             world.Render();
         }

@@ -22,14 +22,8 @@
         <None Update="base\Textures\grid_blue.png">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Update="base\shader\fragment.glsl">
-            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-        </None>
-        <None Update="base\shader\vertex.glsl">
-            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-        </None>
         <None Update="base\shader\default.shader">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
         <None Update="base\materials\grid_blue_material.mat">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
