@@ -2,5 +2,6 @@
 
 public enum CommandPriority
 {
-    Default = 1000
+    Default = 1000,
+    ShaderBind = 100
 }

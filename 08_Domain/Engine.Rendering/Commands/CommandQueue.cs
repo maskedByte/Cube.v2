@@ -5,7 +5,7 @@
 /// </summary>
 public class CommandQueue : ICommandQueue
 {
-    private readonly List<ICommand> _commands;
+    private List<ICommand> _commands;
     private int _currentIndex;
     private bool _started;
 
@@ -65,6 +65,11 @@ public class CommandQueue : ICommandQueue
         {
             return;
         }
+
+        _commands = _commands
+           .DistinctBy(c => c.Id)
+           .OrderBy(c => c.Priority)
+           .ToList();
 
         _started = false;
         IsReady = true;
