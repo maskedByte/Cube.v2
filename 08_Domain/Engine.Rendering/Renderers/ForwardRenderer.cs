@@ -10,7 +10,9 @@ public class ForwardRenderer : RendererBase
     {
     }
 
-    public override void BeginRender() => Context.Wireframe = false;
+    public override void BeginRender()
+    {
+    }
 
     public override void EndRender()
     {
