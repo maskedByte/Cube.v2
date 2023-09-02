@@ -5,7 +5,7 @@ namespace Engine.Rendering.Commands.ShaderCommands;
 
 public sealed class BindShaderProgramCommand : CommandBase
 {
-    public IShaderProgram ShaderProgram { get; }
+    public IShaderProgram ShaderProgram { get; set; }
 
     public BindShaderProgramCommand(IShaderProgram shaderProgram)
         : base(CommandType.BindShaderProgram)

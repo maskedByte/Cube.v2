@@ -15,6 +15,7 @@ namespace Engine.Framework.Systems;
 public sealed class CameraSystem : SystemBase<CameraComponent>
 {
     private readonly IUniformBuffer _cameraUniformBuffer;
+    private readonly BindUniformBufferCommand _commandCache;
 
     /// <summary>
     ///     Creates a new instance of the <see cref="CameraSystem" /> class
@@ -35,6 +36,9 @@ public sealed class CameraSystem : SystemBase<CameraComponent>
             ),
             0
         );
+
+        context.RegisterUniformBuffer(_cameraUniformBuffer);
+        _commandCache = new BindUniformBufferCommand(_cameraUniformBuffer);
     }
 
     public override void Handle(SystemStage stage, IComponent component, ICommandQueue commandQueue, float deltaTime)
@@ -42,6 +46,7 @@ public sealed class CameraSystem : SystemBase<CameraComponent>
         switch (stage)
         {
             case SystemStage.Start:
+                break;
             case SystemStage.Update:
                 var cameraComponent = (CameraComponent)component;
 
@@ -70,7 +75,7 @@ public sealed class CameraSystem : SystemBase<CameraComponent>
 
                 break;
             case SystemStage.Render:
-                commandQueue.Enqueue(new BindUniformBufferCommand(_cameraUniformBuffer));
+                commandQueue.Enqueue(_commandCache);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(stage), stage, null);

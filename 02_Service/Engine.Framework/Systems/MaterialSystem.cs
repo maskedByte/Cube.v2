@@ -14,6 +14,9 @@ namespace Engine.Framework.Systems;
 public sealed class MaterialSystem : SystemBase<MaterialComponent>
 {
     private readonly IUniformBuffer _materialUniformBuffer;
+    private BindShaderProgramCommand? _bindShaderProgramCommand;
+    private BindUniformBufferCommand? _bindUniformBufferCommand;
+    private BindTextureCommand? _bindTextureCommand;
 
     /// <summary>
     ///     Creates a new instance of the <see cref="MaterialSystem" /> class to handle entities with a
@@ -35,6 +38,8 @@ public sealed class MaterialSystem : SystemBase<MaterialComponent>
             ),
             2
         );
+
+        context.RegisterUniformBuffer(_materialUniformBuffer);
     }
 
     public override void Handle(SystemStage stage, IComponent component, ICommandQueue commandQueue, float deltaTime)
@@ -49,41 +54,82 @@ public sealed class MaterialSystem : SystemBase<MaterialComponent>
                 _materialUniformBuffer.SetUniformData("v_MaterialColor", material.Color);
                 _materialUniformBuffer.SetUniformData("v_DefaultColor", Color.White);
                 _materialUniformBuffer.SetUniformData("v_Tiling", material.Tiling);
-
                 break;
+
             case SystemStage.Render:
-                commandQueue.Enqueue(new BindShaderProgramCommand(material.Shader.InternalShaderProgram));
-                commandQueue.Enqueue(new BindUniformBufferCommand(_materialUniformBuffer));
-                commandQueue.Enqueue(new BindTextureCommand(material.Diffuse.InternalTexture, TextureUnit.DiffuseColor));
+
+                if (_bindShaderProgramCommand is null)
+                {
+                    _bindShaderProgramCommand = new BindShaderProgramCommand(material.Shader.InternalShaderProgram);
+                }
+                else
+                {
+                    _bindShaderProgramCommand.ShaderProgram = material.Shader.InternalShaderProgram;
+                }
+
+                if (_bindUniformBufferCommand is null)
+                {
+                    _bindUniformBufferCommand = new BindUniformBufferCommand(_materialUniformBuffer);
+                }
+                else
+                {
+                    _bindUniformBufferCommand.UniformBuffer = _materialUniformBuffer;
+                }
+
+                if (_bindTextureCommand is null)
+                {
+                    _bindTextureCommand = new BindTextureCommand(material.Diffuse.InternalTexture, TextureUnit.DiffuseColor);
+                }
+                else
+                {
+                    _bindTextureCommand.Texture = material.Diffuse.InternalTexture;
+                    _bindTextureCommand.TextureUnit = (uint)TextureUnit.DiffuseColor;
+                }
+
+                commandQueue.Enqueue(_bindShaderProgramCommand);
+                commandQueue.Enqueue(_bindUniformBufferCommand);
+                commandQueue.Enqueue(_bindTextureCommand);
 
                 if (material.Detail.HasValue)
                 {
-                    commandQueue.Enqueue(new BindTextureCommand(material.Detail.Value.InternalTexture, TextureUnit.DetailColor));
+                    _bindTextureCommand.Texture = material.Detail.Value.InternalTexture;
+                    _bindTextureCommand.TextureUnit = (uint)TextureUnit.DetailColor;
+                    commandQueue.Enqueue(_bindTextureCommand);
                 }
 
                 if (material.Metallic.HasValue)
                 {
-                    commandQueue.Enqueue(new BindTextureCommand(material.Metallic.Value.InternalTexture, TextureUnit.MetallicColor));
+                    _bindTextureCommand.Texture = material.Metallic.Value.InternalTexture;
+                    _bindTextureCommand.TextureUnit = (uint)TextureUnit.MetallicColor;
+                    commandQueue.Enqueue(_bindTextureCommand);
                 }
 
                 if (material.Normal.HasValue)
                 {
-                    commandQueue.Enqueue(new BindTextureCommand(material.Normal.Value.InternalTexture, TextureUnit.NormalColor));
+                    _bindTextureCommand.Texture = material.Normal.Value.InternalTexture;
+                    _bindTextureCommand.TextureUnit = (uint)TextureUnit.NormalColor;
+                    commandQueue.Enqueue(_bindTextureCommand);
                 }
 
                 if (material.Height.HasValue)
                 {
-                    commandQueue.Enqueue(new BindTextureCommand(material.Height.Value.InternalTexture, TextureUnit.HeightColor));
+                    _bindTextureCommand.Texture = material.Height.Value.InternalTexture;
+                    _bindTextureCommand.TextureUnit = (uint)TextureUnit.HeightColor;
+                    commandQueue.Enqueue(_bindTextureCommand);
                 }
 
                 if (material.Emission.HasValue)
                 {
-                    commandQueue.Enqueue(new BindTextureCommand(material.Emission.Value.InternalTexture, TextureUnit.EmissionColor));
+                    _bindTextureCommand.Texture = material.Emission.Value.InternalTexture;
+                    _bindTextureCommand.TextureUnit = (uint)TextureUnit.EmissionColor;
+                    commandQueue.Enqueue(_bindTextureCommand);
                 }
 
                 if (material.DetailMask.HasValue)
                 {
-                    commandQueue.Enqueue(new BindTextureCommand(material.DetailMask.Value.InternalTexture, TextureUnit.DetailMaskColor));
+                    _bindTextureCommand.Texture = material.DetailMask.Value.InternalTexture;
+                    _bindTextureCommand.TextureUnit = (uint)TextureUnit.DetailMaskColor;
+                    commandQueue.Enqueue(_bindTextureCommand);
                 }
 
                 break;

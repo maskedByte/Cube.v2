@@ -10,7 +10,7 @@
     layout (location = 2) in vec2 a_TexCoord;
     layout (location = 3) in vec2 a_Normal;
 
-    layout (std140) uniform Matrices
+    layout (std140, binding = 0) uniform Matrices
     {
         mat4 m_ViewMatrix;
         mat4 m_ProjectionMatrix;

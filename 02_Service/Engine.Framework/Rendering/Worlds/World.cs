@@ -15,6 +15,7 @@ public sealed class World : IDisposable
     private readonly List<IEntity> _entities;
     private readonly Dictionary<Type, ISystem> _systems;
     private readonly Dictionary<Guid, ICommandQueue> _entityCommandQueue;
+    private readonly bool _firstRun;
 
     private Material _defaultMaterial;
 
@@ -63,6 +64,7 @@ public sealed class World : IDisposable
         _entities = new List<IEntity>();
         _systems = new Dictionary<Type, ISystem>();
         _entityCommandQueue = new Dictionary<Guid, ICommandQueue>();
+        _firstRun = true;
 
         Core = core ?? throw new ArgumentNullException(nameof(core));
         Context = core.ActiveDriver.GetContext() ?? throw new Exception("No context found.");
@@ -147,6 +149,19 @@ public sealed class World : IDisposable
     {
         Core.ActiveDriver.Clear();
         Core.ActiveDriver.HandleEvents();
+
+        if (_firstRun)
+        {
+            foreach (var entity in _entities)
+            {
+                var entityCommandQueue = _entityCommandQueue[entity.Id];
+                entityCommandQueue.Begin();
+                foreach (var component in entity.Components.Where(x => _systems.ContainsKey(x.Key)))
+                {
+                    _systems[component.Key].Handle(SystemStage.Start, component.Value, entityCommandQueue, Time.DeltaTime);
+                }
+            }
+        }
 
         foreach (var entity in _entities.Where(e => e.IsActive))
         {

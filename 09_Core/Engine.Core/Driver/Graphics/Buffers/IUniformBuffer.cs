@@ -15,7 +15,7 @@ public interface IUniformBuffer : IBuffer
     /// </summary>
     /// <remarks>Checks internally if the buffer was already bound to this shader</remarks>
     /// <param name="shaderProgram"><see cref="IUniformBuffer" /> to attach the <see cref="IShaderProgram" /> to</param>
-    void Attach(IShaderProgram shaderProgram);
+    void Attach(IShaderProgram? shaderProgram);
 
     /// <summary>
     ///     Set <see cref="IUniformBuffer" /> buffer date for <paramref name="name" /> of type <see cref="float" />

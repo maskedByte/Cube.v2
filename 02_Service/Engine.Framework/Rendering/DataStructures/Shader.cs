@@ -1,4 +1,5 @@
 ﻿using Engine.Assets.Assets.Shaders;
+using Engine.Core.Driver;
 using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Logging;
 
@@ -49,6 +50,9 @@ public struct Shader
         }
 
         InternalShaderProgram = context.CreateShaderProgram();
+        Name = $"ShaderProgram-{InternalShaderProgram.GetId()}";
+
+        var hasShader = false;
 
         if (shaderAsset.HasShader(ShaderAssetType.Vertex))
         {
@@ -58,6 +62,7 @@ public struct Shader
                     shaderAsset.Data[ShaderAssetType.Vertex]
                 )
             );
+            hasShader = true;
         }
 
         if (shaderAsset.HasShader(ShaderAssetType.Fragment))
@@ -68,6 +73,7 @@ public struct Shader
                     shaderAsset.Data[ShaderAssetType.Fragment]
                 )
             );
+            hasShader = true;
         }
 
         if (shaderAsset.HasShader(ShaderAssetType.Geometry))
@@ -78,6 +84,7 @@ public struct Shader
                     shaderAsset.Data[ShaderAssetType.Geometry]
                 )
             );
+            hasShader = true;
         }
 
         if (shaderAsset.HasShader(ShaderAssetType.TessellationControl))
@@ -88,6 +95,7 @@ public struct Shader
                     shaderAsset.Data[ShaderAssetType.TessellationControl]
                 )
             );
+            hasShader = true;
         }
 
         if (shaderAsset.HasShader(ShaderAssetType.TessellationEvaluation))
@@ -98,6 +106,7 @@ public struct Shader
                     shaderAsset.Data[ShaderAssetType.TessellationEvaluation]
                 )
             );
+            hasShader = true;
         }
 
         if (shaderAsset.HasShader(ShaderAssetType.Compute))
@@ -108,10 +117,20 @@ public struct Shader
                     shaderAsset.Data[ShaderAssetType.Compute]
                 )
             );
+            hasShader = true;
+        }
+
+        if (hasShader == false)
+        {
+            Log.LogMessageAsync("No shader found.", LogLevel.Error, this);
+            throw new Exception("No shader found.");
         }
 
         InternalShaderProgram.Compile();
 
-        Name = $"ShaderProgram-{InternalShaderProgram.GetId()}";
+        foreach (var uniformBuffer in IContext.CurrentState.UniformBuffers)
+        {
+            uniformBuffer.Attach(InternalShaderProgram);
+        }
     }
 }

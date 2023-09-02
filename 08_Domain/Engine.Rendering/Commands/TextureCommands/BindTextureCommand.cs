@@ -4,8 +4,8 @@ namespace Engine.Rendering.Commands.TextureCommands;
 
 public class BindTextureCommand : CommandBase
 {
-    public uint TextureUnit { get; }
-    public ITexture Texture { get; }
+    public uint TextureUnit { get; set; }
+    public ITexture Texture { get; set; }
 
     public BindTextureCommand(ITexture texture, TextureUnit textureUnit)
         : base(CommandType.BindTexture)

@@ -48,13 +48,14 @@ public class CommandQueue : ICommandQueue
     /// <inheritdoc />
     public ICommand? Dequeue()
     {
-        if (_commands.Count <= 0)
+        if (_currentIndex >= _commands.Count)
         {
             return null;
         }
 
-        var firstCommand = _commands[0];
-        _commands.RemoveAt(0);
+        var firstCommand = _commands[_currentIndex];
+
+        //_commands.RemoveAt(0);
         _currentIndex++;
         return firstCommand;
     }

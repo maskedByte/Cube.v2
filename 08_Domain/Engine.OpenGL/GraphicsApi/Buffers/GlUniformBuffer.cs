@@ -78,9 +78,13 @@ internal sealed class GlUniformBuffer : IUniformBuffer
     public void Unbind() => GlStateWatch.UnbindBuffer(BufferTarget.UniformBuffer);
 
     /// <inheritdoc />
-    public void Attach(IShaderProgram shaderProgram)
+    public void Attach(IShaderProgram? shaderProgram)
     {
-        ArgumentNullException.ThrowIfNull(shaderProgram);
+        if (shaderProgram == null)
+        {
+            return;
+        }
+
         var shaderId = shaderProgram.GetId();
 
         if (_attachedShader.Contains(shaderId))

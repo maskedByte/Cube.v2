@@ -5,6 +5,7 @@ namespace Engine.Core.Driver.Graphics.Textures;
 /// </summary>
 public enum TextureUnit
 {
+    None = -1,
     DiffuseColor = 0,
     DetailColor = 1,
     MetallicColor = 5,

@@ -39,15 +39,6 @@ internal class Context : IContext
     private float _pointSize;
     private bool _wireframe;
 
-    // State ----------------------------------
-    private PrimitiveType PrimitiveType { get; set; } = PrimitiveType.Triangles;
-    private uint IndexCount { get; set; }
-    private IShaderProgram? BoundShaderProgram { get; set; }
-    private IUniformBuffer? ActiveUniformBuffer { get; set; }
-    private IList<IUniformBuffer> UniformBuffers { get; } = new List<IUniformBuffer>();
-
-    // ----------------------------------------
-
     /// <inheritdoc />
     public bool IsInitialized { get; private set; }
 
@@ -162,14 +153,13 @@ internal class Context : IContext
     /// <inheritdoc />
     public void BindShaderProgram(IShaderProgram shaderProgram)
     {
-        BoundShaderProgram = shaderProgram;
-        shaderProgram.Bind();
-
-        // Bind uniform buffers
-        foreach (var uniformBuffer in UniformBuffers)
+        if (IContext.CurrentState.BoundShaderProgram == shaderProgram)
         {
-            uniformBuffer.Attach(shaderProgram);
+            return;
         }
+
+        IContext.CurrentState.BoundShaderProgram = shaderProgram;
+        shaderProgram.Bind();
     }
 
     /// <inheritdoc />
@@ -179,57 +169,58 @@ internal class Context : IContext
     public void BindBufferArray(IBufferArray bufferArray) => bufferArray.Bind();
 
     /// <inheritdoc />
-    public void BindUniformBuffer(IUniformBuffer uniformBuffer)
-    {
-        UniformBuffers.Add(uniformBuffer);
-        ActiveUniformBuffer = uniformBuffer;
-    }
+    public void BindUniformBuffer(IUniformBuffer uniformBuffer) => IContext.CurrentState.ActiveUniformBuffer = uniformBuffer;
 
     /// <inheritdoc />
-    public void SetPrimitiveType(PrimitiveType primitiveType) => PrimitiveType = primitiveType;
+    public void SetPrimitiveType(PrimitiveType primitiveType) => IContext.CurrentState.PrimitiveType = primitiveType;
 
     /// <inheritdoc />
-    public void SetIndexCount(uint indexCount) => IndexCount = indexCount;
+    public void SetIndexCount(uint indexCount) => IContext.CurrentState.IndexCount = indexCount;
 
     /// <inheritdoc />
-    public void SetShaderUniformB(string name, bool value) => BoundShaderProgram?[name]?.SetValue(value);
+    public void SetShaderUniformB(string name, bool value) => IContext.CurrentState.BoundShaderProgram?[name]?.SetValue(value);
 
     /// <inheritdoc />
-    public void SetShaderUniformI(string name, int value) => BoundShaderProgram?[name]?.SetValue(value);
+    public void SetShaderUniformI(string name, int value) => IContext.CurrentState.BoundShaderProgram?[name]?.SetValue(value);
 
     /// <inheritdoc />
-    public void SetShaderUniformF(string name, float value) => BoundShaderProgram?[name]?.SetValue(value);
+    public void SetShaderUniformF(string name, float value) => IContext.CurrentState.BoundShaderProgram?[name]?.SetValue(value);
 
     /// <inheritdoc />
-    public void SetShaderUniformF(string name, float[] value) => BoundShaderProgram?[name]?.SetValue(value);
+    public void SetShaderUniformF(string name, float[] value) => IContext.CurrentState.BoundShaderProgram?[name]?.SetValue(value);
 
     /// <inheritdoc />
-    public void SetShaderUniformVec2(string name, Vector2 value) => BoundShaderProgram?[name]?.SetValue(value);
+    public void SetShaderUniformVec2(string name, Vector2 value) => IContext.CurrentState.BoundShaderProgram?[name]?.SetValue(value);
 
     /// <inheritdoc />
-    public void SetShaderUniformVec3(string name, Vector3 value) => BoundShaderProgram?[name]?.SetValue(value);
+    public void SetShaderUniformVec3(string name, Vector3 value) => IContext.CurrentState.BoundShaderProgram?[name]?.SetValue(value);
 
     /// <inheritdoc />
-    public void SetShaderUniformVec4(string name, Vector4 value) => BoundShaderProgram?[name]?.SetValue(value);
+    public void SetShaderUniformVec4(string name, Vector4 value) => IContext.CurrentState.BoundShaderProgram?[name]?.SetValue(value);
 
     /// <inheritdoc />
-    public void SetShaderUniformMat2(string name, Matrix2 value) => BoundShaderProgram?[name]?.SetValue(value);
+    public void SetShaderUniformMat2(string name, Matrix2 value) => IContext.CurrentState.BoundShaderProgram?[name]?.SetValue(value);
 
     /// <inheritdoc />
-    public void SetShaderUniformMat3(string name, Matrix3 value) => BoundShaderProgram?[name]?.SetValue(value);
+    public void SetShaderUniformMat3(string name, Matrix3 value) => IContext.CurrentState.BoundShaderProgram?[name]?.SetValue(value);
 
     /// <inheritdoc />
-    public void SetShaderUniformMat4(string name, Matrix4 value) => BoundShaderProgram?[name]?.SetValue(value);
+    public void SetShaderUniformMat4(string name, Matrix4 value) => IContext.CurrentState.BoundShaderProgram?[name]?.SetValue(value);
 
     /// <inheritdoc />
     public void DrawElements() =>
-        Gl.DrawElements(DrawModeToBeginMode[PrimitiveType], (int)IndexCount, DrawElementsType.UnsignedInt, nint.Zero);
+        Gl.DrawElements(
+            DrawModeToBeginMode[IContext.CurrentState.PrimitiveType],
+            (int)IContext.CurrentState.IndexCount,
+            DrawElementsType.UnsignedInt,
+            nint.Zero
+        );
 
     /// <inheritdoc />
-    public void RegisterUniformBuffer(IUniformBuffer uniformBuffer) => UniformBuffers.Add(uniformBuffer);
+    public void RegisterUniformBuffer(IUniformBuffer uniformBuffer) => IContext.CurrentState.UniformBuffers.Add(uniformBuffer);
 
     /// <inheritdoc />
-    public IUniformBuffer? GetActiveUniformBuffer() => ActiveUniformBuffer;
+    public IUniformBuffer? GetActiveUniformBuffer() => IContext.CurrentState.ActiveUniformBuffer;
 
     /// <inheritdoc />
     public IBufferArray CreateBufferArray() => new GlBufferArray();
@@ -266,8 +257,11 @@ internal class Context : IContext
         GlStateWatch.Dispose();
 
         // Release state
-        BoundShaderProgram?.Dispose();
-        ActiveUniformBuffer?.Dispose();
+        IContext.CurrentState.BoundShaderProgram?.Dispose();
+        foreach (var uniformBuffer in IContext.CurrentState.UniformBuffers)
+        {
+            uniformBuffer.Dispose();
+        }
 
         GC.SuppressFinalize(this);
     }

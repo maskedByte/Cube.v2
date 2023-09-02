@@ -2,17 +2,11 @@
 
 public class SetIndexCountCommand : CommandBase
 {
-    public uint IndexCount { get; }
+    public uint IndexCount { get; set; }
 
     public SetIndexCountCommand(uint indexCount)
         : base(CommandType.SetIndexCount)
     {
         IndexCount = indexCount;
-    }
-
-    public SetIndexCountCommand(int indexCount)
-        : base(CommandType.SetIndexCount)
-    {
-        IndexCount = (uint)indexCount;
     }
 }

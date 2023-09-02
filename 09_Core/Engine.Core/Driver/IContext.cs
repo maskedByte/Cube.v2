@@ -29,6 +29,18 @@ public interface IContext : IDisposable
     float PointSize { get; set; }
 
     /// <summary>
+    ///     Current state of the graphics context
+    /// </summary>
+    public static class CurrentState
+    {
+        public static PrimitiveType PrimitiveType { get; set; } = PrimitiveType.Triangles;
+        public static uint IndexCount { get; set; }
+        public static IShaderProgram? BoundShaderProgram { get; set; }
+        public static IUniformBuffer? ActiveUniformBuffer { get; set; }
+        public static IList<IUniformBuffer> UniformBuffers { get; } = new List<IUniformBuffer>();
+    }
+
+    /// <summary>
     ///     Initialize the graphics context
     /// </summary>
     void Initialize();
