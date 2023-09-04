@@ -51,6 +51,8 @@
     // Input from Vertex Shader
     in vec4 v_VertexColorOut;
     in vec2 v_TextureCoordOut;
+    in vec4 v_MaterialColorOut;
+    in vec4 v_DefaultColorOut;
 
     // Output to Framebuffer
     out vec4 fragColor;
@@ -69,7 +71,7 @@
         vec4 emissionColor = texture(texUnits[8], v_TextureCoordOut);
         vec4 detailMaskColor = texture(texUnits[9], v_TextureCoordOut);
 
-        vec4 texColor = diffuseColor * v_VertexColorOut;
+        vec4 texColor = diffuseColor * v_VertexColorOut * v_MaterialColorOut * v_DefaultColorOut;
 
         if (texColor.a < 0.001) {
             discard;

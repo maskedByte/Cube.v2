@@ -1,6 +1,7 @@
 ﻿using Engine.Core.Driver;
 using Engine.Core.Driver.Graphics.Buffers;
 using Engine.Core.Driver.Graphics.Shaders;
+using Engine.Core.Math.Matrices;
 using Engine.Framework.Components;
 using Engine.Framework.Entities;
 using Engine.Framework.Rendering.Cameras;
@@ -15,7 +16,7 @@ namespace Engine.Framework.Systems;
 public sealed class CameraSystem : SystemBase<CameraComponent>
 {
     private readonly IUniformBuffer _cameraUniformBuffer;
-    private readonly BindUniformBufferCommand _commandCache;
+    private readonly BindUniformBufferCommand _cameraUniformBufferCommand;
 
     /// <summary>
     ///     Creates a new instance of the <see cref="CameraSystem" /> class
@@ -38,7 +39,7 @@ public sealed class CameraSystem : SystemBase<CameraComponent>
         );
 
         context.RegisterUniformBuffer(_cameraUniformBuffer);
-        _commandCache = new BindUniformBufferCommand(_cameraUniformBuffer);
+        _cameraUniformBufferCommand = new BindUniformBufferCommand(_cameraUniformBuffer);
     }
 
     public override void Handle(SystemStage stage, IComponent component, ICommandQueue commandQueue, float deltaTime)
@@ -49,22 +50,29 @@ public sealed class CameraSystem : SystemBase<CameraComponent>
                 break;
             case SystemStage.Update:
                 var cameraComponent = (CameraComponent)component;
+                commandQueue.Enqueue(_cameraUniformBufferCommand);
 
                 switch (cameraComponent.ProjectionMode)
                 {
                     case ProjectionMode.Orthographic:
-                        _cameraUniformBuffer.SetUniformData("m_ViewMatrix", cameraComponent.Camera!.Transform.Transformation);
-                        _cameraUniformBuffer.SetUniformData(
-                            "m_ProjectionMatrix",
-                            cameraComponent.Camera.GetProjection(ProjectionMode.Orthographic)
+                        commandQueue.Enqueue(
+                            new SetUniformBufferValueCommand<Matrix4>("m_ViewMatrix", cameraComponent.Camera!.Transform.Transformation)
+                        );
+                        commandQueue.Enqueue(
+                            new SetUniformBufferValueCommand<Matrix4>(
+                                "m_ProjectionMatrix",
+                                cameraComponent.Camera.GetProjection(ProjectionMode.Orthographic)
+                            )
                         );
 
                         break;
                     case ProjectionMode.Perspective:
-                        _cameraUniformBuffer.SetUniformData("m_ViewMatrix", cameraComponent.Camera!.ViewMatrix);
-                        _cameraUniformBuffer.SetUniformData(
-                            "m_ProjectionMatrix",
-                            cameraComponent.Camera.GetProjection(ProjectionMode.Perspective)
+                        commandQueue.Enqueue(new SetUniformBufferValueCommand<Matrix4>("m_ViewMatrix", cameraComponent.Camera!.ViewMatrix));
+                        commandQueue.Enqueue(
+                            new SetUniformBufferValueCommand<Matrix4>(
+                                "m_ProjectionMatrix",
+                                cameraComponent.Camera.GetProjection(ProjectionMode.Perspective)
+                            )
                         );
 
                         break;
@@ -75,7 +83,7 @@ public sealed class CameraSystem : SystemBase<CameraComponent>
 
                 break;
             case SystemStage.Render:
-                commandQueue.Enqueue(_commandCache);
+                commandQueue.Enqueue(_cameraUniformBufferCommand);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(stage), stage, null);

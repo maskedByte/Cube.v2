@@ -15,7 +15,7 @@ public sealed class World : IDisposable
     private readonly List<IEntity> _entities;
     private readonly Dictionary<Type, ISystem> _systems;
     private readonly Dictionary<Guid, ICommandQueue> _entityCommandQueue;
-    private readonly bool _firstRun;
+    private bool _firstRun;
 
     private Material _defaultMaterial;
 
@@ -76,6 +76,7 @@ public sealed class World : IDisposable
         Renderer = new ForwardRenderer(Context, null, CommandHandler);
 
         // Add default systems.
+        AddSystem(new TransformSystem(Context));
         AddSystem(new CameraSystem(Context));
         AddSystem(new MeshSystem(Context));
         AddSystem(new MaterialSystem(Context));
@@ -161,6 +162,8 @@ public sealed class World : IDisposable
                     _systems[component.Key].Handle(SystemStage.Start, component.Value, entityCommandQueue, Time.DeltaTime);
                 }
             }
+
+            _firstRun = false;
         }
 
         foreach (var entity in _entities.Where(e => e.IsActive))

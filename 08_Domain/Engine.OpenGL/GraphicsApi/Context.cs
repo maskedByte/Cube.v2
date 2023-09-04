@@ -258,10 +258,7 @@ internal class Context : IContext
 
         // Release state
         IContext.CurrentState.BoundShaderProgram?.Dispose();
-        foreach (var uniformBuffer in IContext.CurrentState.UniformBuffers)
-        {
-            uniformBuffer.Dispose();
-        }
+        IContext.CurrentState.UniformBuffers.Clear();
 
         GC.SuppressFinalize(this);
     }

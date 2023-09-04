@@ -36,40 +36,41 @@ public class TestApp
         world.AmbientLight = Color.Black;
 
         var mainCamera = new Entity(world);
+        mainCamera.Tag = "Camera";
         var camComponent = mainCamera.AddComponent<CameraComponent>();
         camComponent.ClearColor = SysColor.Gray;
         camComponent.ProjectionMode = ProjectionMode.Perspective;
-        camComponent.FieldOfView = 75f;
+        camComponent.FieldOfView = 62f;
 
         var cube = new Entity(world);
+        cube.Tag = "Cube";
         cube.AddComponent<MeshComponent>()
            .Mesh = new CubeMesh(world.Context);
         cube.AddComponent<MaterialComponent>()
            .Material = new Material("materials\\grid_blue_material");
-        cube.Transform.Position = new Vector3(-2, 0, -5f);
+        cube.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(-1, 0, -5f);
 
         var cube2 = new Entity(world);
+        cube2.Tag = "Cube2";
         cube2.AddComponent<MeshComponent>()
            .Mesh = new CubeMesh(world.Context);
         cube2.AddComponent<MaterialComponent>()
-           .Material = new Material("materials\\grid_blue_material");
-        cube2.Transform.Position = new Vector3(2, 0, -5f);
+           .Material = new Material("materials\\grid_blue_material1");
+        cube2.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(1, 0, -5f);
 
         // Main loop
         var rotation = 0f;
         while (!Keyboard.GetKey(KeyCode.Escape) && !window.WindowTerminated())
         {
             rotation += 0.5f * world.Time.DeltaTime;
-            cube.Transform.Rotation = Quaternion.FromEulerAngles(rotation, rotation, 0);
-            cube2.Transform.Rotation = Quaternion.FromEulerAngles(-rotation, -rotation, 0);
+            cube.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(rotation, rotation, 0);
+            cube2.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(-rotation, -rotation, 0);
 
             world.Update();
             world.Render();
         }
 
-        window.Close();
         driver.Close();
         world.Dispose();
-
     }
 }

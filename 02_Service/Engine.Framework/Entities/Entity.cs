@@ -1,4 +1,4 @@
-﻿using Engine.Core.Math.Base;
+﻿using Engine.Framework.Components;
 using Engine.Framework.Rendering.Worlds;
 
 namespace Engine.Framework.Entities;
@@ -38,15 +38,13 @@ public class Entity : IEntity
             _parent?.Children.Remove(this);
             value?.Children.Add(this);
             _parent = value;
-            Transform.Parent = _parent?.Transform.Parent ?? World.Transform;
+            var transform = GetComponent<TransformComponent>();
+            transform!.Transform.Parent = _parent?.GetComponent<TransformComponent>()!.Transform.Parent ?? World.Transform;
         }
     }
 
     /// <inheritdoc />
     public List<IEntity> Children { get; }
-
-    /// <inheritdoc />
-    public Transform Transform { get; set; }
 
     /// <inheritdoc />
     public CullingLayer CullingLayer { get; set; }
@@ -59,7 +57,7 @@ public class Entity : IEntity
     public Entity(World world, IEntity? parent = null)
     {
         Id = Guid.NewGuid();
-        Transform = new Transform();
+        AddComponent<TransformComponent>();
         Children = new List<IEntity>();
 
         World = world;

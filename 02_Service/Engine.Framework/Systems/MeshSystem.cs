@@ -1,22 +1,17 @@
 ﻿using Engine.Core.Driver;
-using Engine.Core.Driver.Graphics.Buffers;
-using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Framework.Components;
 using Engine.Framework.Entities;
 using Engine.Rendering.Commands;
 using Engine.Rendering.Commands.RenderCommands;
-using Engine.Rendering.Commands.ShaderCommands;
 
 namespace Engine.Framework.Systems;
 
 public sealed class MeshSystem : SystemBase<MeshComponent>
 {
-    private readonly IUniformBuffer _modelUniformBuffer;
     private BindBufferArrayCommand? _bindBufferArrayCommand;
     private SetPrimitiveTypeCommand? _setPrimitiveTypeCommand;
     private SetIndexCountCommand? _setIndexCountCommand;
     private readonly DrawElementsCommand _drawElementsCommand;
-    private readonly BindUniformBufferCommand _modelUniformBufferCommand;
 
     /// <summary>
     ///     Creates a new instance of the <see cref="MeshSystem" /> class to handle entities with  a
@@ -26,20 +21,6 @@ public sealed class MeshSystem : SystemBase<MeshComponent>
     public MeshSystem(IContext context)
         : base(context)
     {
-        _modelUniformBuffer = context.CreateUniformBuffer(
-            "Model",
-            new BufferLayout(
-                new[]
-                {
-                    new BufferElement(0, "m_ModelMatrix", ShaderDataType.Matrix4)
-                }
-            ),
-            1
-        );
-
-        _modelUniformBufferCommand = new BindUniformBufferCommand(_modelUniformBuffer);
-        context.RegisterUniformBuffer(_modelUniformBuffer);
-
         _drawElementsCommand = new DrawElementsCommand();
     }
 
@@ -54,11 +35,8 @@ public sealed class MeshSystem : SystemBase<MeshComponent>
                 mesh.Build();
                 break;
             case SystemStage.Update:
-                _modelUniformBuffer.SetUniformData("m_ModelMatrix", meshComponent.Owner.Transform.Transformation);
                 break;
             case SystemStage.Render:
-                commandQueue.Enqueue(_modelUniformBufferCommand);
-
                 if (_bindBufferArrayCommand is null)
                 {
                     _bindBufferArrayCommand = new BindBufferArrayCommand(mesh.BufferArray);
@@ -99,5 +77,7 @@ public sealed class MeshSystem : SystemBase<MeshComponent>
         }
     }
 
-    public override void Dispose() => _modelUniformBuffer.Dispose();
+    public override void Dispose()
+    {
+    }
 }

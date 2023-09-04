@@ -1,0 +1,9 @@
+{
+    "shader": "shader/default",
+    "tiling": "1,1",
+    "Color": "255,200,125,255",
+    "Filter": "Nearest",
+    "channels": {
+        "Diffuse": "textures/grid_blue"
+    }
+}

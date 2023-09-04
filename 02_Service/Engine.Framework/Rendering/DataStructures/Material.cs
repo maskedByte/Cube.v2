@@ -10,6 +10,7 @@ namespace Engine.Framework.Rendering.DataStructures;
 
 public struct Material
 {
+    private static readonly Dictionary<string, Shader> _loadedShaders = new();
     internal static EngineCore Core { get; set; }
 
     /// <summary>
@@ -83,8 +84,16 @@ public struct Material
         Color = Color.White;
         Filter = TextureFilter.Linear;
         Tiling = Vector2.One;
-        Shader = new Shader("shader\\default");
         Diffuse = new Texture2D(Color.White, new Size(16, 16));
+        if (_loadedShaders.TryGetValue("shader\\default", out var shader))
+        {
+            Shader = shader;
+        }
+        else
+        {
+            Shader = new Shader("shader\\default");
+            _loadedShaders.Add("shader\\default", Shader);
+        }
     }
 
     public Material(string path)
@@ -123,6 +132,15 @@ public struct Material
         Color = materialAsset.Data.Color;
         Filter = materialAsset.Data.Filter;
         Tiling = materialAsset.Data.Tiling;
-        Shader = new Shader(materialAsset.Data.ShaderFile);
+
+        if (_loadedShaders.TryGetValue(materialAsset.Data.ShaderFile, out var shader))
+        {
+            Shader = shader;
+        }
+        else
+        {
+            Shader = new Shader(materialAsset.Data.ShaderFile);
+            _loadedShaders.Add(materialAsset.Data.ShaderFile, Shader);
+        }
     }
 }

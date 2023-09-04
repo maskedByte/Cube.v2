@@ -3,6 +3,7 @@ using Engine.Core.Driver.Graphics.Buffers;
 using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Driver.Graphics.Textures;
 using Engine.Core.Math.Base;
+using Engine.Core.Math.Vectors;
 using Engine.Framework.Components;
 using Engine.Framework.Entities;
 using Engine.Rendering.Commands;
@@ -14,8 +15,8 @@ namespace Engine.Framework.Systems;
 public sealed class MaterialSystem : SystemBase<MaterialComponent>
 {
     private readonly IUniformBuffer _materialUniformBuffer;
+    private readonly BindUniformBufferCommand _bindUniformBufferCommand;
     private BindShaderProgramCommand? _bindShaderProgramCommand;
-    private BindUniformBufferCommand? _bindUniformBufferCommand;
     private BindTextureCommand? _bindTextureCommand;
 
     /// <summary>
@@ -40,6 +41,7 @@ public sealed class MaterialSystem : SystemBase<MaterialComponent>
         );
 
         context.RegisterUniformBuffer(_materialUniformBuffer);
+        _bindUniformBufferCommand = new BindUniformBufferCommand(_materialUniformBuffer);
     }
 
     public override void Handle(SystemStage stage, IComponent component, ICommandQueue commandQueue, float deltaTime)
@@ -50,10 +52,13 @@ public sealed class MaterialSystem : SystemBase<MaterialComponent>
         switch (stage)
         {
             case SystemStage.Start:
+                break;
             case SystemStage.Update:
-                _materialUniformBuffer.SetUniformData("v_MaterialColor", material.Color);
-                _materialUniformBuffer.SetUniformData("v_DefaultColor", Color.White);
-                _materialUniformBuffer.SetUniformData("v_Tiling", material.Tiling);
+                commandQueue.Enqueue(_bindUniformBufferCommand);
+                commandQueue.Enqueue(new SetUniformBufferValueCommand<Color>("v_MaterialColor", material.Color));
+                commandQueue.Enqueue(new SetUniformBufferValueCommand<Color>("v_DefaultColor", Color.White));
+                commandQueue.Enqueue(new SetUniformBufferValueCommand<Vector2>("v_Tiling", material.Tiling));
+
                 break;
 
             case SystemStage.Render:
@@ -65,15 +70,6 @@ public sealed class MaterialSystem : SystemBase<MaterialComponent>
                 else
                 {
                     _bindShaderProgramCommand.ShaderProgram = material.Shader.InternalShaderProgram;
-                }
-
-                if (_bindUniformBufferCommand is null)
-                {
-                    _bindUniformBufferCommand = new BindUniformBufferCommand(_materialUniformBuffer);
-                }
-                else
-                {
-                    _bindUniformBufferCommand.UniformBuffer = _materialUniformBuffer;
                 }
 
                 if (_bindTextureCommand is null)

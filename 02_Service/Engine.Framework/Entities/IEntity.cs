@@ -1,5 +1,4 @@
-﻿using Engine.Core.Math.Base;
-using Engine.Framework.Rendering.Worlds;
+﻿using Engine.Framework.Rendering.Worlds;
 
 namespace Engine.Framework.Entities;
 
@@ -37,11 +36,6 @@ public interface IEntity : IDisposable, IComponentOwner
     ///     Gets a collection of child entities that belong to this entity.
     /// </summary>
     List<IEntity> Children { get; }
-
-    /// <summary>
-    ///     Gets or sets the transformation of the entity.
-    /// </summary>
-    Transform Transform { get; set; }
 
     /// <summary>
     ///     Gets or sets the culling layer of the entity.

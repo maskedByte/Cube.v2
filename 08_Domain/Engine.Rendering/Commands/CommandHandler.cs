@@ -49,7 +49,7 @@ public class CommandHandler : CommandHandlerBase
             return;
         }
 
-        var activeUniformBuffer = context.GetActiveUniformBuffer();
+        var activeUniformBuffer = IContext.CurrentState.ActiveUniformBuffer;
         if (activeUniformBuffer == null)
         {
             Log.LogMessageAsync("No active uniform buffer bound.", LogLevel.Warning, this);
