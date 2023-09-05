@@ -449,19 +449,12 @@ public struct Mathf
     }
 
     // Clamps value between min and max and returns value.
-    public static int Clamp(int value, int min, int max)
-    {
-        if (value < min)
-        {
-            value = min;
-        }
-        else if (value > max)
-        {
-            value = max;
-        }
-
-        return value;
-    }
+    public static int Clamp(int value, int min, int max) =>
+        value < min
+            ? min
+            : value > max
+                ? max
+                : value;
 
     // Clamps value between 0 and 1 and returns value
     public static double Clamp01(double value) =>

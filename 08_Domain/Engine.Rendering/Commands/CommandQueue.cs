@@ -5,7 +5,7 @@
 /// </summary>
 public class CommandQueue : ICommandQueue
 {
-    private List<ICommand> _commands;
+    private readonly PriorityQueue<ICommand, long> _sortedCommands;
     private int _currentIndex;
     private bool _started;
 
@@ -16,7 +16,8 @@ public class CommandQueue : ICommandQueue
     /// </summary>
     public CommandQueue()
     {
-        _commands = new List<ICommand>();
+        _sortedCommands = new PriorityQueue<ICommand, long>();
+
         _currentIndex = 0;
         _started = false;
         IsReady = false;
@@ -32,33 +33,21 @@ public class CommandQueue : ICommandQueue
         _currentIndex = 0;
         _started = true;
         IsReady = false;
-        _commands.Clear();
+        _sortedCommands.Clear();
     }
 
     /// <inheritdoc />
-    public void Enqueue(ICommand command) => _commands.Add(command);
-
-    /// <inheritdoc />
-    public bool TryDequeue(out ICommand? command)
+    public void Enqueue(in ICommand command)
     {
-        command = Dequeue();
-        return command != null;
-    }
-
-    /// <inheritdoc />
-    public ICommand? Dequeue()
-    {
-        if (_currentIndex >= _commands.Count)
-        {
-            return null;
-        }
-
-        var firstCommand = _commands[_currentIndex];
-
-        //_commands.RemoveAt(0);
         _currentIndex++;
-        return firstCommand;
+        _sortedCommands.Enqueue(command, GetSortingKey(command));
     }
+
+    /// <inheritdoc />
+    public bool TryDequeue(out ICommand? command) => _sortedCommands.TryDequeue(out command, out _);
+
+    /// <inheritdoc />
+    public ICommand? Dequeue() => _sortedCommands.Dequeue();
 
     public void End()
     {
@@ -67,15 +56,12 @@ public class CommandQueue : ICommandQueue
             return;
         }
 
-        _commands = _commands
-           .DistinctBy(c => c.Id)
-           .OrderBy(c => c.Priority)
-           .ToList();
-
         _started = false;
         IsReady = true;
     }
 
     /// <inheritdoc />
-    public void Dispose() => _commands.Clear();
+    public void Dispose() => _sortedCommands.Clear();
+
+    private long GetSortingKey(in ICommand command) => command.Priority * 1000 + _currentIndex;
 }

@@ -1,5 +1,6 @@
 // ReSharper disable CompareOfFloatsByEqualityOperator
 
+using System.Diagnostics.Contracts;
 using Engine.Core.Math.Matrices;
 using Engine.Core.Math.Quaternions;
 using Engine.Core.Math.Vectors;
@@ -225,7 +226,8 @@ public sealed class Transform
     /// </summary>
     /// <param name="transform">The target <see cref="Transform" /> to calculate distance to.</param>
     /// <returns></returns>
-    public float Distance(Transform transform) => Vector3.Distance(Position, transform.Position);
+    [Pure]
+    public float Distance(in Transform transform) => Vector3.Distance(Position, transform.Position);
 
     private void CalculateMatrix()
     {

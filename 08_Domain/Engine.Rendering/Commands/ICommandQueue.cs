@@ -19,7 +19,7 @@ public interface ICommandQueue : IDisposable
     ///     Enqueue a render command group
     /// </summary>
     /// <param name="commandGroup">The group of commands to enqueue</param>
-    void Enqueue(ICommand commandGroup);
+    void Enqueue(in ICommand commandGroup);
 
     /// <summary>
     ///     Try to dequeue a render command group
