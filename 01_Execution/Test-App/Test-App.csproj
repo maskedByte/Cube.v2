@@ -28,9 +28,6 @@
         <None Update="base\materials\grid_blue_material.mat">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Update="base\materials\grid_blue_material1.mat">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
     </ItemGroup>
 
 

@@ -34,12 +34,17 @@ public class TransformSystem : SystemBase<TransformComponent>
 
     public override void Handle(SystemStage stage, IComponent component, ICommandQueue commandQueue, float deltaTime)
     {
-        var meshComponent = (TransformComponent)component;
-        var transform = meshComponent.Transform;
+        var transformComponent = (TransformComponent)component;
+        var transform = transformComponent.Transform;
 
         switch (stage)
         {
             case SystemStage.Start:
+                if (transformComponent.Owner.Parent != null)
+                {
+                    transformComponent.Transform.Parent = transformComponent.Owner.Parent.GetComponent<TransformComponent>()!.Transform;
+                }
+
                 break;
             case SystemStage.Update:
                 commandQueue.Enqueue(_modelUniformBufferCommand);

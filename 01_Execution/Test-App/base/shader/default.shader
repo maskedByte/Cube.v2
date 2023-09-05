@@ -73,9 +73,12 @@
 
         vec4 texColor = diffuseColor * v_VertexColorOut * v_MaterialColorOut * v_DefaultColorOut;
 
+        float ambientStrength = 1;
+        vec4 ambient = ambientStrength * v_DefaultColorOut;
+
         if (texColor.a < 0.001) {
             discard;
         }
-        fragColor = texColor;
+        fragColor = ambient * texColor;
     }
 }

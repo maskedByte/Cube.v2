@@ -2,7 +2,7 @@
     "shader": "shader/default",
     "tiling": "1,1",
     "Color": "255,255,255,255",
-    "Filter": "Nearest",
+    "Filter": "Linear",
     "channels": {
         "Diffuse": "textures/grid_blue"
     }

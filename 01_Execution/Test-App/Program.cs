@@ -16,7 +16,10 @@ namespace Test_App;
 
 public class TestApp
 {
+    private static World _world;
+
     private static Entity _mainCamera;
+    private static Entity _mainCameraOrtho;
     private const string BasePath = ".\\base\\";
 
     public static void Main()
@@ -33,48 +36,57 @@ public class TestApp
         var driver = core.CreateDriver(DriverType.OpenGl);
         var window = driver.CreateWindow($"Cube.Engine v2 - Testing - {core.ActiveDriver.GetType().Name}", 1280, 1024, false);
 
-        var world = new World(core);
-        world.AmbientLight = Color.Black;
+        _world = new World(core);
+        _world.AmbientLight = Color.Black;
 
-        _mainCamera = new Entity(world);
+        _mainCamera = new Entity(_world);
         _mainCamera.Tag = "Camera";
         var camComponent = _mainCamera.AddComponent<CameraComponent>();
         camComponent.ClearColor = SysColor.Gray;
         camComponent.ProjectionMode = ProjectionMode.Perspective;
         camComponent.FieldOfView = 62f;
 
-        var cube = new Entity(world);
+        var cube = new Entity(_world);
         cube.Tag = "Cube";
         cube.AddComponent<MeshComponent>()
-           .Mesh = new CubeMesh(world.Context);
+           .Mesh = new CubeMesh(_world.Context);
         cube.AddComponent<MaterialComponent>()
            .Material = new Material("materials\\grid_blue_material");
-        cube.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(-1, 0, -5f);
+        cube.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, -5f);
 
-        var cube2 = new Entity(world);
+        var cube2 = new Entity(_world, cube);
         cube2.Tag = "Cube2";
         cube2.AddComponent<MeshComponent>()
-           .Mesh = new CubeMesh(world.Context);
+           .Mesh = new CubeMesh(_world.Context);
         cube2.AddComponent<MaterialComponent>()
-           .Material = new Material("materials\\grid_blue_material1");
-        cube2.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(1, 0, -5f);
+           .Material = new Material("materials\\grid_blue_material");
+        cube2.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, 3f);
+
+        var rect = new Entity(_world, cube2);
+        rect.Tag = "Rect";
+        rect.AddComponent<MeshComponent>()
+           .Mesh = new SphereMesh(_world.Context);
+        rect.AddComponent<MaterialComponent>()
+           .Material = new Material("materials\\grid_blue_material");
+        rect.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, 4f);
+        rect.GetComponent<TransformComponent>()!.Transform.Scale = new Vector3(.7f, .7f, .7f);
 
         // Main loop
         var rotation = 0f;
         while (!Keyboard.GetKey(KeyCode.Escape) && !window.WindowTerminated())
         {
-            rotation += 0.5f * world.Time.DeltaTime;
-            cube.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(rotation, rotation, 0);
-            cube2.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(-rotation, -rotation, 0);
+            rotation += 0.5f * _world.Time.DeltaTime;
+            cube.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(-rotation, rotation, 0);
+            cube2.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(rotation, 0, 0);
 
-            world.Update();
-            world.Render();
+            _world.Update();
+            _world.Render();
 
-            KeyControls(world.Time.DeltaTime);
+            KeyControls(_world.Time.DeltaTime);
         }
 
         driver.Close();
-        world.Dispose();
+        _world.Dispose();
     }
 
     private static void KeyControls(float deltaTime)
