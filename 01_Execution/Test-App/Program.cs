@@ -16,6 +16,7 @@ namespace Test_App;
 
 public class TestApp
 {
+    private static Entity _mainCamera;
     private const string BasePath = ".\\base\\";
 
     public static void Main()
@@ -35,9 +36,9 @@ public class TestApp
         var world = new World(core);
         world.AmbientLight = Color.Black;
 
-        var mainCamera = new Entity(world);
-        mainCamera.Tag = "Camera";
-        var camComponent = mainCamera.AddComponent<CameraComponent>();
+        _mainCamera = new Entity(world);
+        _mainCamera.Tag = "Camera";
+        var camComponent = _mainCamera.AddComponent<CameraComponent>();
         camComponent.ClearColor = SysColor.Gray;
         camComponent.ProjectionMode = ProjectionMode.Perspective;
         camComponent.FieldOfView = 62f;
@@ -68,9 +69,38 @@ public class TestApp
 
             world.Update();
             world.Render();
+
+            KeyControls(world.Time.DeltaTime);
         }
 
         driver.Close();
         world.Dispose();
+    }
+
+    private static void KeyControls(float deltaTime)
+    {
+        if (Keyboard.GetKeyDown(KeyCode.W))
+        {
+            _mainCamera.GetComponent<TransformComponent>()!.Transform.Position +=
+                _mainCamera.GetComponent<CameraComponent>()!.Forward * 10f * deltaTime;
+        }
+
+        if (Keyboard.GetKeyDown(KeyCode.S))
+        {
+            _mainCamera.GetComponent<TransformComponent>()!.Transform.Position -=
+                _mainCamera.GetComponent<CameraComponent>()!.Forward * 10f * deltaTime;
+        }
+
+        if (Keyboard.GetKeyDown(KeyCode.A))
+        {
+            _mainCamera.GetComponent<TransformComponent>()!.Transform.Position -=
+                _mainCamera.GetComponent<CameraComponent>()!.Right * 10f * deltaTime;
+        }
+
+        if (Keyboard.GetKeyDown(KeyCode.D))
+        {
+            _mainCamera.GetComponent<TransformComponent>()!.Transform.Position +=
+                _mainCamera.GetComponent<CameraComponent>()!.Right * 10f * deltaTime;
+        }
     }
 }

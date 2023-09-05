@@ -1,4 +1,6 @@
 ﻿using Engine.Core.Math.Base;
+using Engine.Core.Math.Matrices;
+using Engine.Core.Math.Vectors;
 using Engine.Framework.Entities;
 using Engine.Framework.Rendering.Cameras;
 
@@ -31,6 +33,26 @@ public sealed class CameraComponent : IComponent
             Camera!.SetClipPlane(_clipPlane.nearClip, _clipPlane.farClip);
         }
     }
+
+    /// <summary>
+    ///     Return the view matrix
+    /// </summary>
+    public Matrix4 ViewMatrix => Camera?.ViewMatrix ?? Matrix4.Identity;
+
+    /// <summary>
+    ///     Get the camera forward vector
+    /// </summary>
+    public Vector3 Forward => Camera?.Forward ?? Vector3.Forward;
+
+    /// <summary>
+    ///     Get the camera right vector
+    /// </summary>
+    public Vector3 Right => Camera?.Right ?? Vector3.Right;
+
+    /// <summary>
+    ///     Get the camera right vector
+    /// </summary>
+    public Vector3 Up => Camera?.Up ?? Vector3.Up;
 
     /// <summary>
     ///     Gets or sets the far clip plane.
