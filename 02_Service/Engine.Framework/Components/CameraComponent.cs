@@ -2,7 +2,7 @@
 using Engine.Core.Math.Matrices;
 using Engine.Core.Math.Vectors;
 using Engine.Framework.Entities;
-using Engine.Framework.Rendering.Cameras;
+using Engine.Framework.Rendering.DataStructures;
 
 namespace Engine.Framework.Components;
 

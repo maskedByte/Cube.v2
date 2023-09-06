@@ -3,7 +3,7 @@ using Engine.Core.Math.Base;
 using Engine.Core.Math.Matrices;
 using Engine.Core.Math.Vectors;
 
-namespace Engine.Framework.Rendering.Cameras;
+namespace Engine.Framework.Rendering.DataStructures;
 
 /// <summary>
 ///     Interface for camera classes

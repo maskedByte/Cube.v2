@@ -4,7 +4,7 @@ using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Math.Matrices;
 using Engine.Framework.Components;
 using Engine.Framework.Entities;
-using Engine.Framework.Rendering.Cameras;
+using Engine.Framework.Rendering.DataStructures;
 using Engine.Rendering.Commands;
 using Engine.Rendering.Commands.ShaderCommands;
 
