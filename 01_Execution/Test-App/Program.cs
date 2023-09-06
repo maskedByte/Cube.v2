@@ -6,7 +6,6 @@ using Engine.Core.Math.Vectors;
 using Engine.Framework.Components;
 using Engine.Framework.Entities;
 using Engine.Framework.Rendering;
-using Engine.Framework.Rendering.Cameras;
 using Engine.Framework.Rendering.DataStructures;
 using Engine.Framework.Rendering.Shapes;
 using Engine.Framework.Rendering.Worlds;
@@ -41,6 +40,8 @@ public class TestApp
 
         _mainCamera = new Entity(_world);
         _mainCamera.Tag = "Camera";
+        _mainCamera.GetComponent<TransformComponent>().Transform.Position = new Vector3(0, 2, 0);
+
         var camComponent = _mainCamera.AddComponent<CameraComponent>();
         camComponent.ClearColor = SysColor.Gray;
         camComponent.ProjectionMode = ProjectionMode.Perspective;
@@ -54,12 +55,12 @@ public class TestApp
            .Material = new Material("materials\\grid_blue_material");
         cube.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, -5f);
 
-        var cube2 = new Entity(_world, cube);
+        var cube2 = new Entity(_world);
         cube2.Tag = "Cube2";
         cube2.AddComponent<MeshComponent>()
            .Mesh = new CubeMesh(_world.Context);
         cube2.AddComponent<MaterialComponent>()
-           .Material = new Material("materials\\grid_blue_material");
+           .Material = new Material("materials\\grid_yellow_material");
         cube2.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, 3f);
 
         var rect = new Entity(_world, cube2);
@@ -71,13 +72,18 @@ public class TestApp
         rect.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, 4f);
         rect.GetComponent<TransformComponent>()!.Transform.Scale = new Vector3(.7f, .7f, .7f);
 
+        var light = new Entity(_world);
+        light.Tag = "Light";
+        light.AddComponent<LightComponent>().Color = SysColor.Peru;
+        light.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, -5);
+
         // Main loop
         var rotation = 0f;
         while (!Keyboard.GetKey(KeyCode.Escape) && !window.WindowTerminated())
         {
             rotation += 0.5f * _world.Time.DeltaTime;
-            cube.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(-rotation, rotation, 0);
             cube2.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(rotation, 0, 0);
+            rect.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(-rotation, -rotation, -rotation);
 
             _world.Update();
             _world.Render();

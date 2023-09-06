@@ -80,8 +80,8 @@ public sealed class World : IDisposable
         AddSystem(new CameraSystem(Context));
         AddSystem(new MeshSystem(Context));
         AddSystem(new MaterialSystem(Context));
+        AddSystem(new LightSystem(Context));
 
-        //AddSystem(new LightSystem(Context));
         //AddSystem(new PhysicsSystem(Context));
         //AddSystem(new ParticleSystem(Context));
         //AddSystem(new AnimationSystem(Context));

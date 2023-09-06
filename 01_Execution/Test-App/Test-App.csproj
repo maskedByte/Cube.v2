@@ -22,10 +22,22 @@
         <None Update="base\Textures\grid_blue.png">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Update="base\shader\default.shader">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <None Update="base\shader\default_lit.shader">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Update="base\materials\grid_blue_material.mat">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="base\shader\default_unlit.shader">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="base\textures\grid_grey.png">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="base\textures\grid_yellow.png">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="base\materials\grid_yellow_material.mat">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>

@@ -96,6 +96,38 @@ public abstract class Mesh : IMesh
         _builded = true;
     }
 
+    public void CalculateNormals()
+    {
+        if (Vertices == null || Indices == null || Indices.Length % 3 != 0)
+        {
+            throw new InvalidOperationException("Invalid mesh data.");
+        }
+
+        Normals = new Vector3[Vertices.Length];
+
+        for (var i = 0; i < Indices.Length; i += 3)
+        {
+            var i1 = Indices[i];
+            var i2 = Indices[i + 1];
+            var i3 = Indices[i + 2];
+
+            var v1 = Vertices[i1].Position.Xyz;
+            var v2 = Vertices[i2].Position.Xyz;
+            var v3 = Vertices[i3].Position.Xyz;
+
+            var normal = Vector3.Cross(v2 - v1, v3 - v1);
+
+            Normals[i1] += normal;
+            Normals[i2] += normal;
+            Normals[i3] += normal;
+        }
+
+        for (var i = 0; i < Normals.Length; i++)
+        {
+            Normals[i] = Vector3.Normalize(Normals[i]);
+        }
+    }
+
     public bool Equals(IMesh? other) => other is not null && Id.Equals(other.Id);
 
     private bool Equals(Mesh other) => Id.Equals(other.Id);

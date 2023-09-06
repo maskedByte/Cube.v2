@@ -108,6 +108,8 @@ public sealed class CubeMesh : Mesh
             new Vector2(1.0f, 0.0f)
         };
 
+        CalculateNormals();
+
         Build();
     }
 }

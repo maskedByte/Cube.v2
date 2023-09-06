@@ -36,6 +36,8 @@ public sealed class PlaneMesh : Mesh
             new Vector2(1f, 0f)
         };
 
+        CalculateNormals();
+
         Build();
     }
 }

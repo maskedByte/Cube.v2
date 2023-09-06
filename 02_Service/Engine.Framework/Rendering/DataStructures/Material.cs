@@ -13,6 +13,8 @@ public struct Material
     private static readonly Dictionary<string, Shader> _loadedShaders = new();
     internal static EngineCore Core { get; set; }
 
+    public const string DefaultShaderSource = "shader\\default_lit";
+
     /// <summary>
     ///     Unique name of the material.
     /// </summary>
@@ -85,14 +87,15 @@ public struct Material
         Filter = TextureFilter.Linear;
         Tiling = Vector2.One;
         Diffuse = new Texture2D(Color.White, new Size(16, 16));
-        if (_loadedShaders.TryGetValue("shader\\default", out var shader))
+
+        if (_loadedShaders.TryGetValue(DefaultShaderSource, out var shader))
         {
             Shader = shader;
         }
         else
         {
-            Shader = new Shader("shader\\default");
-            _loadedShaders.Add("shader\\default", Shader);
+            Shader = new Shader(DefaultShaderSource);
+            _loadedShaders.Add(DefaultShaderSource, Shader);
         }
     }
 

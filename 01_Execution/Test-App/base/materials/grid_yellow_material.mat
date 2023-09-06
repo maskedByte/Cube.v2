@@ -4,6 +4,6 @@
     "Color": "255,255,255,255",
     "Filter": "Linear",
     "channels": {
-        "Diffuse": "textures/grid_blue"
+        "Diffuse": "textures/grid_yellow"
     }
 }

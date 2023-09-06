@@ -58,6 +58,8 @@ public sealed class SphereMesh : Mesh
 
         Center = CalculateLeastSquaresCenter();
 
+        CalculateNormals();
+
         Build();
     }
 
