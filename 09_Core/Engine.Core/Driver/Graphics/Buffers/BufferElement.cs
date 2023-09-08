@@ -56,6 +56,19 @@ public sealed class BufferElement
     }
 
     /// <summary>
+    ///     Creates a new instance of <see cref="BufferElement" />
+    /// </summary>
+    /// <param name="index">The index for the shader layout location</param>
+    /// <param name="name">The name of the shader element</param>
+    /// <param name="type">The type of the shader element</param>
+    /// <param name="normalized">True if the data is normalized</param>
+    public BufferElement(uint index, string name, ShaderDataType type, bool normalized)
+        : this(index, name, type)
+    {
+        Normalized = normalized;
+    }
+
+    /// <summary>
     ///     Gets the correct size for Shader data types
     /// </summary>
     /// <returns>Size for the data in bytes</returns>
