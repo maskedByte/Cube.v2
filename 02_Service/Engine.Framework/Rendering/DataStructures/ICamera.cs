@@ -31,21 +31,6 @@ public interface ICamera : IEventSubscriber
     float FarClip { get; }
 
     /// <summary>
-    ///     Get the forward vector based on the camera transform
-    /// </summary>
-    Vector3 Forward { get; }
-
-    /// <summary>
-    ///     Get the right vector based on the camera transform
-    /// </summary>
-    Vector3 Up { get; }
-
-    /// <summary>
-    ///     Get the right vector based on the camera transform
-    /// </summary>
-    Vector3 Right { get; }
-
-    /// <summary>
     ///     Get the perspective projection matrix
     /// </summary>
     Matrix4 PerspectiveMatrix { get; }

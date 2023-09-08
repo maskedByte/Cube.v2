@@ -10,7 +10,7 @@ using Engine.Core.Math.Vectors;
 
 namespace Engine.Framework.Rendering.DataStructures;
 
-internal class Camera : ICamera
+public sealed class Camera : ICamera
 {
     private readonly IDriver _driver;
     private Color _clearColor;
@@ -72,15 +72,6 @@ internal class Camera : ICamera
 
     /// <inheritdoc />
     public float FarClip { get; private set; }
-
-    /// <inheritdoc />
-    public Vector3 Forward => Vector3.Transform(-Vector3.Forward, Transform.Rotation);
-
-    /// <inheritdoc />
-    public Vector3 Up => Vector3.Transform(Vector3.Up, Transform.Rotation);
-
-    /// <inheritdoc />
-    public Vector3 Right => Vector3.Transform(Vector3.Right, Transform.Rotation);
 
     /// <summary>
     ///     Initialize a new Camera
