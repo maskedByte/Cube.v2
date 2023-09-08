@@ -128,6 +128,21 @@ public sealed class Transform
     }
 
     /// <summary>
+    ///     Get the forward vector based on the camera transform
+    /// </summary>
+    public Vector3 Forward => Vector3.Transform(-Vector3.Forward, Rotation);
+
+    /// <summary>
+    ///     Get the right vector based on the camera transform
+    /// </summary>
+    public Vector3 Up => Vector3.Transform(Vector3.Up, Rotation);
+
+    /// <summary>
+    ///     Get the right vector based on the camera transform
+    /// </summary>
+    public Vector3 Right => Vector3.Transform(Vector3.Right, Rotation);
+
+    /// <summary>
     ///     Creates a new instance of <see cref="Transform" />
     /// </summary>
     public Transform()
