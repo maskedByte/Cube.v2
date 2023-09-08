@@ -45,8 +45,8 @@ public sealed class ImageAssetConverter : IAssetConverter
             {
                 File.Delete(file);
             }
-        }
 
-        IAssetConverter.WriteConsoleProgressEnd();
+            IAssetConverter.WriteConsoleProgressEnd();
+        }
     }
 }
