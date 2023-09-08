@@ -1,14 +1,48 @@
-﻿using Engine.Core.Math.Base;
-using Engine.Framework.Entities;
-using Engine.Framework.Rendering.DataStructures;
+﻿using Engine.Framework.Entities;
+using Engine.Framework.Rendering.DataStructures.Lights;
 
 namespace Engine.Framework.Components;
 
-public class LightComponent : IComponent
+public abstract class LightComponentBase<TLight> : IComponent
 {
+    public TLight Light { get; }
+
     public IEntity Owner { get; set; } = null!;
-    public LightType Type { get; set; } = LightType.Point;
-    public Color Color { get; set; } = Color.White;
-    public float Intensity { get; set; } = 1f;
-    public float Range { get; set; } = 5f;
+
+    protected LightComponentBase(TLight light)
+    {
+        Light = light;
+    }
+}
+
+public sealed class AmbientLightComponent : LightComponentBase<AmbientLight>
+{
+    public AmbientLightComponent()
+        : base(new AmbientLight())
+    {
+    }
+}
+
+public sealed class DirectionalLightComponent : LightComponentBase<DirectionalLight>
+{
+    public DirectionalLightComponent()
+        : base(new DirectionalLight())
+    {
+    }
+}
+
+public sealed class PointLightComponent : LightComponentBase<PointLight>
+{
+    public PointLightComponent()
+        : base(new PointLight())
+    {
+    }
+}
+
+public sealed class SpotLightComponent : LightComponentBase<SpotLight>
+{
+    public SpotLightComponent()
+        : base(new SpotLight())
+    {
+    }
 }

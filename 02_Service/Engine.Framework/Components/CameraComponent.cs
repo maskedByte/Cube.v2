@@ -42,17 +42,17 @@ public sealed class CameraComponent : IComponent
     /// <summary>
     ///     Get the camera forward vector
     /// </summary>
-    public Vector3 Forward => Camera?.Forward ?? Vector3.Forward;
+    public Vector3 Forward => Camera?.Transform.Forward ?? Vector3.Forward;
 
     /// <summary>
     ///     Get the camera right vector
     /// </summary>
-    public Vector3 Right => Camera?.Right ?? Vector3.Right;
+    public Vector3 Right => Camera?.Transform.Right ?? Vector3.Right;
 
     /// <summary>
     ///     Get the camera right vector
     /// </summary>
-    public Vector3 Up => Camera?.Up ?? Vector3.Up;
+    public Vector3 Up => Camera?.Transform.Up ?? Vector3.Up;
 
     /// <summary>
     ///     Gets or sets the far clip plane.
