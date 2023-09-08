@@ -75,7 +75,7 @@ public abstract class Mesh : IMesh
 
         // Normal Buffer - 3
         bufferLayout = new BufferLayout();
-        bufferLayout.AddElement(new BufferElement(3, "a_Normal", ShaderDataType.Vector3));
+        bufferLayout.AddElement(new BufferElement(3, "a_Normal", ShaderDataType.Vector3, true));
 
         var nbo = _context.CreateBuffer(bufferLayout);
         nbo.SetData(Normals);
