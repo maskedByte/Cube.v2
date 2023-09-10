@@ -1049,6 +1049,9 @@ public struct Vector2 : IEquatable<Vector2>
     /// <inheritdoc />
     public override int GetHashCode() => HashCode.Combine(X, Y);
 
+    /// <inheritdoc />
+    public override string ToString() => $"({X}, {Y})";
+
     /// <summary>
     ///     Deconstructs the vector into it's individual components.
     /// </summary>
