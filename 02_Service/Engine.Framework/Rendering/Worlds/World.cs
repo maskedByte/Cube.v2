@@ -1,8 +1,11 @@
 ﻿using Engine.Core.Driver;
 using Engine.Core.Math.Base;
+using Engine.Framework.Components;
 using Engine.Framework.Entities;
 using Engine.Framework.Rendering.DataStructures;
+using Engine.Framework.Rendering.DataStructures.Lights;
 using Engine.Framework.Systems;
+using Engine.Framework.Systems.LightSystems;
 using Engine.Rendering.Commands;
 using Engine.Rendering.Renderers;
 
@@ -37,7 +40,7 @@ public sealed class World : IDisposable
     /// <summary>
     ///     Sets or gets the ambient light color.
     /// </summary>
-    public Color AmbientLight { get; set; }
+    public AmbientLight AmbientLight { get; set; }
 
     /// <summary>
     ///     Gets or sets the renderer.
@@ -71,7 +74,6 @@ public sealed class World : IDisposable
         Time = core.ActiveDriver.GetTime();
 
         Transform = new Transform();
-        AmbientLight = Color.White;
         CommandHandler = new CommandHandler();
         Renderer = new ForwardRenderer(Context, null, CommandHandler);
 
@@ -80,7 +82,12 @@ public sealed class World : IDisposable
         AddSystem(new CameraSystem(Context));
         AddSystem(new MeshSystem(Context));
         AddSystem(new MaterialSystem(Context));
-        AddSystem(new LightSystem(Context));
+
+        AddSystem(new AmbientLightSystem(Context));
+
+        // AddSystem(new LightSystem<DirectionalLight>(Context));
+        // AddSystem(new LightSystem<PointLight>(Context));
+        // AddSystem(new LightSystem<SpotLight>(Context));
 
         //AddSystem(new PhysicsSystem(Context));
         //AddSystem(new ParticleSystem(Context));
@@ -90,6 +97,10 @@ public sealed class World : IDisposable
 
         // Defaults
         _defaultMaterial = new Material();
+
+        // Create default
+        var entity = CreateEntity("World-Entity");
+        AmbientLight = entity.AddComponent<AmbientLightComponent>().Light;
     }
 
     /// <summary>
@@ -107,7 +118,7 @@ public sealed class World : IDisposable
                 : name
         };
 
-        return AddEntity(entity);
+        return entity;
     }
 
     /// <summary>

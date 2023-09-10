@@ -82,26 +82,32 @@ public sealed class CubeMesh : Mesh
             new Vector2(0.0f, 1.0f),
             new Vector2(1.0f, 1.0f),
             new Vector2(1.0f, 0.0f),
+
             new Vector2(0.0f, 0.0f),
             new Vector2(0.0f, 1.0f),
             new Vector2(1.0f, 1.0f),
             new Vector2(1.0f, 0.0f),
+
             new Vector2(0.0f, 0.0f),
             new Vector2(0.0f, 1.0f),
             new Vector2(1.0f, 1.0f),
             new Vector2(1.0f, 0.0f),
+
             new Vector2(0.0f, 0.0f),
             new Vector2(0.0f, 1.0f),
             new Vector2(1.0f, 1.0f),
             new Vector2(1.0f, 0.0f),
+
             new Vector2(0.0f, 0.0f),
             new Vector2(0.0f, 1.0f),
             new Vector2(1.0f, 1.0f),
             new Vector2(1.0f, 0.0f),
+
             new Vector2(0.0f, 0.0f),
             new Vector2(0.0f, 1.0f),
             new Vector2(1.0f, 1.0f),
             new Vector2(1.0f, 0.0f),
+
             new Vector2(0.0f, 0.0f),
             new Vector2(0.0f, 1.0f),
             new Vector2(1.0f, 1.0f),

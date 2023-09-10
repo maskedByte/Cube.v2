@@ -28,19 +28,6 @@
         vec2 v_Tiling;
     };
 
-    layout (std140, binding = 3) uniform Lighting
-    {
-        struct Light
-        {
-            vec4 v_AmbientColor;
-            float f_AmbientStrength;
-            vec3 v_LightPos;
-            vec4 v_LightColor;
-        };
-
-        Light u_Lights[10];
-    };
-
     // Output to Fragment Shader
     out vec4 v_MaterialColorOut;
     out vec4 v_DefaultColorOut;
@@ -54,7 +41,7 @@
     // Main shader function
     void main()
     {
-        v_FragmentPos = vec3(m_ModelMatrix * a_Position);
+        v_FragmentPos = (m_ModelMatrix * a_Position).xyz;
         gl_Position = m_ProjectionMatrix * m_ViewMatrix * vec4(v_FragmentPos, 1.0);
 
         v_NormalOut = a_Normal;
@@ -68,6 +55,17 @@
 
 :Shader(Type="Fragment")
 {
+    struct AmbientLightContract
+    {
+        vec4 v_Color;
+        float f_Intensity;
+    };
+
+    layout (std140, binding = 3) uniform AmbientLightUniform
+    {
+        AmbientLightContract AmbientLight;
+    };
+
     // Input from Vertex Shader
     in vec4 v_VertexColorOut;
     in vec2 v_TextureCoordOut;
@@ -76,19 +74,6 @@
 
     in vec3 v_FragmentPos;
     in vec3 v_NormalOut;
-
-    layout (std140, binding = 3) uniform Lighting
-    {
-        struct Light
-        {
-            vec4 v_AmbientColor;
-            float f_AmbientStrength;
-            vec3 v_LightPos;
-            vec4 v_LightColor;
-        };
-
-        Light u_Lights[10];
-    };
 
     // Texture sampler units
     uniform sampler2D texUnits[10];
@@ -108,17 +93,15 @@
         vec4 detailMaskColor = texture(texUnits[9], v_TextureCoordOut);
 
         // Calculate lighting
-        vec4 ambient = v_AmbientStrength * v_AmbientColor;
-        vec3 lightDir = normalize(v_LightPos - v_FragmentPos);
-        float diff = max(dot(v_NormalOut, lightDir), 0.0);
-        vec4 diffuse = vec4(diff * v_lightColor, 1.0);
+        vec4 ambient = AmbientLight.v_Color * AmbientLight.f_Intensity;
 
+        // Calculate texture color
         vec4 texColor = diffuseColor * v_VertexColorOut * v_MaterialColorOut * v_DefaultColorOut;
 
         if (texColor.a < 0.001) {
             discard;
         }
 
-        fragColor = (ambient + diffuse) * texColor;
+        fragColor = ambient * texColor;
     }
 }

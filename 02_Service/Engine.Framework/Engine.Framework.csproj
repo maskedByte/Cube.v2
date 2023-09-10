@@ -16,4 +16,10 @@
     </ItemGroup>
 
 
+    <ItemGroup>
+        <Compile Remove="Systems\LightSystem.cs"/>
+        <None Include="Systems\LightSystem.cs"/>
+    </ItemGroup>
+
+
 </Project>

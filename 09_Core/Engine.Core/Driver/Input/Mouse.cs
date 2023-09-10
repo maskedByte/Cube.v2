@@ -56,11 +56,11 @@ public static class Mouse
     /// <summary>
     ///     Get the movement delta for the mouse x axis
     /// </summary>
-    public static int MouseXDelta()
+    public static float MouseXDelta()
     {
         if (input != null)
         {
-            return (int)input.MouseDelta.X;
+            return input.MouseDelta.X;
         }
 
         Log.LogMessageAsync("Mouse input not set", LogLevel.Error, typeof(Mouse));
@@ -70,11 +70,11 @@ public static class Mouse
     /// <summary>
     ///     Get the movement delta for the mouse y axis
     /// </summary>
-    public static int MouseYDelta()
+    public static float MouseYDelta()
     {
         if (input != null)
         {
-            return (int)input.MouseDelta.Y;
+            return input.MouseDelta.Y;
         }
 
         Log.LogMessageAsync("Mouse input not set", LogLevel.Error, typeof(Mouse));

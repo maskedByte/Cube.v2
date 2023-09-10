@@ -1,5 +1,6 @@
 ﻿using Engine.Assets.AssetHandling;
 using Engine.Core.Driver.Input;
+using Engine.Core.Math;
 using Engine.Core.Math.Base;
 using Engine.Core.Math.Quaternions;
 using Engine.Core.Math.Vectors;
@@ -21,6 +22,8 @@ public class TestApp
     private static Entity _mainCameraOrtho;
     private const string BasePath = ".\\base\\";
 
+    private static Random random = new();
+
     public static void Main()
     {
         var core = new EngineCore(BasePath);
@@ -36,11 +39,16 @@ public class TestApp
         var window = driver.CreateWindow($"Cube.Engine v2 - Testing - {core.ActiveDriver.GetType().Name}", 1280, 1024, false);
 
         _world = new World(core);
-        _world.AmbientLight = Color.Black;
+        _world.AmbientLight.Color = new Color(236, 241, 243);
+
+        // var light = new Entity(_world);
+        // light.Tag = "Light";
+        // light.AddComponent<DirectionalLightComponent>().Light.Color = SysColor.Peru;
+        // light.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, -2);
 
         _mainCamera = new Entity(_world);
         _mainCamera.Tag = "Camera";
-        _mainCamera.GetComponent<TransformComponent>().Transform.Position = new Vector3(0, 2, 0);
+        _mainCamera.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 2, 0);
 
         var camComponent = _mainCamera.AddComponent<CameraComponent>();
         camComponent.ClearColor = SysColor.Gray;
@@ -72,21 +80,40 @@ public class TestApp
         rect.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, 4f);
         rect.GetComponent<TransformComponent>()!.Transform.Scale = new Vector3(.7f, .7f, .7f);
 
-        var light = new Entity(_world);
-        light.Tag = "Light";
-        light.AddComponent<LightComponent>().Color = SysColor.Peru;
-        light.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, -5);
-
         // Main loop
+        const float mouseSensitivity = 50f;
+        const float clampAngle = 80.0f;
+
+        var camTransform = _mainCamera.GetComponent<TransformComponent>()!.Transform;
+        var rot = camTransform.LocalRotation.ToEulerAngles();
+        var rotY = rot.Y; // rotation around the up/y axis
+        var rotX = rot.X; // rotation around the right/x axis
+
         var rotation = 0f;
         while (!Keyboard.GetKey(KeyCode.Escape) && !window.WindowTerminated())
         {
-            rotation += 0.5f * _world.Time.DeltaTime;
+            var deltaTime = _world.Time.DeltaTime;
+
+            rotation += 0.5f * deltaTime;
             cube2.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(rotation, 0, 0);
             rect.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(-rotation, -rotation, -rotation);
 
             _world.Update();
             _world.Render();
+
+            // Mouse look
+            if (Mouse.MouseButtonDown(MouseButtons.Right))
+            {
+                var mouseX = Mouse.MouseXDelta() * mouseSensitivity * deltaTime;
+                var mouseY = Mouse.MouseYDelta() * mouseSensitivity * deltaTime;
+
+                rotY += mouseX;
+                rotX += mouseY;
+
+                rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
+
+                camTransform.LocalRotation = Quaternion.FromEulerAngles(rotX, rotY, 0.0f);
+            }
 
             KeyControls(_world.Time.DeltaTime);
         }

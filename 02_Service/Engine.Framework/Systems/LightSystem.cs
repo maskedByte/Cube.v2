@@ -10,48 +10,52 @@ using Engine.Rendering.Commands.ShaderCommands;
 
 namespace Engine.Framework.Systems;
 
-public class LightSystem : SystemBase<LightComponent>
+public class LightSystem<T> : SystemBase<LightComponentBase<T>>
 {
-    private readonly IUniformBuffer _lightUniformBuffer;
-    private readonly BindUniformBufferCommand _bindUniformBufferCommand;
+    private readonly IUniformBuffer _ambientLightUniformBuffer;
+    private readonly BindUniformBufferCommand _bindAmbientLightUniformBufferCommand;
 
     public LightSystem(IContext context)
         : base(context)
     {
-        _lightUniformBuffer = context.CreateUniformBuffer(
-            "Lighting",
+        _ambientLightUniformBuffer = context.CreateUniformBuffer(
+            "AmbientLight",
             new BufferLayout(
                 new[]
                 {
                     new BufferElement(0, "v_AmbientColor", ShaderDataType.Vector4),
-                    new BufferElement(1, "v_AmbientStrength", ShaderDataType.Float),
-                    new BufferElement(2, "v_LightPos", ShaderDataType.Vector3),
-                    new BufferElement(3, "v_lightColor", ShaderDataType.Vector4)
+                    new BufferElement(1, "f_AmbientStrength", ShaderDataType.Float)
                 }
             ),
             3
         );
 
-        context.RegisterUniformBuffer(_lightUniformBuffer);
-        _bindUniformBufferCommand = new BindUniformBufferCommand(_lightUniformBuffer);
+        context.RegisterUniformBuffer(_ambientLightUniformBuffer);
+        _bindAmbientLightUniformBufferCommand = new BindUniformBufferCommand(_ambientLightUniformBuffer);
     }
 
     public override void Handle(SystemStage stage, IComponent component, ICommandQueue commandQueue, float deltaTime)
     {
-        var lightComponent = (LightComponent)component;
-        var worldAmbientColor = lightComponent.Owner.World.AmbientLight;
-        var transform = lightComponent.Owner.GetComponent<TransformComponent>();
-
         switch (stage)
         {
             case SystemStage.Start:
                 break;
             case SystemStage.Update:
-                commandQueue.Enqueue(_bindUniformBufferCommand);
-                commandQueue.Enqueue(new SetUniformBufferValueCommand<Color>("v_AmbientColor", worldAmbientColor));
-                commandQueue.Enqueue(new SetUniformBufferValueCommand<float>("v_AmbientStrength", lightComponent.Intensity));
-                commandQueue.Enqueue(new SetUniformBufferValueCommand<Vector3>("v_LightPos", transform!.Transform.Position));
-                commandQueue.Enqueue(new SetUniformBufferValueCommand<Color>("v_lightColor", lightComponent.Color));
+                switch (component)
+                {
+                    case AmbientLightComponent ambientLightComponent:
+                        HandleAmbientLight(ambientLightComponent, commandQueue);
+                        break;
+                    case DirectionalLightComponent directionalLightComponent:
+                        //HandleDirectionalLight(directionalLightComponent, commandQueue);
+                        break;
+                    case PointLightComponent pointLightComponent:
+                        //HandlePointLight(pointLightComponent, commandQueue);
+                        break;
+                    case SpotLightComponent spotLightComponent:
+                        //HandleSpotLight(spotLightComponent, commandQueue);
+                        break;
+                }
 
                 break;
             case SystemStage.Render:
@@ -60,4 +64,42 @@ public class LightSystem : SystemBase<LightComponent>
                 throw new ArgumentOutOfRangeException(nameof(stage), stage, null);
         }
     }
+
+    private void HandleAmbientLight(AmbientLightComponent component, ICommandQueue commandQueue)
+    {
+    }
+
+    private void HandleDirectionalLight(DirectionalLightComponent component, ICommandQueue commandQueue)
+    {
+        var transform = component.Owner.GetComponent<TransformComponent>();
+
+        commandQueue.Enqueue(new SetUniformBufferValueCommand<Vector3>("v_DirectionalLight.Direction", transform!.Transform.Forward));
+        commandQueue.Enqueue(new SetUniformBufferValueCommand<Vector3>("v_DirectionalLight.Position", transform!.Transform.Position));
+        commandQueue.Enqueue(new SetUniformBufferValueCommand<Color>("v_Color", component.Light.Color));
+        commandQueue.Enqueue(new SetUniformBufferValueCommand<float>("f_Intensity", component.Light.Intensity));
+    }
+
+    private void HandlePointLight(PointLightComponent component, ICommandQueue commandQueue)
+    {
+        var transform = component.Owner.GetComponent<TransformComponent>();
+
+        commandQueue.Enqueue(new SetUniformBufferValueCommand<Vector3>("v_PointLight.Position", transform!.Transform.Position));
+        commandQueue.Enqueue(new SetUniformBufferValueCommand<float>("f_PointLight.Radius", component.Light.Radius));
+        commandQueue.Enqueue(new SetUniformBufferValueCommand<Color>("v_Color", component.Light.Color));
+        commandQueue.Enqueue(new SetUniformBufferValueCommand<float>("f_Intensity", component.Light.Intensity));
+    }
+
+    private void HandleSpotLight(SpotLightComponent component, ICommandQueue commandQueue)
+    {
+        var transform = component.Owner.GetComponent<TransformComponent>();
+
+        commandQueue.Enqueue(new SetUniformBufferValueCommand<Vector3>("v_SpotLight.Position", transform!.Transform.Position));
+        commandQueue.Enqueue(new SetUniformBufferValueCommand<Color>("v_SpotLight.Color", component.Light.Color));
+        commandQueue.Enqueue(new SetUniformBufferValueCommand<float>("v_SpotLight.Radius", component.Light.Radius));
+        commandQueue.Enqueue(new SetUniformBufferValueCommand<float>("v_SpotLightFalloff", component.Light.Falloff));
+        commandQueue.Enqueue(new SetUniformBufferValueCommand<Color>("v_Color", component.Light.Color));
+        commandQueue.Enqueue(new SetUniformBufferValueCommand<float>("f_Intensity", component.Light.Intensity));
+    }
+
+    public override void Dispose() => _ambientLightUniformBuffer.Dispose();
 }
