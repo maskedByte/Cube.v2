@@ -1,6 +1,5 @@
 ﻿using Engine.Assets.AssetHandling;
 using Engine.Core.Driver.Input;
-using Engine.Core.Math;
 using Engine.Core.Math.Base;
 using Engine.Core.Math.Quaternions;
 using Engine.Core.Math.Vectors;
@@ -104,15 +103,18 @@ public class TestApp
             // Mouse look
             if (Mouse.MouseButtonDown(MouseButtons.Right))
             {
-                var mouseX = Mouse.MouseXDelta() * mouseSensitivity * deltaTime;
-                var mouseY = Mouse.MouseYDelta() * mouseSensitivity * deltaTime;
+                var mouseX = Mouse.MouseXDelta() * deltaTime;
+                var mouseY = Mouse.MouseYDelta() * deltaTime;
 
-                rotY += mouseX;
-                rotX += mouseY;
+                var rotationDelta = Quaternion.FromEulerAngles(-mouseY, mouseX, 0.0f);
+                var camTransformLocalRotation = camTransform.LocalRotation * rotationDelta;
+                camTransform.LocalRotation = Quaternion.FromEulerAngles(
+                    camTransformLocalRotation.ToEulerAngles().X,
+                    camTransformLocalRotation.ToEulerAngles().Y,
+                    0f
+                );
 
-                rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
-
-                camTransform.LocalRotation = Quaternion.FromEulerAngles(rotX, rotY, 0.0f);
+                Console.WriteLine(camTransform.LocalRotation.ToEulerAngles());
             }
 
             KeyControls(_world.Time.DeltaTime);
