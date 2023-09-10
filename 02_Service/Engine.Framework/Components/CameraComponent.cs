@@ -92,7 +92,7 @@ public sealed class CameraComponent : IComponent
         {
             _owner = value;
             Camera ??= new Camera(_owner.World.Core.ActiveDriver);
-            Camera.Transform.Parent = _owner.GetComponent<TransformComponent>()!.Transform;
+            Camera.Transform = _owner.GetComponent<TransformComponent>()!.Transform;
         }
     }
 

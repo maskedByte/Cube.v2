@@ -4,7 +4,6 @@ using Engine.Core.Logging;
 using Engine.Core.Math;
 using Engine.Core.Math.Base;
 using Engine.Core.Math.Matrices;
-using Engine.Core.Math.Vectors;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
@@ -183,11 +182,7 @@ public sealed class Camera : ICamera
         _ = Transform.Transformation;
 
         var position = Transform.Position;
-        var rotation = Transform.Rotation;
 
-        var forward = Vector3.Transform(-Vector3.Forward, rotation);
-        var up = Vector3.Transform(Vector3.Up, rotation);
-
-        _viewMatrix = Matrix4.LookAt(position, position + forward, up);
+        _viewMatrix = Matrix4.LookAt(position, position + Transform.Forward, Transform.Up);
     }
 }

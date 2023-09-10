@@ -1,5 +1,6 @@
 ﻿using Engine.Assets.AssetHandling;
 using Engine.Core.Driver.Input;
+using Engine.Core.Math;
 using Engine.Core.Math.Base;
 using Engine.Core.Math.Quaternions;
 using Engine.Core.Math.Vectors;
@@ -22,6 +23,9 @@ public class TestApp
     private const string BasePath = ".\\base\\";
 
     private static Random random = new();
+
+    private static float _pitch;
+    private static float _yaw;
 
     public static void Main()
     {
@@ -80,7 +84,7 @@ public class TestApp
         rect.GetComponent<TransformComponent>()!.Transform.Scale = new Vector3(.7f, .7f, .7f);
 
         // Main loop
-        const float mouseSensitivity = 50f;
+        const float Sensitivity = 0.5f;
         const float clampAngle = 80.0f;
 
         var camTransform = _mainCamera.GetComponent<TransformComponent>()!.Transform;
@@ -103,18 +107,12 @@ public class TestApp
             // Mouse look
             if (Mouse.MouseButtonDown(MouseButtons.Right))
             {
-                var mouseX = Mouse.MouseXDelta() * deltaTime;
-                var mouseY = Mouse.MouseYDelta() * deltaTime;
+                var xSpeed = Mathf.Radians(Mouse.MouseXDelta() * Sensitivity);
+                var ySpeed = Mathf.Radians(Mouse.MouseYDelta() * Sensitivity);
 
-                var rotationDelta = Quaternion.FromEulerAngles(-mouseY, mouseX, 0.0f);
-                var camTransformLocalRotation = camTransform.LocalRotation * rotationDelta;
-                camTransform.LocalRotation = Quaternion.FromEulerAngles(
-                    camTransformLocalRotation.ToEulerAngles().X,
-                    camTransformLocalRotation.ToEulerAngles().Y,
-                    0f
-                );
-
-                Console.WriteLine(camTransform.LocalRotation.ToEulerAngles());
+                var rotationDelta = Quaternion.FromEulerAngles(ySpeed, xSpeed, 0.0f);
+                camTransform.Rotation *= rotationDelta;
+                ;
             }
 
             KeyControls(_world.Time.DeltaTime);
@@ -122,6 +120,21 @@ public class TestApp
 
         driver.Close();
         _world.Dispose();
+    }
+
+    private static float ClampAngle(float angle, float min, float max)
+    {
+        if (angle < -360F)
+        {
+            angle += 360F;
+        }
+
+        if (angle > 360F)
+        {
+            angle -= 360F;
+        }
+
+        return Mathf.Clamp(angle, min, max);
     }
 
     private static void KeyControls(float deltaTime)

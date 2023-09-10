@@ -753,4 +753,7 @@ public struct Quaternion : IEquatable<Quaternion>
 
     /// <inheritdoc />
     public override int GetHashCode() => HashCode.Combine(Xyz, W);
+
+    /// <inheritdoc />
+    public override string ToString() => $"({X}, {Y}, {Z}, {W})";
 }
