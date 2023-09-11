@@ -44,10 +44,13 @@ public class TestApp
         _world = new World(core);
         _world.AmbientLight.Color = new Color(236, 241, 243);
 
-        // var light = new Entity(_world);
-        // light.Tag = "Light";
-        // light.AddComponent<DirectionalLightComponent>().Light.Color = SysColor.Peru;
-        // light.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, -2);
+        var light = new Entity(_world);
+        light.Tag = "Light";
+        var dirLight = light.AddComponent<DirectionalLightComponent>().Light;
+        dirLight.Color = new Color(255, 125, 5);
+        dirLight.Intensity = 0.8f;
+
+        light.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 10, -2);
 
         _mainCamera = new Entity(_world);
         _mainCamera.Tag = "Camera";
@@ -90,7 +93,7 @@ public class TestApp
 
             rotation += 0.5f * deltaTime;
             cube2.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(rotation, 0, 0);
-            rect.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(-rotation, -rotation, -rotation);
+            rect.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(-rotation, 0, -rotation);
 
             _world.Update();
             _world.Render();

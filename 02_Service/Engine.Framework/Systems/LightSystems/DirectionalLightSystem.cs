@@ -3,6 +3,7 @@ using Engine.Core.Driver.Graphics.Buffers;
 using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Logging;
 using Engine.Core.Math.Base;
+using Engine.Core.Math.Vectors;
 using Engine.Framework.Components;
 using Engine.Framework.Entities;
 using Engine.Rendering.Commands;
@@ -12,33 +13,35 @@ using Engine.Rendering.Commands.ShaderCommands;
 
 namespace Engine.Framework.Systems.LightSystems;
 
-public class AmbientLightSystem : SystemBase<AmbientLightComponent>
+public class DirectionalLightSystem : SystemBase<DirectionalLightComponent>
 {
-    private readonly IUniformBuffer _ambientLightUniformBuffer;
-    private readonly BindUniformBufferCommand _bindAmbientLightUniformBufferCommand;
+    private readonly IUniformBuffer _lightUniformBuffer;
+    private readonly BindUniformBufferCommand _bindLightUniformBufferCommand;
 
-    public AmbientLightSystem(IContext context)
+    public DirectionalLightSystem(IContext context)
         : base(context)
     {
-        _ambientLightUniformBuffer = context.CreateUniformBuffer(
-            "AmbientLightUniform",
+        _lightUniformBuffer = context.CreateUniformBuffer(
+            "DirectionalLightUniform",
             new BufferLayout(
                 new[]
                 {
                     new BufferElement(0, "v_Color", ShaderDataType.Vector4),
-                    new BufferElement(1, "f_Intensity", ShaderDataType.Float)
+                    new BufferElement(1, "f_Intensity", ShaderDataType.Float),
+                    new BufferElement(2, "f_DiffuseIntensity", ShaderDataType.Float),
+                    new BufferElement(3, "v_Direction", ShaderDataType.Vector3, true)
                 }
             ),
             3
         );
 
-        context.RegisterUniformBuffer(_ambientLightUniformBuffer);
-        _bindAmbientLightUniformBufferCommand = new BindUniformBufferCommand(_ambientLightUniformBuffer);
+        context.RegisterUniformBuffer(_lightUniformBuffer);
+        _bindLightUniformBufferCommand = new BindUniformBufferCommand(_lightUniformBuffer);
     }
 
     public override void Handle(SystemStage stage, IComponent component, ICommandQueue commandQueue, float deltaTime)
     {
-        if (component is not AmbientLightComponent lightComponent)
+        if (component is not DirectionalLightComponent lightComponent)
         {
             Log.LogMessageAsync($"The component must be of type {nameof(AmbientLightComponent)}.", LogLevel.Error, this);
             return;
@@ -51,9 +54,13 @@ public class AmbientLightSystem : SystemBase<AmbientLightComponent>
             case SystemStage.Update:
                 var worldAmbient = component.Owner.World.AmbientLight;
 
-                commandQueue.Enqueue(_bindAmbientLightUniformBufferCommand);
+                commandQueue.Enqueue(_bindLightUniformBufferCommand);
+                var transform = component.Owner.GetComponent<TransformComponent>();
+
                 commandQueue.Enqueue(new SetUniformBufferValueCommand<Color>("v_Color", worldAmbient.Color));
                 commandQueue.Enqueue(new SetUniformBufferValueCommand<float>("f_Intensity", lightComponent.Light.Intensity));
+                commandQueue.Enqueue(new SetUniformBufferValueCommand<float>("f_DiffuseIntensity", lightComponent.Light.DiffuseIntensity));
+                commandQueue.Enqueue(new SetUniformBufferValueCommand<Vector3>("v_Direction", transform!.Transform.Forward.Normalized()));
 
                 break;
             case SystemStage.Render:
@@ -63,5 +70,5 @@ public class AmbientLightSystem : SystemBase<AmbientLightComponent>
         }
     }
 
-    public override void Dispose() => _ambientLightUniformBuffer.Dispose();
+    public override void Dispose() => _lightUniformBuffer.Dispose();
 }

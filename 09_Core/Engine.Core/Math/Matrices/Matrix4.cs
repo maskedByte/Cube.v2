@@ -503,6 +503,18 @@ public struct Matrix4 : IEquatable<Matrix4>
     }
 
     /// <summary>
+    ///     Converts this instance into a <see cref="Matrix3" /> for use as a normal matrix.
+    /// </summary>
+    /// <returns>The normal matrix.</returns>
+    public Matrix3 ToNormalMatrix()
+    {
+        var m = this;
+        m.Invert();
+        m.Transpose();
+        return new Matrix3(m.Row0.Xyz, m.Row1.Xyz, m.Row2.Xyz);
+    }
+
+    /// <summary>
     ///     Returns an inverted copy of this instance.
     /// </summary>
     /// <returns>The inverted copy.</returns>

@@ -5,6 +5,8 @@
 /// </summary>
 public sealed class DirectionalLight : BaseLight
 {
+    public float DiffuseIntensity { get; set; }
+
     public DirectionalLight()
         : base(LightType.Directional)
     {

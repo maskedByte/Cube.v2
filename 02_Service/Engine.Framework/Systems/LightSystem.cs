@@ -71,12 +71,7 @@ public class LightSystem<T> : SystemBase<LightComponentBase<T>>
 
     private void HandleDirectionalLight(DirectionalLightComponent component, ICommandQueue commandQueue)
     {
-        var transform = component.Owner.GetComponent<TransformComponent>();
 
-        commandQueue.Enqueue(new SetUniformBufferValueCommand<Vector3>("v_DirectionalLight.Direction", transform!.Transform.Forward));
-        commandQueue.Enqueue(new SetUniformBufferValueCommand<Vector3>("v_DirectionalLight.Position", transform!.Transform.Position));
-        commandQueue.Enqueue(new SetUniformBufferValueCommand<Color>("v_Color", component.Light.Color));
-        commandQueue.Enqueue(new SetUniformBufferValueCommand<float>("f_Intensity", component.Light.Intensity));
     }
 
     private void HandlePointLight(PointLightComponent component, ICommandQueue commandQueue)

@@ -22,7 +22,8 @@ public class TransformSystem : SystemBase<TransformComponent>
             new BufferLayout(
                 new[]
                 {
-                    new BufferElement(0, "m_ModelMatrix", ShaderDataType.Matrix4)
+                    new BufferElement(0, "m_ModelMatrix", ShaderDataType.Matrix4),
+                    new BufferElement(1, "m_NormalMatrix", ShaderDataType.Matrix3)
                 }
             ),
             1
@@ -49,6 +50,9 @@ public class TransformSystem : SystemBase<TransformComponent>
             case SystemStage.Update:
                 commandQueue.Enqueue(_modelUniformBufferCommand);
                 commandQueue.Enqueue(new SetUniformBufferValueCommand<Matrix4>("m_ModelMatrix", transform.Transformation));
+                commandQueue.Enqueue(
+                    new SetUniformBufferValueCommand<Matrix3>("m_NormalMatrix", transform.Transformation.ToNormalMatrix())
+                );
                 break;
             case SystemStage.Render:
                 break;

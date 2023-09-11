@@ -19,6 +19,7 @@
     layout (std140, binding = 1) uniform Model
     {
         mat4 m_ModelMatrix;
+        mat3 m_NormalMatrix;
     };
 
     layout (std140, binding = 2) uniform Material
@@ -35,17 +36,16 @@
     out vec2 v_TextureCoordOut;
 
     // For lighting
+    out vec4 v_FragmentPos;
     out vec3 v_NormalOut;
-    out vec3 v_FragmentPos;
 
     // Main shader function
     void main()
     {
-        v_FragmentPos = (m_ModelMatrix * a_Position).xyz;
-        gl_Position = m_ProjectionMatrix * m_ViewMatrix * vec4(v_FragmentPos, 1.0);
+        v_FragmentPos = m_ModelMatrix * a_Position;
+        gl_Position = m_ProjectionMatrix * m_ViewMatrix * m_ModelMatrix * a_Position;
 
-        v_NormalOut = a_Normal;
-
+        v_NormalOut = m_NormalMatrix * a_Normal;
         v_MaterialColorOut = v_MaterialColor;
         v_DefaultColorOut = v_DefaultColor;
         v_VertexColorOut = a_Color;
@@ -61,9 +61,22 @@
         float f_Intensity;
     };
 
+    struct DirectionalLightContract
+    {
+        vec4 v_Color;
+        float f_Intensity;
+        float f_DiffuseIntensity;
+        vec3 v_Direction;
+    };
+
     layout (std140, binding = 3) uniform AmbientLightUniform
     {
         AmbientLightContract AmbientLight;
+    };
+
+    layout (std140, binding = 4) uniform DirectionalLightUniform
+    {
+        DirectionalLightContract DirectionalLight;
     };
 
     // Input from Vertex Shader
@@ -72,7 +85,7 @@
     in vec4 v_MaterialColorOut;
     in vec4 v_DefaultColorOut;
 
-    in vec3 v_FragmentPos;
+    in vec4 v_FragmentPos;
     in vec3 v_NormalOut;
 
     // Texture sampler units
@@ -92,16 +105,21 @@
         vec4 emissionColor = texture(texUnits[8], v_TextureCoordOut);
         vec4 detailMaskColor = texture(texUnits[9], v_TextureCoordOut);
 
-        // Calculate lighting
-        vec4 ambient = AmbientLight.v_Color * AmbientLight.f_Intensity;
-
         // Calculate texture color
         vec4 texColor = diffuseColor * v_VertexColorOut * v_MaterialColorOut * v_DefaultColorOut;
+
+        // Calculate lighting
+        vec4 AmbientLightColor = AmbientLight.v_Color * AmbientLight.f_Intensity;
+        vec3 lightDir = normalize(-DirectionalLight.v_Direction);
+        float diff = max(dot(v_NormalOut, lightDir), 0.0);
+        vec4 DirectionalLight = diff * DirectionalLight.v_Color * DirectionalLight.f_Intensity;
+        // vec3 lightDir = normalize(lightPos - FragPos);  // Not for Directional Light
 
         if (texColor.a < 0.001) {
             discard;
         }
 
-        fragColor = ambient * texColor;
+        // Calculate final color
+        fragColor = (AmbientLightColor + DirectionalLight) * texColor;
     }
 }

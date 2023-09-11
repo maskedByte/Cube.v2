@@ -84,6 +84,7 @@ public sealed class World : IDisposable
         AddSystem(new MaterialSystem(Context));
 
         AddSystem(new AmbientLightSystem(Context));
+        AddSystem(new DirectionalLightSystem(Context));
 
         // AddSystem(new LightSystem<DirectionalLight>(Context));
         // AddSystem(new LightSystem<PointLight>(Context));
