@@ -237,6 +237,48 @@ public sealed class Transform
     }
 
     /// <summary>
+    ///     Rotates the transform by the specified Euler angles in the specified coordinate space.
+    /// </summary>
+    /// <param name="euler">The Euler angles (in degrees) to rotate by.</param>
+    /// <param name="space">The coordinate space in which to apply the rotation (Local or World).</param>
+    public void Rotate(Vector3 euler, CoordinateSpace space)
+    {
+        var eulerRot = Quaternion.FromEulerAngles(euler.X, euler.Y, euler.Z);
+        if (space == CoordinateSpace.Local)
+        {
+            LocalRotation *= eulerRot;
+        }
+        else
+        {
+            Rotation *= Quaternion.Invert(Rotation) * eulerRot * Rotation;
+        }
+    }
+
+    /// <summary>
+    ///     Rotates the transform by the specified Euler angles in the local coordinate space.
+    /// </summary>
+    /// <param name="euler">The Euler angles (in degrees) to rotate by.</param>
+    public void Rotate(Vector3 euler) => Rotate(euler, CoordinateSpace.Local);
+
+    /// <summary>
+    ///     Rotates the transform by the specified Euler angles in the specified coordinate space.
+    /// </summary>
+    /// <param name="xAngle">The rotation angle around the X-axis (in degrees).</param>
+    /// <param name="yAngle">The rotation angle around the Y-axis (in degrees).</param>
+    /// <param name="zAngle">The rotation angle around the Z-axis (in degrees).</param>
+    /// <param name="relativeTo">The coordinate space in which to apply the rotation (Local or World).</param>
+    public void Rotate(float xAngle, float yAngle, float zAngle, CoordinateSpace relativeTo) =>
+        Rotate(new Vector3(xAngle, yAngle, zAngle), relativeTo);
+
+    /// <summary>
+    ///     Rotates the transform by the specified Euler angles in the local coordinate space.
+    /// </summary>
+    /// <param name="xAngle">The rotation angle around the X-axis (in degrees).</param>
+    /// <param name="yAngle">The rotation angle around the Y-axis (in degrees).</param>
+    /// <param name="zAngle">The rotation angle around the Z-axis (in degrees).</param>
+    public void Rotate(float xAngle, float yAngle, float zAngle) => Rotate(new Vector3(xAngle, yAngle, zAngle), CoordinateSpace.Local);
+
+    /// <summary>
     ///     Calculate the distance between this object and another objects positions
     /// </summary>
     /// <param name="transform">The target <see cref="Transform" /> to calculate distance to.</param>

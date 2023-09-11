@@ -83,15 +83,6 @@ public class TestApp
         rect.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, 4f);
         rect.GetComponent<TransformComponent>()!.Transform.Scale = new Vector3(.7f, .7f, .7f);
 
-        // Main loop
-        const float Sensitivity = 0.5f;
-        const float clampAngle = 80.0f;
-
-        var camTransform = _mainCamera.GetComponent<TransformComponent>()!.Transform;
-        var rot = camTransform.LocalRotation.ToEulerAngles();
-        var rotY = rot.Y; // rotation around the up/y axis
-        var rotX = rot.X; // rotation around the right/x axis
-
         var rotation = 0f;
         while (!Keyboard.GetKey(KeyCode.Escape) && !window.WindowTerminated())
         {
@@ -104,63 +95,46 @@ public class TestApp
             _world.Update();
             _world.Render();
 
-            // Mouse look
-            if (Mouse.MouseButtonDown(MouseButtons.Right))
-            {
-                var xSpeed = Mathf.Radians(Mouse.MouseXDelta() * Sensitivity);
-                var ySpeed = Mathf.Radians(Mouse.MouseYDelta() * Sensitivity);
-
-                var rotationDelta = Quaternion.FromEulerAngles(ySpeed, xSpeed, 0.0f);
-                camTransform.Rotation *= rotationDelta;
-                ;
-            }
-
-            KeyControls(_world.Time.DeltaTime);
+            KeyControls(_world.Time.DeltaTime, .5f);
         }
 
         driver.Close();
         _world.Dispose();
     }
 
-    private static float ClampAngle(float angle, float min, float max)
+    private static void KeyControls(float deltaTime, float sensitivity)
     {
-        if (angle < -360F)
-        {
-            angle += 360F;
-        }
+        var transform = _mainCamera.GetComponent<TransformComponent>()!.Transform;
+        var translation = Vector3.Zero;
 
-        if (angle > 360F)
-        {
-            angle -= 360F;
-        }
-
-        return Mathf.Clamp(angle, min, max);
-    }
-
-    private static void KeyControls(float deltaTime)
-    {
         if (Keyboard.GetKeyDown(KeyCode.W))
         {
-            _mainCamera.GetComponent<TransformComponent>()!.Transform.Position +=
-                _mainCamera.GetComponent<CameraComponent>()!.Forward * 10f * deltaTime;
+            translation.Z -= 10f * deltaTime;
         }
 
         if (Keyboard.GetKeyDown(KeyCode.S))
         {
-            _mainCamera.GetComponent<TransformComponent>()!.Transform.Position -=
-                _mainCamera.GetComponent<CameraComponent>()!.Forward * 10f * deltaTime;
+            translation.Z += 10f * deltaTime;
         }
 
         if (Keyboard.GetKeyDown(KeyCode.A))
         {
-            _mainCamera.GetComponent<TransformComponent>()!.Transform.Position -=
-                _mainCamera.GetComponent<CameraComponent>()!.Right * 10f * deltaTime;
+            translation.X -= 10f * deltaTime;
         }
 
         if (Keyboard.GetKeyDown(KeyCode.D))
         {
-            _mainCamera.GetComponent<TransformComponent>()!.Transform.Position +=
-                _mainCamera.GetComponent<CameraComponent>()!.Right * 10f * deltaTime;
+            translation.X += 10f * deltaTime;
+        }
+
+        transform.Translate(translation, CoordinateSpace.Local);
+
+        if (Mouse.MouseButtonDown(MouseButtons.Right))
+        {
+            var xSpeed = Mathf.Radians(Mouse.MouseXDelta() * sensitivity);
+            var ySpeed = Mathf.Radians(Mouse.MouseYDelta() * sensitivity);
+
+            transform.Rotate(ySpeed, xSpeed, 0f, CoordinateSpace.Local);
         }
     }
 }
