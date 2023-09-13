@@ -523,6 +523,39 @@ public struct Quaternion : IEquatable<Quaternion>
     /// <param name="result">The resulting euler angles in radians.</param>
     public static void ToEulerAngles(in Quaternion q, out Vector3 result) => q.ToEulerAngles(out result);
 
+    /// <summary>Creates a new quaternion from the given yaw, pitch, and roll.</summary>
+    /// <param name="yaw">The yaw angle, in radians, around the Y axis.</param>
+    /// <param name="pitch">The pitch angle, in radians, around the X axis.</param>
+    /// <param name="roll">The roll angle, in radians, around the Z axis.</param>
+    /// <returns>The resulting quaternion.</returns>
+    /// <remarks>Borrowed from System.Numerics.</remarks>
+    public static Quaternion CreateFromYawPitchRoll(float yaw, float pitch, float roll)
+    {
+        //  Roll first, about axis the object is facing, then
+        //  pitch upward, then yaw to face into the new heading
+        float sr, cr, sp, cp, sy, cy;
+
+        var halfRoll = roll * 0.5f;
+        sr = MathF.Sin(halfRoll);
+        cr = MathF.Cos(halfRoll);
+
+        var halfPitch = pitch * 0.5f;
+        sp = MathF.Sin(halfPitch);
+        cp = MathF.Cos(halfPitch);
+
+        var halfYaw = yaw * 0.5f;
+        sy = MathF.Sin(halfYaw);
+        cy = MathF.Cos(halfYaw);
+
+        return new Quaternion
+        {
+            X = cy * sp * cr + sy * cp * sr,
+            Y = sy * cp * cr - cy * sp * sr,
+            Z = cy * cp * sr - sy * sp * cr,
+            W = cy * cp * cr + sy * sp * sr
+        };
+    }
+
     /// <summary>
     ///     Builds a quaternion from the given rotation matrix.
     /// </summary>

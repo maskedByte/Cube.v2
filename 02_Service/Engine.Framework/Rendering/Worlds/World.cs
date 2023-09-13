@@ -205,6 +205,7 @@ public sealed class World : IDisposable
             entityCommandQueue.End();
 
             Renderer.Render(entityCommandQueue);
+            Context.ResetState();
         }
 
         Core.ActiveDriver.Swap();

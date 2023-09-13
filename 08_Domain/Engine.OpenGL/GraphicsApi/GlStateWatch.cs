@@ -124,6 +124,14 @@ internal static class GlStateWatch
         UnbindBufferArray();
     }
 
+    public static void UnbindTextures()
+    {
+        foreach (var (target, textureUnit) in BoundTextures)
+        {
+            UnbindTexture(target.Item1, textureUnit);
+        }
+    }
+
     public static void Dispose()
     {
         UnbindAll();

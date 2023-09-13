@@ -42,24 +42,24 @@ public class TestApp
         var window = driver.CreateWindow($"Cube.Engine v2 - Testing - {core.ActiveDriver.GetType().Name}", 1280, 1024, false);
 
         _world = new World(core);
-        _world.AmbientLight.Color = new Color(236, 241, 243);
+
+        _mainCamera = new Entity(_world);
+        _mainCamera.Tag = "Camera";
+        _mainCamera.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, 2);
+        var camComponent = _mainCamera.AddComponent<CameraComponent>();
+        camComponent.ClearColor = SysColor.Gray;
+        camComponent.ProjectionMode = ProjectionMode.Perspective;
+        camComponent.FieldOfView = 62f;
 
         var light = new Entity(_world);
         light.Tag = "Light";
         var dirLight = light.AddComponent<DirectionalLightComponent>().Light;
         dirLight.Color = new Color(255, 125, 5);
-        dirLight.Intensity = 0.8f;
-
-        light.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 10, -2);
-
-        _mainCamera = new Entity(_world);
-        _mainCamera.Tag = "Camera";
-        _mainCamera.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 2, 0);
-
-        var camComponent = _mainCamera.AddComponent<CameraComponent>();
-        camComponent.ClearColor = SysColor.Gray;
-        camComponent.ProjectionMode = ProjectionMode.Perspective;
-        camComponent.FieldOfView = 62f;
+        dirLight.Intensity = .8f;
+        light.AddComponent<MeshComponent>()
+           .Mesh = new CubeMesh(_world.Context);
+        light.GetComponent<TransformComponent>()!
+           .Transform.Position = new Vector3(0, 10, -2);
 
         var cube = new Entity(_world);
         cube.Tag = "Cube";
@@ -67,7 +67,7 @@ public class TestApp
            .Mesh = new CubeMesh(_world.Context);
         cube.AddComponent<MaterialComponent>()
            .Material = new Material("materials\\grid_blue_material");
-        cube.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, -5f);
+        cube.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, -1f);
 
         var cube2 = new Entity(_world);
         cube2.Tag = "Cube2";
@@ -75,16 +75,15 @@ public class TestApp
            .Mesh = new CubeMesh(_world.Context);
         cube2.AddComponent<MaterialComponent>()
            .Material = new Material("materials\\grid_yellow_material");
-        cube2.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, 3f);
+        cube2.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(2, 0, -1f);
 
-        var rect = new Entity(_world, cube2);
+        var rect = new Entity(_world);
         rect.Tag = "Rect";
         rect.AddComponent<MeshComponent>()
            .Mesh = new SphereMesh(_world.Context);
         rect.AddComponent<MaterialComponent>()
            .Material = new Material("materials\\grid_blue_material");
-        rect.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, 4f);
-        rect.GetComponent<TransformComponent>()!.Transform.Scale = new Vector3(.7f, .7f, .7f);
+        rect.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(4, 0, 1f);
 
         var rotation = 0f;
         while (!Keyboard.GetKey(KeyCode.Escape) && !window.WindowTerminated())
@@ -92,8 +91,11 @@ public class TestApp
             var deltaTime = _world.Time.DeltaTime;
 
             rotation += 0.5f * deltaTime;
+            cube.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(0, rotation, 0);
             cube2.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(rotation, 0, 0);
             rect.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(-rotation, 0, -rotation);
+
+            light.GetComponent<TransformComponent>()!.Transform.LocalRotation = Quaternion.FromEulerAngles(rotation, rotation, 0);
 
             _world.Update();
             _world.Render();
@@ -134,10 +136,12 @@ public class TestApp
 
         if (Mouse.MouseButtonDown(MouseButtons.Right))
         {
-            var xSpeed = Mathf.Radians(Mouse.MouseXDelta() * sensitivity);
-            var ySpeed = Mathf.Radians(Mouse.MouseYDelta() * sensitivity);
+            var yaw = Mathf.Radians(Mouse.MouseXDelta() * sensitivity);
+            var pitch = Mathf.Radians(Mouse.MouseYDelta() * sensitivity);
 
-            transform.Rotate(ySpeed, xSpeed, 0f, CoordinateSpace.Local);
+            transform.Rotate(Quaternion.CreateFromYawPitchRoll(yaw, pitch, 0f), CoordinateSpace.Local);
+
+            // transform.Rotate(ySpeed, xSpeed, 0f, CoordinateSpace.Local);
         }
     }
 }

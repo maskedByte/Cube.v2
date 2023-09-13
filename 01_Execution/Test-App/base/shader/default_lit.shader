@@ -37,15 +37,16 @@
 
     // For lighting
     out vec4 v_FragmentPos;
-    out vec3 v_NormalOut;
+    out vec4 v_NormalOut;
 
     // Main shader function
     void main()
     {
         v_FragmentPos = m_ModelMatrix * a_Position;
-        gl_Position = m_ProjectionMatrix * m_ViewMatrix * m_ModelMatrix * a_Position;
+        gl_Position = m_ProjectionMatrix * m_ViewMatrix * v_FragmentPos;
 
-        v_NormalOut = m_NormalMatrix * a_Normal;
+        v_NormalOut = normalize(m_ModelMatrix * vec4(a_Normal, 0.0));
+
         v_MaterialColorOut = v_MaterialColor;
         v_DefaultColorOut = v_DefaultColor;
         v_VertexColorOut = a_Color;
@@ -86,7 +87,7 @@
     in vec4 v_DefaultColorOut;
 
     in vec4 v_FragmentPos;
-    in vec3 v_NormalOut;
+    in vec4 v_NormalOut;
 
     // Texture sampler units
     uniform sampler2D texUnits[10];
@@ -109,17 +110,18 @@
         vec4 texColor = diffuseColor * v_VertexColorOut * v_MaterialColorOut * v_DefaultColorOut;
 
         // Calculate lighting
-        vec4 AmbientLightColor = AmbientLight.v_Color * AmbientLight.f_Intensity;
+        vec4 ambientLightColor = AmbientLight.v_Color;
         vec3 lightDir = normalize(-DirectionalLight.v_Direction);
-        float diff = max(dot(v_NormalOut, lightDir), 0.0);
-        vec4 DirectionalLight = diff * DirectionalLight.v_Color * DirectionalLight.f_Intensity;
+        float diff = max(dot(v_NormalOut.xyz, lightDir), 0.0);
+        vec4 directionalLightColor = diff * DirectionalLight.v_Color * DirectionalLight.f_Intensity;
         // vec3 lightDir = normalize(lightPos - FragPos);  // Not for Directional Light
+
 
         if (texColor.a < 0.001) {
             discard;
         }
 
         // Calculate final color
-        fragColor = (AmbientLightColor + DirectionalLight) * texColor;
+        fragColor = (ambientLightColor + directionalLightColor) * texColor;
     }
 }

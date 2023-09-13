@@ -19,8 +19,6 @@ public sealed class Transform
     private Quaternion _localRotation;
     private Matrix4 _localRotationMatrix;
     private Matrix4 _modelMatrix; // Cached
-    private Vector3 _origin;
-    private Matrix4 _originMatrix;
 
     private Vector3 _scale;
 
@@ -114,20 +112,6 @@ public sealed class Transform
     }
 
     /// <summary>
-    ///     Set an vector as origin
-    /// </summary>
-    public Vector3 Origin
-    {
-        get => _origin;
-        set
-        {
-            _origin = value;
-            _originMatrix = Matrix4.CreateTranslation(_origin);
-            SetDirty();
-        }
-    }
-
-    /// <summary>
     ///     Get the forward vector based on the camera transform
     /// </summary>
     public Vector3 Forward => Vector3.Transform(-Vector3.Forward, Rotation);
@@ -150,8 +134,6 @@ public sealed class Transform
         LocalPosition = Vector3.Zero;
         LocalRotation = Quaternion.Identity;
         Scale = Vector3.One;
-        Origin = Vector3.Zero;
-
         _modelMatrix = Matrix4.Identity;
 
         Parent = null;
@@ -179,7 +161,6 @@ public sealed class Transform
         : this(position)
     {
         Scale = scale;
-        Origin = Vector3.Zero;
         CalculateMatrix();
     }
 
@@ -193,26 +174,6 @@ public sealed class Transform
         : this(position, scale)
     {
         Rotation = rotation;
-        Origin = Vector3.Zero;
-        CalculateMatrix();
-    }
-
-    /// <summary>
-    ///     Creates a new instance of <see cref="Transform" /> and sets its position, scale, rotation and origin.
-    /// </summary>
-    /// <param name="position">The initial position to set for the transform.</param>
-    /// <param name="scale">The initial scale to set for the transform.</param>
-    /// <param name="rotation">The initial rotation to set for the transform.</param>
-    /// <param name="origin">The initial origin to set for the transform.</param>
-    public Transform(
-        Vector3 position,
-        Vector3 scale,
-        Quaternion rotation,
-        Vector3 origin
-    )
-        : this(position, scale, rotation)
-    {
-        Origin = origin;
         CalculateMatrix();
     }
 
@@ -237,22 +198,28 @@ public sealed class Transform
     }
 
     /// <summary>
+    ///    Rotates the transform by the specified quaternion in the specified coordinate space.
+    /// </summary>
+    /// <param name="quaternion">The quaternion to rotate by.</param>
+    /// <param name="space">The coordinate space in which to apply the rotation (Local or World).</param>
+    public void Rotate(Quaternion quaternion, CoordinateSpace space)
+    {
+        if (space == CoordinateSpace.Local)
+        {
+            LocalRotation *= quaternion;
+        }
+        else
+        {
+            Rotation *= Quaternion.Invert(Rotation) * quaternion * Rotation;
+        }
+    }
+
+    /// <summary>
     ///     Rotates the transform by the specified Euler angles in the specified coordinate space.
     /// </summary>
     /// <param name="euler">The Euler angles (in degrees) to rotate by.</param>
     /// <param name="space">The coordinate space in which to apply the rotation (Local or World).</param>
-    public void Rotate(Vector3 euler, CoordinateSpace space)
-    {
-        var eulerRot = Quaternion.FromEulerAngles(euler.X, euler.Y, euler.Z);
-        if (space == CoordinateSpace.Local)
-        {
-            LocalRotation *= eulerRot;
-        }
-        else
-        {
-            Rotation *= Quaternion.Invert(Rotation) * eulerRot * Rotation;
-        }
-    }
+    public void Rotate(Vector3 euler, CoordinateSpace space) => Rotate(Quaternion.FromEulerAngles(euler.X, euler.Y, euler.Z), space);
 
     /// <summary>
     ///     Rotates the transform by the specified Euler angles in the local coordinate space.
@@ -301,7 +268,7 @@ public sealed class Transform
             _modelMatrix *= Parent.Transformation;
         }
 
-        _modelMatrix = _scaleMatrix * _originMatrix.Inverted() * _localRotationMatrix * _originMatrix * _localPositionMatrix * _modelMatrix;
+        _modelMatrix = _scaleMatrix * _localRotationMatrix * _localPositionMatrix * _modelMatrix;
 
         _dirty = false;
     }

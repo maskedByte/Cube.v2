@@ -223,6 +223,16 @@ internal class Context : IContext
     public IUniformBuffer? GetActiveUniformBuffer() => IContext.CurrentState.ActiveUniformBuffer;
 
     /// <inheritdoc />
+    public void ResetState()
+    {
+        IContext.CurrentState.IndexCount = 0;
+        IContext.CurrentState.PrimitiveType = PrimitiveType.Triangles;
+        IContext.CurrentState.ActiveUniformBuffer = null;
+
+        GlStateWatch.UnbindTextures();
+    }
+
+    /// <inheritdoc />
     public IBufferArray CreateBufferArray() => new GlBufferArray();
 
     /// <inheritdoc />

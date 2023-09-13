@@ -14,6 +14,18 @@ namespace Engine.Core.Driver;
 public interface IContext : IDisposable
 {
     /// <summary>
+    ///     Current state of the graphics context
+    /// </summary>
+    public static class CurrentState
+    {
+        public static PrimitiveType PrimitiveType { get; set; } = PrimitiveType.Triangles;
+        public static uint IndexCount { get; set; }
+        public static IShaderProgram? BoundShaderProgram { get; set; }
+        public static IUniformBuffer? ActiveUniformBuffer { get; set; }
+        public static IList<IUniformBuffer> UniformBuffers { get; } = new List<IUniformBuffer>();
+    }
+
+    /// <summary>
     ///     Ensure that the driver is initialized before calling driver specific methods
     /// </summary>
     bool IsInitialized { get; }
@@ -27,18 +39,6 @@ public interface IContext : IDisposable
     ///     Set the point size
     /// </summary>
     float PointSize { get; set; }
-
-    /// <summary>
-    ///     Current state of the graphics context
-    /// </summary>
-    public static class CurrentState
-    {
-        public static PrimitiveType PrimitiveType { get; set; } = PrimitiveType.Triangles;
-        public static uint IndexCount { get; set; }
-        public static IShaderProgram? BoundShaderProgram { get; set; }
-        public static IUniformBuffer? ActiveUniformBuffer { get; set; }
-        public static IList<IUniformBuffer> UniformBuffers { get; } = new List<IUniformBuffer>();
-    }
 
     /// <summary>
     ///     Initialize the graphics context
@@ -244,4 +244,11 @@ public interface IContext : IDisposable
     /// </summary>
     /// <returns>The active uniform buffer</returns>
     IUniformBuffer? GetActiveUniformBuffer();
+
+    /// <summary>
+    ///     Reset the state of the graphics context
+    /// </summary>
+    void ResetState();
+
+
 }
