@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using Engine.Core.Math.Vectors;
 
 namespace Engine.Core.Math.Base;
@@ -6,6 +7,7 @@ namespace Engine.Core.Math.Base;
 ///     A barebones implementation of the System.Drawing.Size structure
 ///     to support the use of Size in the Texture and FBO classes.
 /// </summary>
+[Serializable, StructLayout(LayoutKind.Sequential)]
 public struct Size : IEquatable<Size>
 {
     /// <summary>

@@ -7,7 +7,7 @@ namespace Engine.Core.Math.Geometrics;
 /// <summary>
 ///     Struct implementation for a Vertex
 /// </summary>
-[StructLayout(LayoutKind.Sequential)]
+[Serializable, StructLayout(LayoutKind.Sequential)]
 public readonly struct Vertex
 {
     /// <summary>

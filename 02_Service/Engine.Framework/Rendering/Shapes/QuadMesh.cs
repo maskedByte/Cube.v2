@@ -37,6 +37,13 @@ public sealed class QuadMesh : Mesh
             3
         };
 
+        Normals = new Vector3[4];
+
+        for (var i = 0; i < 4; i++)
+        {
+            Normals[i] = new Vector3(0, 0, 1);
+        }
+
         Build();
     }
 }

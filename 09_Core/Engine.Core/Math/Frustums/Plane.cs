@@ -6,7 +6,7 @@ namespace Engine.Core.Math.Frustums;
 /// <summary>
 ///     Represents a plane in 3D space
 /// </summary>
-[StructLayout(LayoutKind.Sequential)]
+[Serializable, StructLayout(LayoutKind.Sequential)]
 public readonly struct FrustumPlane
 {
     public readonly Vector3 Normal;

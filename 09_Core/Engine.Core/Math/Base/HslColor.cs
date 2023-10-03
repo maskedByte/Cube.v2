@@ -5,7 +5,7 @@ namespace Engine.Core.Math.Base;
 /// <summary>
 ///     Represents a <see cref="Color" /> as HSL value
 /// </summary>
-[StructLayout(LayoutKind.Sequential)]
+[Serializable, StructLayout(LayoutKind.Sequential)]
 public sealed class HslColor
 {
     private const double Scale = 240.0;

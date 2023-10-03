@@ -8,7 +8,7 @@ namespace Engine.Core.Math.Geometrics;
 /// <summary>
 ///     Defines an axis-aligned 3d box (rectangular prism).
 /// </summary>
-[StructLayout(LayoutKind.Sequential), Serializable]
+[Serializable, StructLayout(LayoutKind.Sequential)]
 public struct AAB3 : IEquatable<AAB3>
 {
     private Vector3 _min;

@@ -1,4 +1,5 @@
 using System.Diagnostics.Contracts;
+using System.Runtime.InteropServices;
 using Engine.Core.Math.Vectors;
 
 namespace Engine.Core.Math.Geometrics;
@@ -6,7 +7,7 @@ namespace Engine.Core.Math.Geometrics;
 /// <summary>
 ///     Represents a quadratic bezier curve with two anchor and one control point.
 /// </summary>
-[Serializable]
+[Serializable, StructLayout(LayoutKind.Sequential)]
 public struct BezierCurveQuadric
 {
     /// <summary>

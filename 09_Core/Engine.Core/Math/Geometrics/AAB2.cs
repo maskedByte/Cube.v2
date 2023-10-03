@@ -8,7 +8,7 @@ namespace Engine.Core.Math.Geometrics;
 /// <summary>
 ///     Defines an axis-aligned 2d box (rectangle).
 /// </summary>
-[StructLayout(LayoutKind.Sequential), Serializable]
+[Serializable, StructLayout(LayoutKind.Sequential)]
 public struct AAB2 : IEquatable<AAB2>
 {
     private Vector2 _min;

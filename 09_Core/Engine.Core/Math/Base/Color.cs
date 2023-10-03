@@ -10,7 +10,9 @@ namespace Engine.Core.Math.Base;
 /// <summary>
 ///     Representation of a color as R,G,B,A byte values ranging from 0-255
 /// </summary>
-[StructLayout(LayoutKind.Sequential), SuppressMessage("ReSharper", "InvalidXmlDocComment")]
+[Serializable,
+ StructLayout(LayoutKind.Sequential),
+ SuppressMessage("ReSharper", "InvalidXmlDocComment")]
 public sealed class Color : IEquatable<Color>
 {
     /// <summary>

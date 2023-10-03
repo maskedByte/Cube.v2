@@ -1,8 +1,11 @@
-﻿namespace Engine.Core.Math.Frustums;
+﻿using System.Runtime.InteropServices;
+
+namespace Engine.Core.Math.Frustums;
 
 /// <summary>
 ///     Represents a frustum in 3D space
 /// </summary>
+[Serializable, StructLayout(LayoutKind.Sequential)]
 public class Frustum
 {
     public FrustumPlane Top { get; }

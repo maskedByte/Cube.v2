@@ -5,7 +5,7 @@ using Engine.Core.Math.Vectors;
 
 namespace Engine.Core.Math.Base;
 
-[StructLayout(LayoutKind.Sequential)]
+[Serializable, StructLayout(LayoutKind.Sequential)]
 public struct Rect : IEquatable<Rect>
 {
     private float _lenghtW;

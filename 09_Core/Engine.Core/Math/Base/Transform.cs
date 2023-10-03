@@ -1,6 +1,7 @@
 // ReSharper disable CompareOfFloatsByEqualityOperator
 
 using System.Diagnostics.Contracts;
+using System.Runtime.InteropServices;
 using Engine.Core.Math.Matrices;
 using Engine.Core.Math.Quaternions;
 using Engine.Core.Math.Vectors;
@@ -10,7 +11,7 @@ namespace Engine.Core.Math.Base;
 /// <summary>
 ///     Implementation of <see cref="Transform" />
 /// </summary>
-[Serializable]
+[Serializable, StructLayout(LayoutKind.Sequential)]
 public sealed class Transform
 {
     private bool _dirty;
