@@ -1,6 +1,6 @@
 :Config
 {
-    Version="#version 450 core";
+    Version="#version 420 core";
 }
 
 :Shader(Type="Vertex")
@@ -16,13 +16,13 @@
         mat4 m_ProjectionMatrix;
     };
 
-    layout (std140, binding = 1) uniform Model
+    layout (std140 , binding = 1) uniform Model
     {
         mat4 m_ModelMatrix;
         mat3 m_NormalMatrix;
     };
 
-    layout (std140, binding = 2) uniform Material
+    layout (std140 , binding = 2) uniform Material
     {
         vec4 v_MaterialColor;
         vec4 v_DefaultColor;
@@ -111,9 +111,9 @@
 
         // Calculate lighting
         vec4 ambientLightColor = AmbientLight.v_Color;
-        vec3 lightDir = normalize(-DirectionalLight.v_Direction);
+        vec3 lightDir = DirectionalLight.v_Direction;
         float diff = max(dot(v_NormalOut.xyz, lightDir), 0.0);
-        vec4 directionalLightColor = diff * DirectionalLight.v_Color * DirectionalLight.f_Intensity;
+        vec4 directionalLightColor = diff * DirectionalLight.v_Color ;
         // vec3 lightDir = normalize(lightPos - FragPos);  // Not for Directional Light
 
 

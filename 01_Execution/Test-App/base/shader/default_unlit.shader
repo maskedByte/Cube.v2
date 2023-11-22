@@ -19,6 +19,7 @@
     layout (std140, binding = 1) uniform Model
     {
         mat4 m_ModelMatrix;
+        mat3 m_NormalMatrix;
     };
 
     layout (std140, binding = 2) uniform Material
@@ -35,15 +36,16 @@
     out vec2 v_TextureCoordOut;
 
     // For lighting
-    out vec3 v_NormalOut;
-    out vec3 v_FragmentPos;
+    out vec4 v_FragmentPos;
+    out vec4 v_NormalOut;
 
     // Main shader function
     void main()
     {
-        v_FragmentPos = vec3(m_ModelMatrix * a_Position);
-        gl_Position = m_ProjectionMatrix * m_ViewMatrix * vec4(v_FragmentPos, 1.0);
-        v_NormalOut = a_Normal;
+        v_FragmentPos = m_ModelMatrix * a_Position;
+        gl_Position = m_ProjectionMatrix * m_ViewMatrix * v_FragmentPos;
+
+        v_NormalOut = normalize(m_ModelMatrix * vec4(a_Normal, 0.0));
 
         v_MaterialColorOut = v_MaterialColor;
         v_DefaultColorOut = v_DefaultColor;
@@ -54,24 +56,44 @@
 
 :Shader(Type="Fragment")
 {
+    struct AmbientLightContract
+    {
+        vec4 v_Color;
+        float f_Intensity;
+    };
+
+    struct DirectionalLightContract
+    {
+        vec4 v_Color;
+        float f_Intensity;
+        float f_DiffuseIntensity;
+        vec3 v_Direction;
+    };
+
+    layout (std140, binding = 3) uniform AmbientLightUniform
+    {
+        AmbientLightContract AmbientLight;
+    };
+
+    layout (std140, binding = 4) uniform DirectionalLightUniform
+    {
+        DirectionalLightContract DirectionalLight;
+    };
+
     // Input from Vertex Shader
     in vec4 v_VertexColorOut;
     in vec2 v_TextureCoordOut;
     in vec4 v_MaterialColorOut;
     in vec4 v_DefaultColorOut;
 
-    in vec3 v_FragmentPos;
-    in vec3 v_NormalOut;
-
-    // Output to Framebuffer
-    out vec4 fragColor;
+    in vec4 v_FragmentPos;
+    in vec4 v_NormalOut;
 
     // Texture sampler units
     uniform sampler2D texUnits[10];
 
-    // Light uniforms
-    uniform vec3 u_LightPos = vec3(-2.0, 0.0, -5.0);
-    uniform vec3 lightColor = vec3(1.0, 1.0, 1.0);
+    // Output to Framebuffer
+    out vec4 fragColor;
 
     // Main shader function
     void main()
@@ -84,21 +106,17 @@
         vec4 emissionColor = texture(texUnits[8], v_TextureCoordOut);
         vec4 detailMaskColor = texture(texUnits[9], v_TextureCoordOut);
 
-        // Calculate lighting
-        float ambientStrength = 1;
-        vec4 ambient = ambientStrength * v_DefaultColorOut; // Replace with correct ambient light color from wolrd
-
-        vec3 norm = normalize(v_NormalOut);
-        vec3 lightDir = normalize(u_LightPos - v_FragmentPos);
-        float diff = max(dot(norm, lightDir), 0.0);
-        vec4 diffuse = vec4(diff * lightColor, 1.0);
-
+        // Calculate texture color
         vec4 texColor = diffuseColor * v_VertexColorOut * v_MaterialColorOut * v_DefaultColorOut;
+
+        // Calculate lighting
+        vec4 ambientLightColor = AmbientLight.v_Color;
 
         if (texColor.a < 0.001) {
             discard;
         }
 
-        fragColor = texColor;
+        // Calculate final color
+        fragColor = ambientLightColor * texColor;
     }
 }

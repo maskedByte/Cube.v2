@@ -45,62 +45,42 @@ public class TestApp
 
         _mainCamera = new Entity(_world);
         _mainCamera.Tag = "Camera";
-        _mainCamera.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, 2);
         var camComponent = _mainCamera.AddComponent<CameraComponent>();
         camComponent.ClearColor = SysColor.Gray;
-        camComponent.ProjectionMode = ProjectionMode.Perspective;
+        camComponent.ProjectionMode = ProjectionMode.Orthographic;
         camComponent.FieldOfView = 62f;
 
         var light = new Entity(_world);
         light.Tag = "Light";
-        var dirLight = light.AddComponent<DirectionalLightComponent>().Light;
-        dirLight.Color = new Color(255, 125, 5);
-        dirLight.Intensity = .8f;
-        light.AddComponent<MeshComponent>()
-           .Mesh = new CubeMesh(_world.Context);
-        light.GetComponent<TransformComponent>()!
-           .Transform.Position = new Vector3(0, 10, -2);
-
-        var cube = new Entity(_world);
-        cube.Tag = "Cube";
-        cube.AddComponent<MeshComponent>()
-           .Mesh = new CubeMesh(_world.Context);
-        cube.AddComponent<MaterialComponent>()
-           .Material = new Material("materials\\grid_blue_material");
-        cube.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(0, 0, -1f);
-
-        var cube2 = new Entity(_world);
-        cube2.Tag = "Cube2";
-        cube2.AddComponent<MeshComponent>()
-           .Mesh = new CubeMesh(_world.Context);
-        cube2.AddComponent<MaterialComponent>()
-           .Material = new Material("materials\\grid_yellow_material");
-        cube2.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(2, 0, -1f);
+        light.AddComponent<DirectionalLightComponent>();
 
         var rect = new Entity(_world);
         rect.Tag = "Rect";
         rect.AddComponent<MeshComponent>()
-           .Mesh = new SphereMesh(_world.Context);
+           .Mesh = new QuadMesh(_world.Context);
         rect.AddComponent<MaterialComponent>()
-           .Material = new Material("materials\\grid_blue_material");
-        rect.GetComponent<TransformComponent>()!.Transform.Position = new Vector3(4, 0, 1f);
+           .Material = new Material("\\materials\\grid_blue_material");
+        var transform = rect.GetComponent<TransformComponent>()
+           .Transform;
+
+        transform.Scale = new Vector3(256, 256, 1);
+        transform.Position = new Vector3(0, 00, 0);
+
+        // var rect2 = Entity.Copy(rect);
+
 
         var rotation = 0f;
         while (!Keyboard.GetKey(KeyCode.Escape) && !window.WindowTerminated())
         {
             var deltaTime = _world.Time.DeltaTime;
 
-            rotation += 0.5f * deltaTime;
-            cube.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(0, rotation, 0);
-            cube2.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(rotation, 0, 0);
-            rect.GetComponent<TransformComponent>()!.Transform.Rotation = Quaternion.FromEulerAngles(-rotation, 0, -rotation);
+            transform.Rotate(new Vector3(0, 0, 1f * deltaTime));
 
-            light.GetComponent<TransformComponent>()!.Transform.LocalRotation = Quaternion.FromEulerAngles(rotation, rotation, 0);
 
             _world.Update();
             _world.Render();
 
-            KeyControls(_world.Time.DeltaTime, .5f);
+            KeyControls(deltaTime, .5f);
         }
 
         driver.Close();
@@ -114,25 +94,23 @@ public class TestApp
 
         if (Keyboard.GetKeyDown(KeyCode.W))
         {
-            translation.Z -= 10f * deltaTime;
+            translation.Y -= 100f * deltaTime;
         }
 
         if (Keyboard.GetKeyDown(KeyCode.S))
         {
-            translation.Z += 10f * deltaTime;
+            translation.Y += 100f * deltaTime;
         }
 
         if (Keyboard.GetKeyDown(KeyCode.A))
         {
-            translation.X -= 10f * deltaTime;
+            translation.X += 100f * deltaTime;
         }
 
         if (Keyboard.GetKeyDown(KeyCode.D))
         {
-            translation.X += 10f * deltaTime;
+            translation.X -= 100f * deltaTime;
         }
-
-        transform.Translate(translation, CoordinateSpace.Local);
 
         if (Mouse.MouseButtonDown(MouseButtons.Right))
         {
@@ -140,8 +118,8 @@ public class TestApp
             var pitch = Mathf.Radians(Mouse.MouseYDelta() * sensitivity);
 
             transform.Rotate(Quaternion.CreateFromYawPitchRoll(yaw, pitch, 0f), CoordinateSpace.Local);
-
-            // transform.Rotate(ySpeed, xSpeed, 0f, CoordinateSpace.Local);
         }
+
+        transform.Translate(translation, CoordinateSpace.Local);
     }
 }

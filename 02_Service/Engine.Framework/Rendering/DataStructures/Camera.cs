@@ -4,7 +4,6 @@ using Engine.Core.Logging;
 using Engine.Core.Math;
 using Engine.Core.Math.Base;
 using Engine.Core.Math.Matrices;
-using Engine.Core.Math.Vectors;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
@@ -119,17 +118,13 @@ public sealed class Camera : ICamera
     }
 
     /// <inheritdoc />
-    public Matrix4 GetProjection(ProjectionMode projectionMode)
-    {
-        CalculateProjections();
-
-        return projectionMode switch
+    public Matrix4 GetProjection(ProjectionMode projectionMode) =>
+        projectionMode switch
         {
             ProjectionMode.Orthographic => OrthographicMatrix,
             ProjectionMode.Perspective  => PerspectiveMatrix,
             _                           => throw new ArgumentOutOfRangeException(nameof(projectionMode), projectionMode, null)
         };
-    }
 
     /// <inheritdoc />
     public void ReceiveEvent<T>(T data)
@@ -157,12 +152,12 @@ public sealed class Camera : ICamera
             _currentViewport.Width,
             _currentViewport.Height,
             0f,
-            -int.MaxValue,
+            0.1f,
             int.MaxValue
         );
+
         _orthographicProjectionMatrix.M22 *= -1f;
 
-        // ReSharper disable once PossibleLossOfFraction
         _perspectiveProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(
             Mathf.DegreesToRadians(FieldOfView),
             _currentViewport.Width / _currentViewport.Height,
@@ -179,13 +174,8 @@ public sealed class Camera : ICamera
     /// </summary>
     private void CalculateViewMatrix()
     {
-        // Ensure the Transform matrix is up to date
         _ = Transform.Transformation;
-
         var position = Transform.Position;
-        var lookDir = Vector3.Transform(-Vector3.Forward, Transform.Rotation);
-        _viewMatrix = Matrix4.LookAt(position, position + lookDir, Vector3.Up);
-
-        //_viewMatrix = Matrix4.LookAt(position, position + Transform.Forward, Vector3.Up);
+        _viewMatrix = Matrix4.LookAt(position, position + Transform.Forward, Transform.Up);
     }
 }
