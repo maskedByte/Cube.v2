@@ -1,14 +1,14 @@
 using Engine.Core.Events;
 using Engine.Core.Math.Base;
 using Engine.Core.Math.Matrices;
-using Engine.Core.Math.Vectors;
+using Engine.OpenGL.Driver.Events;
 
 namespace Engine.Framework.Rendering.DataStructures;
 
 /// <summary>
 ///     Interface for camera classes
 /// </summary>
-public interface ICamera : IEventSubscriber
+public interface ICamera : IEventSubscriber<ViewportChangedEvent>
 {
     /// <summary>
     ///     Get the view matrix of the camera

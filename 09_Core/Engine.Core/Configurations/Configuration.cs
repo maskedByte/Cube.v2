@@ -17,7 +17,7 @@ namespace Engine.Core.Configurations;
 /// </summary>
 public sealed class Configuration : IConfiguration
 {
-    private readonly List<IConfigurationBuilder> _builder;
+    private readonly IEnumerable<IConfigurationBuilder> _builder;
     private readonly Dictionary<string, string> _configurations;
 
     /// <summary>

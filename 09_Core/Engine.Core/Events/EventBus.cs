@@ -5,59 +5,64 @@ namespace Engine.Core.Events;
 /// </summary>
 public static class EventBus
 {
-    private static readonly Dictionary<string, List<IEventSubscriber?>> Subscribers = new();
+    private static readonly Dictionary<Type, IEnumerable<IEventSubscriber>> Subscribers = new();
 
     /// <summary>
-    ///     Register a new <see cref="IEventSubscriber" /> to the Bus
+    ///     Subscribe to a event
     /// </summary>
-    /// <param name="eventName">Name of the event to subscribe to</param>
-    /// <param name="subscriber">The <see cref="IEventSubscriber" /> instance</param>
-    public static void Subscribe(string eventName, IEventSubscriber subscriber)
+    /// <param name="subscriber">The subscriber</param>
+    /// <typeparam name="T">The type of the event</typeparam>
+    public static void Subscribe<T>(IEventSubscriber<T> subscriber)
+        where T : IEvent
     {
-        var loweredEventName = eventName.ToLower();
-        if (!Subscribers.ContainsKey(loweredEventName))
+        var type = typeof(T);
+        if (!Subscribers.TryGetValue(type, out var value))
         {
-            Subscribers.Add(loweredEventName, new List<IEventSubscriber?>());
+            value = new List<IEventSubscriber>();
+            Subscribers.Add(type, value);
         }
 
-        if (!Subscribers[loweredEventName].Contains(subscriber))
-        {
-            Subscribers[loweredEventName].Add(subscriber);
-        }
+        var subscribers = value.ToList();
+        subscribers.Add(subscriber);
+        Subscribers[type] = subscribers;
     }
 
     /// <summary>
-    ///     unsubscribe from an event
+    ///     Unsubscribe from a event
     /// </summary>
-    /// <param name="eventName">Name of the event to unsubscribe from</param>
-    /// <param name="subscriber">The <see cref="IEventSubscriber" /> instance</param>
-    public static void Unsubscribe(string eventName, IEventSubscriber subscriber)
+    /// <param name="subscriber">The subscriber</param>
+    /// <typeparam name="T">The type of the event</typeparam>
+    public static void Unsubscribe<T>(IEventSubscriber<T> subscriber)
+        where T : IEvent
     {
-        var loweredEventName = eventName.ToLower();
-        if (Subscribers.TryGetValue(loweredEventName, out var eventSubscribers))
-        {
-            eventSubscribers.Remove(subscriber);
-        }
-    }
-
-    /// <summary>
-    ///     Dispatch a new event and set it's payload
-    /// </summary>
-    /// <param name="eventName">The name of the event to dispatch</param>
-    /// <param name="payload"></param>
-    /// <typeparam name="T">Type of the payload</typeparam>
-    public static void Dispatch<T>(string eventName, T payload)
-    {
-        var loweredEventName = eventName.ToLower();
-
-        if (!Subscribers.TryGetValue(loweredEventName, out var eventSubscribers))
+        var type = typeof(T);
+        if (!Subscribers.TryGetValue(type, out var value))
         {
             return;
         }
 
-        foreach (var subscriber in eventSubscribers)
+        var subscribers = value.ToList();
+        subscribers.Remove(subscriber);
+        Subscribers[type] = subscribers;
+    }
+
+    /// <summary>
+    ///     Publish a event
+    /// </summary>
+    /// <param name="data">The event data</param>
+    /// <typeparam name="T">The type of the event</typeparam>
+    public static void Publish<T>(T data)
+        where T : IEvent
+    {
+        var type = typeof(T);
+        if (!Subscribers.TryGetValue(type, out var subscribers))
         {
-            subscriber?.ReceiveEvent(payload);
+            return;
+        }
+
+        foreach (var subscriber in subscribers)
+        {
+            (subscriber as IEventSubscriber<T>)?.ReceiveEvent(data);
         }
     }
 }

@@ -4,6 +4,7 @@ using Engine.Core.Logging;
 using Engine.Core.Math;
 using Engine.Core.Math.Base;
 using Engine.Core.Math.Matrices;
+using Engine.OpenGL.Driver.Events;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
@@ -92,7 +93,7 @@ public sealed class Camera : ICamera
             throw new Exception();
         }
 
-        EventBus.Subscribe("ViewportChangedEvent", this);
+        EventBus.Subscribe(this);
         _currentViewport = _driver.GetWindow()!.Viewport;
 
         _recalculateProjection = true;
@@ -125,20 +126,6 @@ public sealed class Camera : ICamera
             ProjectionMode.Perspective  => PerspectiveMatrix,
             _                           => throw new ArgumentOutOfRangeException(nameof(projectionMode), projectionMode, null)
         };
-
-    /// <inheritdoc />
-    public void ReceiveEvent<T>(T data)
-    {
-        if (data == null || data.GetType() != typeof(Viewport))
-        {
-            return;
-        }
-
-        _currentViewport = data is Viewport viewport
-            ? viewport
-            : default;
-        _recalculateProjection = true;
-    }
 
     private void CalculateProjections()
     {
@@ -177,5 +164,11 @@ public sealed class Camera : ICamera
         _ = Transform.Transformation;
         var position = Transform.Position;
         _viewMatrix = Matrix4.LookAt(position, position + Transform.Forward, Transform.Up);
+    }
+
+    public void ReceiveEvent(ViewportChangedEvent data)
+    {
+        _currentViewport = data.Data;
+        _recalculateProjection = true;
     }
 }

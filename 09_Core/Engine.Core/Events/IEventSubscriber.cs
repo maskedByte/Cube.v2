@@ -1,14 +1,21 @@
 ﻿namespace Engine.Core.Events;
 
 /// <summary>
-///     Provides a interface to handle event subscriptions
+///    Provides a interface for a a event subscriber
 /// </summary>
 public interface IEventSubscriber
 {
+}
+
+/// <summary>
+///     Provides a interface to handle event subscriptions
+/// </summary>
+public interface IEventSubscriber<in T> : IEventSubscriber
+    where T : IEvent
+{
     /// <summary>
-    ///     Reacting to an received event
+    ///     Receive a new event
     /// </summary>
-    /// <param name="data">Payload data which was send together with the event</param>
-    /// <typeparam name="T">Type of the date the event can receive</typeparam>
-    void ReceiveEvent<T>(T data);
+    /// <param name="data">The event data</param>
+    void ReceiveEvent(T data);
 }

@@ -2,6 +2,7 @@
 using Engine.Core.Driver.Window;
 using Engine.Core.Events;
 using Engine.Core.Math.Base;
+using Engine.OpenGL.Driver.Events;
 using Engine.OpenGL.Vendor.SFML.Window;
 using SFML.System;
 
@@ -152,7 +153,7 @@ public sealed class Window : IWindow
             Height = height
         };
 
-        EventBus.Dispatch("Window.ViewportChangedEvent", _viewport);
+        EventBus.Publish(new ViewportChangedEvent(_viewport));
     }
 
     /// <inheritdoc />
@@ -203,15 +204,15 @@ public sealed class Window : IWindow
                         Width = (int)windowEvent.Size.Width,
                         Height = (int)windowEvent.Size.Height
                     };
-                    EventBus.Dispatch("Window.ViewportChangedEvent", _viewport);
+                    EventBus.Publish(new ViewportChangedEvent(_viewport));
                     break;
 
                 case EventType.GainedFocus:
-                    EventBus.Dispatch("Window.GainedFocusEvent", _viewport);
+                    EventBus.Publish(new WindowGainedFocusEvent(true));
                     break;
 
                 case EventType.LostFocus:
-                    EventBus.Dispatch("Window.LostFocusEvent", _viewport);
+                    EventBus.Publish(new WindowLostFocusEvent(true));
                     break;
 
                 case EventType.SensorChanged:
