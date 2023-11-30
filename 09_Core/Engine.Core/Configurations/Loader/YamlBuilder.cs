@@ -23,20 +23,19 @@ public sealed class YamlBuilder : IConfigurationBuilder
     }
 
     /// <inheritdoc />
+    /// <example>
+    ///  This loads a configuration file in the following format from yml:
+    ///     GroupName:
+    ///         KeyName: Value
+    ///         KeyName1: Value
+    ///
+    ///    GroupName2:
+    ///         KeyName: Value
+    ///         KeyName1: Value
+    ///
+    /// </example>
     public IDictionary<string, string> Load(string path)
     {
-        /*
-         * This loads a configuration file in the following format from yml:
-         *
-         * GroupName:
-         *   KeyName: Value
-         *   KeyName: Value
-         *
-         * GroupName2:
-         *   KeyName: Value
-         *
-         */
-
         var config = new Dictionary<string, string>();
         var lines = File.ReadAllLines(path);
 
