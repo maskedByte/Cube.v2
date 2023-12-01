@@ -2,7 +2,6 @@
 using Engine.Core.Math.Base;
 using Engine.Framework.Components;
 using Engine.Framework.Entities;
-using Engine.Framework.Rendering.DataStructures;
 using Engine.Framework.Rendering.DataStructures.Lights;
 using Engine.Framework.Systems;
 using Engine.Framework.Systems.LightSystems;
@@ -19,8 +18,6 @@ public sealed class World : IDisposable
     private readonly Dictionary<Type, ISystem> _systems;
     private readonly Dictionary<Guid, ICommandQueue> _entityCommandQueue;
     private bool _firstRun;
-
-    private Material _defaultMaterial;
 
     /// <summary>
     ///     Gets the engine core instance.
@@ -48,11 +45,6 @@ public sealed class World : IDisposable
     public RendererBase Renderer { get; set; }
 
     /// <summary>
-    ///     Sets or gets the command handler.
-    /// </summary>
-    public ICommandHandler CommandHandler { get; set; }
-
-    /// <summary>
     ///     Gets or sets the game timer.
     /// </summary>
     public ITime Time { get; set; }
@@ -74,8 +66,7 @@ public sealed class World : IDisposable
         Time = core.ActiveDriver.GetTime();
 
         Transform = new Transform();
-        CommandHandler = new CommandHandler();
-        Renderer = new ForwardRenderer(Context, null, CommandHandler);
+        Renderer = new ForwardRenderer(Context, null, new CommandHandler());
 
         // Add default systems.
         AddSystem(new TransformSystem(Context));
@@ -95,9 +86,6 @@ public sealed class World : IDisposable
         //AddSystem(new AnimationSystem(Context));
         //AddSystem(new AudioSystem(Context));
         //AddSystem(new ScriptSystem(Context));
-
-        // Defaults
-        _defaultMaterial = new Material();
 
         // Create default
         var entity = CreateEntity("World-Entity");
@@ -153,7 +141,7 @@ public sealed class World : IDisposable
     ///     Adds a system to handle a specific component type.
     /// </summary>
     /// <param name="instance">The system instance.</param>
-    public void AddSystem<T>(SystemBase<T> instance) => _systems.Add(instance.GetCanHandle(), instance);
+    public void AddSystem<T>(SystemBase<T> instance) => _systems.Add(instance.AssignTo(), instance);
 
     /// <summary>
     ///     Updates the world.
@@ -219,7 +207,6 @@ public sealed class World : IDisposable
     public void Dispose()
     {
         Core.Dispose();
-        CommandHandler.Dispose();
         Renderer.Dispose();
 
         GC.SuppressFinalize(this);

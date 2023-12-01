@@ -39,7 +39,14 @@ public class TestApp
         );
 
         var driver = core.CreateDriver(DriverType.OpenGl);
-        var window = driver.CreateWindow($"Cube.Engine v2 - Testing - {core.ActiveDriver.GetType().Name}", 1280, 1024, false);
+        var window = driver.CreateWindow(
+            $"Cube.Engine v2 - Testing - {core.ActiveDriver.GetType().Name}",
+            1280,
+            1024,
+            false,
+            false,
+            true
+        );
 
         _world = new World(core);
 
@@ -68,14 +75,12 @@ public class TestApp
 
         // var rect2 = Entity.Copy(rect);
 
-
         var rotation = 0f;
         while (!Keyboard.GetKey(KeyCode.Escape) && !window.WindowTerminated())
         {
             var deltaTime = _world.Time.DeltaTime;
 
             transform.Rotate(new Vector3(0, 0, 1f * deltaTime));
-
 
             _world.Update();
             _world.Render();

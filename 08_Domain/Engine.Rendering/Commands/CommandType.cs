@@ -3,7 +3,7 @@ namespace Engine.Rendering.Commands;
 public enum CommandType
 {
     NullCommand,
-    ProcessCommand,
+    Process,
 
     BindShaderProgram,
     BindTexture,
@@ -15,5 +15,6 @@ public enum CommandType
     SetPrimitiveType,
     SetIndexCount,
 
-    RenderElement
+    RenderElement,
+    SetViewport
 }

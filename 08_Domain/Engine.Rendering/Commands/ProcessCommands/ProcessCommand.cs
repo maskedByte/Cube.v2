@@ -7,7 +7,7 @@ public class ProcessCommand : CommandBase
     public Func<IContext, ICommand?> CommandFunc { get; }
 
     public ProcessCommand(Func<IContext, ICommand?> commandFunc)
-        : base(CommandType.ProcessCommand)
+        : base(CommandType.Process)
     {
         CommandFunc = commandFunc;
     }

@@ -6,6 +6,7 @@ using Engine.Framework.Components;
 using Engine.Framework.Entities;
 using Engine.Framework.Rendering.DataStructures;
 using Engine.Rendering.Commands;
+using Engine.Rendering.Commands.RenderCommands;
 using Engine.Rendering.Commands.ShaderCommands;
 
 namespace Engine.Framework.Systems;
@@ -49,8 +50,18 @@ public sealed class CameraSystem : SystemBase<CameraComponent>
             case SystemStage.Start:
                 break;
             case SystemStage.Update:
-                var cameraComponent = (CameraComponent)component;
+                var cameraComponent = component as CameraComponent;
                 commandQueue.Enqueue(_cameraUniformBufferCommand);
+
+                if (cameraComponent == null)
+                {
+                    return;
+                }
+
+                if (cameraComponent.Camera!.ViewportHasChanged)
+                {
+                    commandQueue.Enqueue(new SetViewportCommand(cameraComponent.Camera!.CurrentViewport));
+                }
 
                 switch (cameraComponent.ProjectionMode)
                 {
@@ -61,7 +72,7 @@ public sealed class CameraSystem : SystemBase<CameraComponent>
                         commandQueue.Enqueue(
                             new SetUniformBufferValueCommand<Matrix4>(
                                 "m_ProjectionMatrix",
-                                cameraComponent.Camera.GetProjection(ProjectionMode.Orthographic)
+                                cameraComponent.Camera.OrthographicMatrix
                             )
                         );
 
@@ -71,7 +82,7 @@ public sealed class CameraSystem : SystemBase<CameraComponent>
                         commandQueue.Enqueue(
                             new SetUniformBufferValueCommand<Matrix4>(
                                 "m_ProjectionMatrix",
-                                cameraComponent.Camera.GetProjection(ProjectionMode.Perspective)
+                                cameraComponent.Camera.PerspectiveMatrix
                             )
                         );
 

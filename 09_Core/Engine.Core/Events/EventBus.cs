@@ -5,34 +5,34 @@ namespace Engine.Core.Events;
 /// </summary>
 public static class EventBus
 {
-    private static readonly Dictionary<Type, IEnumerable<IEventSubscriber>> Subscribers = new();
+    private static readonly Dictionary<Type, IEnumerable<IEventListener>> Subscribers = new();
 
     /// <summary>
     ///     Subscribe to a event
     /// </summary>
-    /// <param name="subscriber">The subscriber</param>
+    /// <param name="listener">The listener</param>
     /// <typeparam name="T">The type of the event</typeparam>
-    public static void Subscribe<T>(IEventSubscriber<T> subscriber)
+    public static void Subscribe<T>(IEventListener<T> listener)
         where T : IEvent
     {
         var type = typeof(T);
         if (!Subscribers.TryGetValue(type, out var value))
         {
-            value = new List<IEventSubscriber>();
+            value = new List<IEventListener>();
             Subscribers.Add(type, value);
         }
 
         var subscribers = value.ToList();
-        subscribers.Add(subscriber);
+        subscribers.Add(listener);
         Subscribers[type] = subscribers;
     }
 
     /// <summary>
     ///     Unsubscribe from a event
     /// </summary>
-    /// <param name="subscriber">The subscriber</param>
+    /// <param name="listener">The listener</param>
     /// <typeparam name="T">The type of the event</typeparam>
-    public static void Unsubscribe<T>(IEventSubscriber<T> subscriber)
+    public static void Unsubscribe<T>(IEventListener<T> listener)
         where T : IEvent
     {
         var type = typeof(T);
@@ -42,7 +42,7 @@ public static class EventBus
         }
 
         var subscribers = value.ToList();
-        subscribers.Remove(subscriber);
+        subscribers.Remove(listener);
         Subscribers[type] = subscribers;
     }
 
@@ -62,7 +62,7 @@ public static class EventBus
 
         foreach (var subscriber in subscribers)
         {
-            (subscriber as IEventSubscriber<T>)?.ReceiveEvent(data);
+            (subscriber as IEventListener<T>)?.ReceiveEvent(data);
         }
     }
 }

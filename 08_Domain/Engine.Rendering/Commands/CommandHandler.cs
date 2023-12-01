@@ -16,7 +16,7 @@ public class CommandHandler : CommandHandlerBase
 {
     public CommandHandler()
     {
-        RegisterCommandTypeHandler(CommandType.ProcessCommand, ProcessCommandHandler);
+        RegisterCommandTypeHandler(CommandType.Process, ProcessCommandHandler);
         RegisterCommandTypeHandler(CommandType.BindShaderProgram, BindShaderProgramHandler);
         RegisterCommandTypeHandler(CommandType.BindTexture, BindTextureHandler);
         RegisterCommandTypeHandler(CommandType.BindBufferArray, BindBufferArrayHandler);
@@ -26,6 +26,17 @@ public class CommandHandler : CommandHandlerBase
         RegisterCommandTypeHandler(CommandType.SetIndexCount, SetIndexCountHandler);
         RegisterCommandTypeHandler(CommandType.SetShaderUniform, SetShaderUniformHandler);
         RegisterCommandTypeHandler(CommandType.SetUniformBufferValue, SetUniformBufferValueHandler);
+        RegisterCommandTypeHandler(CommandType.SetViewport, SetViewportHandler);
+    }
+
+    private void SetViewportHandler(IContext context, ICommand command)
+    {
+        if (command is not SetViewportCommand bindCommand)
+        {
+            return;
+        }
+
+        context.SetViewport(bindCommand.Viewport);
     }
 
     private void ProcessCommandHandler(IContext context, ICommand command)

@@ -1,16 +1,16 @@
 ﻿namespace Engine.Core.Events;
 
 /// <summary>
-///    Provides a interface for a a event subscriber
+///    Provides a interface for a a event listener
 /// </summary>
-public interface IEventSubscriber
+public interface IEventListener
 {
 }
 
 /// <summary>
-///     Provides a interface to handle event subscriptions
+///     Provides a interface to handle event listener
 /// </summary>
-public interface IEventSubscriber<in T> : IEventSubscriber
+public interface IEventListener<in T> : IEventListener
     where T : IEvent
 {
     /// <summary>

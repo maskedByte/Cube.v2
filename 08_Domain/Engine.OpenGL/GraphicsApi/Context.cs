@@ -217,6 +217,9 @@ internal class Context : IContext
         );
 
     /// <inheritdoc />
+    public void SetViewport(Viewport viewport) => Gl.Viewport(viewport.X, viewport.Y, viewport.Width, viewport.Height);
+
+    /// <inheritdoc />
     public void RegisterUniformBuffer(IUniformBuffer uniformBuffer) => IContext.CurrentState.UniformBuffers.Add(uniformBuffer);
 
     /// <inheritdoc />

@@ -60,7 +60,11 @@ public abstract class RendererBase : IRenderer
         EndRender();
     }
 
-    public void Dispose() => CommandQueue?.Dispose();
+    public void Dispose()
+    {
+        CommandHandler.Dispose();
+        CommandQueue?.Dispose();
+    }
 
     public virtual void BeginRender()
     {

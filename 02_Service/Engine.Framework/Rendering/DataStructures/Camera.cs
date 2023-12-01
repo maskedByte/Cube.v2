@@ -14,7 +14,6 @@ public sealed class Camera : ICamera
 {
     private readonly IDriver _driver;
     private Color _clearColor;
-    private Viewport _currentViewport;
     private Matrix4 _orthographicProjectionMatrix;
     private Matrix4 _perspectiveProjectionMatrix;
 
@@ -36,7 +35,7 @@ public sealed class Camera : ICamera
     {
         get
         {
-            CalculateProjections();
+            CalculateProjections(ProjectionMode.Perspective);
             return _perspectiveProjectionMatrix;
         }
     }
@@ -46,7 +45,7 @@ public sealed class Camera : ICamera
     {
         get
         {
-            CalculateProjections();
+            CalculateProjections(ProjectionMode.Orthographic);
             return _orthographicProjectionMatrix;
         }
     }
@@ -74,6 +73,13 @@ public sealed class Camera : ICamera
     public float FarClip { get; private set; }
 
     /// <summary>
+    ///     Current viewport of the camera.
+    /// </summary>
+    internal Viewport CurrentViewport { get; private set; }
+
+    internal bool ViewportHasChanged { get; private set; }
+
+    /// <summary>
     ///     Initialize a new Camera
     /// </summary>
     public Camera(IDriver driver)
@@ -94,7 +100,7 @@ public sealed class Camera : ICamera
         }
 
         EventBus.Subscribe(this);
-        _currentViewport = _driver.GetWindow()!.Viewport;
+        CurrentViewport = _driver.GetWindow()!.Viewport;
 
         _recalculateProjection = true;
         _orthographicProjectionMatrix = Matrix4.Identity;
@@ -118,39 +124,36 @@ public sealed class Camera : ICamera
         FarClip = far;
     }
 
-    /// <inheritdoc />
-    public Matrix4 GetProjection(ProjectionMode projectionMode) =>
-        projectionMode switch
-        {
-            ProjectionMode.Orthographic => OrthographicMatrix,
-            ProjectionMode.Perspective  => PerspectiveMatrix,
-            _                           => throw new ArgumentOutOfRangeException(nameof(projectionMode), projectionMode, null)
-        };
-
-    private void CalculateProjections()
+    private void CalculateProjections(ProjectionMode projectionMode)
     {
         if (!_recalculateProjection)
         {
             return;
         }
 
-        _orthographicProjectionMatrix = Matrix4.CreateOrthographic(
-            0f,
-            _currentViewport.Width,
-            _currentViewport.Height,
-            0f,
-            0.1f,
-            int.MaxValue
-        );
+        if (projectionMode == ProjectionMode.Orthographic)
+        {
+            _orthographicProjectionMatrix = Matrix4.CreateOrthographic(
+                0f,
+                CurrentViewport.Width,
+                CurrentViewport.Height,
+                0f,
+                0.1f,
+                int.MaxValue
+            );
 
-        _orthographicProjectionMatrix.M22 *= -1f;
+            _orthographicProjectionMatrix.M22 *= -1f;
+        }
 
-        _perspectiveProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(
-            Mathf.DegreesToRadians(FieldOfView),
-            _currentViewport.Width / _currentViewport.Height,
-            NearClip,
-            FarClip
-        );
+        if (projectionMode == ProjectionMode.Perspective)
+        {
+            _perspectiveProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(
+                Mathf.DegreesToRadians(FieldOfView),
+                CurrentViewport.Width / CurrentViewport.Height,
+                NearClip,
+                FarClip
+            );
+        }
 
         _recalculateProjection = false;
     }
@@ -168,7 +171,8 @@ public sealed class Camera : ICamera
 
     public void ReceiveEvent(ViewportChangedEvent data)
     {
-        _currentViewport = data.Data;
+        CurrentViewport = data.Data;
+        ViewportHasChanged = true;
         _recalculateProjection = true;
     }
 }

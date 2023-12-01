@@ -8,7 +8,7 @@ namespace Engine.Framework.Rendering.DataStructures;
 /// <summary>
 ///     Interface for camera classes
 /// </summary>
-public interface ICamera : IEventSubscriber<ViewportChangedEvent>
+public interface ICamera : IEventListener<ViewportChangedEvent>
 {
     /// <summary>
     ///     Get the view matrix of the camera
@@ -51,11 +51,4 @@ public interface ICamera : IEventSubscriber<ViewportChangedEvent>
     /// <param name="near"></param>
     /// <param name="far"></param>
     void SetClipPlane(float near, float far);
-
-    /// <summary>
-    ///     Returns a projection matrix for the set <see cref="ProjectionMode" />
-    /// </summary>
-    /// <param name="projectionMode"></param>
-    /// <returns></returns>
-    Matrix4 GetProjection(ProjectionMode projectionMode);
 }

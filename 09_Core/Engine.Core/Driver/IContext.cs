@@ -234,6 +234,12 @@ public interface IContext : IDisposable
     void DrawElements();
 
     /// <summary>
+    ///     Set the rendering viewport
+    /// </summary>
+    /// <param name="viewport">The viewport to set</param>
+    void SetViewport(Viewport viewport);
+
+    /// <summary>
     ///     Register a uniform buffer to the context
     /// </summary>
     /// <param name="uniformBuffer">The uniform buffer to register</param>
@@ -249,6 +255,4 @@ public interface IContext : IDisposable
     ///     Reset the state of the graphics context
     /// </summary>
     void ResetState();
-
-
 }

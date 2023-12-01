@@ -20,7 +20,7 @@ public interface ISystem
     /// <summary>
     ///     Gets the type of component this system can handle.
     /// </summary>
-    Type GetCanHandle();
+    Type AssignTo();
 
     /// <summary>
     ///     Cleans up and disposes the system.
