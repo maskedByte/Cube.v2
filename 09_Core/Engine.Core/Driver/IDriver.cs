@@ -1,5 +1,6 @@
 ﻿using Engine.Core.Driver.Input;
 using Engine.Core.Driver.Window;
+using Engine.Core.Driver.Window.Configurations;
 
 namespace Engine.Core.Driver;
 
@@ -26,6 +27,17 @@ public interface IDriver : IDisposable
         bool fullscreen = false,
         bool resizeAble = false,
         bool showStats = false
+    );
+
+    /// <summary>
+    ///     Create a new window
+    /// </summary>
+    /// <param name="title">The title of the window</param>
+    /// <param name="configuration">The configuration for the window</param>
+    /// <returns></returns>
+    IWindow CreateWindow(
+        string title,
+        WindowCreationConfiguration configuration
     );
 
     /// <summary>

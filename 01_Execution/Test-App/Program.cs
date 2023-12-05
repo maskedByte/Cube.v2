@@ -1,8 +1,7 @@
 ﻿using Engine.Assets.AssetHandling;
 using Engine.Core.Driver.Input;
-using Engine.Core.Math;
+using Engine.Core.Driver.Window.Configurations;
 using Engine.Core.Math.Base;
-using Engine.Core.Math.Quaternions;
 using Engine.Core.Math.Vectors;
 using Engine.Framework.Components;
 using Engine.Framework.Entities;
@@ -41,11 +40,19 @@ public class TestApp
         var driver = core.CreateDriver(DriverType.OpenGl);
         var window = driver.CreateWindow(
             $"Cube.Engine v2 - Testing - {core.ActiveDriver.GetType().Name}",
-            1280,
-            1024,
-            false,
-            false,
-            true
+            new WindowCreationConfiguration
+            {
+                CanvasSize = new Size(1280, 1024),
+                ShowCursor = true,
+                WindowStyle = new WindowStyleConfiguration
+                {
+                    ResizeAble = true
+                },
+                WindowContext = new WindowContextConfiguration
+                {
+                    MajorVersion = 3
+                }
+            }
         );
 
         _world = new World(core);
@@ -71,7 +78,7 @@ public class TestApp
            .Transform;
 
         transform.Scale = new Vector3(256, 256, 1);
-        transform.Position = new Vector3(0, 00, 0);
+        transform.Position = new Vector3(128, -128, 0);
 
         // var rect2 = Entity.Copy(rect);
 
@@ -117,13 +124,13 @@ public class TestApp
             translation.X -= 100f * deltaTime;
         }
 
-        if (Mouse.MouseButtonDown(MouseButtons.Right))
-        {
-            var yaw = Mathf.Radians(Mouse.MouseXDelta() * sensitivity);
-            var pitch = Mathf.Radians(Mouse.MouseYDelta() * sensitivity);
-
-            transform.Rotate(Quaternion.CreateFromYawPitchRoll(yaw, pitch, 0f), CoordinateSpace.Local);
-        }
+        // if (Mouse.MouseButtonDown(MouseButtons.Right))
+        // {
+        //     var yaw = Mathf.Radians(Mouse.MouseXDelta() * sensitivity);
+        //     var pitch = Mathf.Radians(Mouse.MouseYDelta() * sensitivity);
+        //
+        //     transform.Rotate(Quaternion.CreateFromYawPitchRoll(yaw, pitch, 0f), CoordinateSpace.Local);
+        // }
 
         transform.Translate(translation, CoordinateSpace.Local);
     }

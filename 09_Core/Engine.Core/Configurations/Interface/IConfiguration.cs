@@ -39,7 +39,7 @@ public interface IConfiguration
     /// </summary>
     /// <param name="key">Name of the configuration</param>
     /// <param name="defaultValue">Default value if value was not found</param>
-    string Get(string key, string defaultValue);
+    string Get(string key, string? defaultValue);
 
     /// <summary>
     ///     Returns value of given key if found. if not return default value

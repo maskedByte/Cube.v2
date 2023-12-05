@@ -90,9 +90,10 @@ public sealed class Configuration : IConfiguration
     #region Getter
 
     /// <inheritdoc />
-    public string Get(string key, string defaultValue)
+    public string Get(string key, string? defaultValue = default!)
     {
         _configurations.TryGetValue(key, out var value);
+
         if (string.IsNullOrWhiteSpace(value))
         {
             Set(key, defaultValue);
@@ -103,7 +104,7 @@ public sealed class Configuration : IConfiguration
     }
 
     /// <inheritdoc />
-    public int Get(string key, int defaultValue)
+    public int Get(string key, int defaultValue = default)
     {
         _configurations.TryGetValue(key, out var value);
 
@@ -117,7 +118,7 @@ public sealed class Configuration : IConfiguration
     }
 
     /// <inheritdoc />
-    public bool Get(string key, bool defaultValue)
+    public bool Get(string key, bool defaultValue = default)
     {
         _configurations.TryGetValue(key, out var value);
 
@@ -131,7 +132,7 @@ public sealed class Configuration : IConfiguration
     }
 
     /// <inheritdoc />
-    public float Get(string key, float defaultValue)
+    public float Get(string key, float defaultValue = default)
     {
         _configurations.TryGetValue(key, out var value);
 
@@ -159,7 +160,7 @@ public sealed class Configuration : IConfiguration
     }
 
     /// <inheritdoc />
-    public Vector2 Get(string key, Vector2 defaultValue)
+    public Vector2 Get(string key, Vector2 defaultValue = default)
     {
         _configurations.TryGetValue(key, out var value);
 
@@ -173,7 +174,7 @@ public sealed class Configuration : IConfiguration
     }
 
     /// <inheritdoc />
-    public Vector3 Get(string key, Vector3 defaultValue)
+    public Vector3 Get(string key, Vector3 defaultValue = default)
     {
         _configurations.TryGetValue(key, out var value);
         if (string.IsNullOrWhiteSpace(value))
@@ -186,7 +187,7 @@ public sealed class Configuration : IConfiguration
     }
 
     /// <inheritdoc />
-    public Vector4 Get(string key, Vector4 defaultValue)
+    public Vector4 Get(string key, Vector4 defaultValue = default)
     {
         _configurations.TryGetValue(key, out var value);
         if (string.IsNullOrWhiteSpace(value))
@@ -199,7 +200,7 @@ public sealed class Configuration : IConfiguration
     }
 
     /// <inheritdoc />
-    public Matrix2 Get(string key, Matrix2 defaultValue)
+    public Matrix2 Get(string key, Matrix2 defaultValue = default)
     {
         _configurations.TryGetValue(key, out var value);
         if (string.IsNullOrWhiteSpace(value))
@@ -212,7 +213,7 @@ public sealed class Configuration : IConfiguration
     }
 
     /// <inheritdoc />
-    public Matrix3 Get(string key, Matrix3 defaultValue)
+    public Matrix3 Get(string key, Matrix3 defaultValue = default)
     {
         _configurations.TryGetValue(key, out var value);
         if (string.IsNullOrWhiteSpace(value))
@@ -225,7 +226,7 @@ public sealed class Configuration : IConfiguration
     }
 
     /// <inheritdoc />
-    public Matrix4 Get(string key, Matrix4 defaultValue)
+    public Matrix4 Get(string key, Matrix4 defaultValue = default)
     {
         _configurations.TryGetValue(key, out var value);
         if (string.IsNullOrWhiteSpace(value))
@@ -238,13 +239,13 @@ public sealed class Configuration : IConfiguration
     }
 
     /// <inheritdoc />
-    public Color Get(string key, Color defaultValue)
+    public Color Get(string key, Color? defaultValue = default)
     {
         _configurations.TryGetValue(key, out var value);
         if (string.IsNullOrWhiteSpace(value))
         {
             Set(key, defaultValue);
-            return defaultValue;
+            return defaultValue ?? Color.White;
         }
 
         return Color.Parse(value);
@@ -255,88 +256,43 @@ public sealed class Configuration : IConfiguration
     #region Setter
 
     /// <inheritdoc />
-    public void Set(string key, string value)
-    {
-        _configurations.Remove(key);
-        _configurations.Add(key, value);
-    }
+    public void Set(string key, string value) => _configurations[key] = value;
 
     /// <inheritdoc />
-    public void Set(string key, int value)
-    {
-        _configurations.Remove(key);
-        _configurations.Add(key, value.ToString());
-    }
+    public void Set(string key, int value) => _configurations[key] = value.ToString();
 
     /// <inheritdoc />
-    public void Set(string key, bool value)
-    {
-        _configurations.Remove(key);
-        _configurations.Add(key, value.ToString());
-    }
+    public void Set(string key, bool value) => _configurations[key] = value.ToString();
 
     /// <inheritdoc />
-    public void Set(string key, float value)
-    {
-        _configurations.Remove(key);
-        _configurations.Add(key, value.ToString(CultureInfo.InvariantCulture));
-    }
+    public void Set(string key, float value) => _configurations[key] = value.ToString(CultureInfo.InvariantCulture);
 
     /// <inheritdoc />
-    public void Set(string key, double value)
-    {
-        _configurations.Remove(key);
-        _configurations.Add(key, value.ToString(CultureInfo.InvariantCulture));
-    }
+    public void Set(string key, double value) => _configurations[key] = value.ToString(CultureInfo.InvariantCulture);
 
     /// <inheritdoc />
-    public void Set(string key, Vector2 value)
-    {
-        _configurations.Remove(key);
-        _configurations.Add(key, value.ToString());
-    }
+    public void Set(string key, Vector2 value) => _configurations[key] = value.ToString();
 
     /// <inheritdoc />
-    public void Set(string key, Vector3 value)
-    {
-        _configurations.Remove(key);
-        _configurations.Add(key, value.ToString());
-    }
+    public void Set(string key, Vector3 value) => _configurations[key] = value.ToString();
 
     /// <inheritdoc />
-    public void Set(string key, Vector4 value)
-    {
-        _configurations.Remove(key);
-        _configurations.Add(key, value.ToString());
-    }
+    public void Set(string key, Vector4 value) => _configurations[key] = value.ToString() ?? string.Empty;
 
     /// <inheritdoc />
-    public void Set(string key, Matrix2 value)
-    {
-        _configurations.Remove(key);
-        _configurations.Add(key, value.ToString());
-    }
+    public void Set(string key, Matrix2 value) => _configurations[key] = value.ToString() ?? string.Empty;
 
     /// <inheritdoc />
-    public void Set(string key, Matrix3 value)
-    {
-        _configurations.Remove(key);
-        _configurations.Add(key, value.ToString());
-    }
+    public void Set(string key, Matrix3 value) => _configurations[key] = value.ToString();
 
     /// <inheritdoc />
-    public void Set(string key, Matrix4 value)
-    {
-        _configurations.Remove(key);
-        _configurations.Add(key, value.ToString());
-    }
+    public void Set(string key, Matrix4 value) => _configurations[key] = value.ToString();
 
     /// <inheritdoc />
-    public void Set(string key, Color value)
-    {
-        _configurations.Remove(key);
-        _configurations.Add(key, value.ToString());
-    }
+    public void Set(string key, Color? value) =>
+        _configurations[key] = value != null
+            ? value.ToString()
+            : Color.White.ToString();
 
     #endregion
 }

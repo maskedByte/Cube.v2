@@ -1,5 +1,6 @@
 ﻿using Engine.Core.Configurations;
 using Engine.Core.Driver.Window;
+using Engine.Core.Driver.Window.Configurations;
 using Engine.Core.Events;
 using Engine.Core.Math.Base;
 using Engine.OpenGL.Driver.Events;
@@ -57,58 +58,42 @@ public sealed class Window : IWindow
     /// <summary>
     ///     Default constructor
     /// </summary>
-    /// <param name="width">width of the window</param>
-    /// <param name="height">Height of the window</param>
-    /// <param name="vSync">VSync enabled</param>
-    /// <param name="fullscreen">Fullscreen enabled</param>
-    /// <param name="resizeAble">Set if the window is resizeable</param>
+    /// <param name="configuration">The window creation configuration</param>
     /// <exception cref="Exception">Throws exception if window creation failed</exception>
-    public Window(
-        int width,
-        int height,
-        bool vSync,
-        bool fullscreen,
-        bool resizeAble
-    )
+    public Window(WindowCreationConfiguration configuration)
     {
         _input = null;
 
-        var oglMajorVersion = Configuration.Instance.Get("OpenGl.MajorVersion", 4);
-        var oglMinorVersion = Configuration.Instance.Get("OpenGl.MinorVersion", 5);
-        var oglDepthBits = Configuration.Instance.Get("OpenGl.DepthBits", 24);
-        var oglStencilBits = Configuration.Instance.Get("OpenGl.StencilBits", 8);
-        var oglAntialiasingLevel = Configuration.Instance.Get("OpenGl.AntialiasingLevel", 0);
-
-        var windowWidth = Configuration.Instance.Get("Window.Width", width);
-        var windowHeight = Configuration.Instance.Get("Window.Height", height);
-        var windowVSync = Configuration.Instance.Get("Window.VSync", vSync);
-
-        var windowResizeAble = Configuration.Instance.Get("Window.Resizeable", resizeAble);
-        var windowFullScreen = Configuration.Instance.Get("Window.Fullscreen", fullscreen);
-
         var style = Styles.Titlebar | Styles.Close;
-        if (windowResizeAble)
+        if (configuration.WindowStyle.ResizeAble)
         {
             style = Styles.Titlebar | Styles.Close | Styles.Resize;
         }
 
-        if (windowFullScreen)
+        if (configuration.WindowStyle.Borderless)
+        {
+            style = Styles.None;
+        }
+
+        if (configuration.WindowStyle.Fullscreen)
         {
             style = Styles.Fullscreen;
         }
 
         var contextSettings = new ContextSettings
         {
-            MajorVersion = (uint)oglMajorVersion,
-            MinorVersion = (uint)oglMinorVersion,
-            DepthBits = (uint)oglDepthBits,
-            StencilBits = (uint)oglStencilBits,
-            AntialiasingLevel = (uint)oglAntialiasingLevel
+            MajorVersion = (uint)configuration.WindowContext.MajorVersion,
+            MinorVersion = (uint)configuration.WindowContext.MinorVersion,
+            DepthBits = (uint)configuration.WindowContext.DepthBits,
+            StencilBits = (uint)configuration.WindowContext.StencilBits,
+            AntialiasingLevel = (uint)configuration.WindowContext.Samples
         };
 
+        var viewMode = new VideoMode((uint)configuration.CanvasSize.Width, (uint)configuration.CanvasSize.Height);
+
         _internalWindow = new Vendor.SFML.Window.Window(
-            new VideoMode((uint)windowWidth, (uint)windowHeight),
-            Configuration.Instance.Get("Defaults.WindowTitle", "Cube.Engine"),
+            viewMode,
+            Configuration.Instance.Get("Window.WindowTitle", "Cube.Engine"),
             style,
             contextSettings
         );
@@ -122,11 +107,11 @@ public sealed class Window : IWindow
         {
             X = 0,
             Y = 0,
-            Width = width,
-            Height = height
+            Width = (int)viewMode.Width,
+            Height = (int)viewMode.Height
         };
-        _internalWindow.SetActive(true);
-        _internalWindow.SetVerticalSyncEnabled(windowVSync);
+        _internalWindow.SetActive(configuration.WindowStyle.Active);
+        _internalWindow.SetVerticalSyncEnabled(configuration.WindowContext.VerticalSync);
     }
 
     /// <inheritdoc />

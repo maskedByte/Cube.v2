@@ -1,7 +1,9 @@
 ﻿using Engine.Core.Driver;
 using Engine.Core.Driver.Input;
 using Engine.Core.Driver.Window;
+using Engine.Core.Driver.Window.Configurations;
 using Engine.Core.Logging;
+using Engine.Core.Math.Base;
 using Engine.OpenGL.GraphicsApi;
 using Engine.OpenGL.Vendor.OpenGL.Core;
 
@@ -44,15 +46,37 @@ public sealed class OpenGlDriver : IDriver
         bool fullscreen,
         bool resizeAble = false,
         bool showStats = false
-    )
+    ) =>
+        CreateWindow(
+            title,
+            new WindowCreationConfiguration
+            {
+                CanvasSize = new Size(width, height),
+                WindowStyle = new WindowStyleConfiguration
+                {
+                    Fullscreen = fullscreen,
+                    ResizeAble = resizeAble
+                },
+                ShowCursor = true,
+                WindowContext = new WindowContextConfiguration
+                {
+                    DebugContext = showStats,
+                    VerticalSync = vSync
+                }
+            }
+        );
+
+    public IWindow CreateWindow(string title, WindowCreationConfiguration configuration)
     {
+        ArgumentNullException.ThrowIfNull(configuration);
+
         if (CurrentWindow != null)
         {
             Log.LogMessageAsync("Window already created.", LogLevel.Warning, this);
             return CurrentWindow;
         }
 
-        CurrentWindow = new Window(width, height, vSync, fullscreen, resizeAble);
+        CurrentWindow = new Window(configuration);
 
         if (CurrentWindow == null)
         {
@@ -64,7 +88,7 @@ public sealed class OpenGlDriver : IDriver
         _context = new Context(this);
         _context.Initialize();
 
-        if (showStats)
+        if (configuration.WindowContext.DebugContext)
         {
             ShowOpenGlExtensions();
         }
