@@ -11,7 +11,7 @@ namespace Engine.Core.Math.Base;
 /// <summary>
 ///     Implementation of <see cref="Transform" />
 /// </summary>
-[Serializable, StructLayout(LayoutKind.Sequential)]
+[StructLayout(LayoutKind.Sequential)]
 public sealed class Transform
 {
     private bool _dirty;
@@ -41,8 +41,8 @@ public sealed class Transform
     /// </summary>
     public Vector3 Position
     {
-        get => _modelMatrix.ExtractTranslation();
-        set => LocalPosition = value;
+        get => Transformation.ExtractTranslation();
+        set => LocalPosition = new Vector3(value);
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public sealed class Transform
         get => _localPosition;
         set
         {
-            _localPosition = value;
+            _localPosition = new Vector3(value);
             _localPositionMatrix = Matrix4.CreateTranslation(LocalPosition);
             SetDirty();
         }
@@ -64,7 +64,7 @@ public sealed class Transform
     /// </summary>
     public Quaternion Rotation
     {
-        get => _modelMatrix.ExtractRotation();
+        get => Transformation.ExtractRotation();
         set
         {
             LocalRotation = value;
@@ -91,10 +91,10 @@ public sealed class Transform
     /// </summary>
     public Vector3 Scale
     {
-        get => _modelMatrix.ExtractScale();
+        get => Transformation.ExtractScale();
         set
         {
-            _scale = value;
+            _scale = new Vector3(value);
             _scaleMatrix = Matrix4.CreateScale(_scale);
             SetDirty();
         }
@@ -139,7 +139,6 @@ public sealed class Transform
 
         Parent = null;
         _dirty = true;
-        CalculateMatrix();
     }
 
     /// <summary>
@@ -150,7 +149,6 @@ public sealed class Transform
         : this()
     {
         LocalPosition = position;
-        CalculateMatrix();
     }
 
     /// <summary>
@@ -162,7 +160,6 @@ public sealed class Transform
         : this(position)
     {
         Scale = scale;
-        CalculateMatrix();
     }
 
     /// <summary>
@@ -175,7 +172,6 @@ public sealed class Transform
         : this(position, scale)
     {
         Rotation = rotation;
-        CalculateMatrix();
     }
 
     /// <summary>
@@ -252,7 +248,7 @@ public sealed class Transform
     /// <param name="transform">The target <see cref="Transform" /> to calculate distance to.</param>
     /// <returns></returns>
     [Pure]
-    public float Distance(in Transform transform) => Vector3.Distance(Position, transform.Position);
+    public float Distance(Transform transform) => Vector3.Distance(Position, transform.Position);
 
     private void CalculateMatrix()
     {

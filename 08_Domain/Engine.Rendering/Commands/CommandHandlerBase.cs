@@ -1,4 +1,8 @@
-﻿using Engine.Core.Driver;
+﻿using System.Collections.Concurrent;
+using Engine.Core.Driver;
+using Engine.Core.Logging;
+
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
 namespace Engine.Rendering.Commands;
 
@@ -7,16 +11,16 @@ namespace Engine.Rendering.Commands;
 /// </summary>
 public abstract class CommandHandlerBase : ICommandHandler
 {
-    private readonly Dictionary<CommandType, Action<IContext, ICommand>> _commandHandlers;
-    private readonly List<Func<ICommand, bool>> _commandRules;
+    private readonly ConcurrentDictionary<CommandType, Action<IContext, ICommand>> _commandHandlers;
+    private readonly ConcurrentBag<Func<ICommand, bool>> _commandRules;
 
     /// <summary>
     ///     Base implementation of a command handler.
     /// </summary>
     protected CommandHandlerBase()
     {
-        _commandHandlers = new Dictionary<CommandType, Action<IContext, ICommand>>();
-        _commandRules = new List<Func<ICommand, bool>>();
+        _commandHandlers = new ConcurrentDictionary<CommandType, Action<IContext, ICommand>>();
+        _commandRules = new ConcurrentBag<Func<ICommand, bool>>();
     }
 
     /// <inheritdoc />
@@ -24,14 +28,14 @@ public abstract class CommandHandlerBase : ICommandHandler
     {
         if (_commandHandlers.TryGetValue(command.Type, out var handler))
         {
-            if (!_commandRules.Any() || _commandRules.TrueForAll(func => func(command)))
+            if (!_commandRules.Any() || _commandRules.All(func => func(command)))
             {
                 handler(context, command);
             }
         }
         else
         {
-            throw new InvalidOperationException($"Handler for CommandType {command.Type} not registered.");
+            Log.LogMessageAsync($"Handler for CommandType {command.Type} not registered.", LogLevel.Error, this);
         }
     }
 
@@ -39,10 +43,22 @@ public abstract class CommandHandlerBase : ICommandHandler
     public void AddRule(Func<ICommand, bool> rule) => _commandRules.Add(rule);
 
     /// <inheritdoc />
-    public void RegisterCommandTypeHandler(CommandType type, Action<IContext, ICommand> handler) => _commandHandlers[type] = handler;
+    public void RegisterCommandTypeHandler(CommandType type, Action<IContext, ICommand> handler)
+    {
+        if (!_commandHandlers.TryAdd(type, handler))
+        {
+            Log.LogMessageAsync($"Handler for CommandType {type} already registered.", LogLevel.Debug, this);
+        }
+    }
 
     /// <inheritdoc />
-    public void UnregisterCommandTypeHandler(CommandType type) => _commandHandlers.Remove(type);
+    public void UnregisterCommandTypeHandler(CommandType type)
+    {
+        if (!_commandHandlers.TryRemove(type, out _))
+        {
+            Log.LogMessageAsync($"Handler for CommandType {type} not found.", LogLevel.Debug, this);
+        }
+    }
 
     public void Dispose()
     {

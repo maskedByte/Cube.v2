@@ -1,4 +1,5 @@
-﻿using Engine.Framework.Components;
+﻿using System.Collections.Concurrent;
+using Engine.Framework.Components;
 using Engine.Framework.Rendering.Worlds;
 
 namespace Engine.Framework.Entities;
@@ -10,7 +11,7 @@ public class Entity : IEntity
     private IEntity? _parent;
 
     /// <inheritdoc />
-    public Dictionary<Type, IComponent> Components { get; } = new();
+    public ConcurrentDictionary<Type, IComponent> Components { get; } = new();
 
     /// <inheritdoc />
     public Guid Id { get; }
@@ -33,6 +34,11 @@ public class Entity : IEntity
             if (value == this)
             {
                 throw new InvalidOperationException("Cannot set parent to self.");
+            }
+
+            if (_parent == value)
+            {
+                return;
             }
 
             _parent?.Children.Remove(this);
@@ -94,7 +100,10 @@ public class Entity : IEntity
         }
 
         var component = Activator.CreateInstance<T>();
-        Components.Add(typeof(T), component);
+
+        // Error handling!
+
+        Components.TryAdd(typeof(T), component);
         component.Owner = this;
         return component;
     }
@@ -107,7 +116,7 @@ public class Entity : IEntity
             return;
         }
 
-        Components.Remove(typeof(T));
+        Components.TryRemove(typeof(T), out _);
     }
 
     /// <inheritdoc />

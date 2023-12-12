@@ -1,4 +1,6 @@
-﻿using Engine.Core.Driver;
+﻿using System.Collections.Concurrent;
+using Engine.Core.Driver;
+using Engine.Core.Logging;
 using Engine.Core.Math.Base;
 using Engine.Framework.Components;
 using Engine.Framework.Entities;
@@ -14,9 +16,9 @@ namespace Engine.Framework.Rendering.Worlds;
 
 public sealed class World : IDisposable
 {
-    private readonly List<IEntity> _entities;
-    private readonly Dictionary<Type, ISystem> _systems;
-    private readonly Dictionary<Guid, ICommandQueue> _entityCommandQueue;
+    private readonly ConcurrentDictionary<Guid, IEntity?> _entities;
+    private readonly ConcurrentDictionary<Type, ISystem> _systems;
+    private readonly ConcurrentDictionary<Guid, ICommandQueue> _entityCommandQueue;
     private bool _firstRun;
 
     /// <summary>
@@ -56,9 +58,9 @@ public sealed class World : IDisposable
     /// <exception cref="ArgumentNullException"></exception>
     public World(EngineCore core)
     {
-        _entities = new List<IEntity>();
-        _systems = new Dictionary<Type, ISystem>();
-        _entityCommandQueue = new Dictionary<Guid, ICommandQueue>();
+        _entities = new ConcurrentDictionary<Guid, IEntity?>();
+        _systems = new ConcurrentDictionary<Type, ISystem>();
+        _entityCommandQueue = new ConcurrentDictionary<Guid, ICommandQueue>();
         _firstRun = true;
 
         Core = core ?? throw new ArgumentNullException(nameof(core));
@@ -115,14 +117,20 @@ public sealed class World : IDisposable
     /// </summary>
     /// <param name="entity">The entity to add.</param>
     /// <returns>The entity that was added.</returns>
-    public IEntity AddEntity(IEntity entity)
+    public void AddEntity(IEntity? entity)
     {
         ArgumentNullException.ThrowIfNull(entity);
 
-        _entities.Add(entity);
-        _entityCommandQueue.Add(entity.Id, new CommandQueue());
+        if (!_entities.TryAdd(entity.Id, entity))
+        {
+            Log.LogMessageAsync($"Failed to add entity {entity.Tag}.", LogLevel.Critical, this);
+            return;
+        }
 
-        return entity;
+        if (!_entityCommandQueue.TryAdd(entity.Id, new CommandQueue()))
+        {
+            Log.LogMessageAsync($"Failed to add entity to command queue {entity.Tag}.", LogLevel.Error, this);
+        }
     }
 
     /// <summary>
@@ -133,15 +141,28 @@ public sealed class World : IDisposable
     {
         ArgumentNullException.ThrowIfNull(entity);
 
-        _entities.Remove(entity);
-        _entityCommandQueue.Remove(entity.Id);
+        if (!_entities.TryRemove(entity.Id, out _))
+        {
+            Log.LogMessageAsync($"Failed to remove entity {entity.Tag}.", LogLevel.Critical, this);
+        }
+
+        if (!_entityCommandQueue.TryRemove(entity.Id, out _))
+        {
+            Log.LogMessageAsync($"Failed to remove entity from command queue {entity.Tag}.", LogLevel.Error, this);
+        }
     }
 
     /// <summary>
     ///     Adds a system to handle a specific component type.
     /// </summary>
     /// <param name="instance">The system instance.</param>
-    public void AddSystem<T>(SystemBase<T> instance) => _systems.Add(instance.AssignTo(), instance);
+    public void AddSystem<T>(SystemBase<T> instance)
+    {
+        if (!_systems.TryAdd(instance.AssignTo(), instance))
+        {
+            Log.LogMessageAsync($"Failed to add system {instance.GetType().Name}.", LogLevel.Error, this);
+        }
+    }
 
     /// <summary>
     ///     Updates the world.
@@ -153,9 +174,14 @@ public sealed class World : IDisposable
 
         if (_firstRun)
         {
-            foreach (var entity in _entities)
+            foreach (var (entityId, entity) in _entities)
             {
-                var entityCommandQueue = _entityCommandQueue[entity.Id];
+                if (entity == null)
+                {
+                    continue;
+                }
+
+                var entityCommandQueue = _entityCommandQueue[entityId];
                 entityCommandQueue.Begin();
                 foreach (var component in entity.Components.Where(x => _systems.ContainsKey(x.Key)))
                 {
@@ -166,9 +192,14 @@ public sealed class World : IDisposable
             _firstRun = false;
         }
 
-        foreach (var entity in _entities.Where(e => e.IsActive))
+        foreach (var (entityId, entity) in _entities)
         {
-            var entityCommandQueue = _entityCommandQueue[entity.Id];
+            if (entity == null || !entity.IsActive)
+            {
+                continue;
+            }
+
+            var entityCommandQueue = _entityCommandQueue[entityId];
             entityCommandQueue.Begin();
             foreach (var component in entity.Components.Where(x => _systems.ContainsKey(x.Key)))
             {
@@ -182,9 +213,14 @@ public sealed class World : IDisposable
     /// </summary>
     public void Render()
     {
-        foreach (var entity in _entities.Where(e => e.IsActive))
+        foreach (var (entityId, entity) in _entities)
         {
-            var entityCommandQueue = _entityCommandQueue[entity.Id];
+            if (entity == null || !entity.IsActive)
+            {
+                continue;
+            }
+
+            var entityCommandQueue = _entityCommandQueue[entityId];
             foreach (var component in entity.Components.Where(x => _systems.ContainsKey(x.Key)))
             {
                 _systems[component.Key].Handle(SystemStage.Render, component.Value, entityCommandQueue, Time.DeltaTime);
