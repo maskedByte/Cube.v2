@@ -1,59 +1,49 @@
-﻿using Engine.Assets.Assets;
+﻿using Engine.Assets.AssetHandling.Models;
+using Engine.Assets.Assets;
+using Engine.Core.Logging;
+
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
 namespace Engine.Assets.AssetHandling;
 
 internal sealed class AssetCompiler
 {
     private readonly Dictionary<string, IAssetConverter> _converters = new();
-    private IEnumerable<string> _assetFiles = null!;
 
     public void RegisterFileConverter(IAssetConverter assetFileConverter) =>
         _converters.Add(assetFileConverter.Extensions, assetFileConverter);
 
     public void Compile(
         string basePath,
-        string[]? extensionsToCompile = null,
+        IEnumerable<string>? extensionsToCompile = null,
         bool removeSourceAfterCompile = false
     )
     {
-        _assetFiles = Directory
+        var convertJobs = Directory
            .EnumerateFiles(basePath, "*.*", SearchOption.AllDirectories)
-           .Where(x => !x.EndsWith(".cda"))
-           .ToList();
-
-        var converterList = new Dictionary<string, IAssetConverter>();
-        if (extensionsToCompile != null)
-        {
-            foreach (var extension in extensionsToCompile)
-            {
-                var converter = _converters.SingleOrDefault(
-                        x =>
-                            x.Key.Contains(extension, StringComparison.InvariantCultureIgnoreCase)
-                    )
-                   .Value;
-                if (converter != null)
+           .Where(
+                file => extensionsToCompile == null
+                        || extensionsToCompile.Any(ext => file.EndsWith(ext, StringComparison.OrdinalIgnoreCase))
+            )
+           .Where(file => !file.EndsWith(".cda", StringComparison.OrdinalIgnoreCase))
+           .Select(
+                filePath =>
                 {
-                    converterList.Add(converter.Extensions, converter);
+                    var fileExtension = Path.GetExtension(filePath);
+                    if (_converters.TryGetValue(fileExtension, out var converter))
+                    {
+                        return new AssetConvertJob(converter, filePath, Path.GetFileNameWithoutExtension(filePath), fileExtension);
+                    }
+
+                    Log.LogMessageAsync("No converter found for file extension: " + fileExtension, LogLevel.Warning, this);
+                    return null;
                 }
-            }
-        }
-        else
-        {
-            converterList = _converters;
-        }
+            )
+           .Where(job => job != null);
 
-        foreach (var converter in converterList)
+        foreach (var job in convertJobs)
         {
-            converter.Value.Convert(
-                GetFilesForExtensions(converter.Value.Extensions, _assetFiles),
-                removeSourceAfterCompile
-            );
+            Task.Run(() => job!.Convert(removeSourceAfterCompile));
         }
-    }
-
-    private static IEnumerable<string> GetFilesForExtensions(string extensions, IEnumerable<string> files)
-    {
-        var extensionSplit = extensions.Trim().Split(';');
-        return files.Where(x => extensionSplit.Any(x.EndsWith));
     }
 }

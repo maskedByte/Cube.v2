@@ -1,4 +1,5 @@
-﻿using Engine.Assets.FileIO;
+﻿using Engine.Assets.AssetHandling.Models;
+using Engine.Assets.FileIO;
 
 namespace Engine.Assets.Assets.Shaders;
 
@@ -10,28 +11,12 @@ public sealed class ShaderAssetConverter : IAssetConverter
     /// <inheritdoc />
     public string Extensions => "shader";
 
-    /// <inheritdoc />
-    public void Convert(IEnumerable<string> filesToConvert, bool removeSourceAfterCompile)
+    public void Convert(AssetConvertFile assetConvertFile)
     {
-        foreach (var file in filesToConvert)
-        {
-            IAssetConverter.WriteConsoleProgressStart(file);
-            var shaderSource = File.ReadAllText(file);
-            var pathName = Path.GetDirectoryName(file);
-            var fileName = Path.GetFileNameWithoutExtension(file);
+        var shaderSource = File.ReadAllText(assetConvertFile.FilePath);
 
-            using (var assetFile = new FileWriter($"{pathName}\\{fileName}.cda"))
-            {
-                assetFile.WriteHeader(AssetDataType.ShaderData);
-                assetFile.Write("Data", shaderSource);
-            }
-
-            if (removeSourceAfterCompile)
-            {
-                File.Delete(file);
-            }
-
-            IAssetConverter.WriteConsoleProgressEnd();
-        }
+        using var assetFile = new FileWriter(assetConvertFile.ConvertedFileName);
+        assetFile.WriteHeader(AssetDataType.ShaderData);
+        assetFile.Write("Data", shaderSource);
     }
 }

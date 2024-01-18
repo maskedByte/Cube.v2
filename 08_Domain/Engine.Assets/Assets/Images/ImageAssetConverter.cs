@@ -1,4 +1,5 @@
-﻿using Engine.Assets.FileIO;
+﻿using Engine.Assets.AssetHandling.Models;
+using Engine.Assets.FileIO;
 using StbiSharp;
 
 namespace Engine.Assets.Assets.Images;
@@ -12,41 +13,27 @@ public sealed class ImageAssetConverter : IAssetConverter
     public string Extensions => "jpg;jpeg;png;tga;bmp;tiff;gif";
 
     /// <inheritdoc />
-    public void Convert(IEnumerable<string> filesToConvert, bool removeSourceAfterCompile)
+    public void Convert(AssetConvertFile assetConvertFile)
     {
-        foreach (var file in filesToConvert)
+        // Don't convert font image files
+        if (assetConvertFile.FileName.Contains("-font."))
         {
-            // Don't convert font image files
-            if (file.Contains("-font."))
-            {
-                continue;
-            }
-
-            IAssetConverter.WriteConsoleProgressStart(file);
-            using var srcStream = File.OpenRead(file);
-            using var memoryStream = new MemoryStream();
-            srcStream.CopyTo(memoryStream);
-            srcStream.Close();
-
-            Stbi.SetFlipVerticallyOnLoad(true);
-            var image = Stbi.LoadFromMemory(memoryStream, 4);
-
-            var fileName = Path.GetFileNameWithoutExtension(file);
-            var pathName = Path.GetDirectoryName(file);
-
-            using var assetFile = new FileWriter($"{pathName}\\{fileName}.cda");
-
-            assetFile.WriteHeader(AssetDataType.ImageData);
-            assetFile.Write("Width", image.Width);
-            assetFile.Write("Height", image.Height);
-            assetFile.Write("Data", image.Data);
-
-            if (removeSourceAfterCompile)
-            {
-                File.Delete(file);
-            }
-
-            IAssetConverter.WriteConsoleProgressEnd();
+            return;
         }
+
+        using var srcStream = File.OpenRead(assetConvertFile.FilePath);
+        using var memoryStream = new MemoryStream();
+        srcStream.CopyTo(memoryStream);
+        srcStream.Close();
+
+        Stbi.SetFlipVerticallyOnLoad(true);
+        var image = Stbi.LoadFromMemory(memoryStream, 4);
+
+        using var assetFile = new FileWriter(assetConvertFile.ConvertedFileName);
+
+        assetFile.WriteHeader(AssetDataType.ImageData);
+        assetFile.Write("Width", image.Width);
+        assetFile.Write("Height", image.Height);
+        assetFile.Write("Data", image.Data);
     }
 }

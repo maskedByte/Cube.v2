@@ -1,3 +1,5 @@
+using Engine.Assets.AssetHandling.Models;
+
 namespace Engine.Assets.Assets;
 
 /// <summary>
@@ -12,16 +14,20 @@ public interface IAssetConverter
     string Extensions { get; }
 
     /// <summary>
-    ///     Convert all files given by <paramref name="filesToConvert" />
+    ///     Convert all files given by <paramref name="assetConvertFile" />
     /// </summary>
-    /// <param name="filesToConvert"></param>
-    /// <param name="removeSourceAfterCompile"></param>
-    void Convert(IEnumerable<string> filesToConvert, bool removeSourceAfterCompile);
+    /// <param name="assetConvertFile">File to convert</param>
+    void Convert(AssetConvertFile assetConvertFile);
 
     /// <summary>
     ///     Write some output to show progress
     /// </summary>
     public static void WriteConsoleProgressStart(string text) => Console.Write($"Convert: {text} ... ");
+
+    /// <summary>
+    ///     Write some output to show progress
+    /// </summary>
+    public static void WriteDeleteSource() => Console.WriteLine("Delete source file ... ");
 
     /// <summary>
     ///     Write some output to show progress
