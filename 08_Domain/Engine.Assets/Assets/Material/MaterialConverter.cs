@@ -16,14 +16,18 @@ namespace Engine.Assets.Assets.Material;
 internal sealed class MaterialConverter : IAssetConverter
 {
     /// <inheritdoc />
-    public string Extensions => "mat";
+    public IEnumerable<string> Extensions =>
+        new[]
+        {
+            "mat"
+        };
 
     public void Convert(AssetConvertFile assetConvertFile)
     {
-        var scriptSource = File.ReadAllText(assetConvertFile.FilePath);
+        var scriptSource = File.ReadAllText(assetConvertFile.SourceFileName);
         var materialFileJson = JsonConvert.DeserializeObject<MaterialFile>(scriptSource) ?? throw new NullReferenceException();
 
-        using var assetFile = new FileWriter(assetConvertFile.ConvertedFileName);
+        using var assetFile = new FileWriter(assetConvertFile.TargetFileName);
 
         assetFile.WriteHeader(AssetDataType.MaterialData);
         assetFile.Write("Color", Color.Parse(materialFileJson.Color));

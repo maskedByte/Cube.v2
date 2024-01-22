@@ -10,8 +10,23 @@ internal sealed class AssetCompiler
 {
     private readonly Dictionary<string, IAssetConverter> _converters = new();
 
-    public void RegisterFileConverter(IAssetConverter assetFileConverter) =>
-        _converters.Add(assetFileConverter.Extensions, assetFileConverter);
+    public void RegisterFileConverter(IAssetConverter assetFileConverter)
+    {
+        if (_converters.Any(x => assetFileConverter.Extensions.Any(ext => x.Key.Equals(ext))))
+        {
+            Log.LogMessageAsync(
+                $"A converter for the given file extension {assetFileConverter.Extensions} already exists.",
+                LogLevel.Error,
+                typeof(AssetCompiler)
+            );
+            return;
+        }
+
+        foreach (var extension in assetFileConverter.Extensions)
+        {
+            _converters.Add(extension, assetFileConverter);
+        }
+    }
 
     public void Compile(
         string basePath,
@@ -30,7 +45,11 @@ internal sealed class AssetCompiler
                 filePath =>
                 {
                     var fileExtension = Path.GetExtension(filePath);
-                    if (_converters.TryGetValue(fileExtension, out var converter))
+                    fileExtension = fileExtension.StartsWith('.')
+                        ? fileExtension[1..]
+                        : fileExtension;
+
+                    if (TryGetConverterForExtension(fileExtension, out var converter))
                     {
                         return new AssetConvertJob(converter, filePath, Path.GetFileNameWithoutExtension(filePath), fileExtension);
                     }
@@ -45,5 +64,22 @@ internal sealed class AssetCompiler
         {
             Task.Run(() => job!.Convert(removeSourceAfterCompile));
         }
+    }
+
+    private bool TryGetConverterForExtension(string extension, out IAssetConverter assetConverter)
+    {
+        assetConverter = null!;
+
+        if (string.IsNullOrEmpty(extension))
+        {
+            Log.LogMessageAsync("No file extension given.", LogLevel.Error, typeof(AssetCompiler));
+            return false;
+        }
+
+        assetConverter = _converters
+           .SingleOrDefault(x => x.Key.Contains(extension))
+           .Value;
+
+        return assetConverter != null;
     }
 }

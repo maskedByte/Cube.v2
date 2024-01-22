@@ -11,7 +11,7 @@ public interface IAssetConverter
     ///     Set associated file extensions for this <see cref="IAssetConverter" />
     ///     <remarks>Multiple divided by semicolon</remarks>
     /// </summary>
-    string Extensions { get; }
+    IEnumerable<string> Extensions { get; }
 
     /// <summary>
     ///     Convert all files given by <paramref name="assetConvertFile" />
@@ -22,15 +22,17 @@ public interface IAssetConverter
     /// <summary>
     ///     Write some output to show progress
     /// </summary>
-    public static void WriteConsoleProgressStart(string text) => Console.Write($"Convert: {text} ... ");
+    public static void WriteConsoleProgressStart(AssetConvertFile assetConvertFile) =>
+        Console.WriteLine($"Convert: {assetConvertFile.FileName}");
 
     /// <summary>
     ///     Write some output to show progress
     /// </summary>
-    public static void WriteDeleteSource() => Console.WriteLine("Delete source file ... ");
+    public static void WriteDeleteSource(AssetConvertFile assetConvertFile) =>
+        Console.WriteLine($"Delete source file {assetConvertFile.FileName}");
 
     /// <summary>
     ///     Write some output to show progress
     /// </summary>
-    public static void WriteConsoleProgressEnd() => Console.WriteLine("Done");
+    public static void WriteConsoleProgressEnd(AssetConvertFile assetConvertFile) => Console.WriteLine($"{assetConvertFile.FileName} Done");
 }

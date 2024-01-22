@@ -10,7 +10,17 @@ namespace Engine.Assets.Assets.Images;
 public sealed class ImageAssetConverter : IAssetConverter
 {
     /// <inheritdoc />
-    public string Extensions => "jpg;jpeg;png;tga;bmp;tiff;gif";
+    public IEnumerable<string> Extensions =>
+        new[]
+        {
+            "jpg",
+            "jpeg",
+            "png",
+            "tga",
+            "bmp",
+            "tiff",
+            "gif"
+        };
 
     /// <inheritdoc />
     public void Convert(AssetConvertFile assetConvertFile)
@@ -21,7 +31,7 @@ public sealed class ImageAssetConverter : IAssetConverter
             return;
         }
 
-        using var srcStream = File.OpenRead(assetConvertFile.FilePath);
+        using var srcStream = File.OpenRead(assetConvertFile.SourceFileName);
         using var memoryStream = new MemoryStream();
         srcStream.CopyTo(memoryStream);
         srcStream.Close();
@@ -29,7 +39,7 @@ public sealed class ImageAssetConverter : IAssetConverter
         Stbi.SetFlipVerticallyOnLoad(true);
         var image = Stbi.LoadFromMemory(memoryStream, 4);
 
-        using var assetFile = new FileWriter(assetConvertFile.ConvertedFileName);
+        using var assetFile = new FileWriter(assetConvertFile.TargetFileName);
 
         assetFile.WriteHeader(AssetDataType.ImageData);
         assetFile.Write("Width", image.Width);

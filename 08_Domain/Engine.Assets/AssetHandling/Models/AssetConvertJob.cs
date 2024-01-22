@@ -10,6 +10,8 @@ public class AssetConvertJob
     public AssetConvertJob(IAssetConverter converter, string filePath, string fileName, string fileExtension)
     {
         _converter = converter;
+        filePath = filePath[..(filePath.Length - fileName.Length - fileExtension.Length - 1)];
+
         AssetFile = new AssetConvertFile
         {
             FilePath = filePath,
@@ -20,15 +22,15 @@ public class AssetConvertJob
 
     public void Convert(bool removeSourceAfterCompile)
     {
-        IAssetConverter.WriteConsoleProgressStart($"{AssetFile.FileName}.{AssetFile.FileExtension}");
+        IAssetConverter.WriteConsoleProgressStart(AssetFile);
         _converter.Convert(AssetFile);
 
         if (removeSourceAfterCompile)
         {
-            File.Delete(AssetFile.FilePath);
-            IAssetConverter.WriteDeleteSource();
+            File.Delete(AssetFile.SourceFileName);
+            IAssetConverter.WriteDeleteSource(AssetFile);
         }
 
-        IAssetConverter.WriteConsoleProgressEnd();
+        IAssetConverter.WriteConsoleProgressEnd(AssetFile);
     }
 }

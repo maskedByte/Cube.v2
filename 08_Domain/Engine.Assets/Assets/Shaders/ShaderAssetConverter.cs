@@ -9,13 +9,16 @@ namespace Engine.Assets.Assets.Shaders;
 public sealed class ShaderAssetConverter : IAssetConverter
 {
     /// <inheritdoc />
-    public string Extensions => "shader";
+    public IEnumerable<string> Extensions =>
+        new[]
+        {
+            "shader"
+        };
 
     public void Convert(AssetConvertFile assetConvertFile)
     {
-        var shaderSource = File.ReadAllText(assetConvertFile.FilePath);
-
-        using var assetFile = new FileWriter(assetConvertFile.ConvertedFileName);
+        var shaderSource = File.ReadAllText(assetConvertFile.SourceFileName);
+        using var assetFile = new FileWriter(assetConvertFile.TargetFileName);
         assetFile.WriteHeader(AssetDataType.ShaderData);
         assetFile.Write("Data", shaderSource);
     }
