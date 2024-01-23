@@ -12,7 +12,7 @@ using Engine.Rendering.Commands.TextureCommands;
 
 namespace Engine.Rendering.Commands;
 
-public class CommandHandler : CommandHandlerBase
+public sealed class CommandHandler : CommandHandlerBase
 {
     public CommandHandler()
     {

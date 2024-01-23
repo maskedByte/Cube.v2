@@ -17,7 +17,7 @@ public abstract class RendererBase : IRenderer
     }
 
     /// <summary>
-    ///     Renders all commands groups in the queue.
+    ///     Renders all commands in the given queue.
     /// </summary>
     public void Render()
     {
@@ -43,7 +43,7 @@ public abstract class RendererBase : IRenderer
     /// <summary>
     ///     Renders all commands from the given queue.
     /// </summary>
-    /// <param name="commandQueue">A queue with commands to render.</param>
+    /// <param name="commandQueue">The command queue to render.</param>
     public void Render(ICommandQueue commandQueue)
     {
         if (!commandQueue.IsReady)

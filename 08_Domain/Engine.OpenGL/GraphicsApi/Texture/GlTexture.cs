@@ -175,8 +175,8 @@ internal class GlTexture : ITexture
             Gl.TextureParameteri(_textureId, TextureParameterName.TextureMagFilter, TextureParameter.Nearest);
 
             Gl.TextureParameteri(_textureId, TextureParameterName.TextureWrapR, TextureParameter.ClampToEdge);
-            Gl.TextureParameteri(_textureId, TextureParameterName.TextureWrapS, TextureParameter.ClampToEdge);
-            Gl.TextureParameteri(_textureId, TextureParameterName.TextureWrapT, TextureParameter.ClampToEdge);
+            Gl.TextureParameteri(_textureId, TextureParameterName.TextureWrapS, TextureParameter.Repeat);
+            Gl.TextureParameteri(_textureId, TextureParameterName.TextureWrapT, TextureParameter.Repeat);
         }
 
         // Pin data to not get GC handled while processing
