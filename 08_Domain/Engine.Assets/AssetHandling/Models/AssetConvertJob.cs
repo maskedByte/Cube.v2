@@ -28,9 +28,6 @@ public class AssetConvertJob
         if (removeSourceAfterCompile)
         {
             File.Delete(AssetFile.SourceFileName);
-            IAssetConverter.WriteDeleteSource(AssetFile);
         }
-
-        IAssetConverter.WriteConsoleProgressEnd(AssetFile);
     }
 }

@@ -23,16 +23,5 @@ public interface IAssetConverter
     ///     Write some output to show progress
     /// </summary>
     public static void WriteConsoleProgressStart(AssetConvertFile assetConvertFile) =>
-        Console.WriteLine($"Convert: {assetConvertFile.FileName}");
-
-    /// <summary>
-    ///     Write some output to show progress
-    /// </summary>
-    public static void WriteDeleteSource(AssetConvertFile assetConvertFile) =>
-        Console.WriteLine($"Delete source file {assetConvertFile.FileName}");
-
-    /// <summary>
-    ///     Write some output to show progress
-    /// </summary>
-    public static void WriteConsoleProgressEnd(AssetConvertFile assetConvertFile) => Console.WriteLine($"{assetConvertFile.FileName} Done");
+        Console.WriteLine($"Convert: {assetConvertFile.FileName}.{assetConvertFile.FileExtension}");
 }
