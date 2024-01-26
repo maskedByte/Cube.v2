@@ -19,7 +19,7 @@ public class TestApp
 
     private static Entity _mainCamera;
     private static Entity _mainCameraOrtho;
-    private const string BasePath = ".\\base\\";
+    private const string BasePath = @".\base\";
 
     private static Random random = new();
 
@@ -29,6 +29,7 @@ public class TestApp
     public static void Main()
     {
         var core = new EngineCore(BasePath);
+
         core.CompileAssets(
             new AssetCompilerConfiguration
             {
@@ -50,7 +51,7 @@ public class TestApp
                 },
                 WindowContext = new WindowContextConfiguration
                 {
-                    MajorVersion = 3
+                    MajorVersion = 4
                 }
             }
         );
@@ -65,7 +66,6 @@ public class TestApp
         camComponent.FieldOfView = 62f;
 
         var light = new Entity(_world);
-        light.Tag = "Light";
         light.AddComponent<DirectionalLightComponent>();
 
         var rect = new Entity(_world);
@@ -80,14 +80,12 @@ public class TestApp
         transform.Scale = new Vector3(256, 256, 1);
         transform.Position = new Vector3(128, -128, 0);
 
-        // var rect2 = Entity.Copy(rect);
-
         var rotation = 0f;
         while (!Keyboard.GetKey(KeyCode.Escape) && !window.WindowTerminated())
         {
             var deltaTime = _world.Time.DeltaTime;
 
-            transform.Rotate(new Vector3(0, 0, 1f * deltaTime));
+            //transform.Rotate(new Vector3(0, 0, 1f * deltaTime));
 
             _world.Update();
             _world.Render();
