@@ -1,4 +1,5 @@
 using Engine.Assets.AssetHandling.Models;
+using Engine.Core.Logging;
 
 namespace Engine.Assets.Assets;
 
@@ -23,5 +24,9 @@ public interface IAssetConverter
     ///     Write some output to show progress
     /// </summary>
     public static void WriteConsoleProgressStart(AssetConvertFile assetConvertFile) =>
-        Console.WriteLine($"Convert: {assetConvertFile.FileName}.{assetConvertFile.FileExtension}");
+        Log.LogMessageAsync(
+            $"Convert: {assetConvertFile.FileName}.{assetConvertFile.FileExtension}",
+            LogLevel.Info,
+            typeof(IAssetConverter)
+        );
 }

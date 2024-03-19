@@ -49,5 +49,5 @@ public class LogEntry
     ///     Returns a formatted log entry
     /// </summary>
     /// <returns>The formatted log entry</returns>
-    public string GetFormattedLogEntry() => $"[{Level}] {Timestamp:yyyy-MM-dd HH:mm:ss.fff} / {Source}  - {Message}";
+    public string GetFormattedLogEntry() => $"[{Level}] {Timestamp:yyyy-MM-dd HH:mm:ss.fff} / {Source} - {Message}";
 }

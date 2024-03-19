@@ -24,6 +24,11 @@ public sealed class AssetSystem : IDisposable
     }
 
     /// <summary>
+    ///     Get all supported extensions for registered converters in format "*.ext1, *.ext2, ..."
+    /// </summary>
+    public string SupportedExtensions => _assetCompiler.SupportedExtensions();
+
+    /// <summary>
     ///     Create new instance of <see cref="AssetSystem" />
     /// </summary>
     /// <param name="basePath"></param>
@@ -52,13 +57,17 @@ public sealed class AssetSystem : IDisposable
     public void Compile(AssetCompilerConfiguration configuration) =>
         _assetCompiler.Compile(BasePath, configuration.CompileExtensions?.ToArray(), configuration.DeleteCompiledFiles);
 
+    public void Compile(IEnumerable<string> files, AssetCompilerConfiguration configuration) =>
+        _assetCompiler.CompileFiles(files, configuration.DeleteCompiledFiles);
+
     /// <summary>
     ///     Load asset from file
     /// </summary>
     /// <typeparam name="TAssetType">Type of asset to load</typeparam>
     /// <param name="path">Relative path to the file <see cref="BasePath" /></param>
+    /// <param name="reload">If true, the system will try to reload the asset</param>
     /// <returns>New instance of the created asset.</returns>
-    public TAssetType Load<TAssetType>(string path) where TAssetType : IAsset
+    public TAssetType Load<TAssetType>(string path, bool reload = false) where TAssetType : IAsset
     {
         if (string.IsNullOrWhiteSpace(path))
         {
@@ -69,6 +78,12 @@ public sealed class AssetSystem : IDisposable
 
         if (_loadedAssets.TryGetValue(path, out var loadedAsset))
         {
+            if (reload)
+            {
+                loadedAsset.ReloadAsset();
+                return (TAssetType)loadedAsset;
+            }
+
             return (TAssetType)loadedAsset;
         }
 
@@ -108,7 +123,14 @@ public sealed class AssetSystem : IDisposable
             ? filePath
             : $"{filePath}.cda";
 
-        var resultPath = $"{systemPath}{BasePath}{filePath}";
+        filePath = filePath.StartsWith(@"\")
+            ? filePath[1..]
+            : filePath;
+
+        var resultPath = !filePath.StartsWith(BasePath)
+            ? $"{systemPath}{BasePath}{filePath}"
+            : $"{systemPath}{filePath}";
+
         if (File.Exists(resultPath) == false)
         {
             throw new FileNotFoundException(resultPath);

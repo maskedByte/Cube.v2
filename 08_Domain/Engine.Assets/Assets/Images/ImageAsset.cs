@@ -13,6 +13,9 @@ public sealed class ImageAsset : IAsset<Pixmap>
     public Guid Id { get; }
 
     /// <inheritdoc />
+    public bool HasChanged { get; private set; }
+
+    /// <inheritdoc />
     public string SourcePath { get; private set; }
 
     /// <inheritdoc />
@@ -34,6 +37,16 @@ public sealed class ImageAsset : IAsset<Pixmap>
         SourcePath = path;
         LoadData(File.OpenRead(path));
     }
+
+    /// <inheritdoc />
+    public void ReloadAsset()
+    {
+        LoadData(File.OpenRead(SourcePath));
+        HasChanged = true;
+    }
+
+    /// <inheritdoc />
+    public void Updated() => HasChanged = false;
 
     /// <inheritdoc />
     public void Dispose()

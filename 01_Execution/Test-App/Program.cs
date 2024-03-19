@@ -34,7 +34,7 @@ public class TestApp
             new AssetCompilerConfiguration
             {
                 CompileExtensions = null,
-                DeleteCompiledFiles = true
+                DeleteCompiledFiles = false
             }
         );
 
@@ -79,6 +79,18 @@ public class TestApp
 
         transform.Scale = new Vector3(256, 256, 1);
         transform.Position = new Vector3(128, -128, 0);
+
+        var rect1 = new Entity(_world);
+        rect.Tag = "Rect1";
+        rect.AddComponent<MeshComponent>()
+           .Mesh = new QuadMesh(_world.Context);
+        rect.AddComponent<MaterialComponent>()
+           .Material = new Material("\\materials\\grid_yellow_material");
+        var transform1 = rect.GetComponent<TransformComponent>()
+           .Transform;
+
+        transform1.Scale = new Vector3(64, 64, 1);
+        transform1.Position = new Vector3(128, -128, 0);
 
         var rotation = 0f;
         while (!Keyboard.GetKey(KeyCode.Escape) && !window.WindowTerminated())
@@ -133,3 +145,65 @@ public class TestApp
         transform.Translate(translation, CoordinateSpace.Local);
     }
 }
+
+// public class TestMain
+// {
+//     private const string BasePath = @".\base\";
+//
+//     public static void Main()
+//     {
+//         var core = new EngineCore(BasePath);
+//
+//         core.CompileAssets(
+//             new AssetCompilerConfiguration
+//             {
+//                 CompileExtensions = null,
+//                 DeleteCompiledFiles = true
+//             }
+//         );
+//
+//         var driver = core.CreateDriver(DriverType.OpenGl);
+//         var window = driver.CreateWindow(
+//             $"Cube.Engine v2 - Testing - {core.ActiveDriver.GetType().Name}",
+//             new WindowCreationConfiguration
+//             {
+//                 CanvasSize = new Size(1280, 1024),
+//                 ShowCursor = true,
+//                 WindowStyle = new WindowStyleConfiguration
+//                 {
+//                     ResizeAble = true
+//                 },
+//                 WindowContext = new WindowContextConfiguration
+//                 {
+//                     MajorVersion = 4
+//                 }
+//             }
+//         );
+//
+//         var runTimeManager = new GameManager(core);
+//
+//         runTimeManager.AddScene<MainMenuScene>() // Creates a new world for this scene
+//            .AddScene<InGameScene>() // Creates a new world for this scene
+//            .AddScene<EndGameScene>(); // Creates a new world for this scene
+//     }
+// }
+//
+// public class MainMenuScene : GameScene
+// {
+//     protected MainMenuScene(EngineCore core, string sceneName)
+//         : base(core, sceneName)
+//     {
+//     }
+// }
+//
+// public class GameScene
+// {
+//     public string SceneName { get; }
+//     public World World { get; }
+//
+//     protected GameScene(EngineCore core, string sceneName)
+//     {
+//         SceneName = sceneName;
+//         World = new World(core);
+//     }
+// }

@@ -10,6 +10,15 @@ internal sealed class AssetCompiler
 {
     private readonly Dictionary<string, IAssetConverter> _converters = new();
 
+    /// <summary>
+    ///     Returns all supported extensions for registered converters in format "*.ext1, *.ext2, ..."
+    /// </summary>
+    public string SupportedExtensions()
+    {
+        var extensions = _converters.SelectMany(x => x.Value.Extensions).Distinct();
+        return string.Join(", ", extensions.Select(ext => $"*.{ext}"));
+    }
+
     public void RegisterFileConverter(IAssetConverter assetFileConverter)
     {
         if (_converters.Any(x => assetFileConverter.Extensions.Any(ext => x.Key.Equals(ext))))
@@ -41,6 +50,37 @@ internal sealed class AssetCompiler
                         || extensionsToCompile.Any(ext => file.EndsWith(ext, StringComparison.OrdinalIgnoreCase))
             )
            .Where(file => !file.EndsWith(".cda", StringComparison.OrdinalIgnoreCase))
+           .Select(
+                filePath =>
+                {
+                    var fileExtension = Path.GetExtension(filePath);
+                    fileExtension = fileExtension.StartsWith('.')
+                        ? fileExtension[1..]
+                        : fileExtension;
+
+                    if (TryGetConverterForExtension(fileExtension, out var converter))
+                    {
+                        return new AssetConvertJob(converter, filePath, Path.GetFileNameWithoutExtension(filePath), fileExtension);
+                    }
+
+                    Log.LogMessageAsync("No converter found for file extension: " + fileExtension, LogLevel.Warning, this);
+                    return null;
+                }
+            )
+           .Where(job => job != null);
+
+        foreach (var job in convertJobs)
+        {
+            Task.Run(() => job!.Convert(removeSourceAfterCompile));
+        }
+    }
+
+    public void CompileFiles(
+        IEnumerable<string> files,
+        bool removeSourceAfterCompile = false
+    )
+    {
+        var convertJobs = files
            .Select(
                 filePath =>
                 {
