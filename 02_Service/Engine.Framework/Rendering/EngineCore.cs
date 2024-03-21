@@ -85,35 +85,35 @@ public sealed class EngineCore : IDisposable
             DeleteCompiledFiles = false
         };
 
-        Task.Run(
-            async () =>
+        Task.Run(async () => await FileChangeWatcher(reloadFile));
+    }
+
+    private async Task FileChangeWatcher(AssetCompilerConfiguration reloadFile)
+    {
+        while (true)
+        {
+            lock (lockObject)
             {
-                while (true)
+                if (_recentlyChangedFiles.Count > 0)
                 {
-                    lock (lockObject)
+                    _FilesToReloadOnMainThread = _recentlyChangedFiles.Keys.ToList();
+                    _recentlyChangedFiles.Clear();
+
+                    try
                     {
-                        if (_recentlyChangedFiles.Count > 0)
-                        {
-                            _FilesToReloadOnMainThread = _recentlyChangedFiles.Keys.ToList();
-                            _recentlyChangedFiles.Clear();
-
-                            try
-                            {
-                                AssetSystem.Compile(_FilesToReloadOnMainThread, reloadFile);
-                            }
-                            catch (Exception e)
-                            {
-                                Log.LogMessageAsync($"Error while compiling assets: {e.Message}", LogLevel.Error, this);
-                                Thread.Sleep(1000);
-                                AssetSystem.Compile(_FilesToReloadOnMainThread, reloadFile);
-                            }
-                        }
+                        Task.Run(() => AssetSystem.Compile(_FilesToReloadOnMainThread, reloadFile));
                     }
-
-                    await Task.Delay(100);
+                    catch (Exception e)
+                    {
+                        Log.LogMessageAsync($"Error while compiling assets: {e.Message}", LogLevel.Error, this);
+                        Thread.Sleep(1000);
+                        AssetSystem.Compile(_FilesToReloadOnMainThread, reloadFile);
+                    }
                 }
             }
-        );
+
+            await Task.Delay(100);
+        }
     }
 
     /// <summary>
@@ -170,7 +170,6 @@ public sealed class EngineCore : IDisposable
                     var asset = AssetSystem.Load<IAsset>(filePath, true);
                     if (asset is null)
                     {
-                        Log.LogMessageAsync($"Asset {file} has been reloaded.", LogLevel.Info, this);
                         continue;
                     }
 
@@ -178,8 +177,6 @@ public sealed class EngineCore : IDisposable
                     {
                         reloadAble.TryReload(asset);
                     }
-
-                    Log.LogMessageAsync($"Asset {file} has been reloaded.", LogLevel.Info, this);
 
                     _FilesToReloadOnMainThread.Remove(file);
                 }
@@ -267,7 +264,6 @@ public sealed class EngineCore : IDisposable
         }
 
         _recentlyChangedFiles[path] = currentLastWriteTime;
-        Log.LogMessageAsync($"File {path} has been changed, recompiling assets.", LogLevel.Info, this);
     }
 
     private static bool FileIsReady(string path)
