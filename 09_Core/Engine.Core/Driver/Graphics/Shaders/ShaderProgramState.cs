@@ -16,11 +16,6 @@ public enum ShaderProgramState
     Compiled,
 
     /// <summary>
-    ///     A shader was replaced with a new one
-    /// </summary>
-    Reload,
-
-    /// <summary>
     ///     Shader has some issues while compiling or linking
     /// </summary>
     Failed

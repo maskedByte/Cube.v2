@@ -21,5 +21,7 @@ public sealed class ShaderAssetConverter : IAssetConverter
         using var assetFile = new FileWriter(assetConvertFile.TargetFileName);
         assetFile.WriteHeader(AssetDataType.ShaderData);
         assetFile.Write("Data", shaderSource);
+
+        assetFile.Close();
     }
 }

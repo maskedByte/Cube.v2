@@ -45,5 +45,7 @@ public sealed class ImageAssetConverter : IAssetConverter
         assetFile.Write("Width", image.Width);
         assetFile.Write("Height", image.Height);
         assetFile.Write("Data", image.Data);
+
+        assetFile.Close();
     }
 }

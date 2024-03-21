@@ -23,11 +23,6 @@ public interface IAsset : IDisposable, IEquatable<object>
     Guid Id { get; }
 
     /// <summary>
-    ///     Return true if the asset has changed
-    /// </summary>
-    bool HasChanged { get; }
-
-    /// <summary>
     ///     Get the source asset file path
     /// </summary>
     string SourcePath { get; }
@@ -42,9 +37,4 @@ public interface IAsset : IDisposable, IEquatable<object>
     ///     Reload the asset from file
     /// </summary>
     void ReloadAsset();
-
-    /// <summary>
-    ///     Call this method after data was updated in depended systems after hot reload
-    /// </summary>
-    void Updated();
 }

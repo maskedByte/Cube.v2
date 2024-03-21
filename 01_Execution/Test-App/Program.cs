@@ -89,7 +89,7 @@ public class TestApp
         var transform1 = rect.GetComponent<TransformComponent>()
            .Transform;
 
-        transform1.Scale = new Vector3(64, 64, 1);
+        transform1.Scale = new Vector3(256, 256, 1);
         transform1.Position = new Vector3(128, -128, 0);
 
         var rotation = 0f;

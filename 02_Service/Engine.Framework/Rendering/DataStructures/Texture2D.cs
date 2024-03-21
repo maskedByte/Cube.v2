@@ -1,4 +1,5 @@
-﻿using Engine.Assets.Assets.Images;
+﻿using Engine.Assets.Assets;
+using Engine.Assets.Assets.Images;
 using Engine.Core.Driver.Graphics.Textures;
 using Engine.Core.Logging;
 using Engine.Core.Math.Base;
@@ -8,10 +9,10 @@ using Engine.Core.Memory.Pixmap;
 
 namespace Engine.Framework.Rendering.DataStructures;
 
-public struct Texture2D
+public class Texture2D : IReloadAble<ImageAsset>
 {
     internal static EngineCore Core { get; set; } = null!;
-    internal ITexture InternalTexture { get; }
+    internal ITexture InternalTexture { get; private set; }
 
     public string Name { get; set; }
 
@@ -25,6 +26,8 @@ public struct Texture2D
 
         Name = string.Empty;
         InternalTexture = null!;
+
+        Core.RegisterAssetReload(typeof(ImageAsset), this);
     }
 
     public Texture2D(Color color, Size size)
@@ -68,5 +71,29 @@ public struct Texture2D
            .CreateTexture(TextureBufferTarget.Texture2D, asset.Data);
 
         Name = $"Texture2D-{InternalTexture.GetId()}";
+    }
+
+    public void TryReload(ImageAsset asset)
+    {
+        if (InternalTexture is null)
+        {
+            InternalTexture = Core.ActiveDriver
+               .GetContext()!
+               .CreateTexture(TextureBufferTarget.Texture2D, asset.Data);
+            return;
+        }
+
+        var newInternalTexture = Core.ActiveDriver
+           .GetContext()!
+           .CreateTexture(TextureBufferTarget.Texture2D, asset.Data);
+
+        InternalTexture.Dispose();
+        InternalTexture = newInternalTexture;
+    }
+
+    public void Dispose()
+    {
+        Core.UnregisterAssetReload(this);
+        InternalTexture.Dispose();
     }
 }

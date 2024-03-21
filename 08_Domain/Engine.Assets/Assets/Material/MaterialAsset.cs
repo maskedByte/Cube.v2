@@ -14,9 +14,6 @@ public sealed class MaterialAsset : IAsset<MaterialConfiguration>
     public Guid Id { get; }
 
     /// <inheritdoc />
-    public bool HasChanged { get; private set; }
-
-    /// <inheritdoc />
     public string SourcePath { get; private set; }
 
     /// <summary>
@@ -41,14 +38,7 @@ public sealed class MaterialAsset : IAsset<MaterialConfiguration>
     }
 
     /// <inheritdoc />
-    public void ReloadAsset()
-    {
-        LoadData(File.OpenRead(SourcePath));
-        HasChanged = true;
-    }
-
-    /// <inheritdoc />
-    public void Updated() => HasChanged = false;
+    public void ReloadAsset() => LoadData(File.OpenRead(SourcePath));
 
     /// <inheritdoc />
     public void Dispose()
@@ -99,5 +89,7 @@ public sealed class MaterialAsset : IAsset<MaterialConfiguration>
             EmissionTexture = tmpEmission,
             DetailMaskTexture = tmpDetailMask
         };
+
+        fileReader.Close();
     }
 }

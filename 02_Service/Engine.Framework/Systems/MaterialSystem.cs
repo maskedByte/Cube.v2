@@ -86,44 +86,44 @@ public sealed class MaterialSystem : SystemBase<MaterialComponent>
                 commandQueue.Enqueue(_bindUniformBufferCommand);
                 commandQueue.Enqueue(_bindTextureCommand);
 
-                if (material.Detail.HasValue)
+                if (material.Detail is not null)
                 {
-                    _bindTextureCommand.Texture = material.Detail.Value.InternalTexture;
+                    _bindTextureCommand.Texture = material.Detail.InternalTexture;
                     _bindTextureCommand.TextureUnit = (uint)TextureUnit.DetailColor;
                     commandQueue.Enqueue(_bindTextureCommand);
                 }
 
-                if (material.Metallic.HasValue)
+                if (material.Metallic is not null)
                 {
-                    _bindTextureCommand.Texture = material.Metallic.Value.InternalTexture;
+                    _bindTextureCommand.Texture = material.Metallic.InternalTexture;
                     _bindTextureCommand.TextureUnit = (uint)TextureUnit.MetallicColor;
                     commandQueue.Enqueue(_bindTextureCommand);
                 }
 
-                if (material.Normal.HasValue)
+                if (material.Normal is not null)
                 {
-                    _bindTextureCommand.Texture = material.Normal.Value.InternalTexture;
+                    _bindTextureCommand.Texture = material.Normal.InternalTexture;
                     _bindTextureCommand.TextureUnit = (uint)TextureUnit.NormalColor;
                     commandQueue.Enqueue(_bindTextureCommand);
                 }
 
-                if (material.Height.HasValue)
+                if (material.Height is not null)
                 {
-                    _bindTextureCommand.Texture = material.Height.Value.InternalTexture;
+                    _bindTextureCommand.Texture = material.Height.InternalTexture;
                     _bindTextureCommand.TextureUnit = (uint)TextureUnit.HeightColor;
                     commandQueue.Enqueue(_bindTextureCommand);
                 }
 
-                if (material.Emission.HasValue)
+                if (material.Emission is not null)
                 {
-                    _bindTextureCommand.Texture = material.Emission.Value.InternalTexture;
+                    _bindTextureCommand.Texture = material.Emission.InternalTexture;
                     _bindTextureCommand.TextureUnit = (uint)TextureUnit.EmissionColor;
                     commandQueue.Enqueue(_bindTextureCommand);
                 }
 
-                if (material.DetailMask.HasValue)
+                if (material.DetailMask is not null)
                 {
-                    _bindTextureCommand.Texture = material.DetailMask.Value.InternalTexture;
+                    _bindTextureCommand.Texture = material.DetailMask.InternalTexture;
                     _bindTextureCommand.TextureUnit = (uint)TextureUnit.DetailMaskColor;
                     commandQueue.Enqueue(_bindTextureCommand);
                 }

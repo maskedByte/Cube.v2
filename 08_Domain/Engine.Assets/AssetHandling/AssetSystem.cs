@@ -67,7 +67,7 @@ public sealed class AssetSystem : IDisposable
     /// <param name="path">Relative path to the file <see cref="BasePath" /></param>
     /// <param name="reload">If true, the system will try to reload the asset</param>
     /// <returns>New instance of the created asset.</returns>
-    public TAssetType Load<TAssetType>(string path, bool reload = false) where TAssetType : IAsset
+    public TAssetType? Load<TAssetType>(string path, bool reload = false) where TAssetType : IAsset
     {
         if (string.IsNullOrWhiteSpace(path))
         {

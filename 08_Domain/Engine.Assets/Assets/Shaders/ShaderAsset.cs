@@ -15,9 +15,6 @@ public sealed class ShaderAsset : IAsset<Dictionary<ShaderAssetType, string>>
     public Guid Id { get; }
 
     /// <inheritdoc />
-    public bool HasChanged { get; private set; }
-
-    /// <inheritdoc />
     public string SourcePath { get; private set; }
 
     /// <inheritdoc />
@@ -43,18 +40,17 @@ public sealed class ShaderAsset : IAsset<Dictionary<ShaderAssetType, string>>
         SourcePath = path;
         using var assetFile = new FileReader(path);
         LoadData(assetFile);
+        assetFile.Close();
     }
 
     /// <inheritdoc />
     public void ReloadAsset()
     {
         using var assetFile = new FileReader(SourcePath);
+        Data.Clear();
         LoadData(assetFile);
-        HasChanged = true;
+        assetFile.Close();
     }
-
-    /// <inheritdoc />
-    public void Updated() => HasChanged = false;
 
     /// <inheritdoc />
     public void Dispose()

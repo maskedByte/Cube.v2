@@ -13,9 +13,6 @@ public sealed class ImageAsset : IAsset<Pixmap>
     public Guid Id { get; }
 
     /// <inheritdoc />
-    public bool HasChanged { get; private set; }
-
-    /// <inheritdoc />
     public string SourcePath { get; private set; }
 
     /// <inheritdoc />
@@ -39,14 +36,7 @@ public sealed class ImageAsset : IAsset<Pixmap>
     }
 
     /// <inheritdoc />
-    public void ReloadAsset()
-    {
-        LoadData(File.OpenRead(SourcePath));
-        HasChanged = true;
-    }
-
-    /// <inheritdoc />
-    public void Updated() => HasChanged = false;
+    public void ReloadAsset() => LoadData(File.OpenRead(SourcePath));
 
     /// <inheritdoc />
     public void Dispose()
@@ -68,5 +58,6 @@ public sealed class ImageAsset : IAsset<Pixmap>
         fileReader.Read("Data", out byte[] tmpData);
 
         Data = new Pixmap(new Size(width, height), tmpData, PixelFormat.Rgba);
+        fileReader.Close();
     }
 }

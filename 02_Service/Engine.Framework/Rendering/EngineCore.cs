@@ -15,9 +15,13 @@ namespace Engine.Framework.Rendering;
 /// </summary>
 public sealed class EngineCore : IDisposable
 {
+    private static readonly object lockObject = new();
+
     private FileSystemWatcher _fileSystemWatcher;
     private bool _hotReload;
     private readonly Dictionary<string, DateTime> _recentlyChangedFiles;
+    private readonly Dictionary<Type, List<IReloadAble>> _assetReloadRegistry;
+    private List<string> _FilesToReloadOnMainThread;
 
     /// <summary>
     ///     Get the asset system base path which is used to load assets from.
@@ -60,7 +64,9 @@ public sealed class EngineCore : IDisposable
     {
         ArgumentException.ThrowIfNullOrEmpty(basePath);
 
+        _assetReloadRegistry = new Dictionary<Type, List<IReloadAble>>();
         _recentlyChangedFiles = new Dictionary<string, DateTime>();
+        _FilesToReloadOnMainThread = new List<string>();
 
         BasePath = basePath;
         _fileSystemWatcher = null!;
@@ -84,31 +90,22 @@ public sealed class EngineCore : IDisposable
             {
                 while (true)
                 {
-                    if (_recentlyChangedFiles.Count > 0)
+                    lock (lockObject)
                     {
-                        var changedFiles = _recentlyChangedFiles.Keys.ToArray();
-                        _recentlyChangedFiles.Clear();
-
-                        try
+                        if (_recentlyChangedFiles.Count > 0)
                         {
-                            AssetSystem.Compile(changedFiles, reloadFile);
-                        }
-                        catch (IOException e)
-                        {
-                            Console.WriteLine(e);
-                            Thread.Sleep(1000);
-                            AssetSystem.Compile(changedFiles, reloadFile);
-                        }
+                            _FilesToReloadOnMainThread = _recentlyChangedFiles.Keys.ToList();
+                            _recentlyChangedFiles.Clear();
 
-                        foreach (var file in changedFiles)
-                        {
-                            // Remove extenstion from file
-                            var filePath = file[..^Path.GetExtension(file).Length];
-
-                            var asset = AssetSystem.Load<IAsset>(filePath, true);
-                            if (asset != null)
+                            try
                             {
-                                Log.LogMessageAsync($"Asset {file} has been reloaded.", LogLevel.Info, this);
+                                AssetSystem.Compile(_FilesToReloadOnMainThread, reloadFile);
+                            }
+                            catch (Exception e)
+                            {
+                                Log.LogMessageAsync($"Error while compiling assets: {e.Message}", LogLevel.Error, this);
+                                Thread.Sleep(1000);
+                                AssetSystem.Compile(_FilesToReloadOnMainThread, reloadFile);
                             }
                         }
                     }
@@ -150,7 +147,76 @@ public sealed class EngineCore : IDisposable
     /// <param name="assetPath">URI to the asset</param>
     /// <typeparam name="T">Type of the asset</typeparam>
     /// <returns>Loaded asset</returns>
-    public T Load<T>(string assetPath) where T : IAsset => AssetSystem.Load<T>(assetPath);
+    public T? Load<T>(string assetPath) where T : IAsset => AssetSystem.Load<T>(assetPath);
+
+    internal void CheckReload()
+    {
+        lock (lockObject)
+        {
+            if (_FilesToReloadOnMainThread.Count == 0)
+            {
+                return;
+            }
+
+            var files = _FilesToReloadOnMainThread.ToList();
+
+            var retryCount = 0;
+            foreach (var file in files)
+            {
+                var filePath = file[..^Path.GetExtension(file).Length];
+
+                try
+                {
+                    var asset = AssetSystem.Load<IAsset>(filePath, true);
+                    if (asset is null)
+                    {
+                        Log.LogMessageAsync($"Asset {file} has been reloaded.", LogLevel.Info, this);
+                        continue;
+                    }
+
+                    foreach (var reloadAble in _assetReloadRegistry[asset.GetType()])
+                    {
+                        reloadAble.TryReload(asset);
+                    }
+
+                    Log.LogMessageAsync($"Asset {file} has been reloaded.", LogLevel.Info, this);
+
+                    _FilesToReloadOnMainThread.Remove(file);
+                }
+                catch (Exception e)
+                {
+                    retryCount++;
+
+                    if (retryCount > 5)
+                    {
+                        Log.LogMessageAsync($"Error while reloading asset {file}: {e.Message}", LogLevel.Error, this);
+                        _FilesToReloadOnMainThread.Remove(file);
+                    }
+                }
+            }
+        }
+    }
+
+    internal void RegisterAssetReload(Type assetType, IReloadAble reloadAble)
+    {
+        _assetReloadRegistry.TryGetValue(assetType, out var reloadAbles);
+
+        if (reloadAbles is null)
+        {
+            reloadAbles = new List<IReloadAble>();
+            _assetReloadRegistry.Add(assetType, reloadAbles);
+        }
+
+        reloadAbles.Add(reloadAble);
+    }
+
+    internal void UnregisterAssetReload(IReloadAble reloadAble)
+    {
+        foreach (var reloadAbles in _assetReloadRegistry.Values)
+        {
+            reloadAbles.Remove(reloadAble);
+        }
+    }
 
     private void PrepareFileSystemWatcher()
     {
@@ -175,7 +241,6 @@ public sealed class EngineCore : IDisposable
 
     private void AddAssetToRecentChanges(string path, DateTime currentLastWriteTime)
     {
-        // Check if file extension is supported by AssetSystem.SupportedExtensions
         var fileExtension = Path.GetExtension(path);
 
         if (!FileIsReady(path))
@@ -209,7 +274,15 @@ public sealed class EngineCore : IDisposable
     {
         try
         {
+            if (!File.Exists(path)
+                || path.EndsWith(".cda")
+                || (File.GetAttributes(path) & FileAttributes.Directory) == FileAttributes.Directory)
+            {
+                return false;
+            }
+
             using var file = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+
             return true;
         }
         catch (IOException)

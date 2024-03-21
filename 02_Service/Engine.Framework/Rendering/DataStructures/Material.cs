@@ -1,4 +1,5 @@
-﻿using Engine.Assets.Assets.Material;
+﻿using Engine.Assets.Assets;
+using Engine.Assets.Assets.Material;
 using Engine.Core.Driver.Graphics.Textures;
 using Engine.Core.Logging;
 using Engine.Core.Math.Base;
@@ -8,7 +9,7 @@ using Engine.Core.Math.Vectors;
 
 namespace Engine.Framework.Rendering.DataStructures;
 
-public struct Material
+public class Material : IReloadAble<MaterialAsset>
 {
     private static readonly Dictionary<string, Shader> _loadedShaders = new();
     internal static EngineCore Core { get; set; }
@@ -106,44 +107,66 @@ public struct Material
         if (materialAsset == null)
         {
             Log.LogMessageAsync($"Failed to load material : {path}", LogLevel.Error, this);
+            return;
         }
 
-        Name = $"Texture2D-{materialAsset!.Id}";
+        Core.RegisterAssetReload(typeof(MaterialAsset), this);
 
-        Diffuse = !string.IsNullOrEmpty(materialAsset.Data.DiffuseTexture)
-            ? new Texture2D(materialAsset.Data.DiffuseTexture)
+        TryReload(materialAsset);
+    }
+
+    public void TryReload(MaterialAsset asset)
+    {
+        Name = $"Texture2D-{asset!.Id}";
+
+        Diffuse = !string.IsNullOrEmpty(asset.Data.DiffuseTexture)
+            ? new Texture2D(asset.Data.DiffuseTexture)
             : new Texture2D(Color.White, new Size(16, 16));
-        Detail = !string.IsNullOrEmpty(materialAsset.Data.DetailTexture)
-            ? new Texture2D(materialAsset.Data.DetailTexture)
+        Detail = !string.IsNullOrEmpty(asset.Data.DetailTexture)
+            ? new Texture2D(asset.Data.DetailTexture)
             : null;
-        Metallic = !string.IsNullOrEmpty(materialAsset.Data.MetallicTexture)
-            ? new Texture2D(materialAsset.Data.MetallicTexture)
+        Metallic = !string.IsNullOrEmpty(asset.Data.MetallicTexture)
+            ? new Texture2D(asset.Data.MetallicTexture)
             : null;
-        Normal = !string.IsNullOrEmpty(materialAsset.Data.NormalTexture)
-            ? new Texture2D(materialAsset.Data.NormalTexture)
+        Normal = !string.IsNullOrEmpty(asset.Data.NormalTexture)
+            ? new Texture2D(asset.Data.NormalTexture)
             : null;
-        Height = !string.IsNullOrEmpty(materialAsset.Data.HeightTexture)
-            ? new Texture2D(materialAsset.Data.HeightTexture)
+        Height = !string.IsNullOrEmpty(asset.Data.HeightTexture)
+            ? new Texture2D(asset.Data.HeightTexture)
             : null;
-        Emission = !string.IsNullOrEmpty(materialAsset.Data.EmissionTexture)
-            ? new Texture2D(materialAsset.Data.EmissionTexture)
+        Emission = !string.IsNullOrEmpty(asset.Data.EmissionTexture)
+            ? new Texture2D(asset.Data.EmissionTexture)
             : null;
-        DetailMask = !string.IsNullOrEmpty(materialAsset.Data.DetailMaskTexture)
-            ? new Texture2D(materialAsset.Data.DetailMaskTexture)
+        DetailMask = !string.IsNullOrEmpty(asset.Data.DetailMaskTexture)
+            ? new Texture2D(asset.Data.DetailMaskTexture)
             : null;
 
-        Color = materialAsset.Data.Color;
-        Filter = materialAsset.Data.Filter;
-        Tiling = materialAsset.Data.Tiling;
+        Color = asset.Data.Color;
+        Filter = asset.Data.Filter;
+        Tiling = asset.Data.Tiling;
 
-        if (_loadedShaders.TryGetValue(materialAsset.Data.ShaderFile, out var shader))
+        if (_loadedShaders.TryGetValue(asset.Data.ShaderFile, out var shader))
         {
             Shader = shader;
         }
         else
         {
-            Shader = new Shader(materialAsset.Data.ShaderFile);
-            _loadedShaders.Add(materialAsset.Data.ShaderFile, Shader);
+            Shader = new Shader(asset.Data.ShaderFile);
+            _loadedShaders.Add(asset.Data.ShaderFile, Shader);
         }
+    }
+
+    public void Dispose()
+    {
+        Core.UnregisterAssetReload(this);
+
+        Diffuse.Dispose();
+        Detail?.Dispose();
+        Metallic?.Dispose();
+        Normal?.Dispose();
+        Height?.Dispose();
+        Emission?.Dispose();
+        DetailMask?.Dispose();
+        Shader.Dispose();
     }
 }

@@ -1,4 +1,5 @@
-﻿using Engine.Assets.Assets.Shaders;
+﻿using Engine.Assets.Assets;
+using Engine.Assets.Assets.Shaders;
 using Engine.Core.Driver;
 using Engine.Core.Driver.Graphics.Shaders;
 using Engine.Core.Logging;
@@ -7,10 +8,10 @@ using Engine.Core.Logging;
 
 namespace Engine.Framework.Rendering.DataStructures;
 
-public struct Shader
+public class Shader : IReloadAble<ShaderAsset>
 {
     internal static EngineCore Core { get; set; } = null!;
-    internal IShaderProgram InternalShaderProgram { get; }
+    internal IShaderProgram InternalShaderProgram { get; private set; }
 
     public string Name { get; set; }
 
@@ -24,6 +25,8 @@ public struct Shader
 
         InternalShaderProgram = null!;
         Name = string.Empty;
+
+        Core.RegisterAssetReload(typeof(ShaderAsset), this);
     }
 
     public Shader(string path)
@@ -42,6 +45,11 @@ public struct Shader
             return;
         }
 
+        TryReload(shaderAsset);
+    }
+
+    public void TryReload(ShaderAsset asset)
+    {
         var context = Core.ActiveDriver.GetContext();
         if (context is null)
         {
@@ -49,72 +57,72 @@ public struct Shader
             return;
         }
 
-        InternalShaderProgram = context.CreateShaderProgram();
-        Name = $"ShaderProgram-{InternalShaderProgram.GetId()}";
+        var newShaderProgram = context.CreateShaderProgram();
+        Name = $"ShaderProgram-{newShaderProgram.GetId()}";
 
         var hasShader = false;
 
-        if (shaderAsset.HasShader(ShaderAssetType.Vertex))
+        if (asset.HasShader(ShaderAssetType.Vertex))
         {
-            InternalShaderProgram.AddShader(
+            newShaderProgram.AddShader(
                 context.CreateShader(
                     ShaderSourceType.Vertex,
-                    shaderAsset.Data[ShaderAssetType.Vertex]
+                    asset.Data[ShaderAssetType.Vertex]
                 )
             );
             hasShader = true;
         }
 
-        if (shaderAsset.HasShader(ShaderAssetType.Fragment))
+        if (asset.HasShader(ShaderAssetType.Fragment))
         {
-            InternalShaderProgram.AddShader(
+            newShaderProgram.AddShader(
                 context.CreateShader(
                     ShaderSourceType.Fragment,
-                    shaderAsset.Data[ShaderAssetType.Fragment]
+                    asset.Data[ShaderAssetType.Fragment]
                 )
             );
             hasShader = true;
         }
 
-        if (shaderAsset.HasShader(ShaderAssetType.Geometry))
+        if (asset.HasShader(ShaderAssetType.Geometry))
         {
-            InternalShaderProgram.AddShader(
+            newShaderProgram.AddShader(
                 context.CreateShader(
                     ShaderSourceType.Geometry,
-                    shaderAsset.Data[ShaderAssetType.Geometry]
+                    asset.Data[ShaderAssetType.Geometry]
                 )
             );
             hasShader = true;
         }
 
-        if (shaderAsset.HasShader(ShaderAssetType.TessellationControl))
+        if (asset.HasShader(ShaderAssetType.TessellationControl))
         {
-            InternalShaderProgram.AddShader(
+            newShaderProgram.AddShader(
                 context.CreateShader(
                     ShaderSourceType.TessellationControl,
-                    shaderAsset.Data[ShaderAssetType.TessellationControl]
+                    asset.Data[ShaderAssetType.TessellationControl]
                 )
             );
             hasShader = true;
         }
 
-        if (shaderAsset.HasShader(ShaderAssetType.TessellationEvaluation))
+        if (asset.HasShader(ShaderAssetType.TessellationEvaluation))
         {
-            InternalShaderProgram.AddShader(
+            newShaderProgram.AddShader(
                 context.CreateShader(
                     ShaderSourceType.TessellationEvaluation,
-                    shaderAsset.Data[ShaderAssetType.TessellationEvaluation]
+                    asset.Data[ShaderAssetType.TessellationEvaluation]
                 )
             );
             hasShader = true;
         }
 
-        if (shaderAsset.HasShader(ShaderAssetType.Compute))
+        if (asset.HasShader(ShaderAssetType.Compute))
         {
-            InternalShaderProgram.AddShader(
+            newShaderProgram.AddShader(
                 context.CreateShader(
                     ShaderSourceType.Compute,
-                    shaderAsset.Data[ShaderAssetType.Compute]
+                    asset.Data[ShaderAssetType.Compute]
                 )
             );
             hasShader = true;
@@ -126,11 +134,20 @@ public struct Shader
             throw new Exception("No shader found.");
         }
 
-        InternalShaderProgram.Compile();
+        newShaderProgram.Compile();
 
         foreach (var uniformBuffer in IContext.CurrentState.UniformBuffers)
         {
-            uniformBuffer.Attach(InternalShaderProgram);
+            uniformBuffer.Attach(newShaderProgram);
         }
+
+        InternalShaderProgram?.Dispose();
+        InternalShaderProgram = newShaderProgram;
+    }
+
+    public void Dispose()
+    {
+        Core.UnregisterAssetReload(this);
+        InternalShaderProgram.Dispose();
     }
 }

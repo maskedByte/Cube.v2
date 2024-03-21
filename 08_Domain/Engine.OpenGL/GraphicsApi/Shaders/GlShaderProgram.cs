@@ -31,10 +31,7 @@ internal sealed class GlShaderProgram : IShaderProgram
     }
 
     /// <inheritdoc />
-    public IShaderParameter? this[string name] =>
-        _shaderParams.TryGetValue(name, out var shaderParam)
-            ? shaderParam
-            : null;
+    public IShaderParameter? this[string name] => _shaderParams.GetValueOrDefault(name);
 
     /// <inheritdoc />
     public uint GetId() => _shaderProgramId;
@@ -43,13 +40,6 @@ internal sealed class GlShaderProgram : IShaderProgram
     public void AddShader(IShader shader)
     {
         ArgumentNullException.ThrowIfNull(shader);
-
-        if (_shaders.TryGetValue(shader.Type, out _))
-        {
-            // Hot reload shader if program is ShaderProgramState is compiled
-            _programState = ShaderProgramState.Reload;
-            throw new NotImplementedException();
-        }
 
         _shaders.Add(shader.Type, shader);
         _programState = ShaderProgramState.New;

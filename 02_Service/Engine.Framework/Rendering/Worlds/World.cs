@@ -169,6 +169,8 @@ public sealed class World : IDisposable
     /// </summary>
     public void Update()
     {
+        Core.CheckReload();
+
         Core.ActiveDriver.Clear();
         Core.ActiveDriver.HandleEvents();
 

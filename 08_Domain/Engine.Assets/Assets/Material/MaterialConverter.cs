@@ -42,5 +42,7 @@ internal sealed class MaterialConverter : IAssetConverter
         assetFile.Write("Height", materialFileJson.Channels.Height);
         assetFile.Write("Emission", materialFileJson.Channels.Emission);
         assetFile.Write("DetailMask", materialFileJson.Channels.DetailMask);
+
+        assetFile.Close();
     }
 }

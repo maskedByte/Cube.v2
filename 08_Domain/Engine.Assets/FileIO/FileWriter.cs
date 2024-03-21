@@ -21,7 +21,7 @@ public sealed class FileWriter : IDisposable
     /// <param name="filePath"></param>
     public FileWriter(string filePath)
     {
-        _fileStream = File.OpenWrite(filePath);
+        _fileStream = new FileStream(filePath, FileMode.Create);
         _brotliStream = new BrotliStream(_fileStream, CompressionMode.Compress);
         _baseStream = new BinaryWriter(_brotliStream);
     }
