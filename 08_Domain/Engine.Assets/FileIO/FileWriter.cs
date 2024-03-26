@@ -1,5 +1,6 @@
 using System.IO.Compression;
 using Engine.Assets.Assets;
+using Engine.Core.Files;
 using Engine.Core.Math.Base;
 using Engine.Core.Math.Matrices;
 using Engine.Core.Math.Vectors;
@@ -21,7 +22,7 @@ public sealed class FileWriter : IDisposable
     /// <param name="filePath"></param>
     public FileWriter(string filePath)
     {
-        _fileStream = new FileStream(filePath, FileMode.Create);
+        _fileStream = filePath.AsFileStream(FileMode.Create, FileAccess.ReadWrite);
         _brotliStream = new BrotliStream(_fileStream, CompressionMode.Compress);
         _baseStream = new BinaryWriter(_brotliStream);
     }

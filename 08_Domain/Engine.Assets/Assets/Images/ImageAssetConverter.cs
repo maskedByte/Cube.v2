@@ -1,5 +1,6 @@
 ﻿using Engine.Assets.AssetHandling.Models;
 using Engine.Assets.FileIO;
+using Engine.Core.Files;
 using StbiSharp;
 
 namespace Engine.Assets.Assets.Images;
@@ -31,10 +32,7 @@ public sealed class ImageAssetConverter : IAssetConverter
             return;
         }
 
-        using var srcStream = File.OpenRead(assetConvertFile.SourceFileName);
-        using var memoryStream = new MemoryStream();
-        srcStream.CopyTo(memoryStream);
-        srcStream.Close();
+        using var memoryStream = assetConvertFile.SourceFileName.AsStream(FileAccess.Read);
 
         Stbi.SetFlipVerticallyOnLoad(true);
         var image = Stbi.LoadFromMemory(memoryStream, 4);
@@ -47,5 +45,7 @@ public sealed class ImageAssetConverter : IAssetConverter
         assetFile.Write("Data", image.Data);
 
         assetFile.Close();
+        image.Dispose();
+        memoryStream.Close();
     }
 }
