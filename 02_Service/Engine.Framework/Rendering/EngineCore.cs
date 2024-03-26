@@ -88,34 +88,6 @@ public sealed class EngineCore : IDisposable
         Task.Run(async () => await FileChangeWatcher(reloadFile));
     }
 
-    private async Task FileChangeWatcher(AssetCompilerConfiguration reloadFile)
-    {
-        while (true)
-        {
-            lock (lockObject)
-            {
-                if (_recentlyChangedFiles.Count > 0)
-                {
-                    _FilesToReloadOnMainThread = _recentlyChangedFiles.Keys.ToList();
-                    _recentlyChangedFiles.Clear();
-
-                    try
-                    {
-                        Task.Run(() => AssetSystem.Compile(_FilesToReloadOnMainThread, reloadFile));
-                    }
-                    catch (Exception e)
-                    {
-                        Log.LogMessageAsync($"Error while compiling assets: {e.Message}", LogLevel.Error, this);
-                        Thread.Sleep(1000);
-                        AssetSystem.Compile(_FilesToReloadOnMainThread, reloadFile);
-                    }
-                }
-            }
-
-            await Task.Delay(100);
-        }
-    }
-
     /// <summary>
     ///     Compiles all assets with the given configuration and under the given path. <see cref="BasePath" />
     /// </summary>
@@ -215,6 +187,34 @@ public sealed class EngineCore : IDisposable
         }
     }
 
+    private async Task FileChangeWatcher(AssetCompilerConfiguration reloadFile)
+    {
+        while (true)
+        {
+            lock (lockObject)
+            {
+                if (_recentlyChangedFiles.Count > 0)
+                {
+                    _FilesToReloadOnMainThread = _recentlyChangedFiles.Keys.ToList();
+                    _recentlyChangedFiles.Clear();
+
+                    try
+                    {
+                        Task.Run(() => AssetSystem.Compile(_FilesToReloadOnMainThread, reloadFile));
+                    }
+                    catch (Exception e)
+                    {
+                        Log.LogMessageAsync($"Error while compiling assets: {e.Message}", LogLevel.Error, this);
+                        Thread.Sleep(1000);
+                        AssetSystem.Compile(_FilesToReloadOnMainThread, reloadFile);
+                    }
+                }
+            }
+
+            await Task.Delay(500);
+        }
+    }
+
     private void PrepareFileSystemWatcher()
     {
         _fileSystemWatcher = new FileSystemWatcher(BasePath);
@@ -222,7 +222,7 @@ public sealed class EngineCore : IDisposable
         _fileSystemWatcher.EnableRaisingEvents = true;
 
         _fileSystemWatcher.NotifyFilter =
-            NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName | NotifyFilters.LastAccess;
         _fileSystemWatcher.Changed += FileChanged;
         _fileSystemWatcher.Created += FileAdded;
         _fileSystemWatcher.Deleted += FileDeleted;
